@@ -51,4 +51,5 @@ Thumbs.db
 /config
 docker-compose.yml
 CLAUDE.local.md
-.claude/
+.claude/*
+!.claude/docs/

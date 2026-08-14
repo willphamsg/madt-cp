@@ -1,84 +1,64 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository. It is a high-level index — deep technical detail lives in [.claude/docs/](.claude/docs/) and is linked from the relevant section below.
 
-## What this is
+## 1. Project Overview
 
-LTA MADT GUI (`lta-madt-gui`) — the Angular front-end for a bus **Multi-Application Display Terminal**. It is a touchscreen onboard a public bus that talks to a backend **TC** (Transit Computer) over **MQTT**. The terminal exposes three operational domains, each a top-level routed area with its own NgRx slice, MQTT topic family, and layout:
+LTA MADT GUI (`lta-madt-gui`) is the Angular front-end for a bus **Multi-Application Display Terminal**: a touchscreen mounted on a public bus that talks to a backend **TC** (Transit Computer) over MQTT. It covers three operational domains — **main** (bus operator: login, start/end trip, doors, cash payment), **fare** (ticketing, top-up, concession, printer/BLS/CV operation), and **maintenance** (fare console config, audit registers, device diagnostics) — each a top-level routed area with its own NgRx slice and MQTT topic family.
 
-- **main** (BOLC — Bus Operator's) — boot-up/commissioning, login, start/end trip, bus-stop info, doors, cash payment, redeem.
-- **fare** (CRP) — ticketing, transactions, cancel ride, concession, top-up, BLS/CV/printer operation.
-- **maintenance** — CJB, fare maintenance, audit registers, menu/log-off.
+## 2. Tech Stack
 
-## Commands
+- **Angular 21** (standalone components, no NgModules) — `@angular/core`, `@angular/cdk`, `@angular/material`, `@angular/ssr`
+- **NgRx 21** (`@ngrx/store`) for state
+- **TypeScript ~5.9**, `strict` mode + Angular `strictTemplates`
+- **RxJS ~7.8**
+- **MQTT.js 5.x** (`mqtt`) for the broker connection; `@types/mqtt`
+- **ngx-translate 17** for i18n
+- **ngx-scrollbar** for custom scroll UI
+- **Karma + Jasmine** for unit tests (ChromeHeadless)
+- **ESLint 9 (flat config) + Prettier 3.2** for lint/format
+- **Node v20.11.1** (pinned via `.nvmrc`)
+
+## 3. Dev Commands
 
 ```bash
+nvm use                       # switch to the pinned Node version — do this first
+npm install                   # install dependencies
 npm start                     # ng serve → http://localhost:4200
 npm run start:local:network   # ng serve on 0.0.0.0 (test from the physical terminal / LAN)
 npm run build                 # ng build --aot --output-hashing=all, output to dist/
 npm test                      # ng test, ChromeHeadless (auto-detects chromium/chrome via CHROME_BIN)
-npm run test:coverage         # same, plus --code-coverage --watch=false
-npm run lint:check            # eslint + prettier --check (run before pushing)
+npm run lint:check            # eslint + prettier --check — run before pushing
 npm run lint:fix              # eslint --fix + prettier --write
 ```
 
 Run a single spec: `npx ng test --include='**/start-trip.component.spec.ts' --watch=false`
 
-Node is pinned to **v20.11.1** (`.nvmrc`); use `nvm use`. Husky + lint-staged run eslint/prettier on staged files at commit time.
+Before running locally: open `src/environments/environment.ts` and set `localDeveloperName` to your own name/initials (MQTT topics are suffixed with it in dev so multiple developers share one broker without colliding).
 
-## Build configurations
+## 4. Core Logic Summary
 
-`angular.json` defines three environments via file replacement of `src/environments/environment.ts`:
-- `environment.ts` (dev) — `env: 'dev'`, `dummy: true`. In dev, all MQTT topics are **suffixed with `localDeveloperName`** (e.g. `WILL`) so multiple developers share one broker without colliding. Change `localDeveloperName` to your own.
-- `environment.uat.ts`, `environment.prod.ts`.
+This app has no standalone "calculation engine" — its core logic is the **MQTT request/response protocol** that drives every screen: a component publishes a REQUEST with a `msgID`, the TC (or, in dev, the dummy-data simulator) answers on the matching topic with a RESPONSE carrying the same `msgID`, and an NgRx action derived from that RESPONSE updates the relevant store slice, which the component renders. Screens don't mutate their own state from a click handler; they wait on this round trip. The one piece of actual arithmetic in the codebase is fare computation in `src/app/dummyData/fare-calculator.ts`, used by the dev simulator to produce realistic fare responses.
 
-`dummy: true` activates the dummy-data simulator (see below). `displayAutoClick` and `clickInterval` drive an automated UI walkthrough used for demos/testing.
+Full protocol details (message envelope, timeouts, topic subscription rules): **[.claude/docs/mqtt-protocol.md](.claude/docs/mqtt-protocol.md)**
+State flow built on top of it: **[.claude/docs/state-management.md](.claude/docs/state-management.md)**
 
-## Architecture
+## 5. Key Constraints
 
-### MQTT is the application's spine
+- **Every issue/feature change must update unit tests and pass SonarQube in the same change — not as follow-up work.** Add or update specs for any new/changed behavior before considering the change done; run `npm run lint:check` and check SonarQube findings on the diff, and resolve them (or, per the sonar-fix-issue skill, mark as a documented false positive) before merging.
+- **Never hardcode broker host/port/credentials or topic names in `.ts` files.** They are fetched at runtime from `src/assets/mqtt-config.json`; edit that file, not the service.
+- **Never assume `AuthGuard` is enforced on the private routes.** It is currently commented out in `app.routes.ts` (`// canActivate: [AuthGuard]`) — check the live state of that line before relying on it or removing checks that assume it's active.
+- **Never add a user-facing string without a translation key in both `en.json` and `ch.json`.** No hardcoded English text in templates.
+- **Never publish an MQTT message without going through `publishWithMessageFormat`.** It supplies the required envelope (`header`, `msgID`, `msgSubID`) and QoS 2 — hand-built payloads will fail `validateMessageFormat` on the other end.
+- **Never forget `topicKey` + `unsubscribe` on MQTT subscriptions.** Omitting either leaks a handler that keeps firing after the component is destroyed.
+- **Every issue/feature change must be checked for memory leaks before considering it done.** Verify every RxJS subscription, MQTT topic subscription, and `setInterval`/`setTimeout` added or touched has a matching teardown in `ngOnDestroy` (`takeUntil(this.destroy$)`, `unsubscribe()`, `clearInterval`/`clearTimeout`). This matters more here than in a typical web app — the terminal runs for an entire bus shift without a page reload, so a leaked subscription accumulates for hours instead of being wiped out by the next navigation.
+- **Don't treat the dummy-data simulator as a source of truth for real TC behavior.** It's dev/demo tooling (`environment.dummy: true`), not a spec of the actual protocol — when in doubt, check `models/constants.ts` and the real message flow, not just what the simulator returns.
+- **Don't bypass Husky/lint-staged with `--no-verify`.** Fix the lint/format failure instead.
+- **Don't introduce relative imports across feature folders.** Use the tsconfig path aliases (`@services/*`, `@components/*`, etc.).
 
-Everything the terminal does is a request/response exchange with the TC over MQTT. [src/app/services/mqtt.service.ts](src/app/services/mqtt.service.ts) is the single gateway and is the most important file to understand.
+## 6. Additional Documentation
 
-- **Config is fetched at runtime**, not bundled: `connect()` GETs `/assets/mqtt-config.json` (broker host/port/credentials + the full topic map) on every connect, cache-busted. Editing broker or topics means editing [src/assets/mqtt-config.json](src/assets/mqtt-config.json), not a `.ts` file. The broker URL can also be overridden via localStorage key `mqttBrokerUrl`.
-- **Message envelope**: outgoing messages built by `publishWithMessageFormat({ topic, msgID, payload, msgSubID })` are wrapped as `{ header: { dateTime, formatVersion, msgID, msgSubID }, payload }`. `msgID` identifies the message type (`MsgID` in [models/constants.ts](src/app/models/constants.ts)); `msgSubID` is REQUEST(1)/RESPONSE(2)/etc. (`MsgSubID`). Published at **QoS 2**.
-- **Request timeout / TC-no-response**: each REQUEST starts a `DEFAULT_TIMEOUT` (5s) timer; if no matching RESPONSE arrives, the `msgID` is pushed onto `isTCNoResponse$`. A matching RESPONSE (`msgSubID === RESPONSE`) clears it. The layout watches this to show the disconnect/no-response UI.
-- **Multi-handler topics**: `subscribe({ topic, callback, topicKey })` lets several components subscribe to the same topic; `topicKey` namespaces handlers so `unsubscribe` removes only one. Always pass a stable `topicKey` and unsubscribe in `ngOnDestroy`.
-- **Validation + logging**: every message is run through `validateMessageFormat`; failures emit on `messageFormatError$`. All traffic is mirrored to `mqttLog$` as CSV rows.
-- Observables exposed by the service (`connectionStatus$`, `mqttConfigLoaded$`, `isReconnect$`, `isTCNoResponse$`, `messageFormatError$`, `mqttLog$`) are how the rest of the app reacts to connection lifecycle — prefer these over poking the client.
-
-### State — NgRx, one slice per domain
-
-[src/app/store/app.state.ts](src/app/store/app.state.ts) composes four feature reducers: `main`, `maintenance`, `fare`, `global`. `global` holds cross-cutting state (connection status, location/positioning mode, global errors). MQTT RESPONSE handlers dispatch actions into the relevant slice; components `store.select(...)` to render. When adding a server-driven screen, the flow is: subscribe to the response topic → dispatch into the slice → select in the component.
-
-### Dummy-data simulator
-
-When `environment.dummy` is true, [src/app/dummyData/init-dummy-data.ts](src/app/dummyData/init-dummy-data.ts) (`DummyInitService`, kicked off from the layout) **subscribes to the MADT request topics and publishes fake TC responses**, letting the whole UI run with no real backend. Canned payloads live in `src/app/dummyData/*` (`main-page.ts`, `fare.ts`, `maintenance.ts`, etc.). To simulate a new TC behavior, add a handler here.
-
-### Routing
-
-[src/app/app.routes.ts](src/app/app.routes.ts) defines `routerUrls` (the full path tree for public + the three private domains) and a `nestedUrlHandler(url, textToRemove)` helper right in that file, then builds the `Routes` array from them instead of hard-coded path strings — nested/child routes call `nestedUrlHandler` against their parent's URL. Public routes (`sign-in`, `welcome`, `mqtt`) sit outside the authenticated shell; the three domains (`main`, `fare`, `maintenance`, plus `fms`) are nested children under `routerUrls.private`. An `AuthGuard` on the private shell route is currently commented out (`// canActivate: [AuthGuard]`) — check current state before assuming route-level auth is enforced. The `mqtt` route ([views/mqtt](src/app/views/mqtt/mqtt.component.ts)) is a developer/diagnostics screen for broker config and the live message log.
-
-### Components are standalone
-
-This is a modern Angular (v21) **standalone-component** app — no NgModules. Bootstrap is `bootstrapApplication(AppComponent, appConfig)` in [main.ts](src/main.ts); providers (router, NgRx store, ngx-translate, animations, hydration) are in [app.config.ts](src/app/app.config.ts). Each component declares its own `imports`.
-
-### Path aliases
-
-Import via tsconfig aliases, not relative paths: `@app/*`, `@models` / `@models/*`, `@components/*`, `@views/*`, `@store/*`, `@services/*`, `@directives/*`, `@data/*`, `@dummyData/*`, `@env/*`, `@styles/*`, `@assets/*`.
-
-### i18n
-
-ngx-translate, JSON catalogs at `src/assets/i18n/` (`en.json`, `ch.json`), default `en`. User-facing strings go through `translate`; add keys to both catalogs.
-
-## Conventions
-
-- TypeScript `strict` is on, plus Angular `strictTemplates`. Note `noImplicitAny: false` — but don't lean on it.
-- Imports are auto-sorted by `eslint-plugin-simple-import-sort`; let `lint:fix` order them.
-- SSR scaffolding exists ([server.ts](server.ts), `main.server.ts`, `@angular/ssr`) but the terminal runs as a client app; `provideClientHydration()` is configured.
-
-## SSR (rarely used)
-
-```bash
-npm run build && npm run serve:ssr:lta-btds-gui   # node dist/lta-btds-gui/server/server.mjs
-```
+- **[.claude/docs/mqtt-protocol.md](.claude/docs/mqtt-protocol.md)** — the MQTT service, message envelope, timeout/reconnect behavior, and how to wire up a new server-driven screen.
+- **[.claude/docs/state-management.md](.claude/docs/state-management.md)** — NgRx store slices and the RESPONSE-to-render data flow.
+- **[.claude/docs/architecture.md](.claude/docs/architecture.md)** — standalone components, routing conventions, path aliases, build/environment configs, i18n, SSR, lint conventions.
+- **[.claude/docs/dummy-data-simulator.md](.claude/docs/dummy-data-simulator.md)** — how the no-backend dev simulator works and how to extend it.

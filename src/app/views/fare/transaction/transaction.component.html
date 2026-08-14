@@ -1,0 +1,122 @@
+<ng-container>
+    <div class="transaction-page">
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <img src="/assets/images/icons/ticketing/ticket.svg" />
+                <a>{{ 'FARE_SYSTEM' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'TRANSACTION' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="transaction">
+                    @if (transaction.msgID === MsgID.FARE_TRANSACTION_SELECT) {
+                        <div class="dialog">
+                            <div class="dialog-header">
+                                <p>{{ 'VIEW_CARD_TRANSACTION' | translate: { cv: 'CV' + selectedCV } }}</p>
+                            </div>
+                            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+                            <div class="cf-btn-group">
+                                <button class="btn btn-cancel" (click)="handleButtonSound(); handleConfirm(false)">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </button>
+                                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm(true)">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'CONFIRM' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    } @else if (transaction.msgID === MsgID.FARE_TRANSACTION_CONFIRM) {
+                        <div class="dialog">
+                            <div class="dialog-header">
+                                <p [innerHTML]="'VIEW_CARD_TRANSACTIONS_IN_PROGRESS' | translate"></p>
+                            </div>
+                            <p class="confirm-msg">{{ 'PRESS_X_BTN_TO_CANCEL' | translate }}</p>
+                            <div class="cf-btn-group">
+                                <button class="btn btn-cancel" (click)="handleButtonSound(); handleStopTransaction()">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    } @else if (
+                        transaction.msgID === MsgID.FARE_TRANSACTION_INFORMATION_TYPE_1 ||
+                        transaction.msgID === MsgID.FARE_TRANSACTION_INFORMATION_TYPE_2
+                    ) {
+                        @if (transaction.status === ResponseStatus.SUCCESS) {
+                            <ng-container>
+                                <div class="back-button" (click)="handleButtonSound(); backToCVScreen()">{{ 'BACK' | translate }}</div>
+                                @if (transaction.cardValue) {
+                                    <h2 class="title">{{ 'CARD_VALUE' | translate }} = ${{ transaction.cardValue }}</h2>
+                                } @else {
+                                    <h2 class="title">{{ 'CARD_TRANSACTION_HISTORY' | translate }}</h2>
+                                }
+                                
+                                <div class="transaction-list">
+                                    <div class="scrollbar">
+                                        <app-scrollbar>
+                                            <ul>
+                                                @if (transaction.message || !transaction.transactions?.length) {
+                                                    <li class="row">
+                                                        <div class="left">
+                                                            <p class="date">
+                                                                {{ (transaction.message || 'NO_RECORD') | translate }}
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                } @else {
+                                                    @for (transaction of transaction.transactions; track transaction) {
+                                                        <li class="row">
+                                                            <div class="left">
+                                                                <p class="date">
+                                                                    {{ transaction.date | date: 'yyyy-MM-dd' }}
+                                                                </p>
+                                                                <p class="time">{{ transaction.date | date: 'HH:mm' }}</p>
+                                                            </div>
+                                                            <div class="right">
+                                                                <p class="value">
+                                                                    {{ formatValue(transaction.value) | translate }}
+                                                                </p>
+                                                            </div>
+                                                        </li>
+                                                    }
+                                                }
+                                            </ul>
+                                        </app-scrollbar>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        } @else if (transaction.status === ResponseStatus.ERROR) {
+                            <common-pop-up
+                                [type]="'error'"
+                                [title]="'CARD_ERROR' | translate"
+                                [message]="transaction.message || ''"
+                                [fullScreen]="true"
+                                [disableSound]="true"
+                                [isOk]="true"
+                                (onOk)="backToProgressScreen()"
+                            >
+                            </common-pop-up>
+                        }
+                    } @else {
+                        <ng-container>
+                            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+                            <div>
+                                <h2 class="title">{{ 'SELECT_CV' | translate }}</h2>
+                                <div class="content">
+                                    <div class="btn-group">
+                                        @for (cv of transaction.cvList; track cv) {
+                                            <button class="button" (click)="handleButtonSound(); handleSelectCV(cv)">
+                                                <div class="text">{{ 'CV_COUNT' | translate: { count: cv } }}</div>
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

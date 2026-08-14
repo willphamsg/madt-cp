@@ -1,0 +1,241 @@
+<div class="bus-stop-page">
+    @if (!displayFareBusStop && !displayCfmBusStopFare) {
+        <div class="info">
+            <div class="detail">
+                <div class="information">
+                    <div class="info-items">
+                        <div class="number">
+                            {{ currentUserIfo?.busServiceNum }}{{ currentUserIfo?.variantName || '' }}
+                        </div>
+                    </div>
+                    <div class="info-route">
+                        <div class="plate-number">
+                            {{ 'PLATE_NUMBER' | translate }}:
+                            <span class="number">{{ currentUserIfo?.plateNum }}</span>
+                        </div>
+                        <div class="route">
+                            <!-- <div class="label-data">
+              SPID: <span class="data">{{ currentUserIfo?.spid }}</span>
+            </div> -->
+                            <div class="label-data">
+                                {{ 'DIR' | translate }}: <span class="data">{{ currentUserIfo?.dir }}</span>
+                                @if (currentUserIfo?.offRoute) {
+                                    <div class="off-route">
+                                        <img src="/assets/images/icons/main/off-route.svg" alt="Bus Occupancy" />
+                                    </div>
+                                }
+                            </div>
+                            <!-- <div class="label-data">
+            KM: <span class="data">{{ currentUserIfo?.km }}</span>
+          </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (deviation?.busBehindOccupancy || deviation?.busBehindTime) {
+                <div class="next-bus-info-wrapper">
+                    <div class="next-bus-info">
+                        @if (
+                            !!deviation?.busBehindOccupancy && [1, 2, 3].includes(deviation?.busBehindOccupancy || 0)
+                        ) {
+                            <img
+                                src="/assets/images/icons/main/{{ deviation?.busBehindOccupancy }}.svg"
+                                alt="Bus Occupancy"
+                            />
+                        } @else {
+                            <img src="/assets/images/icons/main/load-unknown-icon.svg" alt="Bus Occupancy" />
+                        }
+                        <img src="/assets/images/icons/main/arrow-left-icon.svg" />
+                        <!-- <h1>{{ convertSecondsToMinutes(deviation?.busBehindTime || 0) }}’</h1> -->
+                        <h1>{{ deviation?.busBehindTime || 0 }}’</h1>
+                    </div>
+                </div>
+            }
+            @if (deviation) {
+                <div class="headway" [ngStyle]="{ 'background-color': deviation.color }">
+                    <div
+                        [ngClass]="{
+                            'headway-cont': deviation.isHeadway,
+                            'time-table-cont': !deviation.isHeadway
+                        }"
+                    >
+                        <div class="label-headway a">{{ deviation.currentBlock }}</div>
+                        <div class="icon b">
+                            <div class="bar-cont-wrapper bar-cont">
+                                @for (item of headwayBars; track item; let idx = $index) {
+                                    <div
+                                        [ngStyle]="{
+                                            'background-color': barCounts.includes(item) ? deviation.color : ''
+                                        }"
+                                    ></div>
+                                }
+                            </div>
+                        </div>
+                        <div class="time c">{{ deviation.minSec }}</div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="group">
+            <div class="bus-stop-list">
+                <app-scrollbar [isScrollTop]="backToTop">
+                    @if (allBusStopList.length === 0) {
+                        <div>
+                            @for (item of [0, 1, 3]; track item; let idx = $index) {
+                                <div class="indicator">
+                                    <div class="matd-indicatior loading"></div>
+                                </div>
+                            }
+                        </div>
+                    } @else {
+                        @for (item of allBusStopList; track item; let idx = $index) {
+                            @if (busStopList$) {
+                                <div
+                                    id="{{ item.Busid }}"
+                                    [class]="{
+                                        indicator: true,
+                                        now: currentNowNext[0] === item?.Busid
+                                    }"
+                                    #indicatorDiv
+                                >
+                                    <!-- <div *ngIf="currentNowNext.includes(item.Busid)" class="left">
+              {{
+              currentNowNext[0] === item?.Busid
+              ? 'NOW'
+              : currentNowNext[1] === item?.Busid
+              ? 'NEXT'
+              : ''
+              }}
+            </div> -->
+                                    <div class="matd-indicatior">
+                                        <div class="name">{{ item.Name }}</div>
+                                        <div class="time">
+                                            @if (item?.aitp) {
+                                                <img
+                                                    src="/assets/images/icons/main/watch.svg"
+                                                    alt=""
+                                                    class="watching"
+                                                />
+                                            }
+                                            {{ item.time }}
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </app-scrollbar>
+                @if (allBusStopList.length > 3) {
+                    <img
+                        src="/assets/images/back-to-top.png"
+                        class="back-to-top"
+                        alt=""
+                        (click)="handleButtonSound(); triggerScrollTop()"
+                    />
+                }
+            </div>
+            <div class="indicator destination" [class.full-width]="allBusStopList.length <= 3">
+                @if (destination?.Name) {
+                    <div class="left">{{ 'DESTINATION' | translate }}</div>
+                    <div class="matd-indicatior">
+                        <div class="name">{{ destination?.Name }}</div>
+                        <div class="time">{{ destination?.time }}</div>
+                    </div>
+                }
+            </div>
+            <div
+                class="indicator bus-stop"
+                (click)="handleButtonSound(); handleDisplayFareBusStop()"
+                [ngClass]="{ 'mis-match': fareBusStop?.misMatch, 'full-width': allBusStopList.length <= 3 }"
+            >
+                <div class="left">
+                    <img src="/assets/images/icons/main/fare-bus-stop.svg" alt="" />
+                    <div>{{ 'FARE_BUS_STOP' | translate }}</div>
+                </div>
+                <div class="matd-indicatior">
+                    <div class="name">{{ fareBusStop?.Busid }} - {{ fareBusStop?.Name }}</div>
+                    <!-- <div class="time">KM {{ fareBusStop?.km }}</div> -->
+                </div>
+                <div class="right">
+                    @if (fareBusStop?.autoBls) {
+                        <div class="auto">
+                            <img src="/assets/images/icons/main/madt-icon-tickstatus.svg" alt="auto" />
+                            {{ 'AUTO' | translate }}
+                        </div>
+                    }
+                    @if (fareBusStop?.manualBls) {
+                        <div class="manual">
+                            <img src="/assets/images/icons/main/madt-icondefault-alert.svg" alt="manual" />
+                            {{ 'MANUAL' | translate }}
+                        </div>
+                    }
+                    <div class="km">KM {{ formatKm(fareBusStop?.km || '') }}</div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (displayFareBusStop) {
+        <div class="bus-stop-fare-page">
+            <div class="page-header full-row">
+                <div class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </div>
+            </div>
+            <div class="bus-stop-fare">
+                <div class="bus-stop-fare-header">{{ 'SELECT_FARE_BUS_STOP' | translate }}</div>
+                <div class="scrollbar">
+                    <app-scrollbar>
+                        @for (item of fareBusStopList$ | async; track item; let idx = $index) {
+                            <div
+                                class="indicator bus-stop-fare-item"
+                                [ngClass]="{
+                                    active: fareBusStop?.idx === idx,
+                                    selected: item?.Busid === selectFareBusStop
+                                }"
+                                (click)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
+                            >
+                                <div class="left">{{ item.Busid }}</div>
+                                <div class="matd-indicatior">
+                                    <div class="name">
+                                        {{ item.Name }}
+                                    </div>
+                                    <div class="time">KM {{ formatKm(item?.km || '') }}</div>
+                                </div>
+                            </div>
+                        }
+                    </app-scrollbar>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (displayCfmBusStopFare) {
+        <div class="confirm-bus-stop-fare-container">
+            <!-- <div class="page-header full-row">
+    <div class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
+      <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+      <span>{{ 'CLOSE' | translate }}</span>
+    </div>
+  </div> -->
+            <div class="confirm">
+                <div
+                    class="confirm-header"
+                    [innerHTML]="'CHANGE_FARE_BUS_TO' | translate: { busStopName: selectFareBusStopName }"
+                ></div>
+                <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+                <div class="cf-btn-group">
+                    <button class="btn btn-cancel" (click)="handleButtonSound(); handleCloseBusStopFare()">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </button>
+                    <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmBusStopFare(true)">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'CONFIRM' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

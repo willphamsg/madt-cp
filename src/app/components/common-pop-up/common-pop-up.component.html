@@ -1,0 +1,39 @@
+<div class="pop-up" [ngClass]="{ 'full-screen': fullScreen, 'override-all': overrideAll }">
+    <div class="pop-up-wrapper">
+        @if (type === 'success') {
+            <img src="/assets/images/svg/big-success.svg" alt="" />
+        } @else if (type === 'error') {
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+        } @else if (type === 'warning') {
+            <img src="/assets/images/svg/big-warning.svg" alt="" />
+        }
+
+        @if (title) {
+            <h3 class="title" [innerHTML]="title | translate"></h3>
+        }
+        @if (message) {
+            <div class="content" [innerHTML]="message | translate"></div>
+        }
+
+        <div class="btn-group">
+            @if (isCancel) {
+                <button [disabled]="disabled" class="btn btn-cancel" (click)="handleButtonSound(); handleCancel()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </button>
+            }
+            @if (isConfirm) {
+                <button [disabled]="disabled" class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </button>
+            }
+            @if (isOk) {
+                <button class="btn btn-ok" (click)="handleButtonSound(); handleOk()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OK' | translate }}</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>

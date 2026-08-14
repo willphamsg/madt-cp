@@ -1,0 +1,191 @@
+@use 'variables' as *;
+
+.view-parameter-page {
+    text-align: center;
+    height: 100%;
+    margin-right: -20px;
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: calc(100% - 28px) !important;
+        height: 16px;
+        background-color: $madt-bg-dark-1;
+        top: -16px;
+        left: 0;
+        z-index: 9999;
+    }
+
+    .loading {
+        @include flex-center;
+        flex-direction: column;
+        height: 100%;
+
+        > div {
+            font-size: 40px;
+            font-weight: $font-weight-bold;
+            margin-top: 20px;
+            @include dot-loading;
+        }
+
+        .loader {
+            @include spinner;
+        }
+    }
+
+    .error {
+        @include flex-center;
+        flex-direction: column;
+        height: 100%;
+
+        .title {
+            margin-bottom: 12px;
+            margin-top: 8px;
+        }
+
+        .content {
+            margin: 0 auto;
+            width: 700px;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            @include flex-center;
+            min-height: 80px;
+            padding: 0 25px;
+            border-radius: 5px;
+            transition: 0.2s ease-in-out 0s;
+            min-width: 145px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+
+            span {
+                font-size: 22px;
+                font-weight: $font-weight-bold;
+                padding-left: 6px;
+                color: $white;
+            }
+
+            &-confirm,
+            &-ok {
+                background-color: $madt-bg-light-1;
+            }
+        }
+    }
+
+    ng-scrollbar {
+        @include scrollbar;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+
+    .title {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .table-container {
+        overflow: hidden;
+        position: relative;
+        height: 100%;
+    }
+
+    .fake-table {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        width: calc(100% - 28px) !important;
+    }
+
+    .real-table {
+        th {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+    }
+
+    .table {
+        width: 100%;
+
+        &-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+
+            img {
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .desc {
+                transform: rotate(180deg);
+            }
+        }
+
+        th {
+            border-right: 1px solid $madt-bg-dark-2;
+            background-color: $black;
+            position: sticky;
+            top: 0;
+            z-index: 100000;
+
+            &:first-child {
+                width: 40%;
+            }
+        }
+
+        th,
+        tr {
+            font-size: 28px;
+            text-align: left;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            font-weight: $font-weight-bold;
+        }
+
+        td {
+            padding: 15px;
+            border-left: 1px solid $madt-bg-dark-2;
+        }
+
+        tr:nth-child(even) > td {
+            background-color: $madt-bg-dark-2;
+        }
+
+        tr:nth-child(odd) > td {
+            background-color: $madt-bg-dark-3;
+        }
+    }
+}

@@ -1,0 +1,36 @@
+@use 'variables' as *;
+
+@mixin lta-fare-layout-theme($light-theme: false) {
+    @if $light-theme {
+        .maintenance-fare-layout {
+            background: #e9e9e9 !important;
+
+            .layout {
+                background-color: #e9e9e9 !important;
+            }
+
+            .madt-main {
+                .menu {
+                    background-color: $white !important;
+                }
+
+                .menu-item {
+                    color: $black !important;
+
+                    &.active {
+                        color: $white !important;
+                        background-color: $madt-bg-light-1;
+                    }
+                }
+
+                .menu-direction {
+                    background-color: $madt-bg-light-1 !important;
+                }
+            }
+
+            .madt-content {
+                background-color: #f2f2f2;
+            }
+        }
+    }
+}

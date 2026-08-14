@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-check-test-printer-theme($light-theme: false) {
+    @if $light-theme {
+        .test-print-page {
+            color: $black;
+        }
+    }
+}

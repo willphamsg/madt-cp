@@ -1,0 +1,57 @@
+<div class="lock-container">
+    <div class="lta-full-screen">
+        <div class="lta-wrapper">
+            @if (lockScreen.msgID === MsgID.MANUAL_LOGIN_PIN || lockScreen.msgID === MsgID.MANUAL_LOGIN_PIN2) {
+                @if (lockScreen.message === 'PIN_ERROR_LOGIN_TERMINATE') {
+                    <div class="termination" [appNotificationSound]="true">
+                        <img src="/assets/images/svg/big-error.svg" alt="" />
+                        <div class="title">{{ 'LOGON_TERMINATED' | translate }}</div>
+                        <div class="content">{{ 'TOO_MANY_PIN_TRIES' | translate }}</div>
+                    </div>
+                } @else {
+                    <div class="lta-unlock">
+                        <!-- <div appButtonSound class="back-button" (click)="handleButtonSound(); handleBack()">Back</div> -->
+                        <div class="unlock-group">
+                            <h2 class="title">{{ 'ENTER_PIN_TO_UNLOCK' | translate }}</h2>
+                            <div class="input-group">
+                                <input
+                                    id="inputField"
+                                    type="password"
+                                    [value]="pinValue"
+                                    [class.hasError]="lockScreen.message"
+                                />
+                                @if (lockScreen.message || pinError) {
+                                    <p class="error">
+                                        {{ lockScreen.message || pinError | translate }}
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event)"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                }
+            } @else {
+                @if (topic.toLocaleLowerCase().includes('maintab')) {
+                    <div class="lta-logo"></div>
+                    <h3 class="title">{{ 'LOCKED' | translate }}</h3>
+                    <div class="content" [innerHTML]="'CLICK_BTN_TO_UNLOCK' | translate"></div>
+                    <div class="btn-group">
+                        <button class="btn btn-confirm" (click)="handleButtonSound(); handleUnlock()">
+                            <img src="/assets/images/icons/main/lock.svg" alt="" />
+                            <span>{{ 'UNLOCK' | translate }}</span>
+                        </button>
+                    </div>
+                } @else {
+                    <div class="lta-logo"></div>
+                    <h3 class="title">{{ 'LOCKED' | translate }}</h3>
+                    <div class="content" [innerHTML]="'PLEASE_UNLOCK_FROM_MAIN_TAB' | translate"></div>
+                }
+            }
+        </div>
+    </div>
+</div>

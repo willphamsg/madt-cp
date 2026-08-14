@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+@mixin lta-inspector-ticket-theme($light-theme: false) {
+    @if $light-theme {
+        .inspector-ticket {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+        }
+    }
+}

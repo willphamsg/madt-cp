@@ -1,0 +1,195 @@
+@use 'variables' as *;
+
+.transaction-page {
+    height: 100%;
+    padding: 5px 20px 15px 20px;
+    background-color: $madt-bg-black-1;
+
+    .layout {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: $madt-bg-dark-1;
+    }
+
+    .madt-breadcrumb {
+        @include breadcrumb;
+    }
+
+    .madt-content {
+        padding: 16px 20px;
+        height: calc(100% - 64px);
+    }
+
+    .transaction {
+        height: 100%;
+        text-align: center;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .back-button {
+            @include back-button;
+            font-weight: $font-weight-bold;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .title {
+            font-size: 32px;
+            font-weight: $font-weight-bold;
+            padding-bottom: 10px;
+        }
+
+        .content {
+            margin: 0 auto;
+            text-align: center;
+
+            .btn-group {
+                @include flex-center;
+                flex-wrap: wrap;
+                gap: 16px 12px;
+                margin-top: 30px;
+            }
+
+            .button {
+                @include dark-button;
+                font-size: 24px;
+                font-weight: $font-weight-semi-bold;
+                min-width: 296px;
+                min-height: 120px;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+            }
+        }
+
+        .dialog-title {
+            @include dialog-title;
+        }
+    }
+
+    .dialog {
+        height: 100%;
+        @include flex-center;
+        flex-direction: column;
+
+        .dialog-header {
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+
+            p {
+                text-align: center;
+                margin-bottom: 12px;
+            }
+        }
+
+        img.error-icon {
+            padding-bottom: 20px;
+        }
+
+        .confirm-msg {
+            // margin-top: 10px;
+            font-size: 28px;
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 80px;
+                padding: 0 25px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
+            }
+        }
+    }
+
+    .transaction-list {
+        flex: 1;
+        margin: auto;
+        margin-top: 20px;
+        overflow: hidden;
+        width: 75%;
+    }
+
+    .scrollbar {
+        height: 100%;
+    }
+
+    ng-scrollbar {
+        @include scrollbar;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+
+    ul {
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: $madt-bg-dark-2;
+            margin-bottom: 8px;
+
+            .left {
+                font-size: 20px;
+                text-align: left;
+                flex-grow: 1;
+                padding: 16px 12px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .right {
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 35%;
+                padding: 16px 12px;
+                border-left: 2px solid $madt-bg-dark-1;
+                color: $madt-bg-light-1;
+
+                .value {
+                    color: $white;
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
+    }
+}

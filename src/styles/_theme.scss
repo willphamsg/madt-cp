@@ -1,0 +1,255 @@
+@use '@angular/material' as mat;
+@use 'variables' as *;
+
+@include mat.elevation-classes();
+@include mat.app-background();
+
+// mat.$theme-ignore-duplication-warnings: true;
+
+// @import '../app/components//confirm-dialog/confirm-dialog.theme';
+// @import '../app/components//dialog/dialog.theme';
+// @import '../app/components/custom-keyboard/custom-keyboard.theme';
+
+// @import '../app/views/main/main-layout/main.theme';
+// @import '../app/components/layout/header/header.theme';
+// @import '../app//views/main/bus-stop/bus-stop-information.theme';
+// @import '../app/views/main/settings/settings.theme';
+// @import '../app/views/main/cash-payment/cash-payment.theme';
+// @import '../app/views/main/bus-stop-fare/bus-stop-fare.theme';
+// @import '../app/views/main/breakdown//breakdown.theme';
+// @import '../app/views/main/end-trip/end-trip.theme';
+// @import '../app/views/main/rear-door/rear-door.theme';
+// @import '../app/views/main/free/free.theme';
+// @import '../app/views/main/lock-screen/lock-screen.theme';
+
+// @import '../app/views//maintenance/maintenance-menu/maintenance-menu.theme';
+// @import '../app/views/maintenance/fare/layout/layout.theme';
+// @import '../app/views/maintenance/fare/view-parameter/view-parameter.theme';
+// @import '../app/views/maintenance/fare/fare-console/fare-console-table/fare-console-table.theme';
+// @import '../app/views/maintenance/fare/fare-console/deck-type/deck-type.theme';
+// @import '../app/views/maintenance/fare/fare-console/bls/bls.theme';
+// @import '../app/views/maintenance/fare/fare-console/time-setting/time-setting.theme';
+// @import '../app/views/maintenance/fare/fare-console/date-setting/date-setting.theme';
+// @import '../app/views/maintenance/fare/fare-console/bus-id/bus-id.theme';
+// @import '../app/views/maintenance/fare/fare-console/complimentary-day/complimentary-day.theme';
+// @import '../app/views/maintenance/fare/fare-console/delete-parameter/delete-parameter.theme';
+// @import '../app/views//maintenance/fare/calibrate-bls/calibrate-bls-menu/calibrate-bls-menu.theme';
+// @import '../app/views/maintenance/fare/calibrate-bls/calibrate-bls-manual-input/calibrate-bls-manual-input.theme';
+// @import '../app/views/maintenance/fare/calibrate-bls/calibrate-bls-calibration/calibrate-bls-calibration.theme';
+// @import '../app/views/maintenance/fare/version-info//version-info.theme';
+// @import '../app/views/maintenance/fare/bls-information/bls-information.theme';
+// @import '../app/views/maintenance/fare/test-print/test-print.theme';
+// @import '../app/views/maintenance/fare/redetect-crp/redetect-crp.theme';
+// @import '../app/views/maintenance/fare/redetect-cv/redetect-cv.theme';
+// @import '../app/views/maintenance/fare/redetect-fms/redetect-fms.theme';
+// @import '../app/views/maintenance/fare/load-parameter//load-parameter.theme';
+// @import '../app/views/maintenance/fare/save-transaction/save-transaction.theme';
+// @import '../app/views/maintenance/fare/print-bcv-result/print-bcv-result.theme';
+// @import '../app/views/maintenance/fare/display-audit/display-audit.theme';
+
+// @import '../app/views/fare/ticketing-menu/ticketing-menu.theme';
+// @import '../app/views/fare/top-up/top-up.theme';
+// @import '../app/views/fare/transaction/transaction.theme';
+
+// @import '../app/views/main/bus-operation/bus-operation-menu/bus-operation-menu.theme';
+// @import '../app/views/main/bus-operation/start-trip/start-trip.theme';
+// // @import '../app/views/bus-operation/end-shift/end-shift.theme';
+// // @import '../app/views/bus-operation/external-devices/external-devices.theme';
+
+$lta-white: (
+    500: white,
+    contrast: (
+        500: black,
+    ),
+);
+
+$lta-black: (
+    500: black,
+    contrast: (
+        500: white,
+    ),
+);
+
+$md-dark-primary: (
+    50: #f6e2e2,
+    100: #e8b7b7,
+    200: #d98888,
+    300: #c95858,
+    400: #be3434,
+    500: $madt-color-red,
+    600: #ab0e0e,
+    700: #a20c0c,
+    800: #990909,
+    900: #8a0505,
+    A100: #ffb7b7,
+    A200: #ff8484,
+    A400: #ff5151,
+    A700: #ff3737,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #ffffff,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #ffffff,
+    ),
+);
+$md-dark-secondary: (
+    50: #e1eff1,
+    100: #b3d7dd,
+    200: #80bdc6,
+    300: #4da2af,
+    400: #278e9e,
+    500: #017a8d,
+    600: #017285,
+    700: #01677a,
+    800: #015d70,
+    900: #004a5d,
+    A100: #8ee3ff,
+    A200: #5bd7ff,
+    A400: #28caff,
+    A700: #0ec4ff,
+    contrast: (
+        50: #000000,
+        100: #000000,
+        200: #000000,
+        300: #000000,
+        400: #ffffff,
+        500: #ffffff,
+        600: #ffffff,
+        700: #ffffff,
+        800: #ffffff,
+        900: #ffffff,
+        A100: #000000,
+        A200: #000000,
+        A400: #000000,
+        A700: #000000,
+    ),
+);
+
+// @mixin lta-core-theme($light-theme) {
+//     // // Theming for lta components
+//     @include lta-dialog-theme($light-theme);
+//     @include lta-confirm-dialog-theme($light-theme);
+//     @include lta-custom-keyboard-theme($light-theme);
+
+//     @include lta-main-theme($light-theme);
+//     @include lta-header-theme($light-theme);
+//     @include lta-bus-stop-theme($light-theme);
+//     @include lta-settings-theme($light-theme);
+//     @include lta-cash-payment-theme($light-theme);
+//     @include lta-bus-stop-fare-theme($light-theme);
+//     @include lta-breakdown-theme($light-theme);
+//     @include lta-end-trip-theme($light-theme);
+//     @include lta-toggle-cv-theme($light-theme);
+//     @include lta-free-theme($light-theme);
+//     @include lta-lock-theme($light-theme);
+
+//     @include lta-maintenance-menu-theme($light-theme);
+//     @include lta-fare-layout-theme($light-theme);
+//     @include lta-view-parameter-theme($light-theme);
+//     @include lta-fare-console-table-theme($light-theme);
+//     @include lta-deck-type-theme($light-theme);
+//     @include lta-bls-theme($light-theme);
+//     @include lta-time-setting-theme($light-theme);
+//     @include lta-date-setting-theme($light-theme);
+//     @include lta-bus-id-theme($light-theme);
+//     @include lta-complimentary-day-theme($light-theme);
+//     @include lta-delete-parameter-theme($light-theme);
+//     @include lta-calibrate-bls-menu-theme($light-theme);
+//     @include lta-calibrate-bls-manual-input-theme($light-theme);
+//     @include lta-calibrate-bls-calibration-theme($light-theme);
+//     @include lta-version-info-theme($light-theme);
+//     @include lta-bls-information-theme($light-theme);
+//     @include lta-check-test-printer-theme($light-theme);
+//     @include lta-redetect-crp-theme($light-theme);
+//     @include lta-redetect-cv-theme($light-theme);
+//     @include lta-redetect-fms-theme($light-theme);
+//     @include lta-load-parameter-theme($light-theme);
+//     @include lta-save-transaction-theme($light-theme);
+//     @include lta-print-bcv-results-theme($light-theme);
+//     @include lta-display-audit-theme($light-theme);
+
+//     @include lta-ticketing-menu-theme($light-theme);
+//     @include lta-top-up-theme($light-theme);
+//     @include lta-transaction-theme($light-theme);
+//     // @include lta-device-operation-layout-theme($light-theme);
+//     // @include lta-cv-operation-menu-theme($light-theme);
+//     // @include lta-show-cv-status-theme($light-theme);
+//     // @include lta-set-cv-entry-exit-theme($light-theme);
+//     // @include lta-cv-mode-control-theme($light-theme);
+//     // @include lta-power-all-cv-on-theme($light-theme);
+//     // @include lta-power-all-cv-off-theme($light-theme);
+//     // @include lta-reset-all-cv-theme($light-theme);
+//     // @include lta-cv-power-control-theme($light-theme);
+//     // @include lta-manual-location-theme($light-theme);
+//     // @include lta-auto-location-theme($light-theme);
+//     // @include lta-inspector-ticket-theme($light-theme);
+//     // @include lta-daily-trip-log-theme($light-theme);
+//     // @include lta-test-receipt-theme($light-theme);
+//     // @include lta-printer-on-theme($light-theme);
+//     // @include lta-printer-off-theme($light-theme);
+//     // @include lta-printer-status-theme($light-theme);
+
+//     // @include lta-bus-operation-layout-theme($light-theme);
+//     // @include lta-bus-operation-menu-theme($light-theme);
+//     // @include lta-start-trip-theme($light-theme);
+//     // @include lta-end-shift-theme($light-theme);
+//     // @include lta-external-devices-theme($light-theme);
+// }
+
+// Angular Material typography
+$regular-font-family: "'Inter', sans-serif";
+$custom-typography-config: mat.m2-define-typography-config(
+    $font-family: $regular-font-family,
+);
+
+$dark-theme: mat.m2-define-dark-theme(
+    (
+        color: (
+            primary: mat.m2-define-palette($md-dark-primary),
+            accent: mat.m2-define-palette($md-dark-secondary, 500),
+        ),
+        // Only include `typography` and `density` in the default dark theme.
+        // typography: mat.define-typography-config(),
+        typography: $custom-typography-config,
+        density: 0,
+    )
+);
+
+// Apply the dark theme by default
+.dark-theme {
+    @include mat.elevation-classes();
+    @include mat.app-background();
+    @include mat.button-theme($dark-theme);
+    @include mat.all-component-themes($dark-theme);
+    // @include lta-core-theme(false);
+}
+
+$light-theme: mat.m2-define-light-theme(
+    (
+        color: (
+            primary: mat.m2-define-palette(mat.$m2-indigo-palette),
+            accent: mat.m2-define-palette(mat.$m2-pink-palette),
+        ),
+        // typography: mat.define-typography-config(),
+        typography: $custom-typography-config,
+        density: 0,
+    )
+);
+
+.light-theme {
+    @include mat.elevation-classes();
+    @include mat.app-background();
+    @include mat.button-color($light-theme);
+    @include mat.all-component-colors($light-theme);
+    // @include lta-core-theme(true);
+}

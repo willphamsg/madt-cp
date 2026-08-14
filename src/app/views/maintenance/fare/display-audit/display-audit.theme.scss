@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+@mixin lta-display-audit-theme($light-theme: false) {
+    @if $light-theme {
+        .display-audit-page {
+            color: $black;
+
+            .table {
+                th {
+                    border-right-color: #e5e5e5 !important;
+                }
+
+                tr:nth-child(odd) > th,
+                tr:nth-child(odd) > td {
+                    background-color: $white !important;
+                }
+
+                tr:nth-child(even) > th,
+                tr:nth-child(even) > td {
+                    background-color: #dedede !important;
+                }
+            }
+        }
+    }
+}

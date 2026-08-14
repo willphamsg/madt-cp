@@ -1,0 +1,45 @@
+@if (bootUpdata.error?.criticalError || bootUpdata.error?.error) {
+    <div class="error-wrapper">
+        <div>
+            <div>
+                <h2 class="text-bold">
+                    {{ 'CRITICAL_ERROR' | translate }}: {{ bootUpdata.error?.criticalError || '' | translate }} |
+                    {{ 'ERROR' | translate }}:
+                    {{ bootUpdata.error?.error || '' | translate }}
+                </h2>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="wrapper">
+    <div>
+        <h1 class="text-center text-bold">{{ 'VERSION_INFO' | translate }}</h1>
+        <table class="custom-table ver-table">
+            <tr>
+                <td>{{ 'SOFTWARE' | translate }}:</td>
+                <td>{{ bootUpdata.softwareVersion }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'OS_VERSION' | translate }}:</td>
+                <td>{{ bootUpdata.osVersion }}</td>
+            </tr>
+            <tr>
+                <td>{{ ('DATE' | translate).toUpperCase() }}:</td>
+                <td>{{ bootUpdata.releaseDate }}</td>
+            </tr>
+            <tr>
+                <td>{{ ('SN' | translate).toUpperCase() }}:</td>
+                <td>{{ bootUpdata.serialNumber }}</td>
+            </tr>
+            <tr>
+                <td>{{ ('SERVICE' | translate).toUpperCase() }}:</td>
+                <td>{{ bootUpdata.service }}</td>
+            </tr>
+            <tr>
+                <td>{{ ('BUS_ID' | translate).toUpperCase() }}:</td>
+                <td>{{ bootUpdata.busId }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

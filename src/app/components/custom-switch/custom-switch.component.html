@@ -1,0 +1,19 @@
+<label class="switch">
+    <input
+        type="checkbox"
+        id="toggleSwitch"
+        (change)="handleChangeSwitch($event)"
+        [checked]="checked"
+        [disabled]="disabled"
+    />
+    <span class="slider">
+        @if (displayText) {
+            @if (innerChecked) {
+                <span class="on">{{ 'ON' | translate }}</span>
+            }
+            @if (!innerChecked) {
+                <span class="off">{{ 'OFF' | translate }}</span>
+            }
+        }
+    </span>
+</label>

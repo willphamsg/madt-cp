@@ -1,0 +1,94 @@
+<div class="version-info-page">
+    @if (isLoading || ResponseStatus.PROGRESS === versionInfo.status) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div>{{ 'LOADING' | translate }}</div>
+        </div>
+    } @else if (ResponseStatus.ERROR === versionInfo.status) {
+        <!-- <div class="error">
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+            <div class="title">Communication Error</div>
+            <div class="content">{{ versionInfo.message || '' }}</div>
+            <div class="btn-group">
+                <div class="btn btn-ok" (click)="handleButtonSound(); handleRetry()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>OK</span>
+                </div>
+            </div>
+        </div> -->
+
+        <common-pop-up
+            [type]="'error'"
+            [title]="versionInfo.message || 'COMMS_ERROR_FULL'"
+            [message]="'PRINTER_FUNCTIONS'"
+            [fullScreen]="true"
+            [disableSound]="true"
+            [isOk]="true"
+            (onOk)="handleRetry()"
+        >
+        </common-pop-up>
+    } @else {
+        <h3 class="title">{{ 'VERSION_INFO' | translate }}</h3>
+        <div class="table-container">
+            <table class="table fake-table">
+                <thead>
+                    <tr>
+                        <th style="width: 20%">
+                            <div class="table-header">
+                                <p>{{ 'DEVICE' | translate }}</p>
+                                <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <p>{{ 'SOFT_WARE' | translate }}</p>
+                                <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                            </div>
+                        </th>
+                        <th>
+                            <div class="table-header">
+                                <p>{{ 'READER_FIRMWARE' | translate }}</p>
+                                <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            <app-scrollbar>
+                <table class="table real-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%">
+                                <div class="table-header">
+                                    <p>{{ 'DEVICE' | translate }}</p>
+                                    <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-header">
+                                    <p>{{ 'SOFT_WARE' | translate }}</p>
+                                    <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-header">
+                                    <p>{{ 'READER_FIRMWARE' | translate }}</p>
+                                    <!-- <img src="/assets/images/icons/maintenance/sort-asc.svg" alt="" /> -->
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (versionInfo of versionInfo.versionInfoList; track versionInfo.device) {
+                            <tr>
+                                <td>{{ versionInfo.device }}</td>
+                                <td>{{ versionInfo.software | translate }}</td>
+                                <td>{{ versionInfo.readerFirmware | translate }}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </app-scrollbar>
+        </div>
+    }
+</div>

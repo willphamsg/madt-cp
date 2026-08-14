@@ -1,0 +1,79 @@
+<div class="printer-off">
+    @if (retentionTicket.msgID === MsgID.FARE_PO_PRINT_RTK_SELECT) {
+        <div class="dialog">
+            <div class="dialog-header">
+                <p>{{ 'DETECT_CARD_AT' | translate: { cv: 'CV' + selectedCV } }}</p>
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+            <div class="cf-btn-group">
+                <button class="btn btn-cancel" (click)="handleButtonSound(); handleDetectCart(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </button>
+                <button class="btn btn-confirm" (click)="handleButtonSound(); handleDetectCart(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </button>
+            </div>
+        </div>
+    } @else if (retentionTicket.msgID === MsgID.FARE_PO_PRINT_RTK_CONFIRM) {
+        @if (retentionTicket.status === ResponseStatus.PROGRESS) {
+            <div class="dialog">
+                <!-- <img class="error-icon" src="/assets/images/svg/big-error.svg" alt="" /> -->
+                <p class="confirm-msg">
+                    {{ 'CARD_DETECTION_IN_PROGRESS' | translate: { cv: 'CV' + selectedCV } }}
+                </p>
+
+                <div class="cf-btn-group">
+                    <button class="btn btn-cancel" (click)="handleButtonSound(); handleStopDetectCard()">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        } @else if (retentionTicket.status === ResponseStatus.SUCCESS) {
+            <div class="dialog">
+                <div class="dialog-header">
+                    <p>{{ 'CARD_DETAILS' | translate }}</p>
+                </div>
+                <ul>
+                    <li>
+                        <span>{{ 'CARD_ID' | translate }}</span>
+                        <span>{{ retentionTicket.cardDetail?.id }}</span>
+                    </li>
+                    <li>
+                        <span>{{ 'CARD_VALUE' | translate }}</span>
+                        <span>{{ retentionTicket.cardDetail?.value }}</span>
+                    </li>
+                </ul>
+                <p class="confirm-msg">{{ 'PLEASE_RETAIN_CARD' | translate }}</p>
+                <div class="cf-btn-group">
+                    <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelPrint()">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </button>
+                    <button class="btn btn-confirm" (click)="handleButtonSound(); handlePrintRetention()">
+                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                        <span>{{ 'RETENTION_TICKET' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        }
+    } @else {
+        <div>
+            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+            <h2 class="title">{{ 'PRINT_RETENTION_TICKET' | translate }}</h2>
+            <div class="content">
+                <div class="button-control">
+                    @for (cv of retentionTicket.cvList; track cv) {
+                        <button class="button" (click)="handleButtonSound(); handleSelectCV(cv)">
+                            <div class="icon-text">
+                                <div class="text">{{ 'CV_COUNT' | translate: { count: cv } }}</div>
+                            </div>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

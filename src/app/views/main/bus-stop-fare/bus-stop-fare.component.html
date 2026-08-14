@@ -1,0 +1,24 @@
+<div class="bus-stop-fare-container">
+    <!-- <div class="page-header">
+        <h2>Toggle Rear Doors</h2>
+    </div> -->
+    <div class="dialog">
+        <div class="dialog-header">
+            <span>{{ 'SELECTED_BUS_STOP' | translate }}</span>
+            <p>{{ (selectedBusStop$ | async)?.Name }}</p>
+        </div>
+        <p class="confirm-msg">
+            {{ 'CONFIRM_TO_SELECT_BUS_STOP' | translate }}
+        </p>
+        <div class="cf-btn-group">
+            <div class="btn btn-cancel" (click)="handleButtonSound(); handleUpdateBusStop('cancel')">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </div>
+            <div class="btn btn-confirm" (click)="handleButtonSound(); handleUpdateBusStop()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

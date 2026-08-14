@@ -1,0 +1,17 @@
+<ng-container>
+    <!-- <app-header screen="fare"></app-header> -->
+    <div class="ticketing-container">
+        <div class="ticketing-page">
+            <div class="button-control">
+                @for (button of buttons; track button) {
+                    <button class="button" (click)="handleButtonSound(); handleClick(button.btn)">
+                        <div class="icon-text">
+                            <img style="margin-bottom: 5px" src="{{ button.icon }}" alt="" />
+                            <div class="text">{{ button.title | translate }}</div>
+                        </div>
+                    </button>
+                }
+            </div>
+        </div>
+    </div>
+</ng-container>

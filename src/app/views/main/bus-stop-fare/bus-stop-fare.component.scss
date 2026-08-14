@@ -1,0 +1,91 @@
+@use 'variables' as *;
+
+.bus-stop-fare-container {
+    background-color: $madt-bg-dark-1;
+    padding: 20px 15px;
+    height: 100%;
+    border-radius: 4px;
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+
+        .button {
+            @include flex-center;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+        }
+
+        &.full-row {
+            justify-content: flex-end;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 18px;
+        }
+    }
+
+    .dialog {
+        margin-top: 105px;
+        @include flex-center;
+        flex-direction: column;
+
+        .dialog-header {
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+            text-align: center;
+
+            span {
+                font-size: 18px;
+                font-weight: 300;
+            }
+
+            p {
+                margin-bottom: 12px;
+            }
+        }
+
+        .confirm-msg {
+            margin-top: 40px;
+            font-size: 28px;
+            text-align: center;
+            width: 525px;
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 50px;
+                min-width: 160px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 20px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
+            }
+        }
+    }
+}

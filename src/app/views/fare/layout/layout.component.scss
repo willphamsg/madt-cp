@@ -1,0 +1,85 @@
+@use 'variables' as *;
+
+.fare-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    main {
+        position: relative;
+        flex: 1;
+        overflow: hidden;
+    }
+}
+
+// .tc-date-time {
+//     position: fixed;
+//     @include flex-center;
+//     font-size: 22px;
+//     z-index: 10000;
+//     right: 24px;
+//     top: 96px;
+//     width: 320px;
+
+//     &.down {
+//         top: 148px;
+//     }
+
+//     .date {
+//         padding: 5px 12px;
+//         @include flex-center;
+
+//         &:after {
+//             content: '';
+//             display: block;
+//             width: 2px;
+//             height: 28px;
+//             background-color: #99bad9;
+//             margin-left: 15px;
+//             opacity: 0.25;
+//         }
+//     }
+
+//     .time {
+//         flex: 1;
+//     }
+// }
+
+.loading {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    opacity: 0.98;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: $madt-bg-black-1;
+}
+
+.warning-box {
+    @include flex-center;
+    padding: 6px;
+    position: relative;
+    background: #88750a;
+    left: 20px;
+    width: calc(100% - 40px);
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+
+    .warning-icon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 400px;
+        @include flex-center;
+    }
+}
+
+.spid {
+    text-align: center;
+    font-size: 18px;
+    padding: 25px;
+}

@@ -1,0 +1,156 @@
+@if (fareConsoleSetting) {
+    <div class="fare-console">
+        @if (MsgID.DELETE_PARAMETER_NOTIFY === fareConsoleSetting.msgID) {
+            <common-pop-up
+                [type]="'info'"
+                [title]="'BUS_ID_HAS_BEEN_CHANGED'"
+                [message]="'DELETE_EXISTING_PARAMETER'"
+                [isConfirm]="true"
+                [isCancel]="true"
+                (onConfirm)="handleDeleteParameter()"
+                (onCancel)="handleClickBack()"
+            >
+            </common-pop-up>
+        } @else {
+            <div class="fare-console-list">
+                <div class="scrollbar">
+                    <app-scrollbar>
+                        <ul>
+                            <li class="row">
+                                <div class="left">{{ 'DECK_TYPE' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleNavigate('/deck-type')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.deckType.label
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.deckType.label) {
+                                        <p class="value">{{ fareConsoleSetting.deckType.label | translate }}</p>
+                                    } @else {
+                                        <p class="value">{{ 'SELECT' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="left">{{ 'FARE_BUS_STOP_MODE' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.fareBusStopMode
+                                    }"
+                                >
+                                    @if (!!fareConsoleSetting.fareBusStopMode) {
+                                        <p class="value">
+                                            {{
+                                                (fareConsoleSetting.fareBusStopMode === 1 ? 'MANUAL' : 'AUTO')
+                                                    | translate
+                                            }}
+                                        </p>
+                                    } @else {
+                                        <p class="value">{{ 'SELECT' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <!-- <li class="row">
+              <div class="left">{{ 'TIME' | translate }}</div>
+              <div
+                class="right"
+                (click)="handleButtonSound(); handleNavigate('/time-setting')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.time
+                                }"
+                >
+                @if (fareConsoleSetting.time) {
+                  <p class="value">{{ fareConsoleSetting.time }}</p>
+                } @else {
+                  <p class="value">{{ 'ENTER' | translate }}</p>
+                }
+                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+              </div>
+            </li> -->
+                            <li class="row">
+                                <div class="left">{{ 'DATE_TIME' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleNavigate('/date-setting')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.dateTime
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.dateTime) {
+                                        <p class="value">
+                                            {{ fareConsoleSetting.dateTime | date: 'dd/MM/yyyy HH:mm:ss' }}
+                                        </p>
+                                    } @else {
+                                        <p class="value">{{ 'ENTER' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="left">{{ 'BUS_ID' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleNavigate('/bus-id')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.busId
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.busId) {
+                                        <p class="value">{{ fareConsoleSetting.busId }}</p>
+                                    } @else {
+                                        <p class="value">{{ 'ENTER' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="left">{{ 'COMPLIMENTARY_DAYS' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleNavigate('/complimentary-day')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.complimentaryDays
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.complimentaryDays) {
+                                        <p class="value">{{ fareConsoleSetting.complimentaryDays }}</p>
+                                    } @else {
+                                        <p class="value">{{ 'ENTER' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <!-- <li class="row">
+            <div class="left" (click)="handleButtonSound(); handleNavigate('/delete-parameter')">
+              {{ 'DELETE_PARAMETERS' | translate }}
+            </div>
+          </li> -->
+                        </ul>
+                    </app-scrollbar>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button
+                    [disabled]="!validateFareConsoleForm()"
+                    class="btn btn-confirm"
+                    (click)="handleButtonSound(); handleConfirmFareConsole()"
+                >
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                </button>
+                <button
+                    class="btn btn-cancel pos-abs"
+                    (click)="handleButtonSound(); handleNavigate('/delete-parameter')"
+                >
+                    <img src="/assets/images/icons/main/trash.svg" alt="" />
+                    <span>{{ 'DELETE_PARAMETERS' | translate }}</span>
+                </button>
+            </div>
+        }
+    </div>
+}

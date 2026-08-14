@@ -1,0 +1,78 @@
+<div class="display-audit-page">
+    @if (isLoading || ResponseStatus.PROGRESS === auditRegistration.status) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div>{{ 'LOADING' | translate }}</div>
+        </div>
+    } @else if (ResponseStatus.ERROR === auditRegistration.status) {
+        <common-pop-up
+            [type]="'error'"
+            [title]="auditRegistration.message || 'ERROR'"
+            [fullScreen]="true"
+            [disableSound]="true"
+            [isOk]="true"
+        >
+        </common-pop-up>
+    } @else {
+        <h3 class="title">{{ 'AUDIT_REGISTERS' | translate }}</h3>
+        <div class="table-container">
+            <table class="table fake-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="table-header"></div>
+                        </th>
+                        <th style="width: 25%">
+                            <div class="table-header">GCM</div>
+                            <div class="spid">
+                                SPID:{{ auditRegistration.gcmSpidName ?? ''
+                                }}{{auditRegistration.gcmSpidNumber ? `(${auditRegistration.gcmSpidNumber})` : ''}}
+                            </div>
+                        </th>
+                        <th style="width: 25%">
+                            <div class="table-header">NGCM</div>
+                            <div class="spid">
+                                SPID:{{ auditRegistration.ngcmSpidName ?? ''
+                                }}{{auditRegistration.ngcmSpidNumber ? `(${auditRegistration.ngcmSpidNumber})` : ''}}
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            <app-scrollbar>
+                <table class="table real-table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="table-header"></div>
+                            </th>
+                            <th style="width: 25%">
+                                <div class="table-header">GCM</div>
+                                <div class="spid">
+                                    SPID:{{ auditRegistration.gcmSpidName ?? ''
+                                    }}{{auditRegistration.gcmSpidNumber ? `(${auditRegistration.gcmSpidNumber})` : ''}}
+                                </div>
+                            </th>
+                            <th style="width: 25%">
+                                <div class="table-header">NGCM</div>
+                                <div class="spid">
+                                    SPID:{{ auditRegistration.ngcmSpidName ?? ''
+                                    }}{{auditRegistration.ngcmSpidNumber ? `(${auditRegistration.ngcmSpidNumber})` : ''}}
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (audit of auditRegistration.auditRegisterList; track audit.name) {
+                            <tr>
+                                <td>{{ audit.name | translate }}</td>
+                                <td>{{ audit.gcmValue }}</td>
+                                <td>{{ audit.ngcmValue }}</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </app-scrollbar>
+        </div>
+    }
+</div>

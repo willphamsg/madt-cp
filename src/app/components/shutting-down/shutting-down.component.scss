@@ -1,0 +1,44 @@
+@use 'variables' as *;
+
+.conneting-warpper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+}
+
+.shutting-down-wrapper {
+    max-width: 670px;
+    width: 100%;
+    max-height: 355px;
+    height: 100%;
+    background-color: $madt-bg-dark-3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo {
+    margin-bottom: 3.5rem;
+    max-width: 275px;
+    width: 100%;
+    height: auto;
+}
+
+.mt {
+    margin-top: 2rem;
+}
+
+h2 {
+    padding: 0 40px;
+}

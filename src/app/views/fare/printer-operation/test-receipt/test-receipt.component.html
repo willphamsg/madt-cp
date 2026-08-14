@@ -1,0 +1,18 @@
+<div class="test-receipt">
+    <div class="back-button" (click)="handleButtonSound(); goBack()">Back</div>
+    <div>
+        <h2 class="title">Print Test Receipt</h2>
+        <div class="content">
+            <p class="label">
+                Press the “Print Test Receipt” <br />
+                button to Print.
+            </p>
+            <div class="btn-group">
+                <button class="button" (click)="handleButtonSound(); handlePrint()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <div class="text">Print Test Receipt</div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

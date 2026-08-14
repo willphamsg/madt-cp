@@ -1,0 +1,92 @@
+<div class="calibrate-bls-calibration-page">
+    @if (blsCalibration.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_START) {
+        @if (blsCalibration.status === ResponseStatus.PROGRESS) {
+            <div>
+                <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">{{ 'BACK' | translate }}</div>
+                <h2 class="title">{{ 'BLS_CALIBRATION' | translate }}</h2>
+                <div class="content">
+                    <p>{{ 'PRESS_STOP_TO_FINISH' | translate }}</p>
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleButtonSound(); handleStop()">
+                            <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                            <span class="text">{{ 'STOP' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        } @else if (blsCalibration.status === ResponseStatus.SUCCESS) {
+            <!-- <common-pop-up
+                [type]="'info'"
+                [title]="'SEND_COMMAND_TO_BLS'"
+                [message]="'BLS_IS_DISABLED'"
+                [disableSound]="true"
+                [isOk]="true"
+                (onOk)="handleSendCommandToBls()"
+            >
+            </common-pop-up> -->
+
+            <div class="confirmation">
+                <h2 class="title">{{ 'SEND_COMMAND_TO_BLS' | translate }}</h2>
+                <div class="content">
+                    <div class="confirm">{{ 'BLS_IS_DISABLED' | translate }}</div>
+                    <div class="btn-group">
+                        <div class="btn btn-confirm" (click)="handleButtonSound(); handleSendCommandToBls()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'OK' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    } @else if (
+        blsCalibration.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_SEND_CMD &&
+        blsCalibration.status === ResponseStatus.SUCCESS
+    ) {
+        <div class="enter-distance">
+            <h2 class="title">{{ 'ENTER_DISTANCE_IN_METERS' | translate }}</h2>
+            <div class="content">
+                <div class="input-group">
+                    <input id="inputField" [class.hasError]="false" [value]="inputValue" />
+                </div>
+            </div>
+            <div class="keyboard">
+                <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+            </div>
+        </div>
+    } @else if (blsCalibration.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_DISTANCE) {
+        <common-pop-up
+            [type]="'info'"
+            [title]="('CONFIRM_DISTANCE_ENTERED' | translate) + ':\n' + inputValue + 'm'"
+            [message]="'PRESS_THE_BTN_TO_PROCEED'"
+            [disableSound]="true"
+            [isConfirm]="true"
+            [isCancel]="true"
+            (onConfirm)="handleConfirmDistance(true)"
+            (onCancel)="handleConfirmDistance(false)"
+        >
+        </common-pop-up>
+    } @else if (blsCalibration.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_RESULT) {
+        <common-pop-up
+            [type]="'info'"
+            [title]="('CALCULATED_CALIBRATION_FACTOR' | translate) + ':\n' + blsCalibration.calculateFactor"
+            [disableSound]="true"
+            [isOk]="true"
+            (onOk)="handleCloseResult()"
+        >
+        </common-pop-up>
+    } @else {
+        <div>
+            <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">{{ 'BACK' | translate }}</div>
+            <h2 class="title">{{ 'BLS_CALIBRATION' | translate }}</h2>
+            <div class="content">
+                <p>{{ 'PRESS_START_TO_BEGIN' | translate }}</p>
+                <div class="btn-group">
+                    <button class="btn btn-confirm" (click)="handleButtonSound(); handleStart()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span class="text">{{ 'START' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

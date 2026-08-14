@@ -1,0 +1,89 @@
+@use 'variables' as *;
+
+:host {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+}
+
+.app-scrollbar {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    width: 100%;
+    gap: 4px;
+}
+
+.app-scrollbar-viewport {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    // Scrolling here is driven manually from pointer events (see the component), not the
+    // browser's native touch panning, since an ancestor sets `touch-action: none` app-wide and a
+    // descendant can't widen that back. `none` also stops native touch handling from fighting
+    // with the manual scrollTop updates.
+    touch-action: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+}
+
+.scrollbar-controls {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 20px;
+    border-radius: 6px;
+    overflow: hidden;
+
+    &.hidden {
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+.scrollbar-track {
+    @include scrollbar-track;
+    position: relative;
+    flex: 1;
+    min-height: 20px;
+}
+
+.scrollbar-thumb {
+    @include scrollbar-thumb;
+    touch-action: none;
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+.scrollbar-button {
+    @include scrollbar-button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.scrollbar-arrow {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 6px solid $white;
+}
+
+.scrollbar-button-down .scrollbar-arrow {
+    transform: rotate(180deg);
+}

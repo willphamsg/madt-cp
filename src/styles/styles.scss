@@ -1,0 +1,77 @@
+// @use '_theme' as theme;
+@use '@angular/material' as mat;
+@use 'variables' as vars;
+@use 'fonts';
+@use 'reset';
+@use 'scrollbar';
+@use 'typography';
+@use 'theme';
+
+@include mat.elevation-classes();
+@include mat.app-background();
+
+.cdk-overlay-pane {
+    background-color: white;
+}
+
+.link-button {
+    text-decoration: underline;
+    background-color: transparent;
+    color: white;
+    display: flex;
+    justify-content: center;
+    border: none;
+    align-items: center;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.text-error {
+    color: vars.$red;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.btn {
+    min-height: 80px;
+    padding: 0 20px;
+    border-radius: 5px;
+    transition: 0.2s ease-in-out 0s;
+    border: none !important;
+
+    &:active {
+        transform: scale(1.01);
+    }
+
+    &-cancel {
+        background-color: vars.$madt-color-red;
+    }
+
+    &-confirm {
+        background-color: vars.$madt-bg-light-1;
+    }
+
+    &:disabled {
+        background-color: vars.$color-charcoal-grey !important;
+        > * {
+            filter: brightness(0.8);
+        }
+    }
+}
+
+.mdc-slider__value-indicator-container {
+    .mdc-slider__value-indicator {
+        width: auto !important;
+        height: auto !important;
+        padding: 8px !important;
+        border-radius: 8px !important;
+    }
+
+    .mdc-slider__value-indicator-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 32px;
+        font-weight: vars.$font-weight-bold;
+        color: vars.$black;
+    }
+}

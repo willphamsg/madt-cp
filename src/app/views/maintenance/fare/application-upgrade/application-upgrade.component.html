@@ -1,0 +1,58 @@
+<div class="app-upgrade-page">
+    @if (isLoading) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div>{{ 'LOADING' | translate }}</div>
+        </div>
+    } @else if (ResponseStatus.PROGRESS === appUpgrade.status) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div [innerHTML]="'APPLICATION_REBOOT_AUTOMATICALLY' | translate"></div>
+        </div>
+    } @else if (ResponseStatus.ERROR === appUpgrade.status) {
+        <div class="error">
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+            <div class="title">{{ 'ERROR' | translate }}</div>
+            @if (appUpgrade.message) {
+                <div class="content">{{ appUpgrade.message | translate }}</div>
+            }
+            <div class="btn-group">
+                <div class="btn btn-ok">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OK' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    } @else if (ResponseStatus.SUCCESS === appUpgrade.status) {
+        <div class="error">
+            <img src="/assets/images/svg/big-success.svg" alt="" />
+            <div class="title">Upgrade Completed</div>
+        </div>
+    } @else if (appUpgrade.upgradeStatus) {
+        <div class="dialog">
+            <div class="dialog-header">
+                <p [innerHTML]="'NEW_VERSION_IS_AVAILABLE' | translate"></p>
+            </div>
+            <p class="confirm-content">{{ 'NEW_VERSION' | translate }}: {{ appUpgrade.version || '' }}</p>
+            <p class="confirm-msg">{{ 'PRESS_BTN_TO_UPGRADE' | translate }}</p>
+            <div class="cf-btn-group">
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleUpgrade()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'UPGRADE' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <div class="dialog">
+            <div class="dialog-header">
+                <p [innerHTML]="'NO_NEW_VERSION' | translate"></p>
+            </div>
+            <!-- <div class="cf-btn-group">
+      <div class="btn btn-ok" (click)="handleButtonSound(); backToFare()">
+        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+        <span>OK</span>
+      </div>
+    </div> -->
+        </div>
+    }
+</div>

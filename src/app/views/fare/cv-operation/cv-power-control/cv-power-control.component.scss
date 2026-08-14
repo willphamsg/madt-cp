@@ -1,0 +1,54 @@
+@use 'variables' as *;
+
+:host {
+    position: relative;
+}
+
+.cv-power-control {
+    height: 100%;
+    text-align: center;
+    position: relative;
+
+    .back-button {
+        @include back-button;
+        font-weight: $font-weight-bold;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .title {
+        font-weight: $font-weight-bold;
+        color: $white;
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 560px;
+        text-align: center;
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: $madt-bg-dark-2;
+
+            .label {
+                font-size: 28px;
+                font-weight: $font-weight-regular;
+                color: $white;
+
+                span {
+                    font-style: italic;
+                    color: #ff7777;
+
+                    &.active {
+                        color: #92ce3d;
+                    }
+                }
+            }
+        }
+    }
+}

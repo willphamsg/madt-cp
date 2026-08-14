@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+@mixin lta-ticketing-menu-theme($light-theme: false) {
+    @if $light-theme {
+        .ticketing-container {
+            background-color: #e9e9e9 !important;
+
+            .button {
+                color: $black !important;
+                background: linear-gradient(to bottom right, #e5e5e5 18%, #e5e5e5 50%) !important;
+                box-shadow: inset 0 0 10px #ccc;
+
+                &::before {
+                    background: $white !important;
+                    box-shadow: inset 0 0 10px #ccc;
+                }
+            }
+        }
+    }
+}

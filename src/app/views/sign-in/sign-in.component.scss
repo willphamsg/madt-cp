@@ -1,0 +1,19 @@
+.welcome-wrapper {
+    // background: url('/assets/images/svg/welcome-bg.svg') no-repeat;
+    // background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    background-color: #404040;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-message-cont {
+    background-color: white;
+    max-width: 487px;
+    min-height: 255px;
+    width: 100%;
+    padding: 15px 20px;
+    text-align: center;
+}

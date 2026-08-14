@@ -1,0 +1,16 @@
+<div class="disable-bls" [ngClass]="{ 'full-screen': fullScreen }" [appNotificationSound]="true">
+    <div class="disable-bls-wrapper">
+        <h3 class="title">{{ 'AUTO_DISABLE_BLS_MSG' | translate }}</h3>
+        <div class="content">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</div>
+        <div class="btn-group">
+            <button [disabled]="disabled" class="btn btn-cancel" (click)="handleButtonSound(); handleCancel()">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </button>
+            <button [disabled]="disabled" class="btn btn-ok" (click)="handleButtonSound(); handleConfirm()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </button>
+        </div>
+    </div>
+</div>

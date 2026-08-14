@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-redetect-fms-theme($light-theme: false) {
+    @if $light-theme {
+        .redetect-fms-page {
+            color: $black;
+        }
+    }
+}

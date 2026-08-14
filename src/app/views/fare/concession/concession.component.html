@@ -1,0 +1,67 @@
+<div class="concession">
+    <div class="layout">
+        <div class="madt-breadcrumb">
+            <img src="/assets/images/icons/ticketing/ticket.svg" />
+            <a>{{ 'FARE_SYSTEM' | translate }}</a>
+            <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+            <p>{{ (cv === 'CV1' ? 'CONCESSION_CV1' : 'CONCESSION_CV2') | translate }}</p>
+        </div>
+        <div class="madt-content">
+            @if (concession.msgID === MsgID.FARE_CONCESSION_SUBMIT) {
+                <div class="dialog">
+                    <div class="dialog-header">
+                        <p [innerHTML]="'VERIFYING_CONCESSION_CARD' | translate: { cv: cv }"></p>
+                    </div>
+                    <p class="confirm-msg">{{ 'PRESS_X_BTN_TO_CANCEL' | translate }}</p>
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleButtonSound(); handleStopConcession()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            } @else if (concession.msgID === MsgID.FARE_CONCESSION_SUBMIT_NOTIFY) {
+                @if (ResponseStatus.SUCCESS === concession.status) {
+                    <common-pop-up
+                        [type]="'success'"
+                        [title]="concession.title ?? 'VALID_CARD'"
+                        [message]="concession.message"
+                        [fullScreen]="true"
+                        [disableSound]="true"
+                        [isOk]="true"
+                        (onOk)="backToFare()"
+                    >
+                    </common-pop-up>
+                } @else if (ResponseStatus.ERROR === concession.status) {
+                    <common-pop-up
+                        [type]="'error'"
+                        [title]="concession.message"
+                        [message]="'USE_ANOTHER_CARD_OR_PAY_CASH'"
+                        [fullScreen]="true"
+                        [disableSound]="true"
+                        [isOk]="true"
+                        (onOk)="backToProgressScreen()"
+                    >
+                    </common-pop-up>
+                }
+            } @else {
+                <div class="dialog">
+                    <div class="dialog-header">
+                        <p [innerHTML]="'VERIFY_CONCESSION_CARD' | translate: { cv: cv }"></p>
+                    </div>
+                    <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleButtonSound(); handleConcession()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </button>
+                        <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmConcession()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'CONFIRM' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

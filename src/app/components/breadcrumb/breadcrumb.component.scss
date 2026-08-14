@@ -1,0 +1,62 @@
+@use 'variables' as *;
+
+.madt-breadcrumb {
+    height: 64px;
+    padding: 0 20px;
+    background-color: $madt-bg-dark-2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 22px;
+    position: relative;
+    z-index: 20; //higher than the error pop-up
+
+    .page {
+        @include flex-center;
+        gap: 12px;
+        color: $white;
+
+        > * {
+            color: $white;
+
+            &:last-child {
+                font-weight: $font-weight-bold;
+            }
+        }
+    }
+}
+
+.tc-date-time {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 22px;
+    width: 400px;
+
+    .date {
+        padding: 5px 12px;
+        @include flex-center;
+
+        &:after {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 28px;
+            background-color: #99bad9;
+            margin-left: 20px;
+            opacity: 0.25;
+        }
+    }
+
+    .time {
+        width: 95px;
+        text-align: right;
+
+        @include flex-center;
+
+        span {
+            width: 29px;
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,69 @@
+@if (loading) {
+    <div class="loading"></div>
+} @else {
+    <div class="fare-layout">
+        <app-header
+            screen="fare"
+            (clickLock)="handleClickLock()"
+            (clickSettings)="displaySettingsPopUp = true"
+            [onlyDateTime]="isPublicScreen || displayLockScreen || bootUpCommissioning.show"
+            [isLoggedIn]="true"
+        ></app-header>
+        @if (displayWarning && isLandingPage) {
+            <div class="warning-box">
+                <div class="warning-icon">
+                    <img src="/assets/images/svg/bell.svg" />
+                </div>
+                <div class="warning-text">{{ 'BYPASS_BLACKLIST_IS_ACTIVE' | translate }}</div>
+            </div>
+        }
+        <main>
+            @if (isLandingPage && !!this.spid) {
+                <div class="spid">
+                    {{ 'SPID' | translate }}: <strong>{{ this.spid }}</strong>
+                </div>
+            }
+            <router-outlet></router-outlet>
+            @if (this.showPopUp) {
+                <common-pop-up
+                    [type]="this.showPopUp.type"
+                    [title]="this.showPopUp.title"
+                    [fullScreen]="true"
+                    [isOk]="true"
+                    (onOk)="closePopUpHandler()"
+                >
+                </common-pop-up>
+            }
+            @if (displaySettingsPopUp) {
+                <madt-setting
+                    [fullScreen]="true"
+                    (onClose)="displaySettingsPopUp = false"
+                    (onConfirmLanguage)="handleConfirmLanguage($event)"
+                    (onChangeAudioVolume)="handleChangeAudioVolume($event)"
+                ></madt-setting>
+            }
+
+            @if (displayLockPopUp) {
+                <common-pop-up
+                    [type]="'info'"
+                    title="SURE_WANT_TO_LOCK"
+                    message="PRESS_THE_BTN_TO_PROCEED"
+                    [fullScreen]="true"
+                    [isConfirm]="true"
+                    [isCancel]="true"
+                    (onConfirm)="handleConfirmLock(true)"
+                    (onCancel)="handleConfirmLock(false)"
+                ></common-pop-up>
+            }
+
+            @if (displayLockScreen) {
+                <lock-screen [topic]="topics.fareTab?.get || ''"></lock-screen>
+            }
+
+            
+            @if (bootUpCommissioning.show) {
+                <boot-up-commissioning [type]="bootUpCommissioning.title || ''"></boot-up-commissioning>
+            }
+        </main>
+    </div>
+}

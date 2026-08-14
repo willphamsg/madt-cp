@@ -1,0 +1,24 @@
+@use 'variables' as *;
+
+@mixin lta-fare-console-table-theme($light-theme: false) {
+    @if $light-theme {
+        .fare-console-page {
+            .row {
+                background-color: $white !important;
+
+                .left {
+                    color: $black;
+                }
+
+                .right {
+                    border-left-color: #e5e5e5 !important;
+                    color: $black !important;
+
+                    .value {
+                        color: $black !important;
+                    }
+                }
+            }
+        }
+    }
+}

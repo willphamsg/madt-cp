@@ -1,0 +1,80 @@
+{
+    "mqtt": {
+        "host": "broker.hivemq.com",
+        "protocol": "wss",
+        "port": "8884",
+        "keepalive": 30,
+        "path": "/mqtt",
+        "username": "",
+        "password": ""
+    },
+    "topics": {
+        "version": 1,
+        "mainTab": {
+            "get": "MADT/UpdateMainTab",
+            "response": "TC/UpdateMainTab",
+            "cv": {
+                "get": "MADT/UpdateMainTab/CVStatus",
+                "response": "TC/UpdateMainTab/CVStatus"
+            },
+            "fmsBusStop": {
+                "get": "MADT/UpdateMainTab/FMSBusStop",
+                "response": "TC/UpdateMainTab/FMSBusStop"
+            },
+            "fareBusStop": {
+                "get": "MADT/UpdateMainTab/FareBusStop",
+                "response": "TC/UpdateMainTab/FareBusStop"
+            },
+            "fareBusStopList": {
+                "get": "MADT/UpdateMainTab/FareBusStopList",
+                "response": "TC/UpdateMainTab/FareBusStopList"
+            },
+            "headWayTimeTable": {
+                "get": "MADT/UpdateMainTab/HeadwayTimeTable",
+                "response": "TC/UpdateMainTab/HeadwayTimeTable"
+            },
+            "currentServiceInfo": {
+                "get": "MADT/UpdateMainTab/CurrentServiceInfo",
+                "response": "TC/UpdateMainTab/CurrentServiceInfo"
+            }
+        },
+        "maintenance": {
+            "get": "MADT/UpdateMaintenanceTab",
+            "response": "TC/UpdateMaintenanceTab"
+        },
+        "fareTab": {
+            "get": "MADT/UpdateFareTab",
+            "response": "TC/UpdateFareTab"
+        },
+        "tcToAllTabs": "TC/UpdateAllTCTabs",
+        "madtToAllTabs": "MADT/UpdateAllTCTabs",
+        "statusBOLC": {
+            "get": "MADT/UpdateBOLCStatus",
+            "response": "TC/UpdateBOLCStatus"
+        },
+        "statusFMS": {
+            "get": "MADT/UpdateFMSStatus",
+            "response": "TC/UpdateFMSStatus"
+        },
+        "statusCRP": {
+            "get": "MADT/UpdateCRPStatus",
+            "response": "TC/UpdateCRPStatus"
+        },
+        "statusBTS": {
+            "get": "MADT/UpdateBTSStatus",
+            "response": "TC/UpdateBTSStatus"
+        },
+        "posnStatus": {
+            "get": "MADT/UpdatePosnStatus",
+            "response": "TC/UpdatePosnStatus"
+        },
+        "configStatus": {
+            "get": "MADT/UpdateConfigStatus",
+            "response": "TC/UpdateConfigStatus"
+        },
+        "messageValidation": {
+            "get": "MADT/ValidateMessageFormat",
+            "response": "TC/ValidateMessageFormat"
+        }
+    }
+}

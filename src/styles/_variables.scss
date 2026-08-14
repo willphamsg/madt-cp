@@ -1,0 +1,229 @@
+//========---------- Colors ----------========
+$initial: initial;
+
+// Colors
+$color-white: #fff;
+$color-black: #000;
+$color-yellow: #ffb000;
+$color-green: #61a600;
+$color-yellow-1: #fed000;
+$color-red-light: #ff7777;
+$color-charcoal-grey: #3e515b;
+
+$madt-bg-black-1: #00151a;
+$madt-bg-dark-1: #0e2a32;
+$madt-color-red: #c80000;
+$madt-color-teal: #00414e;
+$madt-color-green: #61a600;
+$madt-color-cement: #828282;
+$madt-bg-dark-2: #17333d;
+$madt-bg-dark-3: #0c242e;
+$madt-bg-charcoal: #4a5964;
+$madt-bg-charcoal-2: #000d10;
+$madt-bg-light-1: #017a8d;
+
+// Font weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semi-bold: 600;
+$font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+
+// Font size
+$font-size-default: 1.6rem;
+$font-size-sm: 1.2rem;
+$font-size-md: 1.4rem;
+$font-size-lg: 1.8rem;
+
+//White
+$white: hsl(0, 0%, 100%); //#fff
+
+//Black
+$black: hsl(0, 0%, 0%); //#000
+$black-a20: hsla(0, 0%, 0%, 0.2);
+$black-a80: rgba(0, 0, 0, 0.8);
+
+//Orange
+$orange: hsl(11, 74%, 61%); //#e56f54
+$gold: #eaaa00;
+$coral: #cf6148;
+
+//Red
+$red: hsl(0, 100%, 50%); //#ff0000
+$orange-red: hsl(16, 85%, 52%); //#ed541d
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin dark-button {
+    border-radius: 5px;
+    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: linear-gradient(to bottom right, #99b3b8 18%, #2e6772 50%);
+    color: $white;
+    border: none;
+    outline: none;
+    transition: 0.2s ease-in-out 0s;
+    position: relative;
+    z-index: 1;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        height: calc(100% - 2px);
+        width: calc(100% - 2px);
+        background: linear-gradient(to bottom, #00414e 0%, #225c68 100%);
+        border-radius: 5px;
+        z-index: -1;
+        transition: all 0.2s ease 0.3s;
+    }
+}
+
+@mixin back-button {
+    margin-left: 20px;
+    @include flex-center;
+    border-radius: 4px;
+    width: 80px;
+    height: 48px;
+    background-color: $white;
+    color: $black;
+    font-size: 24px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+    font-weight: $font-weight-bold;
+
+    &:before {
+        content: '';
+        width: 36px;
+        height: 36px;
+        background-color: $white;
+        position: absolute;
+        top: 6px;
+        left: -15px;
+        border-radius: 4px;
+        transform: rotate(45deg);
+        z-index: -1;
+    }
+}
+
+@mixin breadcrumb {
+    height: 64px;
+    padding: 0 20px;
+    background-color: $madt-bg-dark-2;
+    display: flex;
+    align-items: center;
+    font-size: 22px;
+    gap: 12px;
+
+    > * {
+        color: $white;
+
+        &:last-child {
+            font-weight: $font-weight-bold;
+        }
+    }
+}
+
+@mixin scrollbar {
+    color: white;
+    border-radius: 4px;
+    --scrollbar-thickness: 20;
+    --scrollbar-track-color: #0c2125;
+    --scrollbar-border-radius: 6px;
+    --scrollbar-offset: 4;
+}
+
+@mixin scrollbar-track {
+    background-color: #0c2125;
+    border-radius: 0;
+}
+
+@mixin scrollbar-thumb {
+    background: url('/assets/images/icons/main/track.svg') no-repeat center;
+    width: 20px;
+    border-radius: 16px;
+    background-color: $madt-bg-light-1;
+    transition: transform 0.2s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation-timeline: none;
+}
+
+@mixin scrollbar-button {
+    height: 26px;
+    background-color: $madt-bg-charcoal;
+
+    &:first-of-type {
+        border-radius: 12px 12px 0 0;
+        .ng-scrollbar-button-icon {
+            transform: rotate(0deg);
+        }
+    }
+    &:not(first-of-type) {
+        border-radius: 0 0 12px 12px;
+        .ng-scrollbar-button-icon {
+            rotate: 360deg;
+            transform: rotate(180deg);
+        }
+    }
+}
+
+@mixin dialog-title {
+    font-size: 32px;
+    font-weight: $font-weight-bold;
+    color: $white;
+    margin-bottom: 20px;
+    line-height: 1.25;
+}
+
+@mixin dot-loading {
+    display: inline-block;
+    clip-path: inset(0 1ch 0 0);
+    animation: l 1s steps(4) infinite;
+}
+
+@keyframes l {
+    to {
+        clip-path: inset(0 -1ch 0 0);
+    }
+}
+
+@mixin spinner {
+    animation: rotation 2s linear infinite;
+}
+
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+$header-footer-height: 80px;
+$breadcrumb-height: 64px;
+
+//========---------- Fonts ----------========
+$font-inter: 'Inter';
+// $font-univers-font-face: 'univers';
+// $universLTStd: 'UniversLTStd-Cn';
+// // The Taiwanese font has to be loaded via JS, please see base.html.twig
+// $font-heit-font-face: 'HeiT ASC Light W40 Regular';
+// $font-univers: $font-univers-font-face, Arial, sans-serif;
+// $font-heit: $font-heit-font-face, Arial, sans-serif;
+
+//========---------- Structure ----------========
+$path-fonts: '../assets/fonts/';

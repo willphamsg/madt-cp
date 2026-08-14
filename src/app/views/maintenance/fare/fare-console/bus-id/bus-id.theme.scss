@@ -1,0 +1,89 @@
+@use 'variables' as *;
+
+@mixin lta-bus-id-theme($light-theme: false) {
+    @if $light-theme {
+        .bus-id {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            ul {
+                .row {
+                    background-color: $white !important;
+
+                    .left {
+                        color: $black;
+                        border-right-color: #e5e5e5 !important;
+                    }
+
+                    .right {
+                        color: $black !important;
+                        flex-grow: 1;
+
+                        .value {
+                            color: $black !important;
+
+                            &.active {
+                                color: $color-green !important;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .bus-id-opt,
+            .service-prov-id-opt {
+                .title {
+                    color: $black !important;
+                }
+
+                .input-group {
+                    input {
+                        background-color: #e7e7e7 !important;
+                        color: $black !important;
+                    }
+                }
+
+                .keyboard {
+                    background-color: $white !important;
+                }
+            }
+
+            .operator {
+                &-header {
+                    h3 {
+                        color: $black !important;
+                    }
+                }
+
+                &-content {
+                    .table {
+                        color: $black;
+                        tr {
+                            td {
+                                border-left-color: #e5e5e5 !important;
+                            }
+                        }
+
+                        tr:nth-child(odd) > th,
+                        tr:nth-child(odd) > td {
+                            background-color: $white !important;
+                        }
+
+                        tr:nth-child(even) > th,
+                        tr:nth-child(even) > td {
+                            background-color: #dedede !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

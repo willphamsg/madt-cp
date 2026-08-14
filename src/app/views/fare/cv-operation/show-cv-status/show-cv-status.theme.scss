@@ -1,0 +1,42 @@
+@use 'variables' as *;
+
+@mixin lta-show-cv-status-theme($light-theme: false) {
+    @if $light-theme {
+        .show-cv-status {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .show-cv-dialog {
+                &-title {
+                    color: $black !important;
+                }
+
+                &-content {
+                    .table {
+                        tr {
+                            .row {
+                                background-color: $white !important;
+
+                                .cv-status {
+                                    color: $black !important;
+
+                                    &-active {
+                                        color: $color-green;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

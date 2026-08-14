@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "willphamsg",
+        "projectKey": "willphamsg_sonar_madt"
+    }
+}

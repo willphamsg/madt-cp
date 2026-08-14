@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+@mixin lta-reset-all-cv-theme($light-theme: false) {
+    @if $light-theme {
+        .reset-all-cv {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+<div class="notification">
+    <div class="notification-wrapper">
+        <img src="/assets/images/svg/big-success.svg" alt="" />
+        <h3 class="title">{{ 'SUCCESS' | translate }}</h3>
+        <div class="content">{{ message | translate }}</div>
+        <div class="btn-group">
+            <button [disabled]="disabled" class="btn btn-ok" (click)="handleButtonSound(); handleClick()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'OK' | translate }}</span>
+            </button>
+        </div>
+    </div>
+</div>

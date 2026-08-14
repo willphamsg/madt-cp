@@ -1,0 +1,108 @@
+@use 'variables' as *;
+
+.bls-information-page {
+    text-align: center;
+    height: 100%;
+    margin-right: -20px;
+    display: flex;
+    flex-direction: column;
+
+    .loading {
+        @include flex-center;
+        flex-direction: column;
+        height: 100%;
+
+        > div {
+            font-size: 40px;
+            font-weight: $font-weight-bold;
+            margin-top: 20px;
+            @include dot-loading;
+        }
+
+        .loader {
+            @include spinner;
+        }
+    }
+
+    .title {
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    ng-scrollbar {
+        @include scrollbar;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+
+    .bls-information-table {
+        padding-right: 10px;
+    }
+
+    .table-container {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .table {
+        width: 100%;
+
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-weight: $font-weight-bold;
+
+            img {
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .desc {
+                transform: rotate(180deg);
+            }
+        }
+
+        th {
+            border-right: 1px solid $madt-bg-dark-2;
+            background-color: $black;
+        }
+
+        th,
+        tr {
+            font-size: 28px;
+            text-align: left;
+        }
+
+        th {
+            width: 480px;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-left: 1px solid $madt-bg-dark-2;
+        }
+
+        tr:nth-child(even) > td {
+            background-color: $madt-bg-dark-3;
+        }
+
+        tr:nth-child(odd) > td {
+            background-color: $madt-bg-dark-2;
+        }
+    }
+}

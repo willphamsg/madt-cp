@@ -1,0 +1,42 @@
+@use 'variables' as *;
+
+@mixin lta-redetect-cv-theme($light-theme: false) {
+    @if $light-theme {
+        .redetect-cv-page {
+            color: $black;
+
+            .title {
+                margin: 30px 0;
+                font-size: 32px;
+                font-weight: $font-weight-bold;
+            }
+
+            .redect-cv-dialog {
+                &-header {
+                    h3 {
+                        color: $black !important;
+                    }
+                }
+
+                &-content {
+                    .table {
+                        th,
+                        td:not(:last-child) {
+                            border-right-color: #e5e5e5 !important;
+                        }
+
+                        tr:nth-child(odd) > th,
+                        tr:nth-child(odd) > td {
+                            background-color: $white !important;
+                        }
+
+                        tr:nth-child(even) > th,
+                        tr:nth-child(even) > td {
+                            background-color: #dedede !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

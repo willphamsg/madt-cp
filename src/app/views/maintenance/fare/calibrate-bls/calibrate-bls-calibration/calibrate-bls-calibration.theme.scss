@@ -1,0 +1,29 @@
+@use 'variables' as *;
+
+@mixin lta-calibrate-bls-calibration-theme($light-theme: false) {
+    @if $light-theme {
+        .calibrate-bls-calibration-page {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .input-group {
+                input {
+                    background-color: #e7e7e7 !important;
+                    color: $black !important;
+                }
+            }
+
+            .keyboard {
+                background-color: $white !important;
+            }
+        }
+    }
+}

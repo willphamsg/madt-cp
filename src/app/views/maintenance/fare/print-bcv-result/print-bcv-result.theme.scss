@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-print-bcv-results-theme($light-theme: false) {
+    @if $light-theme {
+        .print-bcv-results-page {
+            color: $black;
+        }
+    }
+}

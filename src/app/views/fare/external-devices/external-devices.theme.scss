@@ -1,0 +1,46 @@
+@use 'variables' as *;
+
+@mixin lta-external-devices-theme($light-theme: false) {
+    @if $light-theme {
+        .external-devices-page {
+            box-shadow: 1px 1px 5px #ccc;
+            background-color: #f2f2f2 !important;
+            color: $black;
+
+            .external-devices-box {
+                .external-devices-content {
+                    .row {
+                        background-color: $white !important;
+
+                        .left {
+                            color: $black !important;
+                        }
+
+                        .right {
+                            border-left-color: #e5e5e5 !important;
+                            color: $black !important;
+
+                            .value {
+                                font-weight: $font-weight-bold;
+                                color: $black !important;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .loading {
+                @include dot-loading;
+            }
+        }
+    }
+}

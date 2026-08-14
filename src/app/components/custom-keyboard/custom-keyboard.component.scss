@@ -1,0 +1,84 @@
+@use 'variables' as *;
+
+.numeric-keyboard {
+    display: grid;
+    grid-gap: 10px;
+    background-color: $black;
+    width: 100%;
+    grid-template-columns: repeat(6, 1fr);
+
+    .btn {
+        @include dark-button;
+        height: 64px;
+        font-size: 24px;
+        font-weight: $font-weight-semi-bold;
+
+        &-delete {
+            &:before {
+                background-color: $madt-bg-charcoal;
+                background-image: url('/assets/images/svg/back-space.svg');
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        }
+        &-confirm {
+            &:before {
+                background: $madt-bg-light-1;
+            }
+        }
+
+        > img {
+            pointer-events: none;
+        }
+    }
+}
+
+.text-keyboard {
+    background-color: $black;
+    width: 100%;
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        grid-gap: 12px;
+
+        &:not(:first-child) {
+            margin-top: 7px;
+        }
+
+        &:nth-child(2) {
+            .btn:first-child {
+                margin-left: 24px;
+            }
+        }
+    }
+
+    .btn {
+        @include dark-button;
+        height: 64px;
+        flex: 1;
+        font-size: 24px;
+        font-weight: $font-weight-semi-bold;
+
+        &-delete {
+            &:before {
+                background-image: url('/assets/images/icons/maintenance/keyboard-delete.svg');
+                background-color: $madt-bg-charcoal;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+            min-width: 100px;
+        }
+        &-confirm {
+            &:before {
+                background: $madt-bg-light-1;
+            }
+            min-width: 148px;
+        }
+
+        > img {
+            pointer-events: none;
+        }
+    }
+}

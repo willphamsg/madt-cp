@@ -1,0 +1,25 @@
+<div class="test-print-page">
+    @if (step === 1) {
+        <div class="step-1">
+            <h2 class="title">{{ 'RESET_BLS_SOFTWARE' }}</h2>
+            <div class="content">
+                <p>{{ 'PRESS_RESET_BTN_TO_RESET' | translate }}</p>
+                <div class="button" (click)="handleButtonSound(); handleSelect()">
+                    <mat-icon>{{ 'REPLAY' | translate }}</mat-icon>
+                    <div class="text">{{ 'RESET' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (step === 2) {
+        <confirm-dialog
+            [title]="'RESET_CONFIRMATION' | translate"
+            [content]="'PRESS_THE_BTN_TO_CONFIRM' | translate"
+            [btnCancel]="true"
+            [btnConfirm]="true"
+            (onConfirm)="handleFinish()"
+            (onCancel)="handleFinish()"
+        >
+        </confirm-dialog>
+    }
+</div>

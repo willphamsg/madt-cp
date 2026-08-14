@@ -1,0 +1,142 @@
+@use 'variables' as *;
+
+$separator-color: #99bad9;
+$font-size-variable: 16px;
+$font-size-medium: 18px;
+$font-size-label: 20px;
+$font-size-large: 28px;
+$active-color: #fed000;
+
+@mixin button-style($height: 64px) {
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    background-color: $madt-color-teal;
+    height: $height;
+    justify-content: center;
+    gap: 10px;
+    font-size: 22px;
+    padding: 0 12px;
+    cursor: pointer;
+    border: none;
+    color: $white;
+    font-weight: $font-weight-bold;
+}
+
+.madt-header {
+    @include flex-center;
+    justify-content: space-between;
+    height: $header-footer-height;
+    // position: fixed;
+    // top: 0;
+    width: 100%;
+    padding: 0 20px;
+    background: $madt-bg-black-1;
+
+    .navigation-section {
+        @include flex-center;
+        gap: 16px;
+        font-weight: $font-weight-bold;
+
+        .button {
+            @include button-style();
+
+            &.disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+
+            &.active {
+                // background: linear-gradient(to bottom, #017a8d, #076c7c);
+                cursor: pointer !important;
+                pointer-events: all !important;
+                opacity: 1 !important;
+            }
+        }
+
+        .lock-button {
+            background-color: $madt-color-red;
+            padding: 0 16px;
+        }
+    }
+
+    .hidden {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .deep-hidden {
+        display: none !important;
+    }
+
+    .status-indicators {
+        @include flex-center;
+        // width: 300px;
+        gap: 8px;
+        flex: 1;
+        padding: 0 20px;
+        justify-content: flex-end;
+
+        .status {
+            @include flex-center;
+            font-size: $font-size-medium;
+            font-weight: $font-weight-bold;
+            padding: 0 8px;
+            gap: 6px;
+
+            .mode-a {
+                color: #98ea24;
+            }
+
+            .mode-ps {
+                color: #fed000;
+            }
+
+            // .mat-icon {
+            //     color: $madt-color-green;
+            // }
+
+            &.error {
+                background-color: $madt-color-red;
+                border-radius: 20px;
+
+                .mat-icon {
+                    color: $white;
+                }
+            }
+        }
+    }
+
+    .datetime-section {
+        @include flex-center;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: $font-size-large;
+        font-weight: $font-weight-bold;
+        min-width: 330px;
+
+        .date {
+            @include flex-center;
+
+            &::after {
+                content: '';
+                display: block;
+                width: 1px;
+                height: 35px;
+                background-color: $separator-color;
+                margin-left: 18px;
+                opacity: 0.25;
+            }
+        }
+
+        .time {
+            @include flex-center;
+
+            span {
+                width: 40px;
+                text-align: center;
+            }
+        }
+    }
+}

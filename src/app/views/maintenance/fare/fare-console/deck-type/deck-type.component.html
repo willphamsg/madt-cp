@@ -1,0 +1,31 @@
+<div class="deck-type">
+    <h3 class="title">{{ 'SELECT_BUS_DECK_TYPE' | translate }}</h3>
+    <div class="deck-type-list">
+        <div class="scrollbar">
+            <app-scrollbar>
+                <ul>
+                    @for (deck of fareConsoleSetting.deckTypeList; track deck.id) {
+                        <li
+                            (click)="handleButtonSound(); handleChangeDeckType(deck.id)"
+                            [ngClass]="{
+                                selected: selectedDeckTypeId === deck.id
+                            }"
+                        >
+                            {{ deck.label | translate }}
+                        </li>
+                    }
+                </ul>
+            </app-scrollbar>
+        </div>
+    </div>
+    <div class="btn-group">
+        <div class="button button-cancel" (click)="handleButtonSound(); goBack()">
+            <img src="/assets/images/icons/main/close.svg" alt="" />
+            <span>{{ 'CANCEL' | translate }}</span>
+        </div>
+        <div class="button button-confirm" (click)="handleButtonSound(); handleConfirmDeckType()">
+            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            <span class="text">{{ 'CONFIRM' | translate }}</span>
+        </div>
+    </div>
+</div>

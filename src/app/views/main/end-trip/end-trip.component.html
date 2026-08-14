@@ -1,0 +1,68 @@
+<div class="end-trip-container">
+    @if (!endTripInfoData.msgID || endTripInfoData.msgID === MsgID.END_TRIP) {
+        <div class="confirm">
+            <div class="confirm-header">{{ 'END_TRIP' | translate }}</div>
+            <p class="confirm-msg">
+                {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
+            </p>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirm(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    } @else if (endTripInfoData.msgID && endTripInfoData.service) {
+        <div class="end-trip-details">
+            <h2 class="title">{{ endTripInfoData['title'] || '' | translate }}</h2>
+            <div class="content">
+                <ul>
+                    <li class="row">
+                        <div class="left">{{ 'SERVICE' | translate }}</div>
+                        <div class="right">
+                            <p class="value">
+                                @if (endTripInfoData.variantName) {
+                                    {{ endTripInfoData.service }}{{ endTripInfoData.variantName }}
+                                } @else {
+                                    {{ endTripInfoData.service }}
+                                }
+                            </p>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'DIRECTION' | translate }}</div>
+                        <div class="right">
+                            <p class="value">{{ endTripInfoData.direction }}</p>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'FIRST_BUS_STOP' | translate }}</div>
+                        <div class="right">
+                            <p class="value">{{ endTripInfoData['firstBusStop']['Name'] }}</p>
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'LAST_BUS_STOP' | translate }}</div>
+                        <div class="right">
+                            <p class="value">{{ endTripInfoData['lastBusStop']['Name'] }}</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="btn-group">
+                    <div class="btn btn-cancel" (click)="handleButtonSound(); handleCancelEndTrip()">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </div>
+                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmValue()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span class="text">{{ 'CONFIRM' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

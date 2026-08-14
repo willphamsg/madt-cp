@@ -1,0 +1,789 @@
+@use 'variables' as *;
+
+.cash-payment-container {
+    background-color: $madt-bg-dark-1;
+    padding: 20px 15px;
+    height: 100%;
+    border-radius: 4px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .page-header {
+        @include flex-center;
+
+        .button {
+            @include flex-center;
+            justify-content: flex-end;
+        }
+
+        &.full-row {
+            justify-content: flex-end;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+            font-size: 32px;
+            margin-top: 10px;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 28px;
+            font-weight: $font-weight-bold;
+        }
+
+        &.center {
+            justify-content: center;
+        }
+    }
+
+    .button-group {
+        @include flex-center;
+        gap: 10px;
+        background-color: $madt-bg-dark-2;
+        height: 58px;
+        width: 448px;
+        border-radius: 50px;
+        margin-left: auto;
+        margin-right: auto;
+
+        .tk-button {
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: linear-gradient(to bottom, #00414e 0%, #225c68 100%);
+            font-size: 24px;
+            min-height: 42px;
+            border-radius: 50px;
+            padding: 0 25px;
+            outline: none;
+            border: none;
+            box-shadow: none;
+            outline-style: none;
+
+            &:active,
+            &:focus {
+                outline: none;
+                border: none;
+                box-shadow: none;
+                outline-style: none;
+            }
+
+            &.active {
+                background: $madt-bg-light-1;
+            }
+        }
+    }
+
+    .cash-container {
+        margin-top: 24px;
+        display: flex;
+        gap: 20px;
+        flex: 1;
+
+        .cash-title {
+            @include flex-center;
+            padding-top: 10px;
+            font-size: 28px;
+            text-align: center;
+            gap: 5px;
+            min-height: 60px;
+
+            h4 {
+                font-size: 28px;
+            }
+        }
+
+        .cash-block {
+            background-color: #000d10;
+        }
+
+        .child-cash,
+        .senior-cash {
+            flex-basis: 185px;
+        }
+
+        .adult-cash {
+            flex: 1;
+        }
+
+        .cash-btn-block {
+            @include flex-center;
+            flex-wrap: wrap;
+            row-gap: 16px;
+            column-gap: 24px;
+            padding: 20px;
+        }
+
+        .cash-btn-wrap {
+            @include flex-center;
+            // margin-bottom: 40px;
+
+            .cash-btn {
+                position: relative;
+                @include dark-button;
+                width: 96px;
+                height: 96px;
+                cursor: pointer;
+
+                &.active {
+                    &:before {
+                        background: $madt-bg-light-1;
+                    }
+                }
+            }
+
+            .cash-img {
+                @include flex-center;
+                width: 100%;
+                height: 100%;
+                border-radius: 100%;
+                background-color: #161e25;
+            }
+
+            .cash-value {
+                font-size: 24px;
+                font-weight: $font-weight-semi-bold;
+                // @include flex-center;
+                // width: 60px;
+                // height: 24px;
+                // border-radius: 5px;
+                // font-size: 18px;
+                // font-weight: $font-weight-semi-bold;
+                // background: linear-gradient(to bottom, #00414e 0%, #225c68 100%);
+                // position: absolute;
+                // left: 50%;
+                // bottom: -9px;
+                // transform: translateX(-50%);
+            }
+        }
+    }
+
+    .btn-group {
+        @include flex-center;
+        gap: 32px;
+
+        .btn {
+            @include dark-button;
+            font-size: 22px;
+            font-weight: $font-weight-bold;
+            margin-top: 6px;
+            flex-direction: row;
+            background: $madt-bg-light-1;
+            padding: 28px 20px;
+
+            span {
+                font-size: 22px;
+                font-weight: $font-weight-bold;
+                padding-left: 6px;
+                color: #fff;
+            }
+
+            &-cancel {
+                background-color: $madt-color-red;
+            }
+
+            &-confirm {
+                background-color: $madt-bg-light-1;
+            }
+
+            &::before {
+                content: none;
+            }
+
+            .text {
+                padding-left: 8px;
+            }
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+
+    .back-button {
+        @include back-button;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    .confirm {
+        margin-top: 50px;
+        @include flex-center;
+        flex-direction: column;
+        flex: 1;
+
+        .confirm-header {
+            @include flex-center;
+            gap: 10px;
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+        }
+
+        .dialog-title {
+            display: flex;
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+            min-width: 400px;
+            margin-bottom: 12px;
+
+            .title {
+                width: 70%;
+            }
+        }
+
+        .confirm-msg {
+            margin-top: 10px;
+            font-size: 28px;
+        }
+
+        .content {
+            font-size: 24px;
+            margin-top: 20px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .quantity-list {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
+            padding: 16px 0;
+
+            .quantity-btn {
+                @include dark-button;
+                width: 120px;
+                height: 72px;
+                font-size: 24px;
+                font-weight: $font-weight-semi-bold;
+                &:active {
+                    transform: scale(1.01);
+                }
+            }
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 50px;
+                min-width: 160px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 20px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
+            }
+        }
+    }
+
+    .dia-log {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        background-color: $black;
+        z-index: 1000;
+        border-radius: 4px;
+        opacity: 0.9;
+
+        &-main {
+            min-width: 600px;
+            display: inline-block;
+            background-color: $madt-bg-dark-3;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 60px 50px;
+            text-align: center;
+        }
+
+        &-title {
+            font-size: 32px;
+            font-weight: $font-weight-bold;
+            color: $white;
+            margin-bottom: 20px;
+            text-align: center;
+
+            .icon {
+                transform: scale(2.5);
+                color: $color-green;
+            }
+        }
+
+        &-content {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            margin: 0 auto;
+            width: 270px;
+            background-color: $white;
+
+            .progress {
+                background-color: $color-green;
+                height: 24px;
+            }
+        }
+
+        .button {
+            width: 110px;
+        }
+    }
+
+    .multiple {
+        height: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+
+        .input-group {
+            text-align: left;
+            margin-top: 40px;
+            width: 700px;
+            flex: 1;
+
+            p {
+                font-size: 28px;
+            }
+
+            input {
+                width: 100%;
+                height: 72px;
+                font-size: 28px;
+                padding: 10px;
+                margin-top: 10px;
+                background-color: #475057;
+                border: none;
+                color: $white;
+                font-weight: $font-weight-light;
+                border-radius: 4px;
+                box-shadow: inset 0 4px 4px rgb(0 0 0 / 0.25);
+                transition: all 0.3s ease-in-out;
+
+                &.hasError {
+                    border: 1px solid $color-red-light !important;
+                }
+            }
+
+            .total-cash {
+                @include flex-center;
+                justify-content: space-between;
+                margin-top: 16px;
+                font-size: 28px;
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        .keyboard {
+            background-color: $black;
+            margin: 0 -20px;
+            position: absolute;
+            left: 5px;
+            bottom: -20px;
+            width: calc(100% + 30px);
+            padding: 10px;
+            border-bottom-left-radius: 4px;
+            border-bottom-right-radius: 4px;
+        }
+    }
+
+    .fare-calculator {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        // .calculator {
+        //     min-width: 1200px;
+        //     height: calc(100vh - 100px);
+        //     padding: 40px 24px;
+        //     border-radius: 8px;
+        //     text-align: center;
+        //     display: flex;
+        //     flex-direction: column;
+        //     align-items: stretch;
+        //     gap: 20px;
+
+        //     .header {
+        //         @include flex-center;
+        //         justify-content: space-between;
+        //     }
+
+        //     .title {
+        //         font-size: 32px;
+        //         font-weight: $font-weight-bold;
+        //         color: $white;
+        //     }
+
+        //     .close-btn {
+        //         @include flex-center;
+        //         font-size: 28px;
+        //         font-weight: $font-weight-bold;
+
+        //         span {
+        //             padding-left: 8px;
+        //         }
+        //     }
+
+        //     .confirm-button {
+        //         display: inline-flex;
+        //         align-items: center;
+        //         justify-content: center;
+        //         border-radius: 5px;
+        //         transition: 0.2s ease-in-out 0s;
+        //         min-height: 80px;
+        //         padding: 0 20px;
+        //         background-color: $madt-bg-light-1;
+        //         align-self: center;
+
+        //         &:active {
+        //             transform: scale(1.01);
+        //         }
+
+        //         span {
+        //             font-size: 22px;
+        //             font-weight: $font-weight-bold;
+        //             padding-left: 8px;
+        //             color: $white;
+        //         }
+        //     }
+
+        //     .calculator-content {
+        //         font-size: 28px;
+        //         padding: 6px;
+        //         flex-grow: 1;
+        //         overflow: hidden;
+
+        //         .scrollbar {
+        //             height: 100%;
+        //         }
+
+        //         .table {
+        //             width: 100%;
+
+        //             tr {
+        //                 &.selected {
+        //                     th,
+        //                     td {
+        //                         background-color: $madt-bg-light-1 !important;
+        //                         font-weight: $font-weight-bold !important;
+        //                     }
+        //                 }
+
+        //                 th {
+        //                     vertical-align: middle;
+        //                     background-color: $black;
+
+        //                     // .radio {
+        //                     //     height: 100%;
+        //                     //     width: 100%;
+        //                     //     @include flex-center;
+        //                     // }
+
+        //                     &:first-child {
+        //                         width: 60%;
+        //                     }
+        //                 }
+
+        //                 .table-header {
+        //                     font-size: 28px;
+        //                     font-weight: $font-weight-bold;
+        //                     text-align: left;
+        //                     padding: 2px 12px;
+        //                     display: flex;
+        //                     align-items: center;
+        //                     gap: 6px;
+        //                 }
+
+        //                 td {
+        //                     font-size: 28px;
+        //                     padding: 16px 12px;
+        //                     text-align: left;
+        //                     vertical-align: middle;
+        //                     font-weight: $font-weight-regular;
+
+        //                     &:not(:first-child) {
+        //                         // font-weight: $font-weight-bold;
+        //                         border-left: 2px solid $madt-bg-dark-1;
+        //                     }
+        //                 }
+
+        //                 &:not(:first-child) {
+        //                     td {
+        //                         border-top: 2px solid $madt-bg-dark-1;
+        //                     }
+        //                 }
+
+        //                 // .radio {
+        //                 //     display: flex;
+        //                 //     align-items: center;
+        //                 //     gap: 6px;
+        //                 // }
+        //             }
+
+        //             tr:nth-child(odd) > td {
+        //                 background-color: $madt-bg-dark-2;
+        //             }
+
+        //             tr:nth-child(even) > td {
+        //                 background-color: $madt-bg-dark-2;
+        //             }
+        //         }
+        //     }
+
+        //     ng-scrollbar {
+        //         @include scrollbar;
+        //         height: 100%;
+        //     }
+
+        //     ::ng-deep {
+        //         .scrollbar-track {
+        //             @include scrollbar-track;
+        //         }
+        //         .scrollbar-thumb {
+        //             @include scrollbar-thumb;
+        //         }
+        //         .scrollbar-button {
+        //             @include scrollbar-button;
+        //         }
+        //     }
+        // }
+
+        .fare-calculator-result {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+
+            .title {
+                margin-top: 3px;
+                text-align: center;
+                font-weight: $font-weight-bold;
+            }
+
+            .content {
+                margin: auto;
+                flex: 1;
+                overflow: hidden;
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+
+        ul {
+            .row {
+                display: flex;
+                align-items: stretch;
+                justify-content: space-between;
+                background-color: $madt-bg-dark-2;
+                margin-bottom: 6px;
+
+                .left {
+                    font-size: 28px;
+                    text-align: left;
+                    min-height: 80px;
+                    padding: 0 12px;
+                    display: flex;
+                    align-items: center;
+                    gap: 20px;
+                    width: 280px;
+                    border-right: 2px solid $madt-bg-dark-1;
+                }
+
+                .right {
+                    font-size: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    color: $madt-bg-light-1;
+                    flex: 1;
+                    padding-left: 12px;
+                    padding-right: 12px;
+
+                    &.has-btn {
+                        padding-top: 6px;
+                        padding-bottom: 6px;
+                    }
+
+                    .value {
+                        color: $white;
+                        font-weight: $font-weight-bold;
+                        padding-right: 6px;
+                    }
+
+                    .btn-receipt {
+                        @include dark-button;
+                        font-size: 22px;
+                        font-weight: $font-weight-bold;
+                        flex-direction: row;
+                        background: $madt-bg-light-1;
+                        padding: 19px;
+                        width: 240px;
+
+                        span {
+                            font-size: 22px;
+                            font-weight: $font-weight-bold;
+                            padding-left: 6px;
+                            color: #fff;
+                        }
+
+                        &-cancel {
+                            background-color: $madt-color-red;
+                        }
+
+                        &-confirm {
+                            background-color: $madt-bg-light-1;
+                        }
+
+                        &:disabled {
+                            opacity: 0.7;
+                            cursor: not-allowed;
+                        }
+
+                        &::before {
+                            content: none;
+                        }
+
+                        .text {
+                            padding-left: 8px;
+                        }
+
+                        &:active {
+                            transform: scale(1.01);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.mb-50 {
+    margin-bottom: 50px;
+}
+
+.error {
+    color: $color-red-light;
+    text-align: left;
+    font-weight: $font-weight-regular;
+    font-size: 28px;
+    margin-top: 10px;
+}
+
+.bus-stop {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    .title {
+        margin-top: 3px;
+        text-align: center;
+        font-weight: $font-weight-bold;
+    }
+
+    .content {
+        margin: auto;
+        flex: 1;
+        overflow: hidden;
+        width: 100%;
+        margin-top: 30px;
+        margin-bottom: 12px;
+
+        .scrollbar {
+            height: 100%;
+        }
+
+        ul {
+            li {
+                font-size: 28px;
+                padding: 18px 12px;
+                text-align: left;
+                background-color: $madt-bg-charcoal-2;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                transition: all 0.2s ease;
+
+                .left {
+                    flex: 1;
+                }
+
+                &:not(:last-child) {
+                    margin-bottom: 8px;
+                }
+
+                &.selected {
+                    background-color: $madt-bg-light-1 !important;
+                    font-weight: $font-weight-bold !important;
+                }
+            }
+        }
+    }
+
+    .ng-scrollbar {
+        @include scrollbar;
+        height: 100%;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+}
+
+.loading {
+    @include flex-center;
+    flex-direction: column;
+    height: 100%;
+
+    > div {
+        font-size: 40px;
+        font-weight: $font-weight-bold;
+        margin-top: 20px;
+        @include dot-loading;
+    }
+
+    .loader {
+        @include spinner;
+    }
+}

@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-save-transaction-theme($light-theme: false) {
+    @if $light-theme {
+        .save-transaction-page {
+            color: $black;
+        }
+    }
+}

@@ -1,0 +1,19 @@
+<div class="app-scrollbar">
+    <div class="app-scrollbar-viewport" #viewport>
+        <div class="app-scrollbar-content" #content>
+            <ng-content></ng-content>
+        </div>
+    </div>
+
+    <div class="scrollbar-controls" [class.hidden]="!showScrollbar">
+        <button type="button" class="scrollbar-button scrollbar-button-up" (click)="scrollByStep(-1)" aria-label="Scroll up">
+            <span class="scrollbar-arrow"></span>
+        </button>
+        <div class="scrollbar-track" #track>
+            <div class="scrollbar-thumb" #thumb></div>
+        </div>
+        <button type="button" class="scrollbar-button scrollbar-button-down" (click)="scrollByStep(1)" aria-label="Scroll down">
+            <span class="scrollbar-arrow"></span>
+        </button>
+    </div>
+</div>

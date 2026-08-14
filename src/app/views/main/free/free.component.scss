@@ -1,0 +1,101 @@
+@use 'variables' as *;
+
+.free-container {
+    background-color: $madt-bg-dark-1;
+    padding: 20px 15px;
+    height: 100%;
+    border-radius: 4px;
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 28px;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .confirm {
+        margin-top: 100px;
+        @include flex-center;
+        flex-direction: column;
+
+        .confirm-header {
+            @include flex-center;
+            gap: 10px;
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+        }
+
+        .dialog-title {
+            display: flex;
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+            min-width: 400px;
+            margin-bottom: 12px;
+
+            .title {
+                width: 70%;
+            }
+        }
+
+        .confirm-msg {
+            margin-top: 10px;
+            font-size: 28px;
+        }
+
+        .content {
+            font-size: 24px;
+            margin-top: 20px;
+            width: 400px;
+            text-align: center;
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 80px;
+                padding: 0 25px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
+            }
+        }
+    }
+}

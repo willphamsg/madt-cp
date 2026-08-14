@@ -1,0 +1,1326 @@
+<div class="wrapper">
+    <div>
+        <h1>Mqtt Test Page</h1>
+        @if (isLoading) {
+            <div>Loading .....</div>
+        }
+
+        @if (!isLoading && isConnected) {
+            <div class="action-cont">
+                <div class="cv-icon-cont">
+                    <h3>Boot Up, Shutting down & Critical Error</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of bootUpData; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Commissioning</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of commissioningFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>DAGW Operation</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Message Title</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.title">
+                            @for (popMsgtitle of dagwOperation.popMsgtitle; track popMsgtitle) {
+                                <mat-option [value]="popMsgtitle">
+                                    {{ popMsgtitle }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Message Text</mat-label>
+                        <input
+                            matInput
+                            type="'text"
+                            placeholder="Message Text"
+                            [(ngModel)]="dagwOperationPublish.message"
+                        />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>File Name</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.fileName">
+                            @for (fileName of dagwOperation.fileNames; track fileName) {
+                                <mat-option [value]="fileName">
+                                    {{ fileName }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Percentage</mat-label>
+                        <input
+                            matInput
+                            type="'number"
+                            placeholder="Percentage"
+                            [(ngModel)]="dagwOperationPublish.percentage"
+                        />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Status</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.status">
+                            @for (status of ['', 1, 2]; track status) {
+                                <mat-option [value]="status">
+                                    {{ status }} - {{ !status ? 'NA' : status === '1' ? 'Success' : 'Error' }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <mat-form-field>
+          <mat-label>Tick Button</mat-label>
+          <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.tickButton">
+            <mat-option *ngFor="let tickButton of dagwOperation.tickButton" [value]="tickButton">
+              {{ tickButton }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+                    <button
+                        [disabled]="!dagwOperationPublish.message"
+                        mat-raised-button
+                        (click)="sendDagwOperation()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Out of Services</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of outOfServices; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont device-status">
+                    <h3>Devices status</h3>
+                    <br />
+                    <br />
+                    <br />
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusBTS"
+                        (change)="
+                            handleToggleStatus(
+                                'statusBTS',
+                                MsgID.CHANGE_BTS_STATUS,
+                                connectionStatus.connection.statusBTS
+                            )
+                        "
+                        >BTS</mat-slide-toggle
+                    >
+                    <p>
+                        BTS is:
+                        <span [style.color]="connectionStatus.connection.statusBTS ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusBTS ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <br />
+                    <br />
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusBOLC"
+                        (change)="
+                            handleToggleStatus(
+                                'statusBOLC',
+                                MsgID.CHANGE_BOLC_STATUS,
+                                connectionStatus.connection.statusBOLC
+                            )
+                        "
+                        >BOLC</mat-slide-toggle
+                    >
+                    <p>
+                        BOLC is:
+                        <span [style.color]="connectionStatus.connection.statusBOLC ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusBOLC ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <br />
+                    <br />
+                    <!-- <mat-slide-toggle [(ngModel)]="connectionStatus.connection.statusFARE">FARE</mat-slide-toggle>
+                <p>
+                  FARE is:<span [style.color]="connectionStatus.connection.statusFARE ? 'green' : 'red'">
+                  {{ connectionStatus.connection.statusFARE ? 'Connected' : 'Disconnected' }}
+                </span>
+              </p>
+              <br />
+              <br /> -->
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusFMS"
+                        (change)="
+                            handleToggleStatus(
+                                'statusFMS',
+                                MsgID.CHANGE_FMS_STATUS,
+                                connectionStatus.connection.statusFMS
+                            )
+                        "
+                        >FMS</mat-slide-toggle
+                    >
+                    <p>
+                        FMS is:<span [style.color]="connectionStatus.connection.statusFMS ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusFMS ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                    <br />
+                    <br />
+                    <mat-slide-toggle
+                        [(ngModel)]="connectionStatus.connection.statusCRP"
+                        (change)="
+                            handleToggleStatus(
+                                'statusCRP',
+                                MsgID.CHANGE_CRP_STATUS,
+                                connectionStatus.connection.statusCRP
+                            )
+                        "
+                        >CRP</mat-slide-toggle
+                    >
+                    <p>
+                        CRP is:
+                        <span [style.color]="connectionStatus.connection.statusCRP ? 'green' : 'red'">
+                            {{ connectionStatus.connection.statusCRP ? 'Connected' : 'Disconnected' }}</span
+                        >
+                    </p>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>BC Tap Card Login</h3>
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of bcLoginFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Manual Login</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of manualLoginFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Maintenance Staff Login</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of msTapCardFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>External Devices</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of externalDevicesFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Changes Start Trip flow</h3>
+                    <mat-form-field>
+                        <mat-label>Choose flow</mat-label>
+                        <mat-select
+                            (selectionChange)="onIconTypeChange($event.value)"
+                            [(ngModel)]="currentStartTripFlow"
+                        >
+                            @for (iconName of startTripList; track iconName) {
+                                <mat-option [value]="iconName">
+                                    {{ replaceUnderscore(iconName) }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-slide-toggle [(ngModel)]="startTripNotification">Notification</mat-slide-toggle>
+                    <br />
+                    <button mat-raised-button (click)="sendStartTripFlow()" color="primary">Send</button>
+
+                    <hr />
+                    <h3>Start Trip Data</h3>
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of startTripFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>CV Passenger Tap card</h3>
+                    <mat-slide-toggle [(ngModel)]="isError">Signal Type</mat-slide-toggle>
+                    <p>Switch is: {{ isError ? 'Error' : 'Success' }}</p>
+                    <mat-form-field>
+                        <mat-label>Error Message</mat-label>
+                        <mat-select [(ngModel)]="cvErrorMsg">
+                            @for (
+                                message of [
+                                    'MULTIPLE_CARDS',
+                                    'LOW_VALUE',
+                                    'INVALID_CARD',
+                                    'CARD_EXPIRED',
+                                    'BANK_CARD_NOT_SUPPORTED',
+                                    'BLAKCLISTED_CARD',
+                                    'ERROR'
+                                ];
+                                track message
+                            ) {
+                                <mat-option [value]="message">
+                                    {{ message }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Cv url / number</mat-label>
+                        <mat-select (selectionChange)="onCvNumberChange($event.value)" [(ngModel)]="cvUrl">
+                            @for (cvData of [1, 2, 3, 4, 5, 6]; track cvData) {
+                                <mat-option [value]="cvData">
+                                    {{ cvData }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                        <mat-label>Icon type</mat-label>
+                        <mat-select (selectionChange)="onIconTypeChange($event.value)" [(ngModel)]="activeIcon">
+                            @for (iconName of iconNames; track iconName) {
+                                <mat-option [value]="iconName.value">
+                                    <img alt="{{ iconName.value }}" width="26" height="26" [src]="iconName.url" />
+                                    {{ iconName.value }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!cvUrl || !activeIcon" mat-raised-button (click)="sendIcon()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Change CV Status</h3>
+                    <section class="cv-number-cont">
+                        @for (cvData of [1, 2, 3, 4, 5, 6]; track cvData) {
+                            <mat-checkbox
+                                [checked]="cvStatusChanger?.includes(cvData)"
+                                (change)="onCheckboxChange($event, cvData)"
+                                >CV Number {{ cvData }}</mat-checkbox
+                            >
+                        }
+                    </section>
+
+                    <mat-form-field>
+                        <mat-label>Status</mat-label>
+                        <mat-select multiple [(ngModel)]="activeCvDir">
+                            @for (iconName of cvDirOptions; track iconName) {
+                                <mat-option [value]="iconName.value">
+                                    {{ iconName.key }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+
+                    <button
+                        [disabled]="!activeCvDir || cvStatusChanger.length === 0"
+                        mat-raised-button
+                        (click)="sendCvStatus()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+
+                <!-- <div class="">
+                    <h6>Publish bus DIR(Now, Next, Dest)</h6>
+                    <br />
+                    <mat-form-field>
+                      <mat-label>Bus route now</mat-label>
+                      <mat-select
+                        [compareWith]="compareObjects"
+                        (selectionChange)="onRouteChange($event.value, 'now')"
+                        [(value)]="currentRoute.now"
+                        >
+                        <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
+                          {{ busRoute.Name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Bus route dest</mat-label>
+                      <mat-select
+                        [compareWith]="compareObjects"
+                        (selectionChange)="onRouteChange($event.value, 'dest')"
+                        [(value)]="currentRoute.dest"
+                        >
+                        <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
+                          {{ busRoute.Name }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendDirRoute()" color="primary">
+                      Send
+                    </button>
+                  </div> -->
+
+                <div class="cv-icon-cont">
+                    <h6>Publish Current Fare Bus stop</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Fare Bus Stop</mat-label>
+                        <mat-select
+                            [compareWith]="compareObjects"
+                            (selectionChange)="onRouteChange($event.value, 'fareBusStop')"
+                            [(value)]="currentRoute.fareBusStop"
+                        >
+                            @for (busRoute of busRouteList; track busRoute) {
+                                <mat-option [value]="busRoute?.Busid">
+                                    {{ busRoute.Name }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Index</mat-label>
+                        <input matInput placeholder="Change Index" [(ngModel)]="fareBusStopIndex" />
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="autoBls">Auto BLS</mat-slide-toggle>
+                    <mat-slide-toggle [(ngModel)]="manualBls">Manual BLS</mat-slide-toggle>
+                    <mat-slide-toggle [(ngModel)]="misMatch">Mis Match</mat-slide-toggle>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendCurrentFareBusStop()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h6>Change FMS Bus stop</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Bus Service Number</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.busServiceNum" />
+                    </mat-form-field>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Plate Number</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.plateNum" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>SPID</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.spid" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Dir</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.dir" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>KM</mat-label>
+                        <input matInput [(ngModel)]="fmsBusStop.km" />
+                    </mat-form-field>
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="fmsBusStop.updateBusStopList"
+                        >Change FMS Bus Stop List</mat-slide-toggle
+                    >
+                    <br />
+                    <button mat-raised-button (click)="sendUpdateFmsBusStop()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h6>Head way and Timetable</h6>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Current Block</mat-label>
+                        <input matInput placeholder="Name" [(ngModel)]="headTimeTTable.currentBlock" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Bar count</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="headTimeTTable.bars">
+                            @for (barCount of [0, 1, 2, 3, 4, 5, 6]; track barCount) {
+                                <mat-option [value]="barCount">
+                                    {{ barCount }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-slide-toggle [(ngModel)]="headTimeTTable.isHeadway">Is headway</mat-slide-toggle>
+                    <br />
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Min Sec 00:00</mat-label>
+                        <input matInput placeholder="Name" [(ngModel)]="headTimeTTable.minSec" />
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Color</mat-label>
+                        <mat-select [(ngModel)]="headTimeTTable.color">
+                            @for (color of ['green', 'blue', 'orange', 'black']; track color) {
+                                <mat-option [value]="color">
+                                    {{ color }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Color</mat-label>
+                        <mat-select [(ngModel)]="headTimeTTable.direction">
+                            @for (dir of ['left', 'right']; track dir) {
+                                <mat-option [value]="dir">
+                                    {{ dir }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+
+                    <h6>Next Bus Info</h6>
+                    <mat-form-field>
+                        <mat-label>Bus Behind occupancy</mat-label>
+                        <mat-select [compareWith]="compareObjects" [(ngModel)]="nextBusInfo.busBehindOccupancy">
+                            @for (barCount of [0, 1, 2, 3]; track barCount) {
+                                <mat-option [value]="barCount">
+                                    {{ barCount }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Minutes</mat-label>
+                        <input matInput type="'number" placeholder="Name" [(ngModel)]="nextBusInfo.busBehindTime" />
+                    </mat-form-field>
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="nextBusInfo.show">Show next Bus info</mat-slide-toggle>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendHeadTime()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <!-- <div class="cv-icon-cont">
+                    <h6>Next Bus Info</h6>
+                    <br />
+                    <mat-form-field>
+                      <mat-label>Bus Behind occupancy</mat-label>
+                      <mat-select [compareWith]="compareObjects" [(ngModel)]="nextBusInfo.busBehindOccupancy">
+                        <mat-option *ngFor="let barCount of [0, 1, 2, 3]" [value]="barCount">
+                          {{ barCount }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Seconds</mat-label>
+                      <input matInput type="'number" placeholder="Name" [(ngModel)]="nextBusInfo.busBehindTime" />
+                    </mat-form-field>
+                    <br />
+                    <mat-slide-toggle [(ngModel)]="nextBusInfo.show">Show next Bus info</mat-slide-toggle>
+                    <br />
+                    <br />
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendNextBusInfo()" color="primary">
+                      Send
+                    </button>
+                  </div> -->
+
+                <div class="cv-icon-cont">
+                    <h3>Free flows</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of freeFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Breakdown flows</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of breakDownFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Front doors and Rear doors Exit</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of frontDoorAndRearDoorFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>End trip flows</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of endTripFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Cash flows</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of cashPaymentFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>On Shift pop up message</h3>
+                    <mat-form-field>
+                        <mat-label>Choose pop up</mat-label>
+                        <mat-select (selectionChange)="onIconTypeChange($event.value)" [(ngModel)]="currentMainPagePop">
+                            @for (iconName of mainPagePopUpList; track iconName) {
+                                <mat-option [value]="iconName">
+                                    {{ replaceUnderscore(iconName) }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <button mat-raised-button (click)="sendMainPagePop()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Off Trip pop up message</h3>
+                    <mat-form-field>
+                        <mat-label>Choose pop up</mat-label>
+                        <mat-select (selectionChange)="onIconTypeChange($event.value)" [(ngModel)]="currentMainPagePop">
+                            @for (iconName of mainPagePopUpList; track iconName) {
+                                <mat-option [value]="iconName">
+                                    {{ replaceUnderscore(iconName) }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <button mat-raised-button (click)="sendMainPagePop2()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Redirection for Main Tab</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Redirection</mat-label>
+                        <mat-select [(ngModel)]="authData">
+                            @for (barCount of authList; track barCount) {
+                                @if (barCount?.isLatest) {
+                                    <mat-option [value]="barCount?.data">
+                                        {{ barCount?.label }}
+                                    </mat-option>
+                                }
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendRedirect()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div style="width: 100%; max-width: none">
+                    <hr />
+                    <h2>Maintenance</h2>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>App Upgrade</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceAppUpgradeFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>View Parameter</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceViewParameterFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Fare Console Configuration</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceFareConsoleFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Calibrate BLS</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceBlsCalibrateFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Version Information</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceVersionInfoFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>BLS Information</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceBLSInfoFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Redetect CV</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceRedectCVFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Load Parameters</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceLoadParameterFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Save Transaction</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceSaveTransactionFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Display Audit</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceAuditRegistrationFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>External Devices</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceExtDeviceFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Decommissioning</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceDecommissioningFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendMaintenanceRedirect()" color="primary">Send</button>
+                </div>
+                <div class="cv-icon-cont">
+                    <h3>Change Screen Maintenance Tab</h3>
+                    <mat-form-field>
+                        <mat-label>Maintenance Tab Screen</mat-label>
+                        <mat-select [(ngModel)]="maintenanceScreen">
+                            @for (screen of [1, 2, 3]; track screen) {
+                                <mat-option [value]="screen">
+                                    {{ screen }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button
+                        [disabled]="!maintenanceScreen"
+                        mat-raised-button
+                        (click)="changeMaintenanceTabScreen()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+                <div class="cv-icon-cont">
+                    <h3>Redirection for Maintenance Tab</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Redirection</mat-label>
+                        <mat-select [(ngModel)]="maintenanceData">
+                            @for (barCount of maintenanceList; track barCount) {
+                                @if (barCount?.isLatest) {
+                                    <mat-option [value]="barCount?.data">
+                                        {{ barCount?.label }}
+                                    </mat-option>
+                                }
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button
+                        [disabled]="!currentRoute"
+                        mat-raised-button
+                        (click)="sendMaintenanceRedirect()"
+                        color="primary"
+                    >
+                        Send
+                    </button>
+                </div>
+
+                <div style="width: 100%; max-width: none">
+                    <hr />
+                    <h2>Fare Tab</h2>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Cancel Ride</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of cancelRideFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Transaction</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of transactionFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Concession</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of concessionFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Top Up</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of topUpFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Fare Bus Stop Mode</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of fareBusStopModeFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Show CV Status</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of showCVStatusFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Set CV Entry/Exit</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of setCVFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>CV Mode Control</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of cvModeControlFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Power All CVs ON/OFF</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of powerAllCVOnOffFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>CV Power Control</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of cvPowerControlFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Reset All CVs</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of resetAllCVFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Print Retention Ticket</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of printRetentionTicketFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Printer Status</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of printStatusFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Printer ON/OFF</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Please select</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of printerOnOffFlows; track barCount) {
+                                <mat-option [value]="barCount?.data">
+                                    {{ barCount?.label }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <br />
+                    <br />
+                    <button mat-raised-button (click)="sendFareRedirect()" color="primary">Send</button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Change Screen Fare Tab</h3>
+                    <mat-form-field>
+                        <mat-label>Fare Tab Screen</mat-label>
+                        <mat-select [(ngModel)]="fareScreen">
+                            @for (screen of [1, 2, 3, 4]; track screen) {
+                                <mat-option [value]="screen">
+                                    {{ screen }}
+                                </mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!fareScreen" mat-raised-button (click)="changeFareTabScreen()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <div class="cv-icon-cont">
+                    <h3>Redirection for Fare Tab</h3>
+                    <br />
+                    <mat-form-field>
+                        <mat-label>Redirection</mat-label>
+                        <mat-select [(ngModel)]="fareData">
+                            @for (barCount of fareList; track barCount) {
+                                @if (barCount?.isLatest) {
+                                    <mat-option [value]="barCount?.data">
+                                        {{ barCount?.label }}
+                                    </mat-option>
+                                }
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendFareRedirect()" color="primary">
+                        Send
+                    </button>
+                </div>
+
+                <!-- <div class="cv-icon-cont">
+                  <h2>Changes Start Trip flow</h2>
+
+                  <mat-form-field>
+                    <mat-label>Choose flow</mat-label>
+                    <mat-select
+                      (selectionChange)="onIconTypeChange($event.value)"
+                      [(ngModel)]="currentStartTripFlow"
+                      >
+                      <mat-option *ngFor="let iconName of startTripList" [value]="iconName">
+                        {{ replaceUnderscore(iconName) }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <br />
+                  <mat-slide-toggle [(ngModel)]="startTripNotification">Notification</mat-slide-toggle>
+                  <br />
+                  <button mat-raised-button (click)="sendStartTripFlow()" color="primary">Send</button>
+                </div> -->
+            </div>
+        }
+    </div>
+</div>

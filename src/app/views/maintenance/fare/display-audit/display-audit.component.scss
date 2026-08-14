@@ -1,0 +1,146 @@
+@use 'variables' as *;
+
+.display-audit-page {
+    text-align: center;
+    height: 100%;
+    margin-right: -20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    .loading {
+        @include flex-center;
+        flex-direction: column;
+        height: 100%;
+
+        > div {
+            font-size: 40px;
+            font-weight: $font-weight-bold;
+            margin-top: 20px;
+            @include dot-loading;
+        }
+
+        .loader {
+            @include spinner;
+        }
+    }
+
+    .title {
+        padding-bottom: 20px;
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+        position: relative;
+
+        &::before {
+            content: '';
+            position: absolute;
+            width: calc(100% - 28px) !important;
+            height: 10px;
+            background-color: $madt-bg-dark-1;
+            bottom: 0;
+            left: 0;
+            z-index: 9999;
+        }
+    }
+
+    ng-scrollbar {
+        @include scrollbar;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+
+    .table-container {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .fake-table {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        width: calc(100% - 28px) !important;
+    }
+
+    .real-table {
+        thead {
+            th {
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    .table {
+        width: 100%;
+
+        &-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            font-weight: $font-weight-bold;
+
+            img {
+                cursor: pointer;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .desc {
+                transform: rotate(180deg);
+            }
+        }
+
+        .spid {
+            font-weight: $font-weight-semi-bold;
+            font-size: 20px;
+        }
+
+        th {
+            border-right: 1px solid $madt-bg-dark-2;
+            background-color: $black;
+            position: sticky;
+            top: 0;
+        }
+
+        th,
+        tr {
+            font-size: 28px;
+            text-align: left;
+        }
+
+        th {
+            width: 480px;
+            text-align: left;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            border-left: 1px solid $madt-bg-dark-2;
+        }
+
+        tr:nth-child(even) > td {
+            background-color: $madt-bg-dark-2;
+        }
+
+        tr:nth-child(odd) > td {
+            background-color: $madt-bg-dark-3;
+        }
+    }
+}

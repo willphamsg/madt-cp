@@ -1,0 +1,157 @@
+@use 'variables' as *;
+
+.fare-console {
+    height: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative;
+
+    .required {
+        border: 1px solid $white;
+
+        .value {
+            font-style: italic;
+        }
+    }
+
+    &-list {
+        // flex-grow: 1;
+        overflow: hidden;
+
+        .scrollbar {
+            height: 100%;
+        }
+    }
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $madt-bg-dark-2;
+        margin-bottom: 8px;
+
+        .left {
+            font-size: 28px;
+            text-align: left;
+            padding: 16px 12px;
+            width: 460px;
+            border-right: 2px solid $madt-bg-dark-1;
+        }
+
+        .right {
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-grow: 1;
+            padding: 16px 12px;
+            color: $madt-bg-light-1;
+
+            .value {
+                color: $white;
+                font-weight: $font-weight-bold;
+            }
+        }
+        // &:last-child {
+        //     .left {
+        //         color: #ef2626;
+        //         font-weight: $font-weight-bold;
+        //         border-right: none;
+        //     }
+        // }
+    }
+
+    .ng-scrollbar {
+        @include scrollbar;
+        //     height: 100%;
+    }
+
+    ::ng-deep {
+        .scrollbar-track {
+            @include scrollbar-track;
+        }
+        .scrollbar-thumb {
+            @include scrollbar-thumb;
+        }
+        .scrollbar-button {
+            @include scrollbar-button;
+        }
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 500px;
+        text-align: center;
+        p {
+            font-size: 28px;
+            line-height: 2;
+        }
+
+        .button {
+            @include dark-button;
+            font-size: 18px;
+            font-weight: $font-weight-bold;
+            height: 54px;
+            width: 216px;
+            margin: auto;
+            margin-top: 20px;
+            flex-direction: row;
+            background: $madt-bg-light-1;
+
+            &::before {
+                content: none;
+            }
+
+            .text {
+                padding-left: 10px;
+            }
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+
+    .btn-group {
+        @include flex-center;
+        gap: 32px;
+        margin-top: 20px;
+        position: relative;
+
+        .pos-abs {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .btn {
+        @include flex-center;
+        padding: 15px 25px;
+        min-height: 80px;
+        border-radius: 4px;
+        transition: 0.2s ease-in-out 0s;
+
+        &:active {
+            transform: scale(1.01);
+        }
+
+        span {
+            font-size: 22px;
+            font-weight: $font-weight-bold;
+            padding-left: 6px;
+            color: $white;
+        }
+
+        &-cancel {
+            background-color: $madt-color-red;
+        }
+
+        &-confirm {
+            background-color: $madt-bg-light-1;
+        }
+    }
+}

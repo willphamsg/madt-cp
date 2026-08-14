@@ -1,0 +1,46 @@
+@use 'variables' as *;
+
+.print-bcv-results-page {
+    text-align: center;
+
+    .title {
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 500px;
+        text-align: center;
+        margin-top: 30px;
+
+        p {
+            font-size: 28px;
+            line-height: 1.5;
+        }
+
+        .button {
+            @include dark-button;
+            font-size: 22px;
+            font-weight: $font-weight-bold;
+            min-height: 80px;
+            padding: 0 20px;
+            margin: auto;
+            margin-top: 20px;
+            flex-direction: row;
+            background: $madt-bg-light-1;
+
+            &::before {
+                content: none;
+            }
+
+            .text {
+                padding-left: 6px;
+            }
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+}

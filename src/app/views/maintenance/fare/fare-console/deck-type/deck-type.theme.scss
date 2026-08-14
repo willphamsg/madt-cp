@@ -1,0 +1,36 @@
+@use 'variables' as *;
+
+@mixin lta-deck-type-theme($light-theme: false) {
+    @if $light-theme {
+        .deck-type {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .deck-type-table {
+                tr {
+                    td {
+                        border-left-color: #e5e5e5 !important;
+                    }
+                }
+
+                tr:nth-child(odd) > th,
+                tr:nth-child(odd) > td {
+                    background-color: $white !important;
+                }
+
+                tr:nth-child(even) > th,
+                tr:nth-child(even) > td {
+                    background-color: #dedede !important;
+                }
+            }
+        }
+    }
+}

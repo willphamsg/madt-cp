@@ -1,0 +1,49 @@
+<div class="bls">
+    @if (step === 1) {
+        <div>
+            <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
+            <h2 class="title">{{ 'SECONDARY_BLS_STATUS' | translate }}</h2>
+            <div class="content">
+                <p class="label">
+                    {{ 'STATUS' | translate }}:
+                    <span class="value">{{
+                        (fareConsoleSetting.blsStatus === 1 ? 'ENABLE' : 'DISABLED') | translate
+                    }}</span>
+                </p>
+                <div class="btn-group">
+                    <button class="btn" [disabled]="fareConsoleSetting.blsStatus === 2" (click)="handleButtonSound(); handleSelectStatus(2)">
+                        <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                        <div class="text">{{ 'DISABLED' | translate }}</div>
+                    </button>
+                    <button class="btn" [disabled]="fareConsoleSetting.blsStatus === 1" (click)="handleButtonSound(); handleSelectStatus(1)">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <div class="text">{{ 'ENABLE' | translate }}</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (step === 2) {
+        <div>
+            <h2 class="title">
+                {{ selectedBlsStatus === 1 ? ('BLS_STATUS_ENABLE' | translate) : ('BLS_STATUS_DISABLE' | translate) }}
+            </h2>
+            <div class="content">
+                <div class="confirm">
+                    {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
+                </div>
+                <div class="btn-group">
+                    <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirmBlsStatus(false)">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </div>
+                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmBlsStatus(true)">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'CONFIRM' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

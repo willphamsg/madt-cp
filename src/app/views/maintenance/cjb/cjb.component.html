@@ -1,0 +1,33 @@
+<ng-container>
+    <div class="maintenance-fare-layout">
+        <div class="layout">
+            <div class="button" (click)="handleButtonSound(); backToMaintenance()">
+                <!-- <img src="/assets/images/icons/main/close-circle.svg" alt="" /> -->
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+            <iframe
+                #iframeRef
+                [src]="safeUrl"
+                (load)="onIframeLoad(iframeRef)"
+                (error)="onIframeError()"
+                width="1280"
+                height="720"
+                title="CJB Iframe"
+                frameborder="0"
+                allowfullscreen
+            ></iframe>
+        </div>
+        @if (isBroken) {
+            <div class="cjb-error">
+                <div class="cjb-error-content">
+                    <img src="/assets/images/svg/big-error.svg" alt="" />
+                    <p>{{ 'CJB_CANNOT_BE_ACCESSED' | translate }}</p>
+                    <button class="btn btn-ok" (click)="handleButtonSound(); backToMaintenance()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'OK' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        }
+    </div>
+</ng-container>

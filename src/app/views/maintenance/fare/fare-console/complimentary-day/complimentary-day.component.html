@@ -1,0 +1,54 @@
+<div class="complimentary-day">
+    <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
+    <!-- <div *ngIf="step === 1">
+  <h2 class="title">{{'COMPLIMENTARY_DAYS' | translate}}</h2>
+  <div class="content">
+    <p class="label">
+      {{'CURRENT_DAYS' | translate}}: <span class="value">{{ currentDays }}</span>
+    </p>
+    <div class="btn-group">
+      <button class="button" (click)="handleButtonSound(); handleSetTime()">
+        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+        <div class="text">{{'SET_COMPLIMENTARY_DAYS' | translate}}</div>
+      </button>
+    </div>
+  </div>
+</div> -->
+    <div>
+        <h2 class="title">{{ 'SET_COMPLIMENTARY_DAYS' | translate }}</h2>
+        <div class="content">
+            <p class="label">
+                {{ 'CURRENT_DAYS' | translate }}: <span class="value">{{ fareConsoleSetting.complimentaryDays }}</span>
+            </p>
+            <div class="input-group">
+                <p>{{ 'INPUT_CURRENT_DAYS' | translate }}</p>
+                <input id="inputField" [class.hasError]="hasInputError" />
+                @if (hasInputError) {
+                    <p class="error">
+                        {{
+                            'EXCEEDED_THE_MAXIMUM_DAYS'
+                                | translate: { days: fareConsoleSetting.maximumcomplimentaryDays }
+                        }}
+                    </p>
+                }
+            </div>
+        </div>
+
+        <div class="keyboard">
+            <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+        </div>
+    </div>
+
+    <!-- <ng-container *ngIf="step === 3">
+<confirm-dialog
+  [btnOK]="true"
+  (onOK)="handleFinish()"
+  [title]="'SUCCESS' | translate"
+  [content]="'COMPLIMENTARY_DAYS_IS_SET' | translate"
+  >
+  <div style="margin-bottom: 20px" icon>
+    <img src="/assets/images/svg/big-success.svg" alt="" />
+  </div>
+</confirm-dialog>
+</ng-container> -->
+</div>

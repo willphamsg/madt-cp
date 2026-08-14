@@ -1,0 +1,18 @@
+@use 'variables' as *;
+
+@mixin lta-daily-trip-log-theme($light-theme: false) {
+    @if $light-theme {
+        .daily-trip-log {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,112 @@
+<div class="date-setting">
+    <!-- <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div> -->
+    <!-- <div *ngIf="step === 1">
+  <h2 class="title">{{ 'SET_DATE' | translate }}</h2>
+  <div class="content">
+    <p class="label">{{ 'DATE_FORMAT' | translate }}</p>
+    <p class="value">{{ currentDate }}</p>
+    <div class="btn-group">
+      <button class="button" (click)="handleButtonSound(); handleSetTime()">
+        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+        <div class="text">{{ 'SET_DATE' | translate }}</div>
+      </button>
+    </div>
+  </div>
+</div> -->
+    <div>
+        <h2 class="title">{{ 'DATE_TIME' | translate }}</h2>
+        <div class="content">
+            <!-- <p class="label">{{ 'DATE_FORMAT' | translate }}</p> -->
+            <p class="value">{{ dateTimeSetting.dateTime | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+            <div class="input-group">
+                <div class="box">
+                    <div class="input-box">
+                        <p>{{ 'INPUT_DATE' | translate }}</p>
+                        <div class="input-block" [ngClass]="{ 'has-error': !!dateTimeErrorMessage }">
+                            <input
+                                type="text"
+                                id="day"
+                                placeholder="--"
+                                (click)="handleButtonSound(); dateTimeInputType = 'day'"
+                                tabindex="1"
+                            />
+                            <div>/</div>
+                            <input
+                                type="text"
+                                id="month"
+                                placeholder="--"
+                                (click)="handleButtonSound(); dateTimeInputType = 'month'"
+                                tabindex="2"
+                            />
+                            <div>/</div>
+                            <input
+                                type="text"
+                                id="year"
+                                class="year"
+                                placeholder="----"
+                                (click)="handleButtonSound(); dateTimeInputType = 'year'"
+                                tabindex="3"
+                            />
+                        </div>
+                        @if (!!dateTimeErrorMessage) {
+                            <p class="error">{{ dateTimeErrorMessage | translate }}</p>
+                        } @else if (dateTimeSetting.message) {
+                            <p class="error">{{ dateTimeSetting.message || 'INVALID_ENTRY' | translate }}</p>
+                        }
+                    </div>
+                    <div class="input-box">
+                        <p>{{ 'INPUT_TIME' | translate }}</p>
+                        <div class="input-block" [ngClass]="{ 'has-error': hasTimeInputError }">
+                            <input
+                                type="text"
+                                id="hour"
+                                placeholder="--"
+                                (click)="handleButtonSound(); dateTimeInputType = 'hour'"
+                                tabindex="4"
+                            />
+                            <div>:</div>
+                            <input
+                                type="text"
+                                id="minute"
+                                placeholder="--"
+                                (click)="handleButtonSound(); dateTimeInputType = 'minute'"
+                                tabindex="5"
+                            />
+                            <div>:</div>
+                            <input
+                                type="text"
+                                id="second"
+                                placeholder="--"
+                                (click)="handleButtonSound(); dateTimeInputType = 'second'"
+                                tabindex="6"
+                            />
+                        </div>
+                        @if (hasTimeInputError) {
+                            <p class="error">{{ 'INVALID_ENTRY' | translate }}</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="keyboard">
+            <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+        </div>
+    </div>
+
+    <!-- <ng-container *ngIf="step === 3">
+<confirm-dialog
+  [title]="success ? ('SUCCESS' | translate) : ('ERROR' | translate)"
+  [content]="success ? ('DATE_IS_SET' | translate) : ('INVALID_ENTRY' | translate)"
+  [btnOK]="true"
+  (onOK)="handleFinish()"
+  >
+  <div *ngIf="success" style="margin-bottom: 20px" icon>
+    <img src="/assets/images/svg/big-success.svg" alt="" />
+  </div>
+  <div *ngIf="!success" style="margin-bottom: 20px" icon>
+    <img src="/assets/images/svg/big-error.svg" alt="" />
+  </div>
+</confirm-dialog>
+</ng-container> -->
+</div>

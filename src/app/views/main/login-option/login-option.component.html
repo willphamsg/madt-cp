@@ -1,0 +1,12 @@
+<div class="lta-full-screen">
+    <div class="lta-logo"></div>
+    <h3 class="title">{{ 'LOGIN_OPTION' | translate }}</h3>
+    <div class="btn-group">
+        @for (button of loginOptionButtons; track button.id) {
+            <button class="btn btn-confirm" (click)="handleButtonSound(); button.onClick($event)">
+                <img [src]="button.imgSrc" alt="" />
+                <span class="text">{{ button.label | translate }}</span>
+            </button>
+        }
+    </div>
+</div>

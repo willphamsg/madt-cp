@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div>
+        <h1 class="text-center text-bold">{{ 'SELECT_LANGUAGE' | translate }}</h1>
+        <ul>
+            @for (lang of languageOptions; track lang.id) {
+                <p
+                    class="language-opt"
+                    [ngClass]="{ active: language === lang.id }"
+                    (click)="handleButtonSound(); handleChangeLanguage(lang.id)"
+                >
+                    {{ lang.label }}
+                </p>
+            }
+        </ul>
+        <div class="btn-group">
+            <!-- <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirmLanguage(false)">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </div> -->
+            <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmLanguage(true)">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </div>
+        </div>
+    </div>
+</div>

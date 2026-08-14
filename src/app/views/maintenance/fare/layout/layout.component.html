@@ -1,0 +1,63 @@
+<ng-container>
+    <!-- <app-header screen="maintenance"></app-header> -->
+    <div class="maintenance-fare-layout">
+        <div class="layout">
+            <app-breadcrumb [id]="'maintenanceBreadcrumb'" [dateTime]="tcDateTime">
+                <img (click)="handleButtonSound(); handleBack()" src="/assets/images/icons/maintenance/back.svg" alt="" icon />
+                <!-- <button class="back-button" button>{{ 'BACK' | translate }}</button> -->
+            </app-breadcrumb>
+            <div class="madt-main">
+                <div class="madt-side-nav">
+                    <!-- <div class="menu"> -->
+                    <ng-scrollbar
+                        #scrollbarRef
+                        class="menu"
+                        (reachedTop)="onTopReached()"
+                        (reachedBottom)="onBottomReached()"
+                    >
+                        @for (menu of menus; track menu.id) {
+                            <a
+                                class="menu-item"
+                                [routerLink]="'/maintenance/fare' + [menu.route]"
+                                [ngClass]="{ active: activeMenu?.id === menu.id }"
+                                (click)="handleButtonSound(); handleActiveMenu(menu)"
+                            >
+                                {{ menu.label | translate }}
+                            </a>
+                        }
+                    </ng-scrollbar>
+                    <!-- </div> -->
+
+                    @if (isScrollTop) {
+                        <div class="menu-direction" (click)="handleButtonSound(); handleScrollBottom()">
+                            <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
+                        </div>
+                    } @else {
+                        <div
+                            class="menu-direction"
+                            style="transform: rotate(180deg); transition: all 0.2s ease"
+                            (click)="handleButtonSound(); handleScrollTop()"
+                        >
+                            <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
+                        </div>
+                    }
+                </div>
+                <div class="madt-content">
+                    <router-outlet></router-outlet>
+
+                    @if (showSavePopup) {
+                        <common-pop-up
+                            [type]="'warning'"
+                            [title]="'ALERT'"
+                            [message]="'PRESS_CONFIRM_TO_SAVE'"
+                            [disableTimeout]="true"
+                            [isOk]="true"
+                            (onOk)="handleConfirmFareConsole()"
+                        >
+                        </common-pop-up>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

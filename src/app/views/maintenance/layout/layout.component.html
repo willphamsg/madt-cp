@@ -1,0 +1,59 @@
+@if (loading) {
+    <div class="loading"></div>
+}
+
+<ng-container>
+    <app-header
+        screen="maintenance"
+        (clickLogout)="handleActiveLogoutPopup()"
+        [onlyDateTime]="dateTimeOnly || bootUpCommissioning.show"
+        [isLoggedIn]="true"
+    >
+    </app-header>
+    <main>
+        <router-outlet></router-outlet>
+        @if (ignitionOff.show) {
+            <ignition-off
+                [time]="ignitionOff.message || ''"
+                [delay]="ignitionOff.delay"
+                (onConfirm)="handleIgnitionOff()"
+                [disabled]="ignitionOff.disabled"
+            ></ignition-off>
+        }
+        @if (notification.show) {
+            <div class="notification">
+                <notification [message]="notification.message || ''" (onOK)="handleClosePopup()"></notification>
+            </div>
+        }
+        @if (activeLogoutPopup) {
+            <common-pop-up
+                [type]="'info'"
+                [overrideAll]="true"
+                [title]="'LOGOUT'"
+                [message]="'PRESS_THE_BTN_TO_PROCEED'"
+                [fullScreen]="true"
+                [disableSound]="true"
+                [isConfirm]="true"
+                [isCancel]="true"
+                (onCancel)="handleLogout(false)"
+                (onConfirm)="handleLogout(true)"
+            >
+            </common-pop-up>
+        }
+
+        @if (this.showPopUp) {
+            <common-pop-up
+                [type]="this.showPopUp.type"
+                [title]="this.showPopUp.title"
+                [fullScreen]="true"
+                [isOk]="true"
+                (onOk)="closePopUpHandler()"
+            >
+            </common-pop-up>
+        }
+
+        @if (bootUpCommissioning.show) {
+            <boot-up-commissioning [type]="bootUpCommissioning.title || ''"></boot-up-commissioning>
+        }
+    </main>
+</ng-container>

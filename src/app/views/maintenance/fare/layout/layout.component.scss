@@ -1,0 +1,64 @@
+@use 'variables' as *;
+
+.maintenance-fare-layout {
+    height: calc(100vh - $header-footer-height);
+    padding: 5px 20px 15px 20px;
+    background-color: $madt-bg-black-1;
+
+    .layout {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: $madt-bg-dark-1;
+    }
+
+    .madt-main {
+        flex: 1;
+        overflow: hidden;
+        display: flex;
+
+        .madt-side-nav {
+            width: 300px;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .menu {
+            flex: 1;
+            // overflow-y: overlay;
+            overflow-x: hidden;
+            background-color: #010d10;
+        }
+
+        .menu-item {
+            color: $white;
+            font-size: 22px;
+            padding: 16px;
+            display: block;
+            transition: all 0.2s ease;
+
+            &.active {
+                background-color: $madt-bg-light-1;
+            }
+        }
+
+        .menu-direction {
+            background-color: $black;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: $color-yellow;
+        }
+
+        .madt-content {
+            height: 100%;
+            flex: 1;
+            padding: 16px 20px;
+            position: relative;
+        }
+    }
+}

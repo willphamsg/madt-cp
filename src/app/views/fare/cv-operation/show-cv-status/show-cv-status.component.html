@@ -1,0 +1,29 @@
+<div class="show-cv-status">
+    <div class="page-header">
+        <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+    </div>
+    <h2 class="title">{{ 'SHOW_CV_STATUS' | translate }}</h2>
+    <div class="content">
+        <div class="scrollbar">
+            <app-scrollbar>
+                <ul class="bus-stop-list">
+                    @for (cv of showCVStatus.cvStatus; track cv.cvNum) {
+                        <li class="row">
+                            <div class="left">
+                                <p class="cv-name">CV{{ cv.cvNum }}:</p>
+                            </div>
+                            <div class="right">
+                                {{ FareCVStatus[cv.status] | translate }}
+                                {{
+                                    FareCVSubStatus[cv?.subStatus || 0]
+                                        ? ' - ' + (FareCVSubStatus[cv?.subStatus || 0] || '' | translate)
+                                        : ''
+                                }}
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </app-scrollbar>
+        </div>
+    </div>
+</div>

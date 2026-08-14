@@ -1,0 +1,38 @@
+@use 'variables' as *;
+
+.calibrate-bls-page {
+    text-align: center;
+
+    .title {
+        margin: 30px 0;
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 550px;
+        text-align: center;
+        p {
+            font-size: 28px;
+            line-height: 2;
+        }
+    }
+
+    .button-group {
+        @include flex-center;
+        gap: 10px;
+
+        .button {
+            @include dark-button;
+            font-size: 24px;
+            font-weight: $font-weight-semi-bold;
+            min-height: 128px;
+            min-width: 292px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+}

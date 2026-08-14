@@ -1,0 +1,26 @@
+@use 'variables' as *;
+
+@mixin lta-end-shift-theme($light-theme: false) {
+    @if $light-theme {
+        .end-shift-page {
+            box-shadow: 1px 1px 5px #ccc;
+            background-color: #f2f2f2 !important;
+            color: $black;
+
+            .odo {
+                .input-group {
+                    input {
+                        background-color: #e7e7e7 !important;
+                        color: $black !important;
+                    }
+                }
+
+                .keyboard {
+                    background-color: $white !important;
+                    border-bottom-left-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                }
+            }
+        }
+    }
+}

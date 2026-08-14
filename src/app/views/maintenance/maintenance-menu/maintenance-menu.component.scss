@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+.maintenance-container {
+    height: calc(100vh - $header-footer-height);
+
+    .maintenance-page {
+        height: 100%;
+        background: url('/assets/images/icons/maintenance/lta-logo.svg') no-repeat center;
+    }
+
+    .button-control {
+        @include flex-center;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .button {
+        @include dark-button;
+        font-size: 24px;
+        font-weight: $font-weight-semi-bold;
+        min-height: 128px;
+        min-width: 292px;
+
+        &:active {
+            transform: scale(1.01);
+        }
+    }
+}

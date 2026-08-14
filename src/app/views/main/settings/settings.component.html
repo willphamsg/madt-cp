@@ -1,0 +1,122 @@
+<div class="settings-container">
+    @if (step === '') {
+        <div class="page-header full-row">
+            <div class="button" (click)="handleButtonSound(); backToMain()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div>
+        <h2 class="page-title">{{ 'SETTINGS' | translate }}</h2>
+        <ul>
+            <!-- <li class="row">
+      <div class="left">{{ 'THEME' | translate }}</div>
+      <div class="right">
+        <p class="value">{{ 'DARK_MODE' | translate }}</p>
+        <custom-switch
+          [checked]="themeMode === themeType.DARK"
+          (onChange)="setStep('lightMode')"
+        ></custom-switch>
+      </div>
+    </li> -->
+            <li class="row">
+                <div class="left">{{ 'LANGUAGE' | translate }}</div>
+                <div class="right" (click)="handleButtonSound(); setStep('language')">
+                    <p class="value">{{ currentLanguage | translate }}</p>
+                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                </div>
+            </li>
+        </ul>
+    }
+
+    @if (step === 'lightMode') {
+        <div class="page-header full-row">
+            <!-- <h2>{{ 'SETTINGS' | translate }}</h2> -->
+            <div class="button" (click)="handleButtonSound(); backToMain()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+        </div>
+        <div class="confirm">
+            <div class="confirm-header">
+                {{
+                    'CONFIRM_THEME_CHANGE_MODE'
+                        | translate
+                            : {
+                                  theme:
+                                      themeMode === themeType.DARK
+                                          ? ('LIGHT_MODE' | translate)
+                                          : ('DARK_MODE' | translate)
+                              }
+                }}
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_ENTER_CONFIRM' | translate }}</p>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div
+                    class="btn btn-confirm"
+                    (click)="
+                        handleButtonSound();
+                        toggleDarkMode(themeMode === themeType.LIGHT ? themeType.DARK : themeType.LIGHT)
+                    "
+                >
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (step === 'language') {
+        @if (languageStep === 1) {
+            <div class="page-header full-row">
+                <!-- <h2>{{ 'SETTINGS' | translate }}</h2> -->
+                <div class="button" (click)="handleButtonSound(); backToMain()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </div>
+            </div>
+            <div class="confirm">
+                <div class="confirm-header">{{ 'SELECT_LANGUAGE' | translate }}</div>
+                <ul>
+                    @for (lang of languageOptions; track lang.id) {
+                        <p
+                            class="language-opt"
+                            [ngClass]="{ active: currentLanguage === lang.id }"
+                            (click)="handleButtonSound(); handleSelectLang(lang.id)"
+                        >
+                            {{ lang.label }}
+                        </p>
+                    }
+                </ul>
+            </div>
+        }
+        @if (languageStep === 2) {
+            <div class="page-header full-row">
+                <!-- <h2>{{ 'SETTINGS' | translate}}</h2> -->
+                <div class="button" (click)="handleButtonSound(); backToMain()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </div>
+            </div>
+            <div class="confirm">
+                <div class="confirm-header">
+                    {{ 'CONFIRM_CHANGE_LANGUAGE' | translate: { lang: (selectedLanguage?.id ?? '' | translate) } }}
+                </div>
+                <p class="confirm-msg">{{ 'PRESS_ENTER_CONFIRM' | translate }}</p>
+                <div class="btn-group">
+                    <div class="btn btn-cancel" (click)="handleButtonSound(); onLanguageChange(false)">
+                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                        <span>{{ 'CANCEL' | translate }}</span>
+                    </div>
+                    <div class="btn btn-confirm" (click)="handleButtonSound(); onLanguageChange(true)">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'CONFIRM' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

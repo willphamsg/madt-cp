@@ -1,0 +1,98 @@
+@use 'variables' as *;
+
+.maintenance-fare-layout {
+    background-color: $madt-bg-black-1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+
+    .layout {
+        height: 100%;
+        width: 100%;
+        border-radius: 4px;
+    }
+
+    .button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        @include flex-center;
+        gap: 6px;
+        font-size: 28px;
+        font-weight: bold;
+        z-index: 99999;
+        cursor: pointer;
+        pointer-events: auto;
+        padding-left: 36px;
+        background-image: url('assets/images/icons/main/close-circle.svg');
+        background-repeat: no-repeat;
+    }
+
+    iframe {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        z-index: 1;
+        inset: 0;
+        pointer-events: auto;
+    }
+
+    .cjb-error {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #00171b;
+        @include flex-center;
+        z-index: 2222;
+
+        &-content {
+            max-width: 672px;
+            @include flex-center;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            background-color: $madt-bg-dark-1;
+            padding: 60px 20px;
+            border-radius: 4px;
+
+            p {
+                font-size: 32px;
+                font-weight: $font-weight-bold;
+            }
+        }
+
+        .btn {
+            @include flex-center;
+            min-height: 80px;
+            padding: 0 20px;
+            border-radius: 5px;
+            transition: 0.2s ease-in-out 0s;
+            min-width: 145px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+
+            span {
+                font-size: 22px;
+                font-weight: $font-weight-bold;
+                padding-left: 6px;
+                color: $white;
+            }
+
+            &-cancel {
+                background-color: $madt-color-red;
+            }
+
+            &-confirm,
+            &-ok {
+                background-color: $madt-bg-light-1;
+            }
+        }
+    }
+}

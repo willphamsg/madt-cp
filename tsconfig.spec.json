@@ -1,0 +1,24 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./out-tsc/spec",
+        "types": ["jasmine", "node"],
+        "baseUrl": "./src",
+        "paths": {
+            "@styles/*": ["styles/*"],
+            "@env/*": ["environments/*"],
+            "@app/*": ["app/*"],
+            "@data/*": ["app/data/*"],
+            "@dummyData/*": ["app/dummyData/*"],
+            "@models/*": ["app/models/*"],
+            "@models": ["app/models"],
+            "@components/*": ["app/components/*"],
+            "@directives/*": ["app/directives/*"],
+            "@views/*": ["app/views/*"],
+            "@store/*": ["app/store/*"],
+            "@services/*": ["app/services/*"],
+            "@assets/*": ["assets/*"]
+        }
+    },
+    "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
+}

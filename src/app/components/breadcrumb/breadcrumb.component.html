@@ -1,0 +1,27 @@
+<div class="madt-breadcrumb" [id]="id">
+    <div class="page">
+        <ng-content select="[icon]"></ng-content>
+        @for (bc of breadcrumbs; track bc; let last = $last) {
+            <a [ngClass]="{ 'font-weight-bold': last }">{{ bc.label | translate }}</a>
+            @if (!last) {
+                <span>
+                    <img src="/assets/images/svg/chevron-right.svg" alt="arrow" />
+                </span>
+            }
+        }
+    </div>
+
+    @if (!!dateTime) {
+        <div class="tc-date-time">
+            <strong>{{ 'FARE_SYSTEM' | translate }}:</strong>
+            <p class="date">{{ dateTime | date: 'dd/MM/yyyy' }}</p>
+            <p class="time">
+                <span>{{ dateTime | date: 'HH' }}</span>
+                :
+                <span>{{ dateTime | date: 'mm' }}</span>
+                :
+                <span>{{ dateTime | date: 'ss' }}</span>
+            </p>
+        </div>
+    }
+</div>

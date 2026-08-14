@@ -1,0 +1,170 @@
+<div class="bus-id">
+    @if (busIdData.status === ResponseStatus.ERROR && busIdData.msgID === MsgID.MAINTENANCE_BUS_ID_SUBMIT) {
+        <div class="bus-id-error">
+            <div>
+                <img src="/assets/images/svg/big-error.svg" alt="" />
+                <div class="title">{{ 'ERROR' | translate }}</div>
+                <div class="content">
+                    {{ busIdData.message ? (busIdData.message | translate) : ('PLEASE_RETRY_AGAIN' | translate) }}
+                </div>
+                <div class="btn-group">
+                    <div class="btn btn-ok" (click)="handleButtonSound(); handleRetrySetBusId()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'OK' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else {
+        @if (step === 1) {
+            <!-- <div class="back-button" (click)="handleButtonSound(); backToFareConsole()">{{ 'BACK' | translate }}</div> -->
+            <h3 class="title">{{ 'SET_BUS_ID' | translate }}</h3>
+            <ul class="list">
+                <li class="row">
+                    <div class="left">{{ 'BUS_ID' | translate }}</div>
+                    <div class="right" (click)="handleButtonSound(); handleChangeStep(2)">
+                        <p class="value">{{ busIdTemp }}</p>
+                        <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                    </div>
+                </li>
+                <li class="row">
+                    <div class="left">{{ 'OPERATOR' | translate }}</div>
+                    <!-- <div class="right" (click)="handleButtonSound(); handleChangeStep(3)">
+          <p class="value">
+            <span *ngIf="busIdData.operator?.['label'] && busIdData.operator?.['serviceProvider']">
+              {{ busIdData.operator?.['label'] }}-{{ busIdData.operator?.['serviceProvider'] }}
+            </span>
+          </p>
+          <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+        </div> -->
+                    <div class="right">
+                        <p class="value">
+                            @if (busIdData.operator?.['label'] && busIdData.operator?.['serviceProvider']) {
+                                <span>
+                                    {{ busIdData.operator?.['label'] }}-{{ busIdData.operator?.['serviceProvider'] }}
+                                </span>
+                            }
+                        </p>
+                    </div>
+                </li>
+                <li class="row">
+                    <div class="left">{{ 'SERVICE_PROVIDER' | translate }}</div>
+                    @if (busIdData.operator?.['serviceProvider']) {
+                        <div class="right">
+                            <p class="value">{{ busIdData.operator?.['serviceProvider'] }}</p>
+                            <!-- <img src="/assets/images/icons/main/chevron-right.svg" alt="" /> -->
+                        </div>
+                    }
+                </li>
+            </ul>
+            <div class="btn-group">
+                <div class="btn btn-cancel" (click)="handleButtonSound(); handleCancelSubmitBusId()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleSubmitForm()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                </div>
+            </div>
+        }
+
+        @if (step === 2) {
+            <div class="bus-id-opt">
+                <div class="bus-id-opt-title">
+                    <h3>{{ 'PLEASE_ENTER_BUS_PLATE_NUMBER' | translate }}</h3>
+                </div>
+                <div class="update-wrapper">
+                    <mat-form-field appearance="outline" class="select-box">
+                        <mat-select disableRipple [placeholder]="'SELECT' | translate" [(value)]="busIdPrefix">
+                            @for (prefix of busIdPrefixList; track prefix) {
+                                <mat-option [value]="prefix">{{ prefix }}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="input-box">
+                        <div class="input-group">
+                            <input
+                                [value]="busIdNumber"
+                                id="inputField"
+                                [placeholder]="'INPUT_NUMBER' | translate"
+                                [class.hasError]="hasBusIdNumberError"
+                            />
+                            @if (hasBusIdNumberError) {
+                                <p class="error">
+                                    {{ 'WRONG_FORMAT' | translate }}
+                                </p>
+                            }
+                        </div>
+                    </div>
+                </div>
+                @if (!isShowKeyboard) {
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleButtonSound(); handleOperatorBack()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </button>
+                        <button
+                            [disabled]="!busIdNumber || !busIdPrefix"
+                            class="btn btn-confirm"
+                            (click)="handleButtonSound(); handleSubmitBusId()"
+                        >
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span class="text">{{ 'CONFIRM' | translate }}</span>
+                        </button>
+                    </div>
+                }
+                @if (isShowKeyboard) {
+                    <div class="keyboard">
+                        <custom-keyboard
+                            [layout]="'numeric'"
+                            (onKeyPress)="handleChangeInput($event)"
+                        ></custom-keyboard>
+                    </div>
+                }
+            </div>
+        }
+
+        @if (step === 3) {
+            <div class="operator">
+                <div class="back-button" (click)="handleButtonSound(); handleOperatorBack()">
+                    {{ 'BACK' | translate }}
+                </div>
+                <h3 class="title">{{ 'SELECT_OPERATOR' | translate }}</h3>
+                <div class="operator-content">
+                    @if (!busIdData.operators?.length) {
+                        <div class="loading">
+                            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                            <div>{{ 'LOADING' | translate }}</div>
+                        </div>
+                    } @else {
+                        <div class="scrollbar">
+                            <app-scrollbar>
+                                <ul>
+                                    @for (operator of busIdData.operators; track operator.id) {
+                                        <li
+                                            (click)="handleButtonSound(); handleChangeOperator(operator?.id || 0)"
+                                            [ngClass]="{ selected: operatorIdTemp === operator.id }"
+                                        >
+                                            {{ operator?.label || '' | translate }} - {{ operator.serviceProvider }}
+                                        </li>
+                                    }
+                                </ul>
+                            </app-scrollbar>
+                        </div>
+                    }
+                </div>
+                <div class="btn-group">
+                    <button
+                        [disabled]="!operatorIdTemp"
+                        class="btn btn-confirm"
+                        (click)="handleButtonSound(); handleConfirmOperator()"
+                    >
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span class="text">{{ 'SELECT' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        }
+    }
+</div>

@@ -1,0 +1,30 @@
+<div class="lta-full-screen">
+    <div class="lta-logo"></div>
+    @if (displayEndShiftPopup) {
+        <common-pop-up
+            [type]="'info'"
+            [title]="'LOG_OFF'"
+            [message]="'PRESS_THE_BTN_TO_PROCEED'"
+            [isConfirm]="true"
+            [isCancel]="true"
+            (onConfirm)="handleEndShift(true)"
+            (onCancel)="handleEndShift(false)"
+        ></common-pop-up>
+    } @else {
+        <ng-container>
+            <h3 class="title">{{ 'DRIVER_LOGGED_ON' | translate }}</h3>
+            <a class="link-button" (click)="handleButtonSound(); handleExternalDevices($event)">
+                <img src="assets/images/icons/main/ext-device-icon.svg" />
+                {{ 'EXTERNAL_DEVICES' | translate }}
+            </a>
+            <div class="btn-group">
+                @for (button of bustOperationButtons; track button.id) {
+                    <button class="btn btn-confirm" (click)="handleButtonSound(); button.onClick($event)">
+                        <img [src]="button.imgSrc" alt="" />
+                        <span class="text">{{ button.label | translate }}</span>
+                    </button>
+                }
+            </div>
+        </ng-container>
+    }
+</div>

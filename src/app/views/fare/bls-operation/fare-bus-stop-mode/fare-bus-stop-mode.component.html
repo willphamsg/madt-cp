@@ -1,0 +1,76 @@
+<div class="device-operation-content">
+    @if (
+    fareBusStopMode.msgID === MsgID.FARE_BUS_STOP_MODE_SELECT ||
+    (fareBusStopMode.msgID === MsgID.FARE_BUS_STOP_MODE_SUBMIT && fareBusStopMode.status === ResponseStatus.ERROR)
+    ) {
+    <div class="dialog">
+        <div class="dialog-header">
+                <p
+                    [innerHTML]="(mode === 1 ? 'SET_FARE_MODE_MANUAL' : 'SET_BLS_LOCATION_TO_AUTO') | translate"
+                ></p>
+            </div>
+            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+            <div class="btn-group">
+                <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancel()">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </button>
+                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmFareBusStopMode()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </button>
+            </div>
+        </div>
+    } @else if (fareBusStopMode.msgID === MsgID.FARE_BUS_STOP_MODE_SUBMIT) {
+        @if (fareBusStopMode.status === ResponseStatus.SUCCESS) {
+            <div class="dialog">
+                <img src="/assets/images/svg/big-success.svg" alt="" />
+                <h3 class="dialog-header">{{ 'SUCCESS' | translate }}</h3>
+                <div class="confirm-msg">
+                    {{ (mode === 1 ? 'BLS_LOCATION_SET_TO_MANUAL' : 'BLS_LOCATION_SET_TO_AUTO') | translate }}
+                </div>
+                <div class="btn-group">
+                    <button class="btn btn-ok" (click)="handleButtonSound(); backSelectMode()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'OK' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        }
+        <!-- @else if (fareBusStopMode.status === ResponseStatus.ERROR) {
+            <div class="dialog">
+                <img src="/assets/images/svg/big-error.svg" alt="" />
+                <h3 class="dialog-header">{{ 'ERROR' | translate }}</h3>
+                <div class="btn-group">
+                    <button appButtonSound class="btn btn-ok" (click)="handleButtonSound(); backSelectMode()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'OK' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        } -->
+    } @else {
+        <ng-container>
+            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+            <h1 class="device-operation-title">{{ 'SELECT_BLS_OPERATIONS' | translate }}</h1>
+            <div class="device-operation-button-group">
+                <button [class.active]="finaleMode === 1" class="device-operation-button" (click)="handleButtonSound(); handleSelectFareBusStopMode(1)">
+                    {{ 'MANUAL' | translate }}
+                </button>
+                <button [class.active]="finaleMode === 2" class="device-operation-button" (click)="handleButtonSound(); handleSelectFareBusStopMode(2)">
+                    {{ 'AUTO' | translate }}
+                </button>
+        </div>
+        @if (posnStatus$ | async; as posnStatus) {
+             <div class="source-info">
+                <p>
+                    <span>{{ 'GNSS_SOURCE'| translate }}</span>: <strong>{{ mappingPosnStatus(posnStatus.GNSSSource) | translate }}</strong>
+                </p>
+                <p>
+                    <span>{{ 'BUS_LOCATION_SOURCE'| translate }}</span>: <strong>{{ mappingPosnStatus(posnStatus.busLocationSource) | translate }}</strong>
+                </p>
+            </div>
+        }
+        </ng-container>
+    }
+</div>

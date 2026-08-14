@@ -1,0 +1,90 @@
+<div class="wrapper">
+    <!-- Note: 13 Jan 2026 Piyumi: For DAGW aborting pop up we cannot set a timeout since TS doesn't know how
+     long it would take to abort the connection. So we rely on the following OOS msg from TS to close the DAGW pop up for connection aborting case.
+     isDAGWProcAbortCompleted will be false by default and set this to true only when OOS msg is followed by a connection abort msg -->
+    @if ((dagwOperationData.title || dagwOperationData.message) && !isDAGWProcAbortCompleted) {
+        <div class="operation-overlay">
+            <div class="overlay-hd-bg"></div>
+            <dagw-operation (onCancel)="handleCancelDagwOperation()"></dagw-operation>
+        </div>
+    }
+    <div class="lang-cont">
+        <button (click)="handleButtonSound(); handleChangeLanguage('EN')" mat-button [ngClass]="{ active: currentLanguage === 'EN' }">
+            English
+        </button>
+        |
+        <button (click)="handleButtonSound(); handleChangeLanguage('CH')" mat-button [ngClass]="{ active: currentLanguage === 'CH' }">
+            华语
+        </button>
+    </div>
+    <div class="text-center content">
+        <h1 class="text-bold" [ngClass]="{ 'no-tapping': outOfServiceData.noTapping }">
+            {{ 'TAP_CARD_TO_LOGIN' | translate }}
+        </h1>
+        @if (outOfServiceData.cvUpgradeStatus !== ResponseStatus.PROGRESS) {
+            <h2>
+                {{ outOfServiceData.title || 'OUT_OF_SERVICE' | translate }}
+                @if (outOfServiceData.action) {
+                    <br />
+                    {{ outOfServiceData.action | translate }}
+                }
+                @if (outOfServiceData.message) {
+                    <br />
+                    {{ outOfServiceData.message | translate }}
+                }
+                @if (outOfServiceData.reason) {
+                    <br />
+                    {{ outOfServiceData.reason | translate }}
+                }
+            </h2>
+            <img src="/assets/images/svg/sign-in-img.svg" />
+            @if (outOfServiceData.upgradeStatus) {
+                <br />
+                <h3 class="upgrade-status">
+                    {{ outOfServiceData.upgradeStatus | translate }}
+                </h3>
+            }
+            <!-- <button class="btn btn-confirm bt" (click)="handleButtonSound(); showKeyboardHandler()">
+                <img src="/assets/images/svg/keyboard-icon.svg" />
+            </button> -->
+        } @else {
+            <h2>
+                {{ 'OUT_OF_SERVICE' | translate }}
+                <br />
+                {{ 'PENDING_UPGRADE_CV' | translate }}
+            </h2>
+            <div class="cv-upgrade">
+                <img src="/assets/images/svg/sign-in-img.svg" />
+                <img class="ban" src="/assets/images/svg/ban.svg" />
+            </div>
+        }
+    </div>
+    <!-- <div
+        [ngClass]="{
+            'keyboard-wrapper': true,
+            'service-input': true,
+            'show-keyboard': showKeyboard
+        }"
+    >
+        <div class="keyboard-block">
+            <div class="button" (click)="handleButtonSound(); showKeyboardHandler()">
+                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                <span>{{ 'CLOSE' | translate }}</span>
+            </div>
+            <div class="content">
+                <div>
+                    <div class="additional-service">
+                        <h3>{{ 'PLEASE_ENTER_DIGIT' | translate }}</h3>
+                    </div>
+                    <div class="input-group">
+                        <input id="inputField" />
+                        <p class="text-error" *ngIf="commissionError">{{ commissionError | translate }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="keyboard">
+                <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+            </div>
+        </div>
+    </div> -->
+</div>

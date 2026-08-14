@@ -1,0 +1,9 @@
+{
+    "port": 8080,
+    "server": {
+        "baseDir": "dist/browser",
+        "routes": {
+            "/": "dist/browser/index.html"
+        }
+    }
+}

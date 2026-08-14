@@ -1,0 +1,90 @@
+<div class="settings-container" [ngClass]="{ 'full-screen': fullScreen }">
+    <div class="settings-wrapper">
+        @if (step === '') {
+            @if (!fromMaintenance) {
+                <div class="close-button" (click)="handleButtonSound(); handleClose()">
+                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </div>
+            }
+            <div class="settings-content" [ngClass]="{ 'no-mt': fromMaintenance }">
+                <h2 class="page-title">{{ 'SETTINGS' | translate }}</h2>
+                <ul>
+                    <li class="row">
+                        <div class="left">{{ 'LANGUAGE' | translate }}</div>
+                        <div class="right" (click)="handleButtonSound(); setStep('language')">
+                            <p class="value">{{ currentLanguage | translate }}</p>
+                            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                        </div>
+                    </li>
+                    <li class="row">
+                        <div class="left">{{ 'SOUND_VOLUME' | translate }}</div>
+                        <div class="right">
+                            <img src="/assets/images/svg/volume-mute.svg" alt="" />
+                            <mat-slider [max]="100" [min]="0" [discrete]="true">
+                                <input
+                                    matSliderThumb
+                                    [value]="audio.value"
+                                    (valueChange)="handleChangeAudioVolume($event)"
+                                />
+                            </mat-slider>
+                            <img src="/assets/images/svg/volume-up.svg" alt="" />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        }
+
+        @if (step === 'language') {
+            @if (languageStep === 1) {
+                @if (!fromMaintenance) {
+                    <div class="close-button" (click)="handleButtonSound(); handleClose()">
+                        <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                        <span>{{ 'CLOSE' | translate }}</span>
+                    </div>
+                }
+                <div class="confirm">
+                    <div class="confirm-header">{{ 'SELECT_LANGUAGE' | translate }}</div>
+                    <ul>
+                        @for (lang of languageOptions; track lang.id) {
+                            <p
+                                class="language-opt"
+                                [ngClass]="{ active: currentLanguage === lang.id }"
+                                (click)="handleButtonSound(); handleSelectLang(lang.id)"
+                            >
+                                {{ lang.label }}
+                            </p>
+                        }
+                    </ul>
+                </div>
+            }
+            @if (languageStep === 2) {
+                @if (!fromMaintenance) {
+                    <div class="close-button" (click)="handleButtonSound(); handleClose()">
+                        <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                        <span>{{ 'CLOSE' | translate }}</span>
+                    </div>
+                }
+                <div class="confirm">
+                    <div class="confirm-header">
+                        {{
+                            'CONFIRM_CHANGE_LANGUAGE'
+                                | translate: { lang: selectedLanguage?.id === 'EN' ? 'English' : '华语' }
+                        }}
+                    </div>
+                    <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+                    <div class="btn-group">
+                        <div class="btn btn-cancel" (click)="handleButtonSound(); onLanguageChange(false)">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </div>
+                        <div class="btn btn-confirm" (click)="handleButtonSound(); onLanguageChange(true)">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'CONFIRM' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

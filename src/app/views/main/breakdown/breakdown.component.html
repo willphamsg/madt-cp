@@ -1,0 +1,265 @@
+<div class="breakdown-container">
+    <!-- @if (!breakDownInfoData.msgID) {
+  <ng-container *ngIf="step === 1">
+    <div class="confirm m-w">
+      <div class="confirm-header">{{ 'END_TRIP_BREAKDOWN' | translate }}</div>
+      <p class="confirm-msg">
+        {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
+      </p>
+      <div class="btn-group">
+        <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirm(false)">
+          <img src="/assets/images/icons/main/close.svg" alt="" />
+          <span>{{ 'CANCEL' | translate }}</span>
+        </div>
+        <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm(true)">
+          <img src="/assets/images/icons/main/confirm.svg" alt="" />
+          <span>{{ 'CONFIRM' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  } -->
+
+    @if (step === 1) {
+        <ng-container>
+            <div class="page-header">
+                <div class="back-button" (click)="handleButtonSound(); backToInformation()">
+                    {{ 'BACK' | translate }}
+                </div>
+            </div>
+            <div class="bus-stop">
+                @if (breakDownInfoData.busStopList?.length) {
+                    <h2 class="title">
+                        {{ 'SELECT_LAST_BUS_STOP' | translate }}
+                    </h2>
+                }
+                <div class="content">
+                    @if (!breakDownInfoData.busStopList?.length) {
+                        <div class="loading">
+                            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                            <div>{{ 'LOADING' | translate }}</div>
+                        </div>
+                    } @else {
+                        <div class="scrollbar">
+                            <app-scrollbar>
+                                <ul class="bus-stop-list">
+                                    @for (busStop of breakDownInfoData.busStopList; track busStop.Busid) {
+                                        <li
+                                            [ngClass]="{
+                                                selected: selectedLastBusStop['Busid'] == busStop.Busid
+                                            }"
+                                            (click)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
+                                        >
+                                            {{ busStop.Name }}
+                                        </li>
+                                    }
+                                </ul>
+                            </app-scrollbar>
+                        </div>
+                    }
+                </div>
+                @if (breakDownInfoData.busStopList?.length) {
+                    <div class="btn-group">
+                        <!-- <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirmValue(false)">
+            <img src="/assets/images/icons/main/close.svg" alt="" />
+            <span>Cancel</span>
+          </div> -->
+                        <button
+                            [disabled]="!selectedLastBusStop"
+                            class="btn btn-confirm"
+                            (click)="handleButtonSound(); handleUpdateBusStop()"
+                        >
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span class="text">{{ 'CONFIRM' | translate }}</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </ng-container>
+    } @else if (screen === 'DETAIL') {
+        <ng-container>
+            <div class="breakdown-info">
+                <h2 class="title">
+                    {{
+                        breakDownInfoData.title
+                            ? (breakDownInfoData.title | translate)
+                            : ('END_TRIP_BREAKDOWN_DETAIL' | translate)
+                    }}
+                </h2>
+                <div class="content">
+                    <ul>
+                        <li class="row">
+                            <div class="left">{{ 'SERVICE' | translate }}</div>
+                            <div class="right">
+                                <p class="value">
+                                    {{ breakDownInfoData.service }}{{ breakDownInfoData.variantName ?? '' }}
+                                </p>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'DIRECTION' | translate }}</div>
+                            <div class="right">
+                                <p class="value">{{ breakDownInfoData.direction }}</p>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'FIRST_BUS_STOP' | translate }}</div>
+                            <div class="right">
+                                <p class="value">{{ breakDownInfoData['firstBusStop']['Name'] }}</p>
+                            </div>
+                        </li>
+                        <li class="row">
+                            <div class="left">{{ 'LAST_BUS_STOP' | translate }}</div>
+                            <div class="right" (click)="handleButtonSound(); handleChangeEndBusStop()">
+                                <p class="value">{{ breakDownInfoData['lastBusStop']['Name'] }}</p>
+                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="btn-group">
+                        <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelBreakdown()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </button>
+                        <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmBreakdown()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span class="text">{{ 'CONFIRM' | translate }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    } @else if (screen === 'REASON') {
+        <ng-container>
+            <div class="page-header">
+                <div class="back-button" (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.MAIN_BREAKDOWN)">
+                    {{ 'BACK' | translate }}
+                </div>
+            </div>
+            <div class="bus-stop">
+                <h2 class="title">
+                    {{ 'SELECT_REASON' | translate }}
+                </h2>
+                <div class="content">
+                    <div class="scrollbar">
+                        <app-scrollbar>
+                            <ul class="bus-stop-list">
+                                @for (_reason of breakDownInfoData.reasonList; track _reason.id) {
+                                    <li
+                                        [ngClass]="{
+                                            selected: reason === _reason.id
+                                        }"
+                                        (click)="handleButtonSound(); handleSelectReason(_reason.id)"
+                                    >
+                                        {{ _reason.label }}
+                                    </li>
+                                }
+                            </ul>
+                        </app-scrollbar>
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button
+                        [disabled]="!reason"
+                        class="btn btn-confirm"
+                        (click)="handleButtonSound(); handleConfirmReason()"
+                    >
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span class="text">{{ 'CONFIRM' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    } @else if (screen === 'COMPLIMENTARY_TICKET') {
+        <ng-container>
+            <div class="page-header">
+                <div
+                    class="back-button"
+                    (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.BREAKDOWN_SUBMIT)"
+                >
+                    {{ 'BACK' | translate }}
+                </div>
+                <!-- <div class="button" (click)="handleButtonSound(); backToMain()">
+      <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+      <span>{{ 'CLOSE' | translate }}</span>
+    </div> -->
+            </div>
+            <div class="print-complimentary">
+                <h2 class="title">
+                    {{ 'PRINT_COMPLIMENTARY_TICKETS' | translate }}
+                </h2>
+                <div class="content">
+                    <div class="select-copies-title">{{ 'SELECT_COPIES_TO_PRINT' | translate }}</div>
+                    <div class="btn-value-group">
+                        @for (value of [1, 2, 3, 4, 5]; track value) {
+                            <button
+                                class="btn-value"
+                                (click)="handleButtonSound(); selectNumOfComplimentaryTicket(value)"
+                                [ngClass]="{ active: numOfComplimentaryTickets === value }"
+                                [disabled]="disableActions"
+                            >
+                                {{ value }}
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button
+                        [disabled]="disableActions"
+                        class="btn btn-confirm"
+                        (click)="handleButtonSound(); printComplimentaryTicket()"
+                    >
+                        <img src="/assets/images/icons/main/print.svg" alt="" />
+                        <span class="text">{{ 'PROCEED_AND_PRINT_TICKET_SUMMARY' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    } @else if (screen === 'BREAKDOWN_TICKET') {
+        <ng-container>
+            <div class="page-header">
+                <div
+                    class="back-button"
+                    (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.BREAKDOWN_SUBMIT_REASON)"
+                >
+                    {{ 'BACK' | translate }}
+                </div>
+                <!-- <div class="button" (click)="handleButtonSound(); backToMain()">
+      <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+      <span>{{ 'CLOSE' | translate }}</span>
+    </div> -->
+            </div>
+            <div class="print-complimentary">
+                <h2 class="title">
+                    {{ 'PRINT_BREAKDOWN_TICKETS' | translate }}
+                </h2>
+                <div class="content">
+                    <div class="select-copies-title">{{ 'SELECT_COPIES_TO_PRINT' | translate }}</div>
+                    <div class="btn-value-group">
+                        @for (value of [1, 2, 3, 4, 5]; track value) {
+                            <button
+                                class="btn-value"
+                                (click)="handleButtonSound(); selectNumOfBreakdownTicket(value)"
+                                [ngClass]="{ active: numOfBreakdownTickets === value }"
+                                [disabled]="disableActions"
+                            >
+                                {{ value }}
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div class="btn-group">
+                    <button
+                        [disabled]="disableActions"
+                        class="btn btn-confirm"
+                        (click)="handleButtonSound(); printBreakdownTicket()"
+                    >
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span class="text">{{ 'END_TRIP_BREAKDOWN' | translate }}</span>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    }
+</div>

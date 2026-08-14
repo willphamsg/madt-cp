@@ -1,0 +1,144 @@
+<div class="view-parameter-page">
+    @if (isLoading || ResponseStatus.PROGRESS === viewParameter.status) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div>{{ 'LOADING' | translate }}</div>
+        </div>
+    } @else if (ResponseStatus.ERROR === viewParameter.status) {
+        <common-pop-up
+            [type]="'error'"
+            [title]="viewParameter.message || 'COMMS_ERROR_FULL'"
+            [message]="'PRINTER_FUNCTIONS'"
+            [fullScreen]="true"
+            [disableSound]="true"
+            [isOk]="true"
+            (onOk)="handleRetry()"
+        >
+        </common-pop-up>
+    } @else if (ResponseStatus.SUCCESS === viewParameter.status && !viewParameter.parameters.length) {
+        <common-pop-up [type]="'info'" [title]="'NO_PARAMETERS_FOUND'" [fullScreen]="true" [disableSound]="true">
+        </common-pop-up>
+    } @else {
+        <div class="table-container">
+            <table class="table fake-table">
+                <tr>
+                    <th style="width: 40%">
+                        <div class="table-header">
+                            <p>{{ 'FULL_NAME' | translate }}</p>
+                            <img
+                                src="/assets/images/icons/maintenance/sort-asc.svg"
+                                alt=""
+                                [class]="sort['fullName']"
+                                (click)="handleButtonSound(); handleSort('fullName')"
+                            />
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <p>{{ 'VERSION' | translate }}</p>
+                            <img
+                                src="/assets/images/icons/maintenance/sort-asc.svg"
+                                alt=""
+                                [class]="sort['version']"
+                                (click)="handleButtonSound(); handleSort('version')"
+                            />
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <p>{{ 'DATE_TIME' | translate }}</p>
+                            <img
+                                src="/assets/images/icons/maintenance/sort-asc.svg"
+                                alt=""
+                                [class]="sort['date']"
+                                (click)="handleButtonSound(); handleSort('date')"
+                            />
+                        </div>
+                    </th>
+                    <th>
+                        <div class="table-header">
+                            <p>{{ 'STATUS' | translate }}</p>
+                            <img
+                                src="/assets/images/icons/maintenance/sort-asc.svg"
+                                alt=""
+                                [class]="sort['status']"
+                                (click)="handleButtonSound(); handleSort('status')"
+                            />
+                        </div>
+                    </th>
+                </tr>
+            </table>
+            <app-scrollbar>
+                <table class="table real-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%">
+                                <div class="table-header">
+                                    <p>{{ 'FULL_NAME' | translate }}</p>
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['fullName']"
+                                        (click)="handleButtonSound(); handleSort('fullName')"
+                                    />
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-header">
+                                    <p>{{ 'VERSION' | translate }}</p>
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['version']"
+                                        (click)="handleButtonSound(); handleSort('version')"
+                                    />
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-header">
+                                    <p>{{ 'DATE_TIME' | translate }}</p>
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['date']"
+                                        (click)="handleButtonSound(); handleSort('date')"
+                                    />
+                                </div>
+                            </th>
+                            <th>
+                                <div class="table-header">
+                                    <p>{{ 'STATUS' | translate }}</p>
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['status']"
+                                        (click)="handleButtonSound(); handleSort('status')"
+                                    />
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (parameter of viewParameter['parameters']; track parameter.fullName) {
+                            <tr>
+                                <td>{{ parameter.fullName }}</td>
+                                <td>{{ parameter.version }}</td>
+                                <td>
+                                    {{ parameter.date }} <br />
+                                    {{ parameter.time }}
+                                </td>
+                                <td>
+                                    {{
+                                        parameter.status === 'active'
+                                            ? ('ACTIVE' | translate)
+                                            : ('INACTIVE' | translate)
+                                    }}
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </app-scrollbar>
+        </div>
+    }
+</div>

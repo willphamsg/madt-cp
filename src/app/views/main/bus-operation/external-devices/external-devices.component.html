@@ -1,0 +1,235 @@
+<div class="external-devices-page">
+    <div class="external-devices-box">
+        <div class="external-devices-header">
+            <div class="title">{{ 'EXTERNAL_DEVICES_DIAG' | translate }}</div>
+            @if (externalDevices.status === ResponseStatus.SUCCESS || externalDevices.status === ResponseStatus.ERROR) {
+                <div class="refresh-button" (click)="handleButtonSound(); handleRefresh()">
+                    <img src="/assets/images/icons/bus-operation/refresh.svg" alt="" />
+                </div>
+            }
+        </div>
+        <div class="external-devices-content">
+            <div class="scrollbar">
+                <app-scrollbar>
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">{{ 'TEST_PRINT' | translate }}:</div>
+                                    @if (fieldError('testPrinter')) {
+                                        <div class="value error">
+                                            {{ errorText('testPrinter') || '' | translate }}
+                                        </div>
+                                    } @else if (fieldSuccess('testPrinter')) {
+                                        <div class="value">{{ 'OK' | translate }}</div>
+                                    } @else {
+                                        <p class="value loading">{{ 'TESTING' | translate }}</p>
+                                    }
+                                    <div class="button" (click)="handleButtonSound(); handlePrintTest()">
+                                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">{{ 'PRINTER' | translate }}:</div>
+                                    @if (fieldSuccess('printer')) {
+                                        <div class="value">{{ 'OK' | translate }}</div>
+                                    } @else if (fieldError('printer')) {
+                                        <div class="value error">
+                                            {{ errorText('printer') || '' | translate }}
+                                        </div>
+                                    } @else {
+                                        <p class="value loading">{{ 'TESTING' | translate }}</p>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="row">
+                                    <div class="label">{{ 'GNSS_ANTENNA' | translate }}:</div>
+                                    @if (fieldSuccess('GNSSAntenna')) {
+                                        <div class="value">{{ 'OK' | translate }}</div>
+                                    } @else if (fieldError('GNSSAntenna')) {
+                                        <div class="value error">
+                                            {{ errorText('GNSSAntenna') || '' | translate }}
+                                        </div>
+                                    } @else {
+                                        <p class="value loading">{{ 'TESTING' | translate }}</p>
+                                    }
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="label">{{ 'BUS_ETA_UNIT' | translate }}:</div>
+                                    @if (fieldSuccess('busETA')) {
+                                        <div class="value">{{ 'OK' | translate }}</div>
+                                    } @else if (fieldError('busETA')) {
+                                        <div class="value error">
+                                            {{ errorText('busETA') || '' | translate }}
+                                        </div>
+                                    } @else {
+                                        <p class="value loading">{{ 'TESTING' | translate }}</p>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                        @for (
+                            cvs of [
+                                [0, 1],
+                                [2, 3],
+                                [4, 5]
+                            ];
+                            track $index
+                        ) {
+                            @if (existingCvs()[cvs[0]]) {
+                                <tr>
+                                    @if (existingCvs()[cvs[0]]) {
+                                        <td>
+                                            <div class="row">
+                                                <div class="label">{{ existingCvs()[cvs[0]]?.toUpperCase() }}:</div>
+                                                @if (fieldSuccess(existingCvs()[cvs[0]])) {
+                                                    <div class="value">{{ 'OK' | translate }}</div>
+                                                } @else if (fieldError(existingCvs()[cvs[0]])) {
+                                                    <div class="value error">
+                                                        {{ errorText(existingCvs()[cvs[0]]) || '' | translate }}
+                                                    </div>
+                                                } @else {
+                                                    <p class="value loading">{{ 'TESTING' | translate }}</p>
+                                                }
+                                            </div>
+                                        </td>
+                                    }
+                                    @if (existingCvs()[cvs[1]]) {
+                                        <td>
+                                            <div class="row">
+                                                <div class="label">{{ existingCvs()[cvs[1]]?.toUpperCase() }}:</div>
+                                                @if (fieldSuccess(existingCvs()[cvs[1]])) {
+                                                    <div class="value">{{ 'OK' | translate }}</div>
+                                                } @else if (fieldError(existingCvs()[cvs[1]])) {
+                                                    <div class="value error">
+                                                        {{ errorText(existingCvs()[cvs[1]]) || '' | translate }}
+                                                    </div>
+                                                } @else {
+                                                    <p class="value loading">{{ 'TESTING' | translate }}</p>
+                                                }
+                                            </div>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                        <!-- <tr>
+            <td>
+              <div class="row">
+                <div class="label">CV1:</div>
+                @if (fieldSuccess('cv1')) {
+                  <div class="value">{{ 'OK' | translate }}</div>
+                } @else if (fieldError('cv1')) {
+                  <div class="value error">
+                    {{ errorText('cv1') || '' | translate }}
+                  </div>
+                } @else {
+                  <p class="value loading">{{ 'TESTING' | translate }}</p>
+                }
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="label">CV2:</div>
+                @if (fieldSuccess('cv2')) {
+                  <div class="value">{{ 'OK' | translate }}</div>
+                } @else if (fieldError('cv2')) {
+                  <div class="value error">
+                    {{ errorText('cv2') || '' | translate }}
+                  </div>
+                } @else {
+                  <p class="value loading">{{ 'TESTING' | translate }}</p>
+                }
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="row">
+                <div class="label">CV3:</div>
+                @if (fieldSuccess('cv3')) {
+                  <div class="value">{{ 'OK' | translate }}</div>
+                } @else if (fieldError('cv3')) {
+                  <div class="value error">
+                    {{ errorText('cv3') || '' | translate }}
+                  </div>
+                } @else {
+                  <p class="value loading">{{ 'TESTING' | translate }}</p>
+                }
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="label">CV4:</div>
+                @if (fieldSuccess('cv4')) {
+                  <div class="value">{{ 'OK' | translate }}</div>
+                } @else if (fieldError('cv4')) {
+                  <div class="value error">
+                    {{ errorText('cv4') || '' | translate }}
+                  </div>
+                } @else {
+                  <p class="value loading">{{ 'TESTING' | translate }}</p>
+                }
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="row">
+                <div class="label">CV5:</div>
+                @if (fieldSuccess('cv5')) {
+                  <div class="value">{{ 'OK' | translate }}</div>
+                } @else if (fieldError('cv5')) {
+                  <div class="value error">
+                    {{ errorText('cv5') || '' | translate }}
+                  </div>
+                } @else {
+                  <p class="value loading">{{ 'TESTING' | translate }}</p>
+                }
+              </div>
+            </td>
+            <td>
+              <div class="row">
+                <div class="label">CV6:</div>
+                @if (fieldSuccess('cv6')) {
+                  <div class="value">{{ 'OK' | translate }}</div>
+                } @else if (fieldError('cv6')) {
+                  <div class="value error">
+                    {{ errorText('cv6') || '' | translate }}
+                  </div>
+                } @else {
+                  <p class="value loading">{{ 'TESTING' | translate }}</p>
+                }
+              </div>
+            </td>
+          </tr> -->
+                    </table>
+                </app-scrollbar>
+            </div>
+        </div>
+        @if (externalDevices.status === ResponseStatus.ERROR) {
+            <div class="error-text">{{ 'CHECK_AFFECTED_DEVICES' | translate }}</div>
+        }
+        <div class="btn-group">
+            @if (externalDevices.status !== ResponseStatus.SUCCESS && externalDevices.status !== ResponseStatus.ERROR) {
+                <button class="btn btn-cancel" (click)="handleButtonSound(); handleConfirm(false)">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </button>
+            }
+            @if (externalDevices.status === ResponseStatus.SUCCESS || externalDevices.status === ResponseStatus.ERROR) {
+                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span class="text">{{ 'OK' | translate }}</span>
+                </button>
+            }
+        </div>
+    </div>
+</div>

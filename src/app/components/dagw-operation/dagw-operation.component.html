@@ -1,0 +1,43 @@
+<div class="dagw-operation">
+    <div class="text-center content">
+        <h1 class="text-bold">{{ dagwOperationData.title || '' | translate }}</h1>
+
+        @if (dagwOperationData.status === dagwStatus.SUCCESS) {
+            <img src="/assets/images/svg/big-success.svg" alt="" />
+        }
+
+        @if (dagwOperationData.status === dagwStatus.FAILURE) {
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+        }
+        <h2 class="message">{{ dagwOperationData.message | translate }}</h2>
+
+        @if (dagwOperationData.fileName) {
+            <h2 class="mt-20">{{ dagwOperationData.fileName }}</h2>
+        }
+
+        @if (!!dagwOperationData.percentage && dagwOperationData.percentage > 0) {
+            <div class="progress-wrapper">
+                <div class="progress-bar">
+                    <div class="progress" [ngStyle]="{ width: dagwOperationData.percentage + '%' }"></div>
+                </div>
+            </div>
+        }
+
+        <!-- @if (
+    MsgID.NEW_DAGW_OPERATION === dagwOperationData.msgID ||
+    dagwOperationData.message.toLowerCase().includes('attempting')
+    ) {
+    <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelDagwOperation()">
+      <img src="/assets/images/icons/main/close.svg" alt="" />
+      <span>{{ 'CANCEL' | translate }}</span>
+    </button>
+    } -->
+
+        @if (MsgID.NEW_DAGW_OPERATION === dagwOperationData.msgID) {
+            <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelDagwOperation()">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </button>
+        }
+    </div>
+</div>

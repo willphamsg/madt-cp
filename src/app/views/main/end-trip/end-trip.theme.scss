@@ -1,0 +1,81 @@
+@use 'variables' as *;
+
+@mixin lta-end-trip-theme($light-theme: false) {
+    @if $light-theme {
+        .end-trip-container {
+            box-shadow: 1px 1px 5px #ccc;
+            background-color: #f2f2f2 !important;
+            color: $black;
+
+            .confirm {
+                .cf-btn-group {
+                    .btn {
+                        color: $black !important;
+                        background: linear-gradient(to bottom right, #e5e5e5 18%, #e5e5e5 50%) !important;
+                        box-shadow: inset 0px -5px 8px #ccc;
+
+                        &::before {
+                            background: $white !important;
+                            box-shadow: inset 0px -5px 8px #ccc;
+                        }
+                    }
+                }
+            }
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .content {
+                .row {
+                    background-color: $white !important;
+
+                    .right {
+                        border-left-color: #e5e5e5 !important;
+                        color: $black !important;
+
+                        .value {
+                            color: $black !important;
+                        }
+                    }
+                }
+            }
+
+            .reason,
+            .information {
+                color: $black;
+
+                &-header {
+                    h3 {
+                        color: $black !important;
+                    }
+                }
+
+                &-content {
+                    .table {
+                        tr {
+                            td {
+                                border-left-color: #e5e5e5 !important;
+                            }
+                        }
+
+                        tr:nth-child(odd) > th,
+                        tr:nth-child(odd) > td {
+                            background-color: $white !important;
+                        }
+
+                        tr:nth-child(even) > th,
+                        tr:nth-child(even) > td {
+                            background-color: #dedede !important;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

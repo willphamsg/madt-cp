@@ -1,0 +1,22 @@
+@use 'variables' as *;
+
+@mixin lta-delete-parameter-theme($light-theme: false) {
+    @if $light-theme {
+        .delete-parameter {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .keyboard {
+                background-color: $white !important;
+            }
+        }
+    }
+}

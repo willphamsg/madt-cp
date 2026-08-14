@@ -1,0 +1,45 @@
+@use 'variables' as *;
+
+@mixin lta-lock-theme($light-theme: false) {
+    @if $light-theme {
+        .lock-container {
+            box-shadow: 1px 1px 5px #ccc;
+            background-color: #f2f2f2 !important;
+            color: $black;
+
+            .lta-lock-page {
+                background-color: #e9e9e9 !important;
+            }
+
+            .lta-full-screen {
+                box-shadow: 1px 1px 5px #ccc;
+                background-color: #f2f2f2 !important;
+            }
+
+            .lta-unlock {
+                box-shadow: 1px 1px 5px #ccc;
+                background-color: #f2f2f2 !important;
+
+                .back-button {
+                    background-color: #3e515b !important;
+                    color: $white !important;
+
+                    &::before {
+                        background-color: #3e515b !important;
+                    }
+                }
+
+                .input-group {
+                    input {
+                        background-color: #e7e7e7 !important;
+                        color: $black !important;
+                    }
+                }
+
+                .keyboard {
+                    background-color: $white !important;
+                }
+            }
+        }
+    }
+}

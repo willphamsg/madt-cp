@@ -1,0 +1,76 @@
+@use 'variables' as *;
+
+.fare-console-page {
+    height: 100%;
+    text-align: center;
+
+    .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: $madt-bg-dark-2;
+        margin-bottom: 8px;
+
+        .left {
+            font-size: 20px;
+            text-align: left;
+            flex-grow: 1;
+            padding: 16px 12px;
+        }
+
+        .right {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 235px;
+            padding: 16px 12px;
+            border-left: 2px solid $madt-bg-dark-1;
+            color: $madt-bg-light-1;
+
+            .value {
+                color: $white;
+                font-weight: $font-weight-bold;
+            }
+        }
+        &:last-child {
+            .left {
+                color: #ef2626;
+            }
+        }
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 500px;
+        text-align: center;
+        p {
+            font-size: 28px;
+            line-height: 2;
+        }
+
+        .button {
+            @include dark-button;
+            font-size: 18px;
+            font-weight: $font-weight-bold;
+            height: 54px;
+            width: 216px;
+            margin: auto;
+            margin-top: 20px;
+            flex-direction: row;
+            background: $madt-bg-light-1;
+
+            &::before {
+                content: none;
+            }
+
+            .text {
+                padding-left: 10px;
+            }
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+}

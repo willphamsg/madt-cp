@@ -1,0 +1,66 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white !important;
+
+    > div {
+        background-color: #0e2a32;
+        padding: 15px 25px;
+        text-align: center;
+        overflow: auto;
+        height: 100vh;
+        width: 100vw;
+
+        > h1 {
+            margin-bottom: 3rem;
+        }
+    }
+}
+
+.cv-number-cont {
+    display: flex;
+    flex-direction: column;
+}
+
+.broker-input {
+    padding: 5px;
+    width: 100%;
+}
+
+.cv-icon-cont {
+    padding: 15px;
+    background-color: #0a1b20;
+
+    > h2 {
+        margin-bottom: 2rem;
+        color: white !important;
+    }
+
+    > mat-form-field {
+        margin-top: 2.5rem;
+        margin-bottom: 0 !important;
+    }
+}
+
+.redirect-cont {
+    display: flex;
+    padding: 15px;
+
+    button {
+        margin-top: 2rem;
+        width: 100%;
+    }
+
+    flex-wrap: wrap;
+}
+
+.action-cont {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    > div {
+        width: 100%;
+        max-width: 250px;
+    }
+}

@@ -1,0 +1,12 @@
+<div class="bus-off-route" [ngClass]="{ 'full-screen': fullScreen }" [appNotificationSound]="true">
+    <div class="bus-off-route-wrapper">
+        <h3 class="title">{{ 'OFF_ROUTE' | translate }}</h3>
+        <div class="content">{{ 'OFF_ROUTE_MSG' | translate }}</div>
+        <div class="btn-group">
+            <button [disabled]="disabled" class="btn btn-ok" (click)="handleButtonSound(); handleClick()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>OK</span>
+            </button>
+        </div>
+    </div>
+</div>

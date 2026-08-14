@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <button class="link-button">
+      <img src="assets/images/icons/main/ext-device-icon.svg"  /> External Devices
+    </button>
+    <div>
+        <img src="assets/images/svg/madt-logo.svg" />
+        <h2>Out of service</h2>
+        @if (pageData === withInfo) {
+            <h3>Proceed to BEV to Login</h3>
+            <br />
+            <br />
+            <h3>
+                TRANSFER REQUIRED <br />
+                [KEY EXPIRED]
+            </h3>
+        }
+
+        @if (pageData === noData) {
+            <h3>
+                Missing Data
+            </h3>
+        }
+
+    </div>
+</div>

@@ -1,0 +1,75 @@
+@use 'variables' as *;
+
+@mixin lta-bus-stop-theme($light-theme: false) {
+    @if $light-theme {
+        .bus-stop-page {
+            .info {
+                background-color: #f2f2f2 !important;
+
+                .information {
+                    color: $black !important;
+                }
+            }
+
+            .group {
+                background-color: #f2f2f2 !important;
+
+                .indicator {
+                    background-color: $white !important;
+                    color: $black !important;
+
+                    &:first-child {
+                        background-color: #ddd !important;
+                    }
+
+                    &.active {
+                        background-color: #046a7b !important;
+                    }
+
+                    &.destination {
+                        background-color: $madt-bg-dark-3 !important;
+                        color: $white !important;
+                    }
+
+                    &.bus-stop {
+                        background-color: #6b7072 !important;
+                        color: $white !important;
+                    }
+
+                    .left {
+                        background-color: transparent !important;
+
+                        &.fare {
+                            background-color: #fed000 !important;
+                        }
+                    }
+
+                    .right {
+                        background: #fed000;
+                    }
+                }
+            }
+
+            .bus-stop-fare-page,
+            .confirm-bus-stop-fare-container {
+                background-color: #f2f2f2 !important;
+                color: $black !important;
+            }
+
+            .bus-stop-fare {
+                &-header {
+                    color: $black !important;
+                }
+                .indicator {
+                    background-color: #e9e9e9 !important;
+                }
+
+                .name,
+                .time,
+                .left {
+                    color: $black !important;
+                }
+            }
+        }
+    }
+}

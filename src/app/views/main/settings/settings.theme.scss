@@ -1,0 +1,40 @@
+@use 'variables' as *;
+
+@mixin lta-settings-theme($light-theme: false) {
+    @if $light-theme {
+        .settings-container {
+            background-color: #f2f2f2 !important;
+
+            .page-header {
+                color: $black !important;
+            }
+
+            ul {
+                color: $black !important;
+
+                .row {
+                    background-color: #e7e7e7 !important;
+
+                    .left {
+                        border-right-color: #f3f3f3 !important;
+                    }
+
+                    .right {
+                        color: $black !important;
+
+                        .value {
+                            color: $black !important;
+                        }
+                    }
+                }
+                .language-opt {
+                    color: $white;
+                }
+            }
+
+            .confirm {
+                color: black !important;
+            }
+        }
+    }
+}

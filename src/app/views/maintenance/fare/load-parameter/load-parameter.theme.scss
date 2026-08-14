@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-load-parameter-theme($light-theme: false) {
+    @if $light-theme {
+        .load-parameter-page {
+            color: $black;
+        }
+    }
+}

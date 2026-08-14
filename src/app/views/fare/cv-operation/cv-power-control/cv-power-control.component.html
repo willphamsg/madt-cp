@@ -1,0 +1,32 @@
+<div class="cv-power-control">
+    <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+    <ng-container>
+        <h2 class="title">{{ 'CV_POWER_CONTROL' | translate }}</h2>
+        <div class="content">
+            @for (group of cvPowerControl.groups; track group.id) {
+                <div class="row">
+                    <p class="label">
+                        {{ group.cvs.join(', ') }}
+                        <span
+                            [ngClass]="{
+                                active: group.status
+                            }"
+                        >
+                            @if (group.status) {
+                                {{ 'ON' | translate }}
+                            } @else {
+                                {{ 'OFF' | translate }}
+                            }
+                        </span>
+                    </p>
+                    <div class="switch">
+                        <custom-switch
+                            [checked]="group.status"
+                            (onChange)="handleToggleStatus(group.id)"
+                        ></custom-switch>
+                    </div>
+                </div>
+            }
+        </div>
+    </ng-container>
+</div>

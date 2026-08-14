@@ -1,0 +1,369 @@
+<div class="cash-payment-container">
+    <!-- Print error handler -->
+    @if (cashPayment.status === ResponseStatus.ERROR) {
+        <common-pop-up
+            [type]="'error'"
+            [title]="cashPayment.message || ''"
+            [fullScreen]="true"
+            [isOk]="true"
+            (onOk)="handleCloseErrorPopup()"
+        >
+        </common-pop-up>
+    } @else {
+        @if ([ECashMode.SINGLE, ECashMode.MULTIPLE].includes(fareMode)) {
+            @if (
+                cashPayment.msgID === MsgID.MAIN_CASH ||
+                cashPayment.msgID === MsgID.MAIN_CASH_SINGLE_SUBMIT ||
+                cashPayment.msgID === MsgID.MAIN_CASH_MULTI_BACK ||
+                cashPayment.msgID === MsgID.MAIN_CASH_MULTI_CONFIRM ||
+                cashPayment.msgID === MsgID.MAIN_CASH_FARE_CALCULATION_BACK
+            ) {
+                <ng-container>
+                    <div class="page-header">
+                        <h2>{{ 'CASH' | translate }}</h2>
+                        <div class="button-group">
+                            <div
+                                class="tk-button"
+                                [class.active]="fareMode === ECashMode.SINGLE"
+                                (click)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
+                            >
+                                {{ 'SINGLE_TICKET' | translate }}
+                            </div>
+                            <div
+                                class="tk-button"
+                                [class.active]="fareMode === ECashMode.MULTIPLE"
+                                (click)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
+                            >
+                                {{ 'MULTIPLE_TICKET' | translate }}
+                            </div>
+                        </div>
+                        <div class="button" (click)="handleButtonSound(); handleTerminate()">
+                            <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                            <span>{{ 'CLOSE' | translate }}</span>
+                        </div>
+                    </div>
+
+                    <div class="cash-container">
+                        <div class="cash-block adult-cash">
+                            <div class="cash-title">
+                                <img src="/assets/images/icons/main/adult-cash.svg" alt="" />
+                                <h4>{{ 'ADULT' | translate }}</h4>
+                            </div>
+                            <div class="cash-btn-block">
+                                @for (cashValue of cashPayment.adultValues; track $index) {
+                                    <div
+                                        class="cash-btn-wrap"
+                                        (click)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
+                                    >
+                                        <!-- <div
+                    class="cash-btn"
+                                            [ngClass]="{
+                                                active: selectedIndex === $index && cashType === ECashType.ADULT
+                                            }"
+                    > -->
+                                        <div class="cash-btn">
+                                            <div class="cash-value">{{ cashValue.value }}</div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="cash-block senior-cash">
+                            <div class="cash-title">
+                                <img src="/assets/images/icons/main/senior-cash.svg" alt="" />
+                                <h4>{{ 'SENIOR' | translate }}</h4>
+                            </div>
+                            <div class="cash-btn-block">
+                                @for (cashValue of cashPayment.seniorValues; track $index) {
+                                    <div
+                                        class="cash-btn-wrap"
+                                        (click)="handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)"
+                                    >
+                                        <!-- <div
+                    class="cash-btn"
+                                            [ngClass]="{
+                                                active: selectedIndex === $index && cashType === ECashType.SENIOR
+                                            }"
+                    > -->
+                                        <div class="cash-btn">
+                                            <div class="cash-value">{{ cashValue.value }}</div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="cash-block child-cash">
+                            <div class="cash-title">
+                                <img src="/assets/images/icons/main/student.svg" alt="" />
+                                <h4>{{ 'STUDENT' | translate }}</h4>
+                            </div>
+                            <div class="cash-btn-block">
+                                @for (cashValue of cashPayment.studentValues; track $index) {
+                                    <div
+                                        class="cash-btn-wrap"
+                                        (click)="handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)"
+                                    >
+                                        <div class="cash-btn">
+                                            <div class="cash-value">{{ cashValue.value }}</div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button class="btn" (click)="handleButtonSound(); handlePrintInspectorTicket()">
+                            <img src="/assets/images/icons/main/inspector.svg" alt="" />
+                            <div class="text">{{ 'INSPECTOR_TICKET' | translate }}</div>
+                        </button>
+                        <button class="btn" (click)="handleButtonSound(); handleFareBox()">
+                            <img src="/assets/images/icons/main/fare-box.svg" alt="" />
+                            <div class="text">{{ 'FARE_BOX' | translate }}</div>
+                        </button>
+                        <button class="btn" (click)="handleButtonSound(); setFareMode(ECashMode.CALCULATOR)">
+                            <img src="/assets/images/icons/main/fare-calculator.svg" alt="" />
+                            <div class="text">{{ 'FARE_CALCULATOR' | translate }}</div>
+                        </button>
+                    </div>
+                </ng-container>
+            } @else if (cashPayment.msgID === MsgID.MAIN_CASH_MULTI_SUBMIT) {
+                <div class="multiple">
+                    <div class="page-header center">
+                        <!-- <div  class="back-button abs" (click)="handleButtonSound(); handleBack()">
+            {{ 'BACK' | translate }}
+          </div> -->
+                        <h2>
+                            {{ cashType + '_' + 'CASH_FARE' | translate }}: ${{ (selectedAmount / 100).toFixed(2) }}
+                        </h2>
+                    </div>
+                    <div class="confirm">
+                        <div class="input-group">
+                            <p>{{ 'INPUT_NUM_CASH_RECEIPT' | translate }}</p>
+                            <input [value]="quantity" id="inputField" [class.hasError]="quantityError" />
+                            @if (quantityError) {
+                                <p class="error">
+                                    {{ quantityError | translate }}
+                                </p>
+                            }
+                            <div class="total-cash">
+                                <p class="total-cashlabel">{{ 'TOTAL_TICKET_VALUE' | translate }}:</p>
+                                <p class="total-cash-value">
+                                    ${{ ((!!quantity ? +quantity : 0) * (selectedAmount / 100)).toFixed(2) }}
+                                </p>
+                            </div>
+                        </div>
+
+                        @if (!isShowKeyboard) {
+                            <div class="btn-group mb-50">
+                                <button class="btn btn-cancel" (click)="handleButtonSound(); handleBack()">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </button>
+                                <button
+                                    [disabled]="+quantity <= 0 || quantityError"
+                                    class="btn btn-confirm"
+                                    (click)="handleButtonSound(); printMultipleTicket()"
+                                >
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'CONFIRM' | translate }}</span>
+                                </button>
+                            </div>
+                        }
+                        @if (isShowKeyboard) {
+                            <div class="keyboard">
+                                <custom-keyboard
+                                    [layout]="'numeric'"
+                                    (onKeyPress)="handleChangeInput($event)"
+                                ></custom-keyboard>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        } @else {
+            <div class="fare-calculator">
+                @if (changeBusStopMode) {
+                    <!-- set exit bus stop -->
+                    <ng-container>
+                        <div class="page-header">
+                            <div class="back-button" (click)="handleButtonSound(); handleResetBusStopPopup()">
+                                {{ 'BACK' | translate }}
+                            </div>
+                        </div>
+                        <div class="bus-stop">
+                            @if (cashPayment.busStopList?.length) {
+                                <h2 class="title">
+                                    @if (!cashPayment.fareResult) {
+                                        {{ 'SELECT_EXIT_BUS_STOP' | translate }}
+                                    } @else if (changeBusStopMode === 'ENTRY') {
+                                        {{ 'CHANGE_ENTRY_STOP' | translate }}
+                                    } @else if (changeBusStopMode === 'EXIT') {
+                                        {{ 'CHANGE_EXIT_STOP' | translate }}
+                                    }
+                                </h2>
+                            }
+                            <div class="content">
+                                @if (!cashPayment.busStopList?.length) {
+                                    <div class="loading">
+                                        <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                                        <div>{{ 'LOADING' | translate }}</div>
+                                    </div>
+                                } @else {
+                                    <div class="scrollbar">
+                                        <app-scrollbar>
+                                            <ul class="bus-stop-list">
+                                                @for (
+                                                    busStop of cashPayment.busStopList;
+                                                    track busStop.Busid;
+                                                    let idx = $index
+                                                ) {
+                                                    <li
+                                                        [class.selected]="
+                                                            changeBusStopMode === 'EXIT'
+                                                                ? selectedExitBusStop === busStop.Busid
+                                                                : selectedEntryBusStop === busStop.Busid
+                                                        "
+                                                        (click)="
+                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
+                                                        "
+                                                    >
+                                                        <div class="left">
+                                                            {{ busStop.Name }}
+                                                        </div>
+                                                        <div class="right">KM {{ formatKm(busStop.km) }}</div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </app-scrollbar>
+                                    </div>
+                                }
+                            </div>
+                            @if (cashPayment.busStopList?.length) {
+                                <div class="btn-group">
+                                    <button
+                                        [disabled]="
+                                            changeBusStopMode === 'EXIT' ? !selectedExitBusStop : !selectedEntryBusStop
+                                        "
+                                        class="btn btn-confirm"
+                                        (click)="handleButtonSound(); handleSubmitNewBusStop()"
+                                    >
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span class="text">{{ 'CONFIRM' | translate }}</span>
+                                    </button>
+                                </div>
+                            }
+                        </div>
+                    </ng-container>
+                } @else if (cashPayment.msgID === MsgID.MAIN_CASH_FARE_CALCULATION_SUBMIT_BUS_STOP_CHANGE) {
+                    <ng-container>
+                        <div class="page-header">
+                            <div class="back-button" (click)="handleButtonSound(); handleBackFareCalculator()">
+                                {{ 'BACK' | translate }}
+                            </div>
+                        </div>
+                        <div class="fare-calculator-result">
+                            <h2 class="title">
+                                <h2 class="title">{{ 'FARE_CAL_RESULT' | translate }}</h2>
+                            </h2>
+                            <div class="content">
+                                <div class="scrollbar">
+                                    <app-scrollbar>
+                                        <ul>
+                                            <li class="row" (click)="handleButtonSound(); handleChangeBusStop('ENTRY')">
+                                                <div class="left">{{ 'ENTRY_BUS_STOP' | translate }}</div>
+                                                <div class="right">
+                                                    <p class="value">
+                                                        {{ cashPayment.fareResult?.entryBusStop?.Name ?? '' }}
+                                                    </p>
+                                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                                </div>
+                                            </li>
+                                            <li class="row" (click)="handleButtonSound(); handleChangeBusStop('EXIT')">
+                                                <div class="left">{{ 'EXIT_BUS_STOP' | translate }}</div>
+                                                <div class="right">
+                                                    <p class="value">
+                                                        {{ cashPayment.fareResult?.exitBusStop?.Name ?? '' }}
+                                                    </p>
+                                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                                </div>
+                                            </li>
+                                            <li class="row">
+                                                <div class="left">{{ 'ADULT_FARE' | translate }}</div>
+                                                <div class="right has-btn">
+                                                    <p class="value">${{ cashPayment.fareResult?.adultFare || '' }}</p>
+                                                    <button
+                                                        class="btn-receipt"
+                                                        (click)="
+                                                            handleButtonSound();
+                                                            handlePrintReceipt(
+                                                                ECashType.ADULT,
+                                                                cashPayment.fareResult?.adultFare || 0
+                                                            )
+                                                        "
+                                                    >
+                                                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                                        <div class="text">{{ 'ADULT_RECEIPT' | translate }}</div>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="row">
+                                                <div class="left">{{ 'STUDENT_FARE' | translate }}</div>
+                                                <div class="right has-btn">
+                                                    <p class="value">
+                                                        ${{ cashPayment.fareResult?.studentFare || '' }}
+                                                    </p>
+                                                    <button
+                                                        class="btn-receipt"
+                                                        (click)="
+                                                            handleButtonSound();
+                                                            handlePrintReceipt(
+                                                                ECashType.STUDENT,
+                                                                cashPayment.fareResult?.studentFare || 0
+                                                            )
+                                                        "
+                                                    >
+                                                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                                        <div class="text">{{ 'STUDENT_RECEIPT' | translate }}</div>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                            <li class="row">
+                                                <div class="left">{{ 'SENIOR_FARE' | translate }}</div>
+                                                <div class="right has-btn">
+                                                    <p class="value">${{ cashPayment.fareResult?.seniorFare || '' }}</p>
+                                                    <button
+                                                        class="btn-receipt"
+                                                        (click)="
+                                                            handleButtonSound();
+                                                            handlePrintReceipt(
+                                                                ECashType.SENIOR,
+                                                                cashPayment.fareResult?.seniorFare || 0
+                                                            )
+                                                        "
+                                                    >
+                                                        <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                                                        <div class="text">{{ 'SENIOR_RECEIPT' | translate }}</div>
+                                                    </button>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </app-scrollbar>
+                                </div>
+                            </div>
+                            <div class="btn-group">
+                                <button
+                                    class="btn btn-confirm"
+                                    (click)="handleButtonSound(); handleConfirmFareCalculator()"
+                                >
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-container>
+                }
+            </div>
+        }
+    }
+</div>

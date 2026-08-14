@@ -1,0 +1,31 @@
+@use 'variables' as *;
+
+@mixin lta-complimentary-day-theme($light-theme: false) {
+    @if $light-theme {
+        .complimentary-day {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .content {
+                .input-group {
+                    input {
+                        background-color: #e7e7e7 !important;
+                        color: $black !important;
+                    }
+                }
+            }
+
+            .keyboard {
+                background-color: $white !important;
+            }
+        }
+    }
+}

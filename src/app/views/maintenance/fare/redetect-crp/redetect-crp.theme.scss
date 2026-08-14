@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-redetect-crp-theme($light-theme: false) {
+    @if $light-theme {
+        .redetect-crp-page {
+            color: $black;
+        }
+    }
+}

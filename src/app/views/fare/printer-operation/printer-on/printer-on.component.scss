@@ -1,0 +1,21 @@
+@use 'variables' as *;
+
+:host {
+    height: 100%;
+}
+
+.loading {
+    @include flex-center;
+    flex-direction: column;
+    height: 100%;
+
+    > div {
+        font-size: 40px;
+        font-weight: $font-weight-bold;
+        margin-top: 20px;
+    }
+
+    .loader {
+        @include spinner;
+    }
+}

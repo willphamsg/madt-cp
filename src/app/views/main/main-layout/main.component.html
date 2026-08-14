@@ -1,0 +1,296 @@
+<ng-container>
+    <app-header
+        [onlyDateTime]="isOnlyDateTimeDisplay()"
+        [isLoggedIn]="!screensBeforeLoggedOn()"
+        [screen]="currentScreen"
+        (clickLock)="handleDisplayLockPopUp()"
+        (clickSettings)="handleDisplaySettingsPopUp()"
+        [disabledAllButtons]="isDisableButton()"
+        [activeButtons]="activeHeaderButton()"
+    >
+    </app-header>
+    <div class="main-layout-page">
+        <div class="layout-content">
+            @if (isOnTripLayout()) {
+                <div class="left-content">
+                    <div class="cv-block" [ngClass]="genCvBlockClass()">
+                        @for (cvData of cvLists; track cvData.id) {
+                            <div
+                                class="title"
+                                [ngClass]="{
+                                    active: cvData?.activeIcon || cvsActive.includes(cvData.id),
+                                    error: cvData.error,
+                                    'has-active-icon': cvData?.activeIcon
+                                }"
+                            >
+                                @if (cvData.error) {
+                                    <div>
+                                        <p class="count">
+                                            <span>{{ cvData.id }}</span>
+                                            <img [src]="cvData?.activeIcon" alt="" />
+                                        </p>
+                                        <p class="error-message" [innerHTML]="cvData?.message || '' | translate"></p>
+                                        <img
+                                            (click)="handleButtonSound(); closeErrorCv(cvData.id)"
+                                            class="close-btn"
+                                            src="/assets/images/icons/main/close-icon.svg"
+                                            alt=""
+                                        />
+                                    </div>
+                                } @else {
+                                    <div
+                                        class="status-icon"
+                                        [class.has-free]="cvData.statuses.includes(cvStatusTypes.FREE)"
+                                    >
+                                        @if (
+                                            cvData.statuses.includes(cvStatusTypes.FREE) &&
+                                            !cvData.statuses.includes(cvStatusTypes.DISCONNECTED)
+                                        ) {
+                                            <div class="free-text">
+                                                <p>{{ 'FREE' | translate }}</p>
+                                            </div>
+                                        }
+                                        <div class="number">{{ cvData.id }}</div>
+                                        <div class="cv-status-wrapper">
+                                            <img class="cv" src="/assets/images/icons/main/cv.svg" alt="" />
+                                            <div class="cv-status">
+                                                @if (
+                                                    cvData.statuses.includes(cvStatusTypes.ENTRY) ||
+                                                    cvData.statuses.includes(cvStatusTypes.ENTRY_EXIT)
+                                                ) {
+                                                    <img src="/assets/images/icons/main/arrow-out.svg" alt="" />
+                                                }
+                                                @if (
+                                                    cvData.statuses.includes(cvStatusTypes.EXIT) ||
+                                                    cvData.statuses.includes(cvStatusTypes.ENTRY_EXIT)
+                                                ) {
+                                                    <img src="/assets/images/icons/main/arrow-in.svg" alt="" />
+                                                }
+                                                @if (cvData.statuses.includes(cvStatusTypes.DISCONNECTED)) {
+                                                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
+                                                }
+                                                @if (cvData.statuses.includes(cvStatusTypes.NO_TAPPING)) {
+                                                    <img src="/assets/images/icons/main/not-allowed.svg" alt="" />
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (cvData?.activeIcon) {
+                                        <div class="icon-text">
+                                            <img [src]="cvData?.activeIcon" alt="" />
+                                            <div class="text">{{ cvData?.label }}</div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="button-control">
+                        <button
+                            class="button item1"
+                            (click)="handleButtonSound(); updateLineActive(true)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <img src="/assets/images/icons/main/polygon.svg" alt="" class="icon-up" />
+                        </button>
+                        <button
+                            class="button item2"
+                            (click)="handleButtonSound(); updateLineActive(false)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <img src="/assets/images/icons/main/downarrow.svg" alt="" class="icon-down" />
+                        </button>
+                        <button
+                            class="button item3"
+                            (click)="handleButtonSound(); handleClickMainButton(MainButtons.FREE)"
+                            [class.active-link]="isRouteActive(freeRoute)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <div class="icon">
+                                <img src="/assets/images/icons/main/free.svg" alt="" />
+                            </div>
+                            <p>{{ 'FREE' | translate }}</p>
+                        </button>
+
+                        <button
+                            class="button item4"
+                            (click)="handleButtonSound(); handleClickMainButton(MainButtons.CASH)"
+                            [class.active-link]="isRouteActive(cashPaymentRoute)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <div class="icon">
+                                <img src="/assets/images/icons/main/cash.svg" alt="" />
+                            </div>
+                            <p>{{ 'CASH' | translate }}</p>
+                        </button>
+                        <button
+                            class="button item5"
+                            (click)="handleButtonSound(); handleClickMainButton(MainButtons.FRONT_DOOR)"
+                            [class.active-link]="isRouteActive(frontDoorRoute)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <div class="icon">
+                                <img src="/assets/images/icons/main/door.svg" alt="" />
+                            </div>
+                            <p>{{ 'FRONT_DOOR' | translate }}</p>
+                        </button>
+                        <button
+                            class="button item6"
+                            (click)="handleButtonSound(); handleClickMainButton(MainButtons.BREAKDOWN)"
+                            [class.active-link]="isRouteActive(breakDownRoute)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <div class="icon">
+                                <img src="/assets/images/icons/main/breakdown.svg" alt="" />
+                            </div>
+                            <p>{{ 'BRKDWN' | translate }}</p>
+                        </button>
+                        <button
+                            class="button item7"
+                            (click)="handleButtonSound(); handleClickMainButton(MainButtons.REDEEM)"
+                            [class.active-link]="isRouteActive(redeemRoute)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <div class="icon">
+                                <img src="/assets/images/icons/main/redeem.svg" alt="" />
+                            </div>
+                            <p>{{ 'REDEEM' | translate }}</p>
+                        </button>
+                        <button
+                            class="button item8"
+                            (click)="handleButtonSound(); handleClickMainButton(MainButtons.REAR_DOOR)"
+                            [class.active-link]="isRouteActive(rearDoorRoute)"
+                            [disabled]="isDisableButton()"
+                        >
+                            <div class="icon">
+                                <img src="/assets/images/icons/main/rear-door.svg" alt="" />
+                            </div>
+                            <p>{{ 'REAR_DOOR' | translate }}</p>
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <div class="main-content">
+                <router-outlet></router-outlet>
+
+                <!-- start trip -->
+                @if (showPop) {
+                    <div
+                        class="pop-up-wrapper"
+                        [ngClass]="{ 'has-loading': showPop.loading, 'hide-pop-up': hidePopup }"
+                        [appNotificationSound]="true"
+                    >
+                        <div>
+                            @if (showPop.loading) {
+                                <div class="small-loading">
+                                    <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                                </div>
+                            }
+                            <h3 class="text-bold">{{ showPop?.title | translate }}</h3>
+                            <h4>{{ showPop?.caption | translate }}</h4>
+
+                            @if (!showPop.hideButton) {
+                                <button class="btn btn-confirm" (click)="handleButtonSound(); closePopUpHandler()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'OK' | translate }}</span>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                }
+                @if (disableBls.show) {
+                    <auto-disable-bls
+                        [disabled]="disableBls.disabled"
+                        (onOk)="handleConfirmDisableBls(true)"
+                        (onCancel)="handleConfirmDisableBls(false)"
+                    >
+                    </auto-disable-bls>
+                }
+                @if (fareBusStopMode.show) {
+                    <fare-bus-stop-location-mode
+                        [disabled]="fareBusStopMode.disabled"
+                        (onOk)="handleConfirmFareBusStopMode(true)"
+                        (onCancel)="handleConfirmFareBusStopMode(false)"
+                    >
+                    </fare-bus-stop-location-mode>
+                }
+                @if (invalidInspectorCard.show) {
+                    <common-pop-up
+                        [type]="'error'"
+                        [title]="invalidInspectorCard.message || ''"
+                        [message]="
+                            invalidInspectorCard.message === 'INVALID_INSPECTOR_CARD' ? '' : 'PLEASE_TAP_CARD_AGAIN'
+                        "
+                        [isOk]="true"
+                        (onOk)="handleInvalidInspectorCard()"
+                    >
+                    </common-pop-up>
+                }
+                @if (commonPopup.show && !commonPopup.fullScreen) {
+                    <common-pop-up
+                        [type]="commonPopup.type || 'info'"
+                        [title]="commonPopup.title || ''"
+                        [message]="commonPopup.message || ''"
+                        [timeout]="commonPopup.timeout"
+                        [isOk]="true"
+                        [disableTimeout]="commonPopup.disableTimeout || false"
+                        (onOk)="handleCloseCommonPopup(commonPopup.closeMsgID)"
+                    >
+                    </common-pop-up>
+                }
+
+                @if (displayLockPopUp) {
+                    <lock-pop-up (onConfirm)="handleConfirmLock(true)" (onCancel)="handleConfirmLock(false)">
+                    </lock-pop-up>
+                }
+
+                @if (displayLockScreen) {
+                    <lock-screen [topic]="topics.mainTab?.get || ''"></lock-screen>
+                }
+
+                @if (displaySettingsPopUp) {
+                    <madt-setting
+                        (onClose)="displaySettingsPopUp = false"
+                        (onConfirmLanguage)="handleConfirmLanguage($event)"
+                        (onChangeAudioVolume)="handleChangeAudioVolume($event)"
+                    >
+                    </madt-setting>
+                }
+            </div>
+
+            @if (commonPopup.show && commonPopup.fullScreen) {
+                <common-pop-up
+                    [type]="commonPopup.type || 'info'"
+                    [title]="commonPopup.title || ''"
+                    [message]="commonPopup.message || ''"
+                    [timeout]="commonPopup.timeout"
+                    [isOk]="true"
+                    [disableTimeout]="commonPopup.disableTimeout || false"
+                    (onOk)="handleCloseCommonPopup(commonPopup.closeMsgID)"
+                    [fullScreen]="true"
+                >
+                </common-pop-up>
+            }
+
+            @if (bootUpCommissioning.show) {
+                <boot-up-commissioning [type]="bootUpCommissioning.title || ''"></boot-up-commissioning>
+            }
+        </div>
+    </div>
+
+    @if (ignitionOff.show) {
+        <ignition-off
+            [time]="ignitionOff.message || ''"
+            [delay]="ignitionOff.delay"
+            (onConfirm)="handleIgnitionOff()"
+            [disabled]="ignitionOff.disabled"
+        >
+        </ignition-off>
+    }
+
+    @if (appLoading) {
+        <div class="loading"></div>
+    }
+</ng-container>
+<!-- } -->

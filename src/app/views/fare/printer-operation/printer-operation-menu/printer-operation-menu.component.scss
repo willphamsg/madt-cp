@@ -1,0 +1,39 @@
+@use 'variables' as *;
+
+.device-operation-content {
+    position: relative;
+
+    .back-button {
+        @include back-button;
+        font-weight: $font-weight-bold;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .device-operation-title {
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+        color: $white;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .device-operation-button-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px 12px;
+
+        .device-operation-button {
+            @include dark-button;
+            font-size: 24px;
+            font-weight: $font-weight-semi-bold;
+            min-height: 128px;
+            min-width: 292px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+}

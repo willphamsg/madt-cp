@@ -1,0 +1,35 @@
+@use 'variables' as *;
+
+.ticketing-container {
+    height: calc(100vh - $header-footer-height);
+
+    .ticketing-page {
+        height: 100%;
+        background: url('/assets/images/icons/maintenance/lta-logo.svg') no-repeat center;
+    }
+
+    .button-control {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background-color: transparent;
+        align-items: center;
+        gap: 15px;
+        padding: 10px 20px;
+    }
+
+    .button {
+        @include dark-button;
+        font-size: 24px;
+        font-weight: $font-weight-semi-bold;
+        min-height: 128px;
+        min-width: 292px;
+        &:active {
+            transform: scale(1.01);
+        }
+    }
+
+    .dialog-content {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+}

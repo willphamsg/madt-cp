@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+@mixin lta-set-cv-entry-exit-theme($light-theme: false) {
+    @if $light-theme {
+        .select-boarding-type {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .content {
+                .row {
+                    background-color: $white !important;
+
+                    .label {
+                        color: $black !important;
+                    }
+                }
+            }
+        }
+    }
+}

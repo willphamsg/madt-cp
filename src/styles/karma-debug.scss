@@ -1,0 +1,8 @@
+// Test-runner only: the app's global reset (_reset.scss) sets `overflow: hidden` on
+// html/body for the kiosk UI, which also applies inside Karma's browser page and blocks
+// scrolling through the Jasmine HTML reporter's spec list. Only referenced from the
+// `test` architect target in angular.json - never loaded by the actual app.
+html,
+body {
+    overflow: auto !important;
+}

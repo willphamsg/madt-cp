@@ -1,0 +1,165 @@
+@use 'variables' as *;
+
+.app-upgrade-page {
+    text-align: center;
+    height: 100%;
+    margin-right: -20px;
+
+    .loading {
+        @include flex-center;
+        flex-direction: column;
+        height: 100%;
+
+        > div {
+            font-size: 40px;
+            font-weight: $font-weight-bold;
+            margin-top: 20px;
+            @include dot-loading;
+            white-space: pre-line;
+        }
+
+        .loader {
+            @include spinner;
+        }
+    }
+
+    .error,
+    .success {
+        @include flex-center;
+        flex-direction: column;
+        height: 100%;
+
+        .title {
+            margin-bottom: 12px;
+            margin-top: 8px;
+        }
+
+        .content {
+            margin: 0 auto;
+            width: 700px;
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            @include flex-center;
+            min-height: 80px;
+            padding: 0 25px;
+            border-radius: 5px;
+            transition: 0.2s ease-in-out 0s;
+            min-width: 145px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+
+            span {
+                font-size: 22px;
+                font-weight: $font-weight-bold;
+                padding-left: 6px;
+                color: $white;
+            }
+
+            &-confirm,
+            &-ok {
+                background-color: $madt-bg-light-1;
+                min-width: 145px;
+            }
+        }
+    }
+
+    .title {
+        margin-top: 30px;
+        margin-bottom: 20px;
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .page-header {
+        display: flex;
+        justify-content: flex-end;
+
+        .button {
+            @include flex-center;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 28px;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .dialog {
+        height: 100%;
+        @include flex-center;
+        flex-direction: column;
+        align-items: center;
+
+        .dialog-header {
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+
+            p {
+                text-align: center;
+                margin-bottom: 12px;
+            }
+        }
+
+        .confirm-content {
+            font-size: 28px;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .confirm-msg {
+            // margin-top: 10px;
+            font-size: 28px;
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 80px;
+                padding: 0 25px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-ok {
+                    background-color: $madt-bg-light-1;
+                    min-width: 145px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<div class="time-setting">
+    <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
+    <div>
+        <h2 class="title">{{ 'SET_TIME' | translate }}</h2>
+        <div class="content">
+            <p class="label">{{ 'TIME_FORMAT' | translate }}</p>
+            <p class="value">{{ fareConsoleSetting.time }}</p>
+            <div class="input-group">
+                <p>{{ 'INPUT_TIME' | translate }}</p>
+                <input id="inputField" />
+                @if (hasInputError) {
+                    <p class="error">{{ 'INVALID_ENTRY' | translate }}</p>
+                }
+            </div>
+        </div>
+
+        <div class="keyboard">
+            <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,772 @@
+<div class="wrapper">
+    @if (hasSubmitError) {
+        <div class="fare-console-error">
+            <div>
+                <!-- <img src="/assets/images/icons/maintenance/error-success.svg" alt="" /> -->
+                <div class="title">{{ 'CONFIGURATION_INCOMPLETE' | translate }}</div>
+                <div class="content">
+                    {{ 'PLEASE_COMPLETE_FIELD_TO_PROCEED' | translate }}
+                </div>
+                <ul>
+                    @for (errorField of missingFields; track errorField.label) {
+                        <li>{{ errorField.label | translate }}</li>
+                    }
+                </ul>
+                <div class="btn-group">
+                    <div class="btn btn-ok" (click)="handleButtonSound(); handleBackToConfiguration()">
+                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                        <span>{{ 'OK' | translate }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (MsgID.DELETE_PARAMETER_NOTIFY === fareConsoleSetting.msgID) {
+        <common-pop-up
+            [type]="'info'"
+            [title]="'BUS_ID_HAS_BEEN_CHANGED'"
+            [message]="'DELETE_EXISTING_PARAMETER'"
+            [isConfirm]="true"
+            [isCancel]="true"
+            (onConfirm)="handleDeleteParameter()"
+            (onCancel)="handleClickBack()"
+        >
+        </common-pop-up>
+    } @else if (settingType === 'deckType') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'DECK_TYPE' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="deck-type">
+                    <ng-container>
+                        <h3 class="title">{{ 'SELECT_BUS_DECK_TYPE' | translate }}</h3>
+                        <div class="deck-type-list">
+                            <div class="scrollbar">
+                                <app-scrollbar>
+                                    <ul>
+                                        @for (deck of fareConsoleSetting.deckTypeList; track deck.id) {
+                                            <li
+                                                (click)="handleButtonSound(); handleChangeDeckType(deck.id)"
+                                                [ngClass]="{ selected: selectedDeckTypeId === deck.id }"
+                                            >
+                                                {{ deck.label | translate }}
+                                            </li>
+                                        }
+                                    </ul>
+                                </app-scrollbar>
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <div
+                                class="button button-cancel"
+                                (click)="handleButtonSound(); handleConfirmDeckType(false)"
+                            >
+                                <img src="/assets/images/icons/main/close.svg" alt="" />
+                                <span>{{ 'CANCEL' | translate }}</span>
+                            </div>
+                            <div
+                                class="button button-confirm"
+                                (click)="handleButtonSound(); handleConfirmDeckType(true)"
+                            >
+                                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                <span class="text">{{ 'CONFIRM' | translate }}</span>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- <ng-container *ngIf="step === 2">
+          <confirm-dialog
+            [title]="'SUCCESS' | translate"
+            [content]="'BUS_DECK_TYPE_CHANGED' | translate"
+            [btnOK]="true"
+            (onOK)="handleFinish()"
+            >
+            <div style="margin-bottom: 20px" icon>
+              <img src="/assets/images/svg/big-success.svg" alt="" />
+            </div>
+          </confirm-dialog>
+        </ng-container> -->
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'blsStatus') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'SECONDARY_BLS' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="bls">
+                    @if (blsStep === 1) {
+                        <div>
+                            <h2 class="title">{{ 'SECONDARY_BLS_STATUS' | translate }}</h2>
+                            <div class="content">
+                                <p class="label">
+                                    {{ 'STATUS' | translate }}:
+                                    @if (!!fareConsoleSetting.blsStatus) {
+                                        <span class="value">{{
+                                            (fareConsoleSetting.blsStatus === 1 ? 'ENABLE' : 'DISABLED') | translate
+                                        }}</span>
+                                    }
+                                </p>
+                                <div class="btn-group">
+                                    <button
+                                        class="button"
+                                        [disabled]="fareConsoleSetting.blsStatus === 2"
+                                        (click)="handleButtonSound(); handleChangeBlsStatus(2)"
+                                    >
+                                        <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
+                                        <div class="text">{{ 'DISABLED' | translate }}</div>
+                                    </button>
+                                    <button
+                                        class="button"
+                                        [disabled]="fareConsoleSetting.blsStatus === 1"
+                                        (click)="handleButtonSound(); handleChangeBlsStatus(1)"
+                                    >
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <div class="text">{{ 'ENABLE' | translate }}</div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @if (blsStep === 2) {
+                        <div>
+                            <h2 class="title">
+                                {{
+                                    selectedBlsStatus === 1
+                                        ? ('BLS_STATUS_ENABLE' | translate)
+                                        : ('BLS_STATUS_DISABLE' | translate)
+                                }}
+                            </h2>
+                            <div class="content">
+                                <div class="confirm">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</div>
+                                <div class="btn-group">
+                                    <div
+                                        class="btn btn-cancel"
+                                        (click)="handleButtonSound(); handleConfirmBlsStatus(false)"
+                                    >
+                                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                                        <span>{{ 'CANCEL' | translate }}</span>
+                                    </div>
+                                    <div
+                                        class="btn btn-confirm"
+                                        (click)="handleButtonSound(); handleConfirmBlsStatus(true)"
+                                    >
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span>{{ 'CONFIRM' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'setTime') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'TIME' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="time-setting">
+                    <div class="back-button" (click)="handleButtonSound(); handleClickBack()">
+                        {{ 'BACK' | translate }}
+                    </div>
+                    <div>
+                        <h2 class="title">{{ 'SET_TIME' | translate }}</h2>
+                        <div class="content">
+                            <p class="label">{{ 'TIME_FORMAT' | translate }}</p>
+                            <p class="value">{{ fareConsoleSetting.time }}</p>
+                            <div class="input-group">
+                                <p>{{ 'INPUT_TIME' | translate }}</p>
+                                <input id="inputField" [class.hasError]="hasInputError" />
+                                @if (hasInputError) {
+                                    <p class="error">{{ 'INVALID_ENTRY' | translate }}</p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event, 'time')"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'setDate') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'DATE_TIME' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="time-setting">
+                    <div class="back-button" (click)="handleButtonSound(); handleClickBack()">
+                        {{ 'BACK' | translate }}
+                    </div>
+                    <div>
+                        <h2 class="title">{{ 'SET_DATE_TIME' | translate }}</h2>
+                        <div class="content">
+                            <!-- <p class="label">{{ 'DATE_FORMAT' | translate }}</p> -->
+                            <p class="value">{{ fareConsoleSetting.dateTime | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+                            <div class="input-group">
+                                <div class="box">
+                                    <div class="input-box">
+                                        <p>{{ 'INPUT_DATE' | translate }}</p>
+                                        <div class="input-block" [ngClass]="{ 'has-error': !!dateTimeErrorMessage }">
+                                            <input
+                                                type="text"
+                                                id="day"
+                                                placeholder="--"
+                                                [value]="this.dateValue.day"
+                                                (click)="handleButtonSound(); dateTimeInputType = 'day'"
+                                                tabindex="1"
+                                            />
+                                            <div>/</div>
+                                            <input
+                                                type="text"
+                                                id="month"
+                                                placeholder="--"
+                                                [value]="this.dateValue.month"
+                                                (click)="handleButtonSound(); dateTimeInputType = 'month'"
+                                                tabindex="2"
+                                            />
+                                            <div>/</div>
+                                            <input
+                                                type="text"
+                                                id="year"
+                                                class="year"
+                                                placeholder="----"
+                                                [value]="this.dateValue.year"
+                                                (click)="handleButtonSound(); dateTimeInputType = 'year'"
+                                                tabindex="3"
+                                            />
+                                        </div>
+                                        @if (!!dateTimeErrorMessage) {
+                                            <p class="error">
+                                                {{ dateTimeErrorMessage | translate }}
+                                            </p>
+                                        }
+                                    </div>
+                                    <div class="input-box">
+                                        <p>{{ 'INPUT_TIME' | translate }}</p>
+                                        <div class="input-block" [ngClass]="{ 'has-error': hasTimeInputError }">
+                                            <input
+                                                type="text"
+                                                id="hour"
+                                                placeholder="--"
+                                                [value]="this.dateValue.hour"
+                                                (click)="handleButtonSound(); dateTimeInputType = 'hour'"
+                                                tabindex="4"
+                                            />
+                                            <div>:</div>
+                                            <input
+                                                type="text"
+                                                id="minute"
+                                                placeholder="--"
+                                                [value]="this.dateValue.minute"
+                                                (click)="handleButtonSound(); dateTimeInputType = 'minute'"
+                                                tabindex="5"
+                                            />
+                                            <div>:</div>
+                                            <input
+                                                type="text"
+                                                id="second"
+                                                placeholder="--"
+                                                [value]="this.dateValue.second"
+                                                (click)="handleButtonSound(); dateTimeInputType = 'second'"
+                                                tabindex="6"
+                                            />
+                                        </div>
+                                        @if (hasTimeInputError) {
+                                            <p class="error">{{ 'INVALID_ENTRY' | translate }}</p>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeDateTime($event)"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'complimentaryDays') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'COMPLIMENTARY_DAYS' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="complimentary-day">
+                    <div class="back-button" (click)="handleButtonSound(); handleClickBack()">
+                        {{ 'BACK' | translate }}
+                    </div>
+                    <div>
+                        <h2 class="title">{{ 'SET_COMPLIMENTARY_DAYS' | translate }}</h2>
+                        <div class="content">
+                            <p class="label">
+                                {{ 'CURRENT_DAYS' | translate }}:
+                                <span class="value">{{ fareConsoleSetting.complimentaryDays }}</span>
+                            </p>
+                            <div class="input-group">
+                                <p>{{ 'INPUT_CURRENT_DAYS' | translate }}</p>
+                                <input id="inputField" [class.hasError]="hasInputError" />
+                                @if (hasInputError) {
+                                    <p class="error">
+                                        {{
+                                            'EXCEEDED_THE_MAXIMUM_DAYS'
+                                                | translate: { days: fareConsoleSetting.maximumcomplimentaryDays }
+                                        }}
+                                    </p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="keyboard">
+                            <custom-keyboard
+                                [layout]="'numeric'"
+                                (onKeyPress)="handleChangeInput($event, 'complimentaryDays')"
+                            ></custom-keyboard>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'deleteParameter') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'DELETE_PARAMETERS' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="delete-parameter">
+                    @if (
+                        MsgID.DELETE_PARAMETER === fareConsoleSetting.msgID &&
+                        fareConsoleSetting.status === ResponseStatus.PROGRESS
+                    ) {
+                        <div class="loading">
+                            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                            <div>{{ 'DELETING_PARAMETERS_FILES' | translate }}</div>
+                        </div>
+                    } @else if (
+                        MsgID.DELETE_PARAMETER === fareConsoleSetting.msgID &&
+                        fareConsoleSetting.status === ResponseStatus.SUCCESS
+                    ) {
+                        <div>
+                            <img src="/assets/images/svg/big-success.svg" alt="" />
+                            <div class="title">{{ 'SUCCESS' | translate }}</div>
+                            <div class="content">{{ 'ALL_PARAMS_FILE_DELETED' | translate }}</div>
+                            <div class="btn-group">
+                                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'OK' | translate }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    } @else if (
+                        MsgID.DELETE_PARAMETER === fareConsoleSetting.msgID &&
+                        fareConsoleSetting.status === ResponseStatus.ERROR
+                    ) {
+                        <div>
+                            <img src="/assets/images/svg/big-error.svg" alt="" />
+                            <div class="title">{{ 'ERROR' | translate }}</div>
+                            <div class="content">
+                                {{ fareConsoleSetting.message || 'FAILED_TO_DELETE_ALL_PARAMETERS' | translate }}
+                            </div>
+                            <div class="btn-group">
+                                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'OK' | translate }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    } @else {
+                        <div>
+                            <h2 class="title">{{ 'THIS_WILL_DEL_ALL_PARAMS_FILE' | translate }}</h2>
+                            <div class="content">
+                                <p class="label">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}?</p>
+                                <div class="btn-group">
+                                    <div class="btn btn-cancel" (click)="handleButtonSound(); handleClickBack()">
+                                        <img src="/assets/images/icons/main/close.svg" alt="" />
+                                        <span>{{ 'CANCEL' | translate }}</span>
+                                    </div>
+                                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleDeleteParameter()">
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span>{{ 'CONFIRM' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    } @else if (settingType === 'busId') {
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <!-- <img src="/assets/images/icons/ticketing/ticket.svg" /> -->
+                <a>{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'BUS_ID' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="bus-id">
+                    @if (
+                        busIdData.status === ResponseStatus.ERROR && busIdData.msgID === MsgID.COMMISSION_BUS_ID_SUBMIT
+                    ) {
+                        <div class="bus-id-error">
+                            <div>
+                                <img src="/assets/images/svg/big-error.svg" alt="" />
+                                <div class="title">{{ 'ERROR' | translate }}</div>
+                                <div class="content">
+                                    {{ busIdData.message || 'PLEASE_RETRY_AGAIN' | translate }}
+                                </div>
+                                <div class="btn-group">
+                                    <div class="btn btn-ok" (click)="handleButtonSound(); handleRetrySetBusId()">
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span>{{ 'OK' | translate }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    } @else {
+                        @if (busIdStep === 1) {
+                            <h3 class="title">{{ 'SET_BUS_ID' | translate }}</h3>
+                            <ul class="list">
+                                <li class="row">
+                                    <div class="left">{{ 'BUS_ID' | translate }}</div>
+                                    <div class="right" (click)="handleButtonSound(); handleChangeStep(2)">
+                                        <p class="value">{{ busIdTemp }}</p>
+                                        <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <div class="left">{{ 'OPERATOR' | translate }}</div>
+                                    <div class="right" (click)="handleButtonSound(); handleChangeStep(3)">
+                                        <p class="value">
+                                            @if (
+                                                busIdData.operator?.['label'] && busIdData.operator?.['serviceProvider']
+                                            ) {
+                                                <span>
+                                                    {{ busIdData.operator?.['label'] }}-{{
+                                                        busIdData.operator?.['serviceProvider']
+                                                    }}
+                                                </span>
+                                            }
+                                        </p>
+                                        <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                    </div>
+                                </li>
+                                <li class="row">
+                                    <div class="left">{{ 'SERVICE_PROVIDER' | translate }}</div>
+                                    <!-- <div class="right" (click)="handleButtonSound(); handleChangeStep(4)"> -->
+                                    <div class="right">
+                                        @if (busIdData.operator?.['serviceProvider']) {
+                                            <p class="value">{{ busIdData.operator?.['serviceProvider'] }}</p>
+                                        } @else {
+                                            <p class="value"></p>
+                                        }
+                                        <!-- <img src="/assets/images/icons/main/chevron-right.svg" alt="" /> -->
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="btn-group">
+                                <div class="btn btn-cancel" (click)="handleButtonSound(); handleCancelSubmitBusId()">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </div>
+                                <div class="btn btn-confirm" (click)="handleButtonSound(); handleSubmitForm()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span class="text">{{ 'CONFIRM' | translate }}</span>
+                                </div>
+                            </div>
+                        }
+
+                        @if (busIdStep === 2) {
+                            <div class="bus-id-opt">
+                                <div class="bus-id-opt-title">
+                                    <h3>{{ 'PLEASE_ENTER_BUS_PLATE_NUMBER' | translate }}</h3>
+                                </div>
+                                <div class="update-wrapper">
+                                    <mat-form-field appearance="outline" class="select-box">
+                                        <mat-select
+                                            disableRipple
+                                            [placeholder]="'SELECT' | translate"
+                                            [(value)]="busIdPrefix"
+                                        >
+                                            @for (prefix of busIdPrefixList; track prefix) {
+                                                <mat-option [value]="prefix">{{ prefix }}</mat-option>
+                                            }
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div class="input-box">
+                                        <div class="input-group">
+                                            <input
+                                                [value]="busIdNumber"
+                                                id="inputField"
+                                                [placeholder]="'INPUT_NUMBER' | translate"
+                                                [class.hasError]="hasBusIdNumberError"
+                                            />
+                                            @if (hasBusIdNumberError) {
+                                                <p class="error">
+                                                    {{ 'WRONG_FORMAT' | translate }}
+                                                </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                @if (!isShowKeyboard) {
+                                    <div class="btn-group">
+                                        <button class="btn btn-cancel" (click)="handleButtonSound(); handleBusIdBack()">
+                                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                                            <span>{{ 'CANCEL' | translate }}</span>
+                                        </button>
+                                        <button
+                                            [disabled]="!busIdNumber || !busIdPrefix"
+                                            class="btn btn-confirm"
+                                            (click)="handleButtonSound(); handleSubmitBusId()"
+                                        >
+                                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                            <span class="text">{{ 'CONFIRM' | translate }}</span>
+                                        </button>
+                                    </div>
+                                }
+                                @if (isShowKeyboard) {
+                                    <div class="keyboard">
+                                        <custom-keyboard
+                                            [layout]="'numeric'"
+                                            (onKeyPress)="handleChangeBusIdInput($event)"
+                                        ></custom-keyboard>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+                        @if (busIdStep === 3) {
+                            <div class="operator">
+                                <div class="back-button" (click)="handleButtonSound(); handleOperatorBack()">
+                                    {{ 'BACK' | translate }}
+                                </div>
+                                <h3 class="title">{{ 'SELECT_OPERATOR' | translate }}</h3>
+                                <div class="operator-content">
+                                    @if (!busIdData.operators?.length) {
+                                        <div class="loading">
+                                            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+                                            <div>{{ 'LOADING' | translate }}</div>
+                                        </div>
+                                    } @else {
+                                        <div class="scrollbar">
+                                            <app-scrollbar>
+                                                <ul>
+                                                    @for (operator of busIdData.operators; track operator.id) {
+                                                        <li
+                                                            (click)="
+                                                                handleButtonSound();
+                                                                handleChangeOperator(operator?.id || 0)
+                                                            "
+                                                            [ngClass]="{ selected: operatorIdTemp === operator.id }"
+                                                        >
+                                                            {{ operator?.label || '' | translate }} -
+                                                            {{ operator.serviceProvider }}
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </app-scrollbar>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="btn-group">
+                                    <button
+                                        [disabled]="!operatorIdTemp || !busIdData.operators?.length"
+                                        class="btn btn-confirm"
+                                        (click)="handleButtonSound(); handleConfirmOperator()"
+                                    >
+                                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                        <span class="text">{{ 'SELECT' | translate }}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        }
+
+                        @if (busIdStep === 4) {
+                            <div class="spid">
+                                <div class="back-button" (click)="handleButtonSound(); handleSpidBack()">
+                                    {{ 'BACK' | translate }}
+                                </div>
+                                <div>
+                                    <h2 class="title">{{ 'SET_SERVICE_PROVIDER' | translate }}</h2>
+                                    <div class="content">
+                                        <div class="input-group">
+                                            <p>{{ 'SPID' | translate }}</p>
+                                            <input id="inputField" />
+                                        </div>
+                                    </div>
+                                    <div class="keyboard">
+                                        <custom-keyboard
+                                            [layout]="'numeric'"
+                                            (onKeyPress)="handleChangeInput($event, 'spid')"
+                                        ></custom-keyboard>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    } @else if (fareConsoleSetting && MsgID.FARE_CONSOLE === fareConsoleSetting.msgID) {
+        <ng-container>
+            <div class="fare-console-setting">
+                <h1 class="text-center text-bold">{{ 'CONFIGURE_FARE_CONSOLE' | translate }}</h1>
+                <div class="scrollbar">
+                    <app-scrollbar>
+                        <ul class="fare-console-table">
+                            <li class="row">
+                                <div class="left">{{ 'DECK_TYPE' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleChangeSetting('deckType')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.deckType.label,
+                                        highlight: highlightMissingFields
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.deckType.label) {
+                                        <p class="value">{{ fareConsoleSetting.deckType.label | translate }}</p>
+                                    } @else {
+                                        <p class="value">{{ 'SELECT' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <!-- <li class="row">
+            <div class="left">{{ 'SECONDARY_BLS' | translate }}</div>
+            <div
+              class="right"
+              (click)="handleButtonSound(); handleChangeSetting('blsStatus')"
+                                [ngClass]="{
+                                    required: !fareConsoleSetting.blsStatus,
+                                    highlight: highlightMissingFields
+                                }"
+              >
+              @if (!!fareConsoleSetting.blsStatus) {
+                <p class="value">
+                  {{ (fareConsoleSetting.blsStatus === 1 ? 'ENABLE' : 'DISABLED') | translate }}
+                </p>
+              } @else {
+                <p class="value">{{ 'SELECT' | translate }}</p>
+              }
+              <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+            </div>
+          </li> -->
+                            <!-- <li class="row">
+          <div class="left">{{ 'DATE_TIME' | translate }}</div>
+          <div
+            class="right"
+            (click)="handleButtonSound(); handleChangeSetting('setDate')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.dateTime,
+                                        highlight: highlightMissingFields
+                                    }"
+            >
+            @if (fareConsoleSetting.dateTime) {
+              <p class="value">
+                {{ fareConsoleSetting.dateTime | date: 'dd/MM/yyyy HH:mm:ss' }}
+              </p>
+            } @else {
+              <p class="value">{{ 'ENTER' | translate }}</p>
+            }
+            <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+          </div>
+        </li> -->
+                            <li class="row">
+                                <div class="left">{{ 'BUS_ID' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleChangeSetting('busId')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.busId,
+                                        highlight: highlightMissingFields
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.busId) {
+                                        <p class="value">{{ fareConsoleSetting.busId }}</p>
+                                    } @else {
+                                        <p class="value">{{ 'ENTER' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <li class="row">
+                                <div class="left">{{ 'COMPLIMENTARY_DAYS' | translate }}</div>
+                                <div
+                                    class="right"
+                                    (click)="handleButtonSound(); handleChangeSetting('complimentaryDays')"
+                                    [ngClass]="{
+                                        required: !fareConsoleSetting.complimentaryDays,
+                                        highlight: highlightMissingFields
+                                    }"
+                                >
+                                    @if (fareConsoleSetting.complimentaryDays) {
+                                        <p class="value">{{ fareConsoleSetting.complimentaryDays }}</p>
+                                    } @else {
+                                        <p class="value">{{ 'ENTER' | translate }}</p>
+                                    }
+                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                                </div>
+                            </li>
+                            <!-- <li class="row">
+        <div class="left red" (click)="handleButtonSound(); handleChangeSetting('deleteParameter')">
+          {{ 'DELETE_PARAMETERS' | translate }}
+        </div>
+      </li> -->
+                        </ul>
+                    </app-scrollbar>
+                </div>
+            </div>
+            <div class="btn-group w-900 mb-20">
+                <!-- <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirmFareConsole(false)">
+  <img src="/assets/images/icons/main/close.svg" alt="" />
+  <span>{{ 'CANCEL' | translate }}</span>
+</div> -->
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmFareConsole(true)">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+
+                <div
+                    class="btn btn-cancel pos-abs"
+                    (click)="handleButtonSound(); handleChangeSetting('deleteParameter')"
+                >
+                    <img src="/assets/images/icons/main/trash.svg" alt="" />
+                    <span>{{ 'DELETE_PARAMETERS' | translate }}</span>
+                </div>
+            </div>
+        </ng-container>
+    }
+</div>

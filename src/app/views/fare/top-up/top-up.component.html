@@ -1,0 +1,56 @@
+<ng-container>
+    <div class="top-up-page">
+        <div class="layout">
+            <div class="madt-breadcrumb">
+                <img src="/assets/images/icons/ticketing/ticket.svg" />
+                <a>{{ 'FARE_SYSTEM' | translate }}</a>
+                <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
+                <p>{{ 'TOP_UP' | translate }}</p>
+            </div>
+            <div class="madt-content">
+                <div class="top-up">
+                    @if (
+                        topUp.msgID === MsgID.FARE_TOP_UP_SELECT_AMT ||
+                        (topUp.msgID === MsgID.FARE_TOP_UP_SUBMIT && topUp.status === ResponseStatus.ERROR)
+                    ) {
+                        <div class="dialog">
+                            <div class="dialog-header">
+                                <p>{{ 'TOP_UP' | translate }} {{ selectedAmt }} {{ 'CENTS' | translate }}</p>
+                            </div>
+                            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+                            <div class="cf-btn-group">
+                                <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancel()">
+                                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                                    <span>{{ 'CANCEL' | translate }}</span>
+                                </button>
+                                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmTopUp()">
+                                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                                    <span>{{ 'CONFIRM' | translate }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    } @else {
+                        <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+                        <div>
+                            <h2 class="title">{{ 'SELECT_TOP_UP_AMOUNT' | translate }}</h2>
+                            <div class="content">
+                                <div class="btn-group">
+                                    @for (topUpAmount of topUp.amounts; track topUpAmount) {
+                                        <button class="button" (click)="handleButtonSound(); handleSelectAmt(topUpAmount)">
+                                            <div class="text">{{ topUpAmount }} {{ 'CENTS' | translate }}</div>
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn float-btn" (click)="handleButtonSound(); handleFareBox()">
+                            <img src="/assets/images/icons/main/fare-box.svg" alt="" />
+                            <div class="text">{{ 'FARE_BOX' | translate }}</div>
+                        </button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

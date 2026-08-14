@@ -1,0 +1,67 @@
+@if (layout === 'numeric') {
+    <div class="numeric-keyboard">
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">1</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">2</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">3</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">4</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">5</button>
+        <button class="btn btn-delete" id="backspaceKey" (click)="handleButtonSound(); handleChangeInput($event)">
+            <!-- <img src="/assets/images/icons/maintenance/keyboard-delete.svg" alt="" /> -->
+        </button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">6</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">7</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">8</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">9</button>
+        <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">0</button>
+        <button class="btn btn-confirm" id="enterKey" (click)="handleButtonSound(); handleChangeInput($event)">
+            {{ 'CONFIRM' | translate }}
+        </button>
+    </div>
+}
+
+@if (layout === 'text') {
+    <div class="text-keyboard">
+        <div class="row">
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">Q</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">W</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">E</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">R</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">T</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">Y</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">U</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">I</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">O</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">P</button>
+            <button class="btn btn-delete" id="backspaceKey" (click)="handleButtonSound(); handleChangeInput($event)">
+                <!-- <img src="/assets/images/icons/maintenance/keyboard-delete.svg" alt="" /> -->
+            </button>
+        </div>
+        <div class="row">
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">A</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">S</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">D</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">F</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">G</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">H</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">J</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">K</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">L</button>
+            <button class="btn btn-confirm" id="enterKey" (click)="handleButtonSound(); handleChangeInput($event)">
+                Confirm
+            </button>
+        </div>
+        <div class="row">
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)" id="switchKey1">123</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">Z</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">X</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">C</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">V</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">B</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">N</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">M</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">!</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)">?</button>
+            <button class="btn" (click)="handleButtonSound(); handleChangeInput($event)" id="switchKey2">123</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,37 @@
+$separator-color: #99bad9;
+$header-footer-height: 64px;
+
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-container {
+    width: 100%;
+    background-color: #000000;
+    height: $header-footer-height;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    .nav-item {
+        font-size: 24px;
+        @include flex-center;
+        gap: 10px;
+        cursor: pointer;
+        color: #ffffff;
+        transition: all ease-in-out 0.3s;
+
+        &:not(:last-child) {
+            border-right: 1px solid rgba($separator-color, 0.25);
+        }
+
+        &:hover {
+            color: #fed001;
+        }
+
+        &.active-link {
+            color: #fed001;
+        }
+    }
+}

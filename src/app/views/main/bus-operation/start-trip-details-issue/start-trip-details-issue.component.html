@@ -1,0 +1,25 @@
+<div class="wrapper">
+    <div class="page-header">
+        <div class="back-button" (click)="handleButtonSound(); backToBusOperation()">{{ 'BACK' | translate }}</div>
+    </div>
+    <div [ngClass]="{ content: true }">
+        <h2 class="text-bold">
+            {{ 'PENDING_FOR_FMS_INFO' | translate }}
+        </h2>
+        <h3>
+            {{ 'PENDING_FOR_FMS_INFO_CAPTION' | translate }}
+        </h3>
+        <button
+            [ngClass]="{
+                btn: true,
+                'btn-confirm': true
+            }"
+            (click)="handleButtonSound(); handleSettingTrip()"
+        >
+            <img src="/assets/images/svg/docs-icon.svg" alt="" />
+            <span class="text">
+                {{ 'SELECT_FARE_TRIP_DETAILS' | translate }}
+            </span>
+        </button>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+@use 'variables' as *;
+
+@mixin lta-confirm-dialog-theme($light-theme: false) {
+    @if $light-theme {
+        .dia-log {
+            background-color: #999999 !important;
+
+            &-main {
+                background-color: #f2f2f2 !important;
+                color: $black;
+                box-shadow: 1px 1px 10px #ccc;
+            }
+
+            &-title {
+                color: $black !important;
+            }
+
+            .btn-group {
+                @include flex-center;
+                gap: 32px;
+
+                .button {
+                    @include flex-center;
+                    border-radius: 5px;
+                    transition: 0.2s ease-in-out 0s;
+                    min-height: 80px;
+                    padding: 0 25px;
+
+                    &:active {
+                        transform: scale(1.01);
+                    }
+
+                    span {
+                        font-size: 18px;
+                        font-weight: $font-weight-bold;
+                        padding-left: 6px;
+                        color: $white;
+                    }
+
+                    &-cancel {
+                        background-color: $madt-color-red;
+                    }
+
+                    &-confirm,
+                    &-ok {
+                        background-color: $madt-bg-light-1;
+                    }
+                }
+            }
+        }
+    }
+}

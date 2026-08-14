@@ -1,0 +1,90 @@
+<div class="select-boarding-type">
+    <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+    <div>
+        <h2 class="title">{{ 'SET_SV_ENTRY_EXIT' | translate }}</h2>
+        <!-- <h4>
+            Current Settings: <strong>{{ cvType === 1 ? 'AUTO' : cvType === 2 ? 'EXIT' : 'Normal' }}</strong>
+        </h4> -->
+        <div class="content">
+            <div class="row" [ngClass]="{ selected: cvType === 1 }" (click)="handleButtonSound(); handleSelectType(1)">
+                <p class="label">{{ 'SET_ALL_TO_AUTO' | translate }}</p>
+                <!-- <div class="switch">
+                    <custom-switch
+                        [checked]="boardingType.allAuto"
+                        (onChange)="handleToggleStatus('allAuto')"
+                    ></custom-switch>
+                </div> -->
+            </div>
+            <div class="row" [ngClass]="{ selected: cvType === 2 }" (click)="handleButtonSound(); handleSelectType(2)">
+                <p class="label">{{ 'SET_ALL_TO_EXIT' | translate }}</p>
+                <!-- <div class="switch">
+                    <custom-switch
+                        [checked]="boardingType.allExit"
+                        (onChange)="handleToggleStatus('allExit')"
+                    ></custom-switch>
+                </div> -->
+            </div>
+            <div class="row" [ngClass]="{ selected: cvType === 3 }" (click)="handleButtonSound(); handleSelectType(3)">
+                <p class="label">{{ 'SET_ALL_TO_NORMAL' | translate }}</p>
+                <!-- <div class="switch">
+                    <custom-switch
+                        [checked]="boardingType.allNormal"
+                        (onChange)="handleToggleStatus('allNormal')"
+                    ></custom-switch>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-cancel" (click)="handleButtonSound(); handleSubmitType(false)">
+            <img src="/assets/images/icons/main/close.svg" alt="" />
+            <span>{{ 'CANCEL' | translate }}</span>
+        </button>
+        <button class="btn btn-confirm" (click)="handleButtonSound(); handleSubmitType(true)">
+            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+            <span>{{ 'CONFIRM' | translate }}</span>
+        </button>
+    </div>
+
+    <!-- <ng-container *ngIf="step === 2">
+        <confirm-dialog
+            [title]="
+                selectedBoardingType === 'allAuto'
+                    ? 'Setting All CV to AUTO'
+                    : selectedBoardingType === 'allExit'
+                      ? 'Setting All CV to EXIT'
+                      : selectedBoardingType === 'allNormal'
+                        ? 'Setting All CV to NORMAL'
+                        : ''
+            "
+            [content]="'Press the button to confirm.'"
+            [btnCancel]="true"
+            [btnConfirm]="true"
+            (onCancel)="handleSetStatus(false)"
+            (onConfirm)="handleSetStatus(true)"
+        >
+        </confirm-dialog>
+    </ng-container>
+
+    <ng-container *ngIf="step === 3">
+        <confirm-dialog
+            [title]="'Success'"
+            [content]="
+                selectedBoardingType === 'allAuto'
+                    ? 'All CV Set to Auto'
+                    : selectedBoardingType === 'allExit'
+                      ? 'All CV set to Exit'
+                      : selectedBoardingType === 'allNormal'
+                        ? 'All CV set to Normal'
+                        : ''
+            "
+            [btnOK]="true"
+            (onOK)="handleFinish()"
+        >
+            <div style="margin-bottom: 20px" icon>
+                <img src="/assets/images/svg/big-success.svg" alt="" />
+            </div>
+        </confirm-dialog>
+    </ng-container> -->
+</div>

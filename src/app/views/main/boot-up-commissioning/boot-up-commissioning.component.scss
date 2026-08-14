@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+.wrapper {
+    height: 100%;
+    background-color: $madt-bg-dark-3;
+    position: relative;
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    img {
+        margin-bottom: 1.8rem;
+    }
+
+    .content {
+        @include flex-center;
+        flex-direction: column;
+    }
+
+    .loading {
+        @include dot-loading;
+    }
+}

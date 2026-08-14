@@ -1,0 +1,99 @@
+@use 'variables' as *;
+
+.redeem-container {
+    background-color: $madt-bg-dark-1;
+    padding: 20px 15px;
+    height: 100%;
+    border-radius: 4px;
+
+    .page-header {
+        display: flex;
+        justify-content: flex-end;
+
+        .button {
+            @include flex-center;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 28px;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .button-control {
+        @include flex-center;
+        gap: 30px 16px;
+        padding: 10px;
+        flex-wrap: wrap;
+
+        .button {
+            @include dark-button;
+            font-size: 24px;
+            font-weight: $font-weight-semi-bold;
+            min-height: 128px;
+            min-width: 292px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+
+    .dialog {
+        margin-top: 100px;
+        @include flex-center;
+        flex-direction: column;
+
+        .dialog-header {
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+
+            p {
+                text-align: center;
+                margin-bottom: 12px;
+            }
+        }
+
+        .confirm-msg {
+            font-size: 28px;
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 80px;
+                padding: 0 25px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
+            }
+        }
+    }
+}

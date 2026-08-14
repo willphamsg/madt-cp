@@ -1,0 +1,34 @@
+<div class="dia-log">
+    <div class="dia-log-main" [style]="style ? style : ''">
+        <ng-content select="[icon]"></ng-content>
+        @if (title) {
+            <h3 class="dia-log-title">{{ title }}</h3>
+        }
+        <ng-content select="[title]"></ng-content>
+        @if (content) {
+            <div class="dia-log-content">{{ content }}</div>
+        }
+        <ng-content select="[content]"></ng-content>
+        <ng-content></ng-content>
+        <div class="btn-group">
+            @if (btnCancel) {
+                <div class="button button-cancel" (click)="handleButtonSound(); handleClick('cancel')">
+                    <img src="/assets/images/icons/main/close.svg" alt="" />
+                    <span>{{ 'CANCEL' | translate }}</span>
+                </div>
+            }
+            @if (btnConfirm) {
+                <div class="button button-confirm" (click)="handleButtonSound(); handleClick('confirm')">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'CONFIRM' | translate }}</span>
+                </div>
+            }
+            @if (btnOK) {
+                <div class="button button-ok" (click)="handleButtonSound(); handleClick('ok')">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OK' | translate }}</span>
+                </div>
+            }
+        </div>
+    </div>
+</div>

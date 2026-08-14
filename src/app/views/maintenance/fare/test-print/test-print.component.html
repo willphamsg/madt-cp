@@ -1,0 +1,44 @@
+<div class="test-print-page">
+    @if (step === 1) {
+        <div class="step-1">
+            <img src="/assets/images/svg/big-success.svg" alt="" />
+            <h2 class="title">{{ 'PRINTER_IS_IN_SERVICE' | translate }}</h2>
+            <div class="content">
+                <p>{{ 'PRESS_TEST_PRINT_BTN_TO_PRINT_RECEIPT' | translate }}</p>
+                <div class="button" (click)="handleButtonSound(); handleFinish()">
+                    <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                    <div class="text">{{ 'TEST_PRINT' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (step === 2) {
+        <div class="step-2">
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+            <div class="title">{{ 'COMMS_ERROR' | translate }}</div>
+            <div class="content">
+                <h4>{{ 'UNABLE_TO_COM_PRINTER' | translate }}</h4>
+                <p>{{ 'PRESS_TEST_PRINT_BTN_TO_PRINT_RECEIPT' | translate }}</p>
+                <div class="button" (click)="handleButtonSound(); handleFinish()">
+                    <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                    <div class="text">{{ 'TEST_PRINT' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (step === 3) {
+        <div class="step-2">
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+            <div class="title">{{ 'OUT_OF_SERVICE' | translate }}</div>
+            <div class="content">
+                <p>{{ 'PRINTER_NOT_IN_SERVICE' | translate }}</p>
+                <div class="button" (click)="handleButtonSound(); handleFinish()">
+                    <img src="/assets/images/icons/maintenance/print.svg" alt="" />
+                    <div class="text">{{ 'TEST_PRINT' | translate }}</div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

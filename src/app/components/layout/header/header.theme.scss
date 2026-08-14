@@ -1,0 +1,21 @@
+@use 'variables' as *;
+
+@mixin lta-header-theme($light-theme: false) {
+    @if $light-theme {
+        .madt-header {
+            background: #e9e9e9 !important;
+
+            .status:not(.error) {
+                color: $black !important;
+            }
+
+            .date,
+            .time {
+                color: $black !important;
+                &::after {
+                    background-color: $black !important;
+                }
+            }
+        }
+    }
+}

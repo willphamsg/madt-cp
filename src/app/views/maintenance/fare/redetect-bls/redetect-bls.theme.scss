@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+@mixin lta-redetect-bls-theme($light-theme: false) {
+    @if $light-theme {
+        .redetect-bls-page {
+            color: $black;
+        }
+    }
+}

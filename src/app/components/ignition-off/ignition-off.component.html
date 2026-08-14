@@ -1,0 +1,15 @@
+<div class="ignition-off" [appNotificationSound]="true">
+    <div class="ignition-off-wrapper">
+        <img class="logo" src="assets/images/svg/ignition-off.svg" />
+        <h3 class="title">{{ 'IGNITION_IS_OFF' | translate }}</h3>
+        <div class="content">
+            {{ 'TC_SHUTTING_DOWN_FROM' | translate: { time: time | date: 'dd/MM/yyyy HH:mm:ss', delay: delay } }}
+        </div>
+        <div class="btn-group">
+            <button [disabled]="disabled" class="btn btn-ok" (click)="handleButtonSound(); handleClick()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'OK' | translate }}</span>
+            </button>
+        </div>
+    </div>
+</div>

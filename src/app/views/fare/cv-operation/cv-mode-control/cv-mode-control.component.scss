@@ -1,0 +1,137 @@
+@use 'variables' as *;
+
+.cv-mode-control {
+    height: 100%;
+    text-align: center;
+    position: relative;
+
+    .back-button {
+        @include back-button;
+        font-weight: $font-weight-bold;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &-box {
+        height: 100%;
+        @include flex-center;
+        flex-direction: column;
+    }
+
+    .title {
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+        padding-bottom: 10px;
+    }
+
+    .content {
+        margin: 0 auto;
+        text-align: center;
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+            background-color: $madt-bg-dark-2;
+
+            .label {
+                font-size: 28px;
+                font-weight: $font-weight-regular;
+                color: $white;
+
+                span {
+                    font-style: italic;
+                    color: #ff7777;
+
+                    &.active {
+                        color: #92ce3d;
+                    }
+                }
+            }
+        }
+
+        .btn-group {
+            @include flex-center;
+            flex-wrap: wrap;
+            gap: 16px 12px;
+            margin-top: 30px;
+        }
+
+        .button {
+            @include dark-button;
+            font-size: 24px;
+            font-weight: $font-weight-semi-bold;
+            min-width: 296px;
+            min-height: 120px;
+
+            &:active {
+                transform: scale(1.01);
+            }
+        }
+    }
+
+    .dialog {
+        height: 100%;
+        @include flex-center;
+        flex-direction: column;
+
+        .dialog-header {
+            font-size: 32px;
+            font-weight: $font-weight-semi-bold;
+
+            p {
+                text-align: center;
+                margin-bottom: 12px;
+            }
+        }
+
+        img.error-icon {
+            padding-bottom: 20px;
+        }
+
+        .confirm-msg {
+            // margin-top: 10px;
+            font-size: 28px;
+        }
+
+        .cf-btn-group {
+            @include flex-center;
+            gap: 32px;
+            margin-top: 20px;
+
+            .btn {
+                @include flex-center;
+                min-height: 80px;
+                padding: 0 25px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
+
+                &:active {
+                    transform: scale(1.01);
+                }
+
+                span {
+                    font-size: 22px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
+
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
+            }
+        }
+    }
+
+    .dialog-title {
+        @include dialog-title;
+    }
+}

@@ -1,0 +1,65 @@
+@use 'variables' as *;
+
+.wrapper {
+    height: 100%;
+    background-color: $madt-bg-dark-3;
+    position: relative;
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    max-width: 540px;
+    text-align: center;
+    > h2 {
+        margin-bottom: 2rem;
+    }
+}
+
+.content-proceed {
+    max-width: 500px !important;
+}
+.back-button {
+    @include back-button;
+    margin-left: 20px;
+    position: absolute;
+    left: 20px;
+    top: 25px;
+}
+
+.btn {
+    @include flex-center;
+    min-height: 75px;
+    min-width: 325px;
+    padding: 0 20px;
+    border-radius: 5px;
+    border: none;
+    transition: 0.2s ease-in-out 0s;
+    border: none !important;
+    &:disabled {
+        filter: grayscale(85%) !important;
+    }
+
+    &:active {
+        transform: scale(1.01);
+    }
+
+    span {
+        font-size: 22px;
+        font-weight: $font-weight-bold;
+        padding-left: 6px;
+        color: $white;
+    }
+    &-confirm {
+        background-color: $madt-bg-light-1;
+        margin: auto;
+        margin-top: 2rem;
+    }
+}
+
+.btn-proceed {
+    min-width: 0px !important;
+}

@@ -1,0 +1,43 @@
+<main>
+    @if (!!error) {
+        <div class="error-wrapper">
+            <div>
+                <div>
+                    @if (!!error.code && !!error.message) {
+                        <h2 class="text-bold">
+                            {{ 'ERROR' | translate }}: {{ error.code }} | {{ error.message | translate }}
+                        </h2>
+                    } @else if (!!error.code) {
+                        <h1 class="text-bold">{{ error.code }}</h1>
+                    } @else if (!!error.message) {
+                        <h1 class="text-bold">{{ error.message | translate }}</h1>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+
+    @if (listOfMsgInQueue.length > 0) {
+        <div class="tc-no-response">
+            <div>
+                <h1>{{ 'TC_NO_RESPONSE' | translate }}</h1>
+                <button class="btn" (click)="handleButtonSound(); resetTcNoResponse()">
+                    <img src="/assets/images/svg/cancel.svg" alt="" />
+                    <span>{{ 'CLOSE' | translate }}</span>
+                </button>
+            </div>
+        </div>
+    }
+    
+    @if (isConnecting) {
+        <div class="disconnected-wrapper">
+            <app-header screen="" [disconnect]="true"></app-header>
+            <disconnect></disconnect>
+        </div>
+        <!-- <div class="conneting-warpper">Connecting...</div> -->
+    }
+    <router-outlet></router-outlet>
+    @if (shuttingDown.show) {
+        <app-shutting-down [message]="shuttingDown.message || ''"></app-shutting-down>
+    }
+</main>

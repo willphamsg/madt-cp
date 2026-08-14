@@ -1,0 +1,110 @@
+@use 'variables' as *;
+
+@mixin lta-start-trip-theme($light-theme: false) {
+    @if $light-theme {
+        .start-trip-page {
+            box-shadow: 1px 1px 5px #ccc;
+            background-color: #f2f2f2 !important;
+            color: $black;
+
+            .selection-box {
+                .btn-group {
+                    .btn {
+                        color: $black !important;
+                        background: linear-gradient(to bottom right, #e5e5e5 18%, #e5e5e5 50%) !important;
+                        box-shadow: inset 0px -5px 8px #ccc;
+
+                        &::before {
+                            background: $white !important;
+                            box-shadow: inset 0px -5px 8px #ccc;
+                        }
+                    }
+                }
+            }
+
+            .title {
+                color: $black;
+            }
+
+            .trip-detail-content {
+                .row {
+                    background-color: $white !important;
+
+                    .left {
+                        border-right-color: #e5e5e5 !important;
+                    }
+
+                    .right {
+                        color: $black !important;
+
+                        .value {
+                            color: $black !important;
+
+                            &.active {
+                                color: $color-green;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .services,
+            .bus-stop {
+                .title {
+                    color: $black !important;
+                }
+
+                .additional-service {
+                    img {
+                        -webkit-filter: invert(100%); /* Safari/Chrome */
+                        filter: invert(100%);
+                    }
+                }
+
+                &-content {
+                    .table {
+                        tr {
+                            th,
+                            td {
+                                color: $black;
+                            }
+
+                            td {
+                                border-left-color: #e5e5e5 !important;
+                            }
+                        }
+                        tr:nth-child(odd) > th,
+                        tr:nth-child(odd) > td {
+                            background-color: $white !important;
+                        }
+
+                        tr:nth-child(even) > th,
+                        tr:nth-child(even) > td {
+                            background-color: #dedede !important;
+                        }
+                    }
+                }
+
+                .input-group {
+                    input {
+                        background-color: #e7e7e7 !important;
+                        color: $black !important;
+                    }
+                }
+
+                .keyboard {
+                    background-color: $white !important;
+                }
+            }
+        }
+    }
+}

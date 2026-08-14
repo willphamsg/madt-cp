@@ -1,0 +1,67 @@
+<div class="delete-parameter">
+    @if (
+        MsgID.MAINTENANCE_DELETE_PARAMETER === fareConsoleSetting.msgID &&
+        fareConsoleSetting.status === ResponseStatus.PROGRESS
+    ) {
+        <div class="loading">
+            <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+            <div>{{ 'DELETING_PARAMETERS_FILES' | translate }}</div>
+        </div>
+    } @else if (
+        MsgID.MAINTENANCE_DELETE_PARAMETER === fareConsoleSetting.msgID &&
+        fareConsoleSetting.status === ResponseStatus.SUCCESS
+    ) {
+        <div>
+            <img src="/assets/images/svg/big-success.svg" alt="" />
+            <div class="title">{{ 'SUCCESS' | translate }}</div>
+            <div class="content">{{ 'ALL_PARAMS_FILE_DELETED' | translate }}</div>
+            <div class="btn-group">
+                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OK' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    } @else if (
+        MsgID.MAINTENANCE_DELETE_PARAMETER === fareConsoleSetting.msgID &&
+        fareConsoleSetting.status === ResponseStatus.ERROR
+    ) {
+        <div>
+            <img src="/assets/images/svg/big-error.svg" alt="" />
+            <div class="title">{{ 'ERROR' | translate }}</div>
+            <div class="content">
+                {{
+                    fareConsoleSetting.message
+                        ? (fareConsoleSetting.message | translate)
+                        : 'Failed to delete all parameter files.'
+                }}
+            </div>
+            <div class="btn-group">
+                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
+                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                    <span>{{ 'OK' | translate }}</span>
+                </div>
+            </div>
+        </div>
+    } @else {
+        <ng-container>
+            <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
+            <div>
+                <h2 class="title">{{ 'THIS_WILL_DEL_ALL_PARAMS_FILE' | translate }}</h2>
+                <div class="content">
+                    <p class="label">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}?</p>
+                    <div class="btn-group">
+                        <div class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
+                            <img src="/assets/images/icons/main/close.svg" alt="" />
+                            <span>{{ 'CANCEL' | translate }}</span>
+                        </div>
+                        <div class="btn btn-confirm" (click)="handleButtonSound(); handleDeleteParameter()">
+                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                            <span>{{ 'CONFIRM' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    }
+</div>

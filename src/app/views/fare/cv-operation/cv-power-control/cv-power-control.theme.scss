@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+@mixin lta-cv-power-control-theme($light-theme: false) {
+    @if $light-theme {
+        .cv-power-control {
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+
+            .title {
+                color: $black;
+            }
+
+            .row {
+                background-color: $white !important;
+            }
+
+            .left {
+                color: $black;
+            }
+        }
+    }
+}

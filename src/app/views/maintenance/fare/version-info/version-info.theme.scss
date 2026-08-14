@@ -1,0 +1,28 @@
+@use 'variables' as *;
+
+@mixin lta-version-info-theme($light-theme: false) {
+    @if $light-theme {
+        .version-info-page {
+            color: $black;
+
+            .title {
+                color: $black !important;
+            }
+
+            .table {
+                td {
+                    border-left-color: #e5e5e5 !important;
+                    color: $black;
+                }
+
+                tr:nth-child(even) > td {
+                    background-color: $white !important;
+                }
+
+                tr:nth-child(odd) > td {
+                    background-color: #dedede !important;
+                }
+            }
+        }
+    }
+}

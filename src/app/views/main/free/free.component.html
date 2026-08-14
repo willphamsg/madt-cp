@@ -1,0 +1,28 @@
+<!-- <div class="free-container">
+    <div class="confirm">
+        <div class="confirm-header">
+            {{ (free.freeMode ? 'TOGGLE_OFF_FREE_MODE' : 'TOGGLE_CV_TO_FREE') | translate }}
+        </div>
+        <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
+        <div class="cf-btn-group">
+            <button appButtonSound class="btn btn-cancel" (click)="handleButtonSound(); handleCancelFreeRideMode()">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </button>
+            <button appButtonSound class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmFreeRideMode()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>{{ 'CONFIRM' | translate }}</span>
+            </button>
+        </div>
+    </div>
+</div> -->
+<common-pop-up
+    [type]="'info'"
+    [title]="free.freeMode ? 'TOGGLE_OFF_FREE_MODE' : 'TOGGLE_CV_TO_FREE'"
+    [message]="'PRESS_THE_BTN_TO_PROCEED'"
+    [isConfirm]="true"
+    [isCancel]="true"
+    [disableSound]="true"
+    (onConfirm)="handleConfirmFreeRideMode()"
+    (onCancel)="handleCancelFreeRideMode()"
+></common-pop-up>

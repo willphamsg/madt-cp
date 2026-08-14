@@ -1,0 +1,12 @@
+<div class="plate-number" [ngClass]="{ 'full-screen': fullScreen }" [appNotificationSound]="true">
+    <div class="plate-number-wrapper">
+        <h3 class="title">{{ 'CJB' | translate }}</h3>
+        <div class="content">{{ 'BUS_PLATE_NUMBER' | translate }}: {{ plateNumber }}</div>
+        <div class="btn-group">
+            <button [disabled]="disabled" class="btn btn-ok" (click)="handleButtonSound(); handleClick()">
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span>OK</span>
+            </button>
+        </div>
+    </div>
+</div>

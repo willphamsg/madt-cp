@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,20 +18,20 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './save-transaction.component.html',
     styleUrls: ['./save-transaction.component.scss'],
 })
-export class SaveTransactionComponent implements OnInit {
+export class SaveTransactionComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
 
-    private destroy$ = new Subject<void>();
-    private saveTransaction$: Observable<ISaveTransaction>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly saveTransaction$: Observable<ISaveTransaction>;
     saveTransaction: ISaveTransaction = {};
 
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.saveTransaction$ = this.store.select(saveTransaction);
     }

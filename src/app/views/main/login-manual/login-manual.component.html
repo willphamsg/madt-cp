@@ -5,13 +5,25 @@
     ) {
         <ng-container>
             <div class="page-header">
-                <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
+                <div
+                    class="back-button"
+                    (click)="handleButtonSound(); backToLogin()"
+                    tabindex="0"
+                    (keydown.enter)="handleButtonSound(); backToLogin()"
+                >
+                    {{ 'BACK' | translate }}
+                </div>
             </div>
             <div>
                 <div class="content">
                     <div class="input-group">
                         <p>{{ 'ENTER_PIN' | translate }}</p>
-                        <input type="password" id="inputPinField" [class.hasError]="pinError" />
+                        <input
+                            type="password"
+                            id="inputPinField"
+                            [class.hasError]="pinError"
+                            [attr.aria-label]="'ENTER_PIN' | translate"
+                        />
                         @if (pinError) {
                             <p class="error">
                                 {{ pinError | translate }}
@@ -22,7 +34,7 @@
                 <div class="keyboard">
                     <custom-keyboard
                         [layout]="'numeric'"
-                        (onKeyPress)="handleChangeInput($event, 'inputPinField')"
+                        (keyPress)="handleChangeInput($event, 'inputPinField')"
                     ></custom-keyboard>
                 </div>
             </div>
@@ -30,9 +42,6 @@
     } @else if (manualLoginData.msgID === MsgID.MANUAL_LOGIN_PIN2) {
         @if (manualLoginData.status === ResponseStatus.ERROR) {
             @if (manualLoginData.message === 'PIN_ERROR_LOGIN_TERMINATE') {
-                <!-- <div class="page-header">
-        <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
-      </div> -->
                 <div class="termination" [appNotificationSound]="true">
                     <img src="/assets/images/svg/big-error.svg" alt="" />
                     <div class="title">{{ 'LOGON_TERMINATED' | translate }}</div>
@@ -41,7 +50,12 @@
             } @else {
                 <ng-container>
                     <div class="page-header">
-                        <div class="back-button" (click)="handleButtonSound(); backToLogin()">
+                        <div
+                            class="back-button"
+                            (click)="handleButtonSound(); backToLogin()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); backToLogin()"
+                        >
                             {{ 'BACK' | translate }}
                         </div>
                     </div>
@@ -54,6 +68,7 @@
                                     id="inputPinField"
                                     [value]="pinValue"
                                     [class.hasError]="!!manualLoginData.message"
+                                    [attr.aria-label]="'ENTER_PIN' | translate"
                                 />
                                 @if (manualLoginData.message) {
                                     <p class="error">
@@ -65,7 +80,7 @@
                         <div class="keyboard">
                             <custom-keyboard
                                 [layout]="'numeric'"
-                                (onKeyPress)="handleChangeInput($event, 'inputPinField')"
+                                (keyPress)="handleChangeInput($event, 'inputPinField')"
                             ></custom-keyboard>
                         </div>
                     </div>
@@ -74,7 +89,12 @@
         } @else if (manualLoginData.status === ResponseStatus.SUCCESS) {
             <ng-container>
                 <div class="page-header">
-                    <div class="back-button" (click)="handleButtonSound(); backToEnterPIN()">
+                    <div
+                        class="back-button"
+                        (click)="handleButtonSound(); backToEnterPIN()"
+                        tabindex="0"
+                        (keydown.enter)="handleButtonSound(); backToEnterPIN()"
+                    >
                         {{ 'BACK' | translate }}
                     </div>
                 </div>
@@ -82,13 +102,13 @@
                     <div class="content">
                         <div class="input-group">
                             <p>{{ 'ENTER_STAFF_ID' | translate }}</p>
-                            <input id="inputStaffIdField" />
+                            <input id="inputStaffIdField" [attr.aria-label]="'ENTER_STAFF_ID' | translate" />
                         </div>
                     </div>
                     <div class="keyboard">
                         <custom-keyboard
                             [layout]="'numeric'"
-                            (onKeyPress)="handleChangeInput($event, 'inputStaffIdField')"
+                            (keyPress)="handleChangeInput($event, 'inputStaffIdField')"
                         ></custom-keyboard>
                     </div>
                 </div>
@@ -97,9 +117,6 @@
     } @else if (manualLoginData.msgID === MsgID.MANUAL_LOGIN_STAFF_ID) {
         @if (manualLoginData.status === ResponseStatus.ERROR) {
             @if (manualLoginData.message === 'STAFF_ID_ERROR_LOGIN_TERMINATE') {
-                <!-- <div class="page-header">
-      <div class="back-button" (click)="handleButtonSound(); backToEnterPIN()">{{ 'BACK' | translate }}</div>
-    </div> -->
                 <div class="termination" [appNotificationSound]="true">
                     <img src="/assets/images/svg/big-error.svg" alt="" />
                     <div class="title">{{ 'LOGON_TERMINATED' | translate }}</div>
@@ -108,7 +125,12 @@
             } @else {
                 <ng-container>
                     <div class="page-header">
-                        <div class="back-button" (click)="handleButtonSound(); backToEnterPIN()">
+                        <div
+                            class="back-button"
+                            (click)="handleButtonSound(); backToEnterPIN()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); backToEnterPIN()"
+                        >
                             {{ 'BACK' | translate }}
                         </div>
                     </div>
@@ -120,6 +142,7 @@
                                     id="inputStaffIdField"
                                     [value]="staffIdValue"
                                     [class.hasError]="!!manualLoginData.message"
+                                    [attr.aria-label]="'ENTER_STAFF_ID' | translate"
                                 />
                                 @if (manualLoginData.message) {
                                     <p class="error">
@@ -131,7 +154,7 @@
                         <div class="keyboard">
                             <custom-keyboard
                                 [layout]="'numeric'"
-                                (onKeyPress)="handleChangeInput($event, 'inputStaffIdField')"
+                                (keyPress)="handleChangeInput($event, 'inputStaffIdField')"
                             ></custom-keyboard>
                         </div>
                     </div>
@@ -141,20 +164,19 @@
             <div class="progress-wrapper">
                 <h2 class="title">{{ 'FMS' | translate }}</h2>
                 <div class="content">{{ 'SENDING_DRIVER_DETAILS' | translate }}</div>
-                <!-- <div class="progress-bar">
-    <div class="progress" [ngStyle]="{ width: submitProgress + '%' }"></div>
-  </div> -->
             </div>
         } @else if (manualLoginData.msgSubID === ResponseStatus.ERROR) {
             <ng-container>
-                <!-- <div class="page-header">
-    <div class="back-button" (click)="handleButtonSound(); backToEnterStaffId()">{{ 'BACK' | translate }}</div>
-  </div> -->
                 <div>
                     <div class="content">
                         <div class="input-group">
                             <p>{{ 'ENTER_DUTY_NUMBER' | translate }}</p>
-                            <input id="inputDutyField" [value]="dutyValue" [class.hasError]="!!dutyError" />
+                            <input
+                                id="inputDutyField"
+                                [value]="dutyValue"
+                                [class.hasError]="!!dutyError"
+                                [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
+                            />
                             @if (dutyError) {
                                 <p class="error">
                                     {{ dutyError | translate }}
@@ -165,7 +187,7 @@
                     <div class="keyboard">
                         <custom-keyboard
                             [layout]="'numeric'"
-                            (onKeyPress)="handleChangeInput($event, 'inputDutyField')"
+                            (keyPress)="handleChangeInput($event, 'inputDutyField')"
                         ></custom-keyboard>
                     </div>
                 </div>
@@ -174,9 +196,6 @@
     } @else if (manualLoginData.msgID === MsgID.MANUAL_LOGIN_DUTY) {
         @if (manualLoginData.status === ResponseStatus.ERROR) {
             <ng-container>
-                <!-- <div class="page-header">
-      <div class="back-button" (click)="handleButtonSound(); backToEnterStaffId()">{{ 'BACK' | translate }}</div>
-    </div> -->
                 <div>
                     <div class="content">
                         <div class="input-group">
@@ -185,6 +204,7 @@
                                 id="inputDutyField"
                                 [value]="dutyValue"
                                 [class.hasError]="!!manualLoginData.message || !!dutyError"
+                                [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                             />
                             @if (manualLoginData.message || dutyError) {
                                 <p class="error">
@@ -196,7 +216,7 @@
                     <div class="keyboard">
                         <custom-keyboard
                             [layout]="'numeric'"
-                            (onKeyPress)="handleChangeInput($event, 'inputDutyField')"
+                            (keyPress)="handleChangeInput($event, 'inputDutyField')"
                         ></custom-keyboard>
                     </div>
                 </div>
@@ -205,9 +225,6 @@
             <div class="progress-wrapper">
                 <h2 class="title">{{ 'FMS' | translate }}</h2>
                 <div class="content">{{ 'SENDING_DUTY_NUMBER' | translate }}</div>
-                <!-- <div class="progress-bar">
-    <div class="progress" [ngStyle]="{ width: submitProgress + '%' }"></div>
-  </div> -->
             </div>
         }
     }

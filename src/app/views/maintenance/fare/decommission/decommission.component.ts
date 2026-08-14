@@ -19,18 +19,18 @@ import { SoundService } from '@services/sound.service';
 })
 export class Decommission implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
-    private decommission$: Observable<IDeCommission>;
+    private readonly decommission$: Observable<IDeCommission>;
     decommission: IDeCommission = {};
 
     commissionError: string | null = null;
     topics;
 
     constructor(
-        private soundService: SoundService,
+        private readonly soundService: SoundService,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.decommission$ = this.store.select(decommission);
     }

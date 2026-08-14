@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { routerUrls } from '@app/app.routes';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,7 +8,7 @@ import { MqttService } from '@services/mqtt.service';
 import { SoundService } from '@services/sound.service';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject, combineLatest } from 'rxjs';
-import { IBreakDown, MsgID, MsgSubID, ResponseStatus, DEFAULT_TIMEOUT } from '@models';
+import { IBreakDown, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { breakDownInfo, updateBreakDownInfo } from '@store/main/main.reducer';
@@ -20,8 +20,8 @@ import { LocalStorageService } from '@services/local-storage.service';
     templateUrl: './breakdown.component.html',
     styleUrls: ['./breakdown.component.scss'],
 })
-export class BreakdownComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class BreakdownComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
 
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
@@ -57,11 +57,11 @@ export class BreakdownComponent implements OnInit {
     disableActions: boolean = false;
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
-        private store: Store<AppState>,
-        private localStorageService: LocalStorageService,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly store: Store<AppState>,
+        private readonly localStorageService: LocalStorageService,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit() {

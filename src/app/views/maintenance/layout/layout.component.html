@@ -16,13 +16,13 @@
             <ignition-off
                 [time]="ignitionOff.message || ''"
                 [delay]="ignitionOff.delay"
-                (onConfirm)="handleIgnitionOff()"
+                (confirm)="handleIgnitionOff()"
                 [disabled]="ignitionOff.disabled"
             ></ignition-off>
         }
         @if (notification.show) {
             <div class="notification">
-                <notification [message]="notification.message || ''" (onOK)="handleClosePopup()"></notification>
+                <notification [message]="notification.message || ''" (ok)="handleClosePopup()"></notification>
             </div>
         }
         @if (activeLogoutPopup) {
@@ -35,8 +35,8 @@
                 [disableSound]="true"
                 [isConfirm]="true"
                 [isCancel]="true"
-                (onCancel)="handleLogout(false)"
-                (onConfirm)="handleLogout(true)"
+                (cancel)="handleLogout(false)"
+                (confirm)="handleLogout(true)"
             >
             </common-pop-up>
         }
@@ -47,7 +47,7 @@
                 [title]="this.showPopUp.title"
                 [fullScreen]="true"
                 [isOk]="true"
-                (onOk)="closePopUpHandler()"
+                (ok)="closePopUpHandler()"
             >
             </common-pop-up>
         }

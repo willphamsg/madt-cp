@@ -6,7 +6,7 @@
             [message]="'NEW_CALIBRATION_FACTOR_SET'"
             [isOk]="true"
             [disableSound]="true"
-            (onOk)="handleClosePopUp()"
+            (ok)="handleClosePopUp()"
         >
         </common-pop-up>
     } @else if (manualCalibrateBls.status === ResponseStatus.ERROR) {
@@ -16,7 +16,7 @@
             [message]="manualCalibrateBls.message"
             [isOk]="true"
             [disableSound]="true"
-            (onOk)="handleClosePopUp()"
+            (ok)="handleClosePopUp()"
         >
         </common-pop-up>
     } @else if (manualCalibrateBls.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_MANUAL_INPUT) {
@@ -27,13 +27,20 @@
             [disableSound]="true"
             [isConfirm]="true"
             [isCancel]="true"
-            (onConfirm)="handleConfirmNewFactor(true)"
-            (onCancel)="handleConfirmNewFactor(false)"
+            (confirm)="handleConfirmNewFactor(true)"
+            (cancel)="handleConfirmNewFactor(false)"
         >
         </common-pop-up>
     } @else {
         <div>
-            <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">{{ 'BACK' | translate }}</div>
+            <div
+                class="back-button"
+                (click)="handleButtonSound(); handleBackToCalibrateBls()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); handleBackToCalibrateBls()"
+            >
+                {{ 'BACK' | translate }}
+            </div>
             <h2 class="title">{{ 'MANUAL_INPUT' | translate }}</h2>
             <div class="content mt-50">
                 <div class="flex">
@@ -46,11 +53,16 @@
                 </div>
                 <div class="input-group">
                     <p>{{ 'NEW_BLS_CALIB_FACTOR' | translate }}</p>
-                    <input id="inputField" [class.hasError]="false" [value]="inputValue" />
+                    <input
+                        id="inputField"
+                        [class.hasError]="false"
+                        [value]="inputValue"
+                        [attr.aria-label]="'NEW_BLS_CALIB_FACTOR' | translate"
+                    />
                 </div>
             </div>
             <div class="keyboard">
-                <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+                <custom-keyboard [layout]="'numeric'" (keyPress)="handleChangeInput($event)"></custom-keyboard>
             </div>
         </div>
     }

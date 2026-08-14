@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,17 +18,17 @@ import { routerUrls } from '@app/app.routes';
     templateUrl: './reset-all-cv.component.html',
     styleUrls: ['./reset-all-cv.component.scss'],
 })
-export class ResetAllCVComponent implements OnInit {
-    private destroy$ = new Subject<void>();
-    private resetAllCv$: Observable<IResetAllCv>;
+export class ResetAllCVComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
+    private readonly resetAllCv$: Observable<IResetAllCv>;
     topics;
     timeOutId;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.resetAllCv$ = this.store.select(resetAllCv);
     }

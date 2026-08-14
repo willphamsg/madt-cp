@@ -90,14 +90,14 @@ export class TicketingMenuComponent implements OnInit {
             btn: 'EXTERNAL_DEVICES',
         },
     ];
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     topics;
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit() {
@@ -126,11 +126,5 @@ export class TicketingMenuComponent implements OnInit {
 
     handleButtonSound(): void {
         this.soundService.playButton();
-    }
-
-    ngAfterViewInit() {
-        // document.getElementById('main-status')?.classList?.remove('hidden');
-        // document.getElementById('settings-btn')?.classList?.remove('hidden');
-        // document.getElementById('lock-btn')?.classList?.remove('hidden');
     }
 }

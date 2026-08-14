@@ -15,14 +15,14 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./end-shift.component.scss'],
 })
 export class EndShiftComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

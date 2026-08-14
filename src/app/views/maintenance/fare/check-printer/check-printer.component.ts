@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -10,8 +10,6 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './check-printer.component.html',
     styleUrls: ['./check-printer.component.scss'],
 })
-export class CheckPrinterComponent implements OnInit {
+export class CheckPrinterComponent {
     constructor() {}
-
-    ngOnInit() {}
 }

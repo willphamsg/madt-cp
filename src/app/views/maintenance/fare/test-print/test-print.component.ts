@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -11,14 +11,12 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './test-print.component.html',
     styleUrls: ['./test-print.component.scss'],
 })
-export class TestPrintComponent implements OnInit {
+export class TestPrintComponent {
     step: number;
 
-    constructor(private soundService: SoundService) {
+    constructor(private readonly soundService: SoundService) {
         this.step = 1;
     }
-
-    ngOnInit() {}
 
     handleSelect() {
         this.step = 2;

@@ -7,7 +7,7 @@
             [fullScreen]="true"
             [disableSound]="true"
             [isOk]="true"
-            (onOk)="handleClickOK()"
+            (ok)="handleClickOK()"
         >
         </common-pop-up>
     } @else if (loadParameter.status === ResponseStatus.ERROR) {
@@ -18,18 +18,10 @@
             [fullScreen]="true"
             [disableSound]="true"
             [isOk]="true"
-            (onOk)="handleClickOK()"
+            (ok)="handleClickOK()"
         >
         </common-pop-up>
     } @else if (loadParameter.status === ResponseStatus.PROGRESS) {
-        <!-- <div class="progress-wrapper">
-            <h2 class="title">{{ 'LOADING_FILES_FROM_SD' | translate }}</h2>
-            <div class="content">{{ 'PLEASE_WAIT' | translate }}</div>
-            <div class="progress-bar" content>
-                <div class="progress" [ngStyle]="{ width: loadParameter.percentage + '%' }"></div>
-            </div>
-        </div> -->
-
         <div class="loading">
             <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
             <div [innerHTML]="'LOADING_PARAMETERS' | translate"></div>
@@ -39,7 +31,12 @@
             <h2 class="title">{{ 'LOAD_PARAMETERS' | translate }}</h2>
             <div class="content">
                 <p [innerHTML]="'PRESS_LOAD_PARAMETER_BUTTON' | translate"></p>
-                <div class="button" (click)="handleButtonSound(); handleClickButton()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleClickButton()"
+                    tabindex="0"
+                    (keydown.enter)="handleButtonSound(); handleClickButton()"
+                >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <div class="text">{{ 'LOAD_PARAMETERS' | translate }}</div>
                 </div>

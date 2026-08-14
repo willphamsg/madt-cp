@@ -30,7 +30,14 @@
         </div>
     } @else {
         <ng-container>
-            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+            <div
+                class="back-button"
+                (click)="handleButtonSound(); handleBack()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); handleBack()"
+            >
+                {{ 'BACK' | translate }}
+            </div>
             <div>
                 <h2 class="title">{{ 'CV_MODE_CONTROL' | translate }}</h2>
                 <div class="content">
@@ -46,72 +53,4 @@
             </div>
         </ng-container>
     }
-
-    <!-- <div class="content">
-            <div class="row">
-                <p class="label">
-                    Always in Service:
-                    <span
-                        [ngClass]="{
-                            active: cvModeControl.always
-                        }"
-                        >{{ cvModeControl.always ? 'On' : 'Off' }}</span
-                    >
-                </p>
-                <div class="switch">
-                    <custom-switch [checked]="cvModeControl.always" (onChange)="handleToggleStatus()"></custom-switch>
-                </div>
-            </div>
-            <div class="row">
-                <p class="label">
-                    Normal Service:
-                    <span
-                        [ngClass]="{
-                            active: cvModeControl.normal
-                        }"
-                        >{{ cvModeControl.normal ? 'On' : 'Off' }}</span
-                    >
-                </p>
-                <div class="switch">
-                    <custom-switch [checked]="cvModeControl.normal" (onChange)="handleToggleStatus()"></custom-switch>
-                </div>
-            </div>
-        </div> -->
-
-    <!-- <ng-container *ngIf="step === 2">
-        <confirm-dialog
-            [title]="
-                selectedControlMode === 'alwaysInService'
-                    ? 'Setting All CV to Always in Service'
-                    : selectedControlMode === 'normalService'
-                      ? 'Setting All CV to Normal Service'
-                      : ''
-            "
-            [content]="'Press the button to confirm.'"
-            [btnCancel]="true"
-            [btnConfirm]="true"
-            (onCancel)="handleSetStatus(false)"
-            (onConfirm)="handleSetStatus(true)"
-        >
-        </confirm-dialog>
-    </ng-container>
-
-    <ng-container *ngIf="step === 3">
-        <confirm-dialog
-            [btnOK]="true"
-            (onOK)="handleFinish()"
-            [title]="'Success'"
-            [content]="
-                selectedControlMode === 'alwaysInService'
-                    ? 'All CV set to Always in Service'
-                    : selectedControlMode === 'normalService'
-                      ? 'All CV set to Normal Service'
-                      : ''
-            "
-        >
-            <div style="margin-bottom: 20px" icon>
-                <img src="/assets/images/svg/big-success.svg" alt="" />
-            </div>
-        </confirm-dialog>
-    </ng-container> -->
 </div>

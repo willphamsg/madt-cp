@@ -21,8 +21,8 @@ export class TopUpComponent implements OnInit, OnDestroy {
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
-    private destroy$ = new Subject<void>();
-    private topUp$: Observable<ITopUp>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly topUp$: Observable<ITopUp>;
     topUp: ITopUp = {};
     selectedAmt: number = 0;
 
@@ -30,10 +30,10 @@ export class TopUpComponent implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
         protected store: Store<AppState>,
-        private soundService: SoundService,
+        private readonly soundService: SoundService,
     ) {
         this.topUp$ = this.store.select(topUp);
     }

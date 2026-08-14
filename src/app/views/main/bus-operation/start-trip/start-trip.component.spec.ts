@@ -542,10 +542,6 @@ describe('StartTripComponent', () => {
         expect(component.step).toBe(3);
     });
 
-    it('handleCloseManuallyInput should not throw', () => {
-        expect(() => component.handleCloseManuallyInput()).not.toThrow();
-    });
-
     // ------------------------------------------------------------------
     // handleSearchService / getDisplayServices
     // ------------------------------------------------------------------

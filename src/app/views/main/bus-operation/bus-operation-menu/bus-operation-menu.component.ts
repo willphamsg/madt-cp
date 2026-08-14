@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { routerUrls } from '@app/app.routes';
 import { MqttService } from '@services/mqtt.service';
 import { SoundService } from '@services/sound.service';
-import { MsgID, MsgSubID, StartTripTypes, TopicsKeys } from '@models';
+import { MsgID, MsgSubID } from '@models';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -19,10 +19,10 @@ import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
     styleUrls: ['./bus-operation-menu.component.scss'],
 })
 export class BusOperationMenuComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     topics;
-    private mqttSubscriptions: Array<{
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
@@ -76,10 +76,10 @@ export class BusOperationMenuComponent implements OnInit, OnDestroy {
     displayEndShiftPopup: boolean = false;
 
     constructor(
-        private mqttService: MqttService,
-        private router: Router,
+        private readonly mqttService: MqttService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private soundService: SoundService,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit() {

@@ -13,15 +13,8 @@ describe('SignInComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                SignInComponent,
-            ],
-            providers: [
-                provideHttpClient(),
-                provideMockStore({ initialState: mockInitialState }),
-                provideRouter([]),
-            ],
+            imports: [TranslateModule.forRoot(), SignInComponent],
+            providers: [provideHttpClient(), provideMockStore({ initialState: mockInitialState }), provideRouter([])],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 

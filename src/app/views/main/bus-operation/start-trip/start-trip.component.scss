@@ -89,7 +89,6 @@
 
         .title {
             position: relative;
-            // margin-top: -44px;
         }
 
         .trip-detail-content {
@@ -137,7 +136,6 @@
                     }
 
                     &.disabled {
-                        // filter: brightness(0.5);
                         background-color: $color-charcoal-grey;
                     }
 

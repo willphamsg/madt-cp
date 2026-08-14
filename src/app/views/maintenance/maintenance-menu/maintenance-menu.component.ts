@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { MqttService } from '@services/mqtt.service';
-import { MsgSubID, MsgID, IAuth, TopicsKeys, LocalStorageKey, IPopUpControl } from '@models';
+import { MsgSubID, MsgID } from '@models';
 import { SoundService } from '@services/sound.service';
 
 @Component({
@@ -14,13 +14,13 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./maintenance-menu.component.scss'],
 })
 export class MaintenanceMenuComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

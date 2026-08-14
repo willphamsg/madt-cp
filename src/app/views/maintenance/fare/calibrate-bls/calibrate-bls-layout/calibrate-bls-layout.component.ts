@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, Router, RouterOutlet } from '@angular/router';
 import { SoundService } from '@services/sound.service';
@@ -9,13 +9,11 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './calibrate-bls-layout.component.html',
     styleUrls: ['./calibrate-bls-layout.component.scss'],
 })
-export class CalibrateBLSLayoutComponent implements OnInit {
+export class CalibrateBLSLayoutComponent {
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
     ) {}
-
-    ngOnInit() {}
 
     handleButtonSound(): void {
         this.soundService.playButton();

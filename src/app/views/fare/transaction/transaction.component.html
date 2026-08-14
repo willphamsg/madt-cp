@@ -2,7 +2,7 @@
     <div class="transaction-page">
         <div class="layout">
             <div class="madt-breadcrumb">
-                <img src="/assets/images/icons/ticketing/ticket.svg" />
+                <img src="/assets/images/icons/ticketing/ticket.svg" alt="" />
                 <a>{{ 'FARE_SYSTEM' | translate }}</a>
                 <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
                 <p>{{ 'TRANSACTION' | translate }}</p>
@@ -45,13 +45,20 @@
                     ) {
                         @if (transaction.status === ResponseStatus.SUCCESS) {
                             <ng-container>
-                                <div class="back-button" (click)="handleButtonSound(); backToCVScreen()">{{ 'BACK' | translate }}</div>
+                                <div
+                                    class="back-button"
+                                    (click)="handleButtonSound(); backToCVScreen()"
+                                    tabindex="0"
+                                    (keydown.enter)="handleButtonSound(); backToCVScreen()"
+                                >
+                                    {{ 'BACK' | translate }}
+                                </div>
                                 @if (transaction.cardValue) {
                                     <h2 class="title">{{ 'CARD_VALUE' | translate }} = ${{ transaction.cardValue }}</h2>
                                 } @else {
                                     <h2 class="title">{{ 'CARD_TRANSACTION_HISTORY' | translate }}</h2>
                                 }
-                                
+
                                 <div class="transaction-list">
                                     <div class="scrollbar">
                                         <app-scrollbar>
@@ -60,7 +67,7 @@
                                                     <li class="row">
                                                         <div class="left">
                                                             <p class="date">
-                                                                {{ (transaction.message || 'NO_RECORD') | translate }}
+                                                                {{ transaction.message || 'NO_RECORD' | translate }}
                                                             </p>
                                                         </div>
                                                     </li>
@@ -71,7 +78,9 @@
                                                                 <p class="date">
                                                                     {{ transaction.date | date: 'yyyy-MM-dd' }}
                                                                 </p>
-                                                                <p class="time">{{ transaction.date | date: 'HH:mm' }}</p>
+                                                                <p class="time">
+                                                                    {{ transaction.date | date: 'HH:mm' }}
+                                                                </p>
                                                             </div>
                                                             <div class="right">
                                                                 <p class="value">
@@ -94,13 +103,20 @@
                                 [fullScreen]="true"
                                 [disableSound]="true"
                                 [isOk]="true"
-                                (onOk)="backToProgressScreen()"
+                                (ok)="backToProgressScreen()"
                             >
                             </common-pop-up>
                         }
                     } @else {
                         <ng-container>
-                            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+                            <div
+                                class="back-button"
+                                (click)="handleButtonSound(); handleBack()"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleBack()"
+                            >
+                                {{ 'BACK' | translate }}
+                            </div>
                             <div>
                                 <h2 class="title">{{ 'SELECT_CV' | translate }}</h2>
                                 <div class="content">

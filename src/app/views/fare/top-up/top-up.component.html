@@ -2,7 +2,7 @@
     <div class="top-up-page">
         <div class="layout">
             <div class="madt-breadcrumb">
-                <img src="/assets/images/icons/ticketing/ticket.svg" />
+                <img src="/assets/images/icons/ticketing/ticket.svg" alt="" />
                 <a>{{ 'FARE_SYSTEM' | translate }}</a>
                 <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
                 <p>{{ 'TOP_UP' | translate }}</p>
@@ -30,13 +30,23 @@
                             </div>
                         </div>
                     } @else {
-                        <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+                        <div
+                            class="back-button"
+                            (click)="handleButtonSound(); handleBack()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); handleBack()"
+                        >
+                            {{ 'BACK' | translate }}
+                        </div>
                         <div>
                             <h2 class="title">{{ 'SELECT_TOP_UP_AMOUNT' | translate }}</h2>
                             <div class="content">
                                 <div class="btn-group">
                                     @for (topUpAmount of topUp.amounts; track topUpAmount) {
-                                        <button class="button" (click)="handleButtonSound(); handleSelectAmt(topUpAmount)">
+                                        <button
+                                            class="button"
+                                            (click)="handleButtonSound(); handleSelectAmt(topUpAmount)"
+                                        >
                                             <div class="text">{{ topUpAmount }} {{ 'CENTS' | translate }}</div>
                                         </button>
                                     }

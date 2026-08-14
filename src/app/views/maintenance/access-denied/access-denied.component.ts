@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PreLoginComponent } from '@components/pre-login/pre-login.component';
 
 @Component({
@@ -7,8 +7,6 @@ import { PreLoginComponent } from '@components/pre-login/pre-login.component';
     templateUrl: './access-denied.component.html',
     styleUrls: ['./access-denied.component.scss'],
 })
-export class MaintenanceAccessDeniedComponent implements OnInit {
+export class MaintenanceAccessDeniedComponent {
     constructor() {}
-
-    ngOnInit() {}
 }

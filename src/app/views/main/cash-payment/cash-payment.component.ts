@@ -28,7 +28,7 @@ export class CashPaymentComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
     ECashMode = ECashMode;
     ECashType = ECashType;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     cash$: Observable<ICashPayment> = this.store.select(cashPayment);
     cashPayment: ICashPayment = {
         adultValues: [],
@@ -55,12 +55,12 @@ export class CashPaymentComponent implements OnInit, OnDestroy {
     topics;
 
     constructor(
-        private router: Router,
-        private activeRouter: ActivatedRoute,
-        private mqttService: MqttService,
-        private store: Store<AppState>,
-        private soundService: SoundService,
-        @Inject(DOCUMENT) private _document: Document,
+        private readonly router: Router,
+        private readonly activeRouter: ActivatedRoute,
+        private readonly mqttService: MqttService,
+        private readonly store: Store<AppState>,
+        private readonly soundService: SoundService,
+        @Inject(DOCUMENT) private readonly _document: Document,
     ) {
         // this.inputValue = '';
     }

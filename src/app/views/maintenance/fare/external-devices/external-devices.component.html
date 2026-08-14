@@ -8,14 +8,18 @@
         <div class="external-devices-box">
             <ng-container>
                 <div class="external-devices-header">
-                    <!-- <div class="back-button" (click)="handleButtonSound(); backToFareConsole()">Back</div> -->
                     <div class="title">{{ 'EXTERNAL_DEVICES_DIAG' | translate }}</div>
                     @if (
                         externalDevices.status === ResponseStatus.SUCCESS ||
                         externalDevices.status === ResponseStatus.ERROR ||
                         externalDevices.status === ResponseStatus.NA
                     ) {
-                        <div class="refresh-button" (click)="handleButtonSound(); handleRefresh()">
+                        <div
+                            class="refresh-button"
+                            (click)="handleButtonSound(); handleRefresh()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); handleRefresh()"
+                        >
                             <img src="/assets/images/icons/bus-operation/refresh.svg" alt="" />
                         </div>
                     }
@@ -41,7 +45,12 @@
                                             } @else {
                                                 <p class="value loading">{{ 'TESTING' | translate }}</p>
                                             }
-                                            <div class="button" (click)="handleButtonSound(); handlePrintTest()">
+                                            <div
+                                                class="button"
+                                                (click)="handleButtonSound(); handlePrintTest()"
+                                                tabindex="0"
+                                                (keydown.enter)="handleButtonSound(); handlePrintTest()"
+                                            >
                                                 <img src="/assets/images/icons/maintenance/print.svg" alt="" />
                                             </div>
                                         </div>
@@ -150,108 +159,6 @@
                                         </tr>
                                     }
                                 }
-                                <!-- <tr>
-                <td>
-                  <div class="row">
-                    <div class="label">CV1:</div>
-                    @if (externalDevices.status === ResponseStatus.NA) {
-                      <div class="value"></div>
-                    } @else if (fieldSuccess('cv1')) {
-                      <div class="value">{{ 'OK' | translate }}</div>
-                    } @else if (fieldError('cv1')) {
-                      <div class="value error">
-                        {{ errorText('cv1') || '' | translate }}
-                      </div>
-                    } @else {
-                      <p class="value loading">{{ 'TESTING' | translate }}</p>
-                    }
-                  </div>
-                </td>
-                <td>
-                  <div class="row">
-                    <div class="label">CV2:</div>
-                    @if (externalDevices.status === ResponseStatus.NA) {
-                      <div class="value"></div>
-                    } @else if (fieldSuccess('cv2')) {
-                      <div class="value">{{ 'OK' | translate }}</div>
-                    } @else if (fieldError('cv2')) {
-                      <div class="value error">
-                        {{ errorText('cv2') || '' | translate }}
-                      </div>
-                    } @else {
-                      <p class="value loading">{{ 'TESTING' | translate }}</p>
-                    }
-                  </div>
-                </td>
-              </tr> -->
-                                <!-- <tr>
-              <td>
-                <div class="row">
-                  <div class="label">CV3:</div>
-                  @if (externalDevices.status === ResponseStatus.NA) {
-                    <div class="value"></div>
-                  } @else if (fieldSuccess('cv3')) {
-                    <div class="value">{{ 'OK' | translate }}</div>
-                  } @else if (fieldError('cv3')) {
-                    <div class="value error">
-                      {{ errorText('cv3') || '' | translate }}
-                    </div>
-                  } @else {
-                    <p class="value loading">{{ 'TESTING' | translate }}</p>
-                  }
-                </div>
-              </td>
-              <td>
-                <div class="row">
-                  <div class="label">CV4:</div>
-                  @if (externalDevices.status === ResponseStatus.NA) {
-                    <div class="value"></div>
-                  } @else if (fieldSuccess('cv4')) {
-                    <div class="value">{{ 'OK' | translate }}</div>
-                  } @else if (fieldError('cv4')) {
-                    <div class="value error">
-                      {{ errorText('cv4') || '' | translate }}
-                    </div>
-                  } @else {
-                    <p class="value loading">{{ 'TESTING' | translate }}</p>
-                  }
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="row">
-                  <div class="label">CV5:</div>
-                  @if (externalDevices.status === ResponseStatus.NA) {
-                    <div class="value"></div>
-                  } @else if (fieldSuccess('cv5')) {
-                    <div class="value">{{ 'OK' | translate }}</div>
-                  } @else if (fieldError('cv5')) {
-                    <div class="value error">
-                      {{ errorText('cv5') || '' | translate }}
-                    </div>
-                  } @else {
-                    <p class="value loading">{{ 'TESTING' | translate }}</p>
-                  }
-                </div>
-              </td>
-              <td>
-                <div class="row">
-                  <div class="label">CV6:</div>
-                  @if (externalDevices.status === ResponseStatus.NA) {
-                    <div class="value"></div>
-                  } @else if (fieldSuccess('cv6')) {
-                    <div class="value">{{ 'OK' | translate }}</div>
-                  } @else if (fieldError('cv6')) {
-                    <div class="value error">
-                      {{ errorText('cv6') || '' | translate }}
-                    </div>
-                  } @else {
-                    <p class="value loading">{{ 'TESTING' | translate }}</p>
-                  }
-                </div>
-              </td>
-            </tr> -->
                             </table>
                         </app-scrollbar>
                     </div>

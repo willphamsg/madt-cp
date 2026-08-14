@@ -25,7 +25,7 @@ import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
 export class FrontDoorComponent implements OnDestroy, OnInit {
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     cvNum: number = 0;
     frontDoor$: Observable<IFrontDoor> = this.store.select(frontDoor);
     frontDoor: IFrontDoor = {};
@@ -33,10 +33,10 @@ export class FrontDoorComponent implements OnDestroy, OnInit {
     timeOutId;
 
     constructor(
-        private router: Router,
-        private store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly store: Store<AppState>,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit(): void {

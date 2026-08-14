@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { fareBusStopMode, fareConsole, updateFareConsole } from '@store/maintenance/maintenance.reducer';
+import { fareConsole, updateFareConsole } from '@store/maintenance/maintenance.reducer';
 import { IFareConsole, MsgID, MsgSubID, ResponseStatus } from '@models';
 
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
@@ -23,7 +23,7 @@ import { SoundService } from '@services/sound.service';
 })
 export class FareConsoleTableComponent implements OnDestroy, OnInit {
     urlPrefix: string = '/maintenance/fare/fare-console';
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
@@ -53,10 +53,10 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
     hasInputError = false;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
-        private store: Store<AppState>,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly store: Store<AppState>,
     ) {
         this.fareConsole$ = this.store.select(fareConsole);
     }

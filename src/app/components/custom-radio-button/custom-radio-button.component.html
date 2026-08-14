@@ -1,4 +1,9 @@
-<div class="radio" (click)="handleButtonSound(); onClickHandler(value)">
+<div
+    class="radio"
+    (click)="handleButtonSound(); onClickHandler(value)"
+    tabindex="0"
+    (keydown.enter)="handleButtonSound(); onClickHandler(value)"
+>
     @if (isSelected) {
         <img src="/assets/images/icons/maintenance/selected.svg" alt="" />
     } @else {

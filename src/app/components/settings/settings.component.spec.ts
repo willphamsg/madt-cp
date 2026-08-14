@@ -74,9 +74,9 @@ describe('SettingsComponent', () => {
     });
 
     describe('onLanguageChange', () => {
-        it('should emit onConfirmLanguage if isConfirm is true and handling close', () => {
-            const emitSpy = spyOn(component.onConfirmLanguage, 'emit');
-            const closeSpy = spyOn(component.onClose, 'emit');
+        it('should emit confirmLanguage if isConfirm is true and handling close', () => {
+            const emitSpy = spyOn(component.confirmLanguage, 'emit');
+            const closeSpy = spyOn(component.close, 'emit');
 
             component.selectedLanguage = { id: 'CH', label: '华语' };
             component.fromMaintenance = false;
@@ -90,7 +90,7 @@ describe('SettingsComponent', () => {
         });
 
         it('should goBack if isConfirm is true and fromMaintenance is true', () => {
-            const emitSpy = spyOn(component.onConfirmLanguage, 'emit');
+            const emitSpy = spyOn(component.confirmLanguage, 'emit');
             const goBackSpy = spyOn(component, 'goBack');
 
             component.selectedLanguage = { id: 'CH', label: '华语' };
@@ -113,8 +113,8 @@ describe('SettingsComponent', () => {
     });
 
     describe('handleClose', () => {
-        it('should emit onClose', () => {
-            const emitSpy = spyOn(component.onClose, 'emit');
+        it('should emit close', () => {
+            const emitSpy = spyOn(component.close, 'emit');
             component.handleClose();
             expect(emitSpy).toHaveBeenCalled();
         });
@@ -157,7 +157,7 @@ describe('SettingsComponent', () => {
 
     describe('handleChangeAudioVolume', () => {
         it('should emit new value', () => {
-            const emitSpy = spyOn(component.onChangeAudioVolume, 'emit');
+            const emitSpy = spyOn(component.changeAudioVolume, 'emit');
             component.handleChangeAudioVolume(75);
             expect(emitSpy).toHaveBeenCalledWith(75);
         });

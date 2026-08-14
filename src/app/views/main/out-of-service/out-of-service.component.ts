@@ -9,7 +9,7 @@ import { OutOfServiceType } from '@models';
     styleUrl: './out-of-service.component.scss',
 })
 export class OutOfServiceComponent implements OnInit {
-    constructor(private activeRoute: ActivatedRoute) {}
+    constructor(private readonly activeRoute: ActivatedRoute) {}
     pageData!: string;
     withInfo = OutOfServiceType?.WITH_INFO;
     noData = OutOfServiceType?.NO_DATA;

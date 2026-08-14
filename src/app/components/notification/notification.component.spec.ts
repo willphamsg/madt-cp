@@ -30,16 +30,16 @@ describe('NotificationComponent', () => {
     });
 
     describe('handleClick', () => {
-        it('should emit onOK event', () => {
-            const emitSpy = spyOn(component.onOK, 'emit');
+        it('should emit ok event', () => {
+            const emitSpy = spyOn(component.ok, 'emit');
             component.handleClick();
             expect(emitSpy).toHaveBeenCalled();
         });
     });
 
     describe('ngAfterContentInit', () => {
-        it('should emit onOK after DEFAULT_NOTIFICATION_TIMEOUT if onOK is defined', fakeAsync(() => {
-            const okSpy = spyOn(component.onOK, 'emit');
+        it('should emit ok after DEFAULT_NOTIFICATION_TIMEOUT if ok is defined', fakeAsync(() => {
+            const okSpy = spyOn(component.ok, 'emit');
 
             component.ngAfterContentInit();
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { routerUrls } from '@app/app.routes';
@@ -6,7 +6,7 @@ import { routerUrls } from '@app/app.routes';
 import { MqttService } from '@services/mqtt.service';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
-import { IEndTrip, MsgID, MsgSubID, ResponseStatus, DEFAULT_TIMEOUT } from '@models';
+import { IEndTrip, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { endTripInfo, updateEndTripInfo } from '@store/main/main.reducer';
@@ -18,8 +18,8 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './end-trip.component.html',
     styleUrls: ['./end-trip.component.scss'],
 })
-export class EndTripComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class EndTripComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
 
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
@@ -40,10 +40,10 @@ export class EndTripComponent implements OnInit {
     timeOutId;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
-        private store: Store<AppState>,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly store: Store<AppState>,
     ) {}
 
     ngOnInit() {

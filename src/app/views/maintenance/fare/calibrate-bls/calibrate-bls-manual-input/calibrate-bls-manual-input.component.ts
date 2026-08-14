@@ -22,8 +22,8 @@ export class CalibrateBLSManualInputComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
     MsgID = MsgID;
 
-    private destroy$ = new Subject<void>();
-    private manualCalibrateBls$: Observable<IManualCalibrateBls>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly manualCalibrateBls$: Observable<IManualCalibrateBls>;
     manualCalibrateBls: IManualCalibrateBls = {};
     inputValue: string = '';
     topics;
@@ -31,10 +31,10 @@ export class CalibrateBLSManualInputComponent implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.manualCalibrateBls$ = this.store.select(manualCalibrateBls);
     }

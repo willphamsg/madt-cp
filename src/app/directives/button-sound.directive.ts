@@ -14,13 +14,13 @@ import { IAudioVolume, LocalStorageKey } from '@app/models';
     standalone: true,
 })
 export class ButtonSoundDirective implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
-    private audio$: Observable<IAudioVolume> = this.store.select(audioVolume);
+    private readonly destroy$ = new Subject<void>();
+    private readonly audio$: Observable<IAudioVolume> = this.store.select(audioVolume);
     audioVolume: IAudioVolume = { value: 0 };
 
     constructor(
         protected store: Store<AppState>,
-        private localStorageService: LocalStorageService,
+        private readonly localStorageService: LocalStorageService,
     ) {}
 
     ngOnInit() {

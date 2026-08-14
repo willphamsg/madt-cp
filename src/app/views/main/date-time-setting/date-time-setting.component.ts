@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
@@ -8,9 +8,9 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MqttService } from '@services/mqtt.service';
-import { IDateTime, IFareConsole, MsgID, MsgSubID } from '@models';
+import { IDateTime, MsgID, MsgSubID } from '@models';
 import { AppState } from '@store/app.state';
-import { dateTimeSetting, updateDateTimeSetting, updateFareConsole } from '@store/main/main.reducer';
+import { dateTimeSetting, updateDateTimeSetting } from '@store/main/main.reducer';
 import { SoundService } from '@services/sound.service';
 
 @Component({
@@ -20,8 +20,8 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './date-time-setting.component.html',
     styleUrls: ['./date-time-setting.component.scss'],
 })
-export class DateTimeSettingComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class DateTimeSettingComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     dateTime$: Observable<IDateTime> = this.store.select(dateTimeSetting);
     dateTimeSetting: IDateTime = {
         dateTime: '',
@@ -43,12 +43,12 @@ export class DateTimeSettingComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private datePipe: DatePipe,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly datePipe: DatePipe,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private translate: TranslateService,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
     ) {}
 
     ngOnInit() {

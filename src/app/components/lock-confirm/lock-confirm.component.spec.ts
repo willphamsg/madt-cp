@@ -38,16 +38,16 @@ describe('LockConfirmPopUp', () => {
     });
 
     describe('handleConfirm', () => {
-        it('should emit onConfirm event', () => {
-            const emitSpy = spyOn(component.onConfirm, 'emit');
+        it('should emit confirm event', () => {
+            const emitSpy = spyOn(component.confirm, 'emit');
             component.handleConfirm();
             expect(emitSpy).toHaveBeenCalled();
         });
     });
 
     describe('handleCancel', () => {
-        it('should emit onCancel event', () => {
-            const emitSpy = spyOn(component.onCancel, 'emit');
+        it('should emit cancel event', () => {
+            const emitSpy = spyOn(component.cancel, 'emit');
             component.handleCancel();
             expect(emitSpy).toHaveBeenCalled();
         });

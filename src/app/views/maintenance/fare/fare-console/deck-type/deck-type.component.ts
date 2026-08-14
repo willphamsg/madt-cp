@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -19,10 +19,10 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './deck-type.component.html',
     styleUrls: ['./deck-type.component.scss'],
 })
-export class DeckTypeComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class DeckTypeComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
 
-    private fareConsoleSetting$: Observable<IFareConsole>;
+    private readonly fareConsoleSetting$: Observable<IFareConsole>;
     fareConsoleSetting: IFareConsole = {
         deckType: {
             id: 0,
@@ -41,11 +41,11 @@ export class DeckTypeComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private safeJsonService: SafeJsonService,
+        private readonly mqttService: MqttService,
+        private readonly safeJsonService: SafeJsonService,
     ) {
         this.fareConsoleSetting$ = this.store.select(currentFareConsole);
     }

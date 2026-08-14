@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { SoundService } from '@services/sound.service';
@@ -9,30 +9,24 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './lock-confirm.component.html',
     styleUrl: './lock-confirm.component.scss',
 })
-export class LockConfirmPopUp implements OnDestroy, OnInit {
+export class LockConfirmPopUp {
     @Input() disabled?: boolean = false;
     @Input() mqttTopic: string = '';
     @Input() fullScreen?: boolean = false;
-    @Output() onConfirm: EventEmitter<string> = new EventEmitter<string>();
-    @Output() onCancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() confirm: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private soundService: SoundService) {}
-
-    ngOnInit() {}
+    constructor(private readonly soundService: SoundService) {}
 
     handleConfirm() {
-        this.onConfirm.emit();
+        this.confirm.emit();
     }
 
     handleCancel() {
-        this.onCancel.emit();
+        this.cancel.emit();
     }
 
     handleButtonSound(): void {
         this.soundService.playButton();
-    }
-
-    ngOnDestroy() {
-        // Emit to destroy all active subscriptions
     }
 }

@@ -7,14 +7,14 @@
             [message]="'PRESS_THE_BTN_TO_PROCEED'"
             [isConfirm]="true"
             [isCancel]="true"
-            (onConfirm)="handleEndShift(true)"
-            (onCancel)="handleEndShift(false)"
+            (confirm)="handleEndShift(true)"
+            (cancel)="handleEndShift(false)"
         ></common-pop-up>
     } @else {
         <ng-container>
             <h3 class="title">{{ 'DRIVER_LOGGED_ON' | translate }}</h3>
             <a class="link-button" (click)="handleButtonSound(); handleExternalDevices($event)">
-                <img src="assets/images/icons/main/ext-device-icon.svg" />
+                <img src="assets/images/icons/main/ext-device-icon.svg" alt="" />
                 {{ 'EXTERNAL_DEVICES' | translate }}
             </a>
             <div class="btn-group">

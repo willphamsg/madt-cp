@@ -34,12 +34,12 @@ module.exports = function karmaConfig(config) {
         },
         reporters: ['progress', 'kjhtml', 'coverage'],
         browsers: ['ChromeHeadless'],
-         customLaunchers: {
+        customLaunchers: {
             ChromeHeadlessCI: {
                 base: 'ChromeHeadless',
                 flags: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
             },
-            },
+        },
         restartOnFileChange: false,
         browserNoActivityTimeout: 120000,
         browserDisconnectTimeout: 30000,

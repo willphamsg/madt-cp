@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -15,9 +15,9 @@ import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
     templateUrl: './display-audit.component.html',
     styleUrls: ['./display-audit.component.scss'],
 })
-export class DisplayAuditComponent implements OnInit {
-    private destroy$ = new Subject<void>();
-    private auditRegistration$: Observable<IAuditRegistration> = this.store.select(auditRegistration);
+export class DisplayAuditComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
+    private readonly auditRegistration$: Observable<IAuditRegistration> = this.store.select(auditRegistration);
     auditRegistration: IAuditRegistration = {};
 
     isLoading: boolean = true;
@@ -26,7 +26,7 @@ export class DisplayAuditComponent implements OnInit {
 
     constructor(
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

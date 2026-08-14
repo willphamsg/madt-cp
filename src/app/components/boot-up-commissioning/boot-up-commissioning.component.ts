@@ -2,7 +2,6 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
-import { CommissioningType } from '@models';
 
 @Component({
     selector: 'boot-up-commissioning',
@@ -13,10 +12,7 @@ import { CommissioningType } from '@models';
 export class BootUpCommissioningComponent {
     @Input() type!: string;
     constructor(
-        private router: Router,
-        private activeRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly activeRoute: ActivatedRoute,
     ) {}
-    ngOnInit() {
-        // console.log('BootUpCommissioningComponent initialized with type:', this.type);
-    }
 }

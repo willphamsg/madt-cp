@@ -35,7 +35,7 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./layout.component.scss'],
 })
 export class MaintenanceFareLayoutComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     menus: SideNavMenu[] = maintenanceFareMenu;
     activeMenu: SideNavMenu | null = null;
@@ -64,11 +64,11 @@ export class MaintenanceFareLayoutComponent implements OnInit, OnDestroy {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly activatedRoute: ActivatedRoute,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.router.events.subscribe((ev) => {
             if (ev instanceof NavigationEnd) {

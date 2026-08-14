@@ -10,7 +10,6 @@
                     </div>
                 } @else {
                     <div class="lta-unlock">
-                        <!-- <div appButtonSound class="back-button" (click)="handleButtonSound(); handleBack()">Back</div> -->
                         <div class="unlock-group">
                             <h2 class="title">{{ 'ENTER_PIN_TO_UNLOCK' | translate }}</h2>
                             <div class="input-group">
@@ -19,6 +18,7 @@
                                     type="password"
                                     [value]="pinValue"
                                     [class.hasError]="lockScreen.message"
+                                    [attr.aria-label]="'ENTER_PIN_TO_UNLOCK' | translate"
                                 />
                                 @if (lockScreen.message || pinError) {
                                     <p class="error">
@@ -30,7 +30,7 @@
                         <div class="keyboard">
                             <custom-keyboard
                                 [layout]="'numeric'"
-                                (onKeyPress)="handleChangeInput($event)"
+                                (keyPress)="handleChangeInput($event)"
                             ></custom-keyboard>
                         </div>
                     </div>

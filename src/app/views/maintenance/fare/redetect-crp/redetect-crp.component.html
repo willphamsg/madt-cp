@@ -1,25 +1,4 @@
 <div class="redetect-crp-page">
-    <!-- <div *ngIf="step === 1" class="step-1">
-  <h2 class="title">{{ 'REDETECT_CRP' | translate }}</h2>
-  <div class="content">
-    <p>{{ 'PRESS_THE_SCAN_BTN_TO_BEGIN_SCANNING' | translate }}</p>
-    <div class="button" (click)="handleButtonSound(); handleSaveTransaction()">
-      <img src="/assets/images/icons/main/confirm.svg" alt="" />
-      <div class="text">{{ 'SCAN' | translate }}</div>
-    </div>
-  </div>
-</div> -->
-
-    <!-- <confirm-dialog
-*ngIf="step === 1"
-[title]="'SCANNING_FOR_CRP_DEVICE' | translate"
-[content]="'PLEASE_WAIT' | translate"
->
-<div class="progress-bar" content>
-  <div class="progress" [ngStyle]="{ width: progress + '%' }"></div>
-</div>
-</confirm-dialog> -->
-
     @if (step === 1) {
         <div class="progress-wrapper">
             <h2 class="title">{{ 'SCANNING_FOR_CRP_DEVICE' | translate }}</h2>
@@ -36,7 +15,12 @@
             <div class="content">
                 <div class="confirm">{{ 'CRP_INSTALLED' | translate }}</div>
                 <div class="btn-group">
-                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleFinishTransaction()">
+                    <div
+                        class="btn btn-confirm"
+                        (click)="handleButtonSound(); handleFinishTransaction()"
+                        tabindex="0"
+                        (keydown.enter)="handleButtonSound(); handleFinishTransaction()"
+                    >
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'OKAY' | translate }}</span>
                     </div>
@@ -44,16 +28,4 @@
             </div>
         </div>
     }
-    <!--
-<confirm-dialog
-  *ngIf="step === 2"
-  [title]="'SUCCESS' | translate"
-  [content]="'CRP_INSTALLED' | translate"
-  [btnOK]="true"
-  (onOK)="handleFinishTransaction()"
-  >
-  <div style="margin-bottom: 20px" icon>
-    <img src="/assets/images/svg/big-success.svg" alt="" />
-  </div>
-</confirm-dialog> -->
 </div>

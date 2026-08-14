@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule, RouterOutlet } from '@angular/router';
 
@@ -7,15 +7,15 @@ import { Store } from '@ngrx/store';
 import { MqttService } from '@services/mqtt.service';
 import { MsgID, MsgSubID, IFareConsole } from '@models';
 import { AppState } from '@store/app.state';
-import { tcDateTime, fareConsole, updateFareConsole } from '@store/maintenance/maintenance.reducer';
+import { fareConsole, updateFareConsole } from '@store/maintenance/maintenance.reducer';
 @Component({
     selector: 'fare-console-layout',
     imports: [MatIconModule, RouterModule, RouterOutlet],
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
 })
-export class FareConsoleLayoutComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class FareConsoleLayoutComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     private submittedFareConsoleSnapshot: {
         deckTypeId: number;
         fareBusStopMode?: number;
@@ -43,7 +43,7 @@ export class FareConsoleLayoutComponent implements OnInit {
 
     constructor(
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
@@ -12,21 +12,22 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './inspector-ticket.component.html',
     styleUrls: ['./inspector-ticket.component.scss'],
 })
-export class InspectorTicketComponent implements OnInit {
+export class InspectorTicketComponent {
     success: boolean = true;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
     ) {}
-
-    ngOnInit() {}
 
     goBack() {
         this.router.navigate(['/ticketing/device-operation/printer']);
     }
 
-    handlePrint() {}
+    handlePrint() {
+        // No MsgID is defined yet for this print action; placeholder until the backend request is specified.
+        console.warn('InspectorTicketComponent: print not yet implemented');
+    }
 
     handleButtonSound(): void {
         this.soundService.playButton();

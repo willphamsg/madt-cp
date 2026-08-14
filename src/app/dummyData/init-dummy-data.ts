@@ -10,28 +10,17 @@ import MainPageData, {
     busStopList,
     currentFmsTrip,
 } from './main-page'; // Your dummy bus info data
-import {
-    AuthStatus,
-    MessageId,
-    maintenanceDataType,
-    MqttTypes,
-    MsgID,
-    MsgSubID,
-    StartTripTypes,
-    MessageKeys,
-    CommissioningType,
-    ResponseStatus,
-} from '@models';
-import { parameters, versionInfoList, blsList, auditRegistrationList, deckTypeList } from './maintenance';
+import { MsgID, MsgSubID, ResponseStatus } from '@models';
+import { versionInfoList, blsList } from './maintenance';
 import { environment } from '@env/environment';
-import { default as mainPageData, startTripFlows } from './main-page';
+import { default as mainPageData } from './main-page';
 import { timeout } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class DummyInitService {
-    constructor(private mqttService: MqttService) {}
+    constructor(private readonly mqttService: MqttService) {}
     // currentStartTrip = StartTripTypes?.FMS_NOT_CONNECTED;
     // Method to initialize dummy data
     initializeDummyData(topics): void {

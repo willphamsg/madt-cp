@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { MsgSubID, MsgID } from '@models';
     templateUrl: './printer-operation-menu.component.html',
     styleUrls: ['./printer-operation-menu.component.scss'],
 })
-export class PrinterOperationMenuComponent implements OnInit {
+export class PrinterOperationMenuComponent implements OnInit, OnDestroy {
     buttons = [
         {
             title: 'PRINT_INSPEC_TICKET',
@@ -43,15 +43,15 @@ export class PrinterOperationMenuComponent implements OnInit {
         },
     ];
     urlPrefix = '/fare/printer-operation';
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     MsgID = MsgID;
 
     topics;
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit() {

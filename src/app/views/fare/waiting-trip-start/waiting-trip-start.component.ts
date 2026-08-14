@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { PreLoginComponent } from '@components/pre-login/pre-login.component';
 
 @Component({
@@ -7,8 +7,6 @@ import { PreLoginComponent } from '@components/pre-login/pre-login.component';
     templateUrl: './waiting-trip-start.component.html',
     styleUrls: ['./waiting-trip-start.component.scss'],
 })
-export class WaitingTripToStart implements OnInit {
+export class WaitingTripToStart {
     constructor() {}
-
-    ngOnInit() {}
 }

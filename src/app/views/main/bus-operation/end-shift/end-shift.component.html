@@ -1,48 +1,25 @@
 <div class="end-shift-page">
-    <!-- <confirm-dialog
-        *ngIf="step === 1"
-        [title]="'END_SHIFT' | translate"
-        [content]="'OPEN_PRINTER_PRINT_END_SHIFT' | translate"
-        [btnConfirm]="true"
-        [btnCancel]="true"
-        (onConfirm)="handleConfirmEndShift(true)"
-        (onCancel)="handleConfirmEndShift(false)"
-        style="width: 700px"
-    >
-    </confirm-dialog> -->
-
-    <!-- <app-dialog *ngIf="step === 2">
-        <div class="odo" style="min-width: 950px">
-            <div class="header">
-                <div class="close-btn" (click)="handleButtonSound(); handleCloseOdometer()">
-                    <img src="/assets/images/icons/main/close-circle.svg" alt="" />
-                    <span>{{ 'CLOSE' | translate }}</span>
-                </div>
-            </div>
-            <div class="odo-title">
-                <h3>{{ 'ENTER_ODOMETER_VAL' | translate }}</h3>
-            </div>
-            <div class="input-group">
-                <input id="inputField" />
-            </div>
-
-            <div class="keyboard">
-                <custom-keyboard [layout]="'text'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
-            </div>
-        </div>
-    </app-dialog> -->
-
     <div class="dialog">
         <div class="dialog-header">
             <p [innerHTML]="'LOG_OFF' | translate"></p>
         </div>
         <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
         <div class="cf-btn-group">
-            <div class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
+            <div
+                class="btn btn-cancel"
+                (click)="handleButtonSound(); goBack()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); goBack()"
+            >
                 <img src="/assets/images/icons/main/close.svg" alt="" />
                 <span>{{ 'CANCEL' | translate }}</span>
             </div>
-            <div class="btn btn-confirm" (click)="handleButtonSound(); handleEndShift()">
+            <div
+                class="btn btn-confirm"
+                (click)="handleButtonSound(); handleEndShift()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); handleEndShift()"
+            >
                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                 <span>{{ 'CONFIRM' | translate }}</span>
             </div>

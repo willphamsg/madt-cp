@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router, RouterOutlet, NavigationEnd, NavigationStart } from '@angular/router';
-import { takeUntil, map } from 'rxjs/operators';
-import { Observable, Subject, combineLatest } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { routerUrls } from '@app/app.routes';
@@ -10,16 +10,7 @@ import { HeaderComponent } from '@components/layout/header/header.component';
 import { AppState } from '@store/app.state';
 import { MqttService } from '@services/mqtt.service';
 import { LocalStorageService } from '@services/local-storage.service';
-import {
-    MsgSubID,
-    MsgID,
-    ResponseStatus,
-    IAuth,
-    TopicsKeys,
-    IPopUpControl,
-    LocalStorageKey,
-    FareScreen,
-} from '@models';
+import { MsgSubID, MsgID, ResponseStatus, TopicsKeys, IPopUpControl, LocalStorageKey, FareScreen } from '@models';
 import {
     updateCancelRide,
     updateConcession,
@@ -59,10 +50,10 @@ import { updateLockScreen } from '@app/store/main/main.reducer';
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
 })
-export class FareLayoutComponent implements OnInit {
+export class FareLayoutComponent implements OnInit, OnDestroy {
     FareScreen = FareScreen;
-    private destroy$ = new Subject<void>();
-    private mqttSubscriptions: Array<{
+    private readonly destroy$ = new Subject<void>();
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
@@ -98,9 +89,9 @@ export class FareLayoutComponent implements OnInit {
     constructor(
         protected router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private translate: TranslateService,
-        private localStorageService: LocalStorageService,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
+        private readonly localStorageService: LocalStorageService,
     ) {
         this.isLandingPage = this.router.url === '/fare';
         this.isPublicScreen = [

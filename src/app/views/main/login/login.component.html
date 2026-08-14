@@ -5,15 +5,23 @@
     @if ((dagwOperationData.title || dagwOperationData.message) && !isDAGWProcAbortCompleted) {
         <div class="operation-overlay">
             <div class="overlay-hd-bg"></div>
-            <dagw-operation (onCancel)="handleCancelDagwOperation()"></dagw-operation>
+            <dagw-operation (cancel)="handleCancelDagwOperation()"></dagw-operation>
         </div>
     }
     <div class="lang-cont">
-        <button (click)="handleButtonSound(); handleChangeLanguage('EN')" mat-button [ngClass]="{ active: currentLanguage === 'EN' }">
+        <button
+            (click)="handleButtonSound(); handleChangeLanguage('EN')"
+            mat-button
+            [ngClass]="{ active: currentLanguage === 'EN' }"
+        >
             English
         </button>
         |
-        <button (click)="handleButtonSound(); handleChangeLanguage('CH')" mat-button [ngClass]="{ active: currentLanguage === 'CH' }">
+        <button
+            (click)="handleButtonSound(); handleChangeLanguage('CH')"
+            mat-button
+            [ngClass]="{ active: currentLanguage === 'CH' }"
+        >
             华语
         </button>
     </div>
@@ -37,16 +45,13 @@
                     {{ outOfServiceData.reason | translate }}
                 }
             </h2>
-            <img src="/assets/images/svg/sign-in-img.svg" />
+            <img src="/assets/images/svg/sign-in-img.svg" alt="" />
             @if (outOfServiceData.upgradeStatus) {
                 <br />
                 <h3 class="upgrade-status">
                     {{ outOfServiceData.upgradeStatus | translate }}
                 </h3>
             }
-            <!-- <button class="btn btn-confirm bt" (click)="handleButtonSound(); showKeyboardHandler()">
-                <img src="/assets/images/svg/keyboard-icon.svg" />
-            </button> -->
         } @else {
             <h2>
                 {{ 'OUT_OF_SERVICE' | translate }}
@@ -54,37 +59,9 @@
                 {{ 'PENDING_UPGRADE_CV' | translate }}
             </h2>
             <div class="cv-upgrade">
-                <img src="/assets/images/svg/sign-in-img.svg" />
-                <img class="ban" src="/assets/images/svg/ban.svg" />
+                <img src="/assets/images/svg/sign-in-img.svg" alt="" />
+                <img class="ban" src="/assets/images/svg/ban.svg" alt="" />
             </div>
         }
     </div>
-    <!-- <div
-        [ngClass]="{
-            'keyboard-wrapper': true,
-            'service-input': true,
-            'show-keyboard': showKeyboard
-        }"
-    >
-        <div class="keyboard-block">
-            <div class="button" (click)="handleButtonSound(); showKeyboardHandler()">
-                <img src="/assets/images/icons/main/close-circle.svg" alt="" />
-                <span>{{ 'CLOSE' | translate }}</span>
-            </div>
-            <div class="content">
-                <div>
-                    <div class="additional-service">
-                        <h3>{{ 'PLEASE_ENTER_DIGIT' | translate }}</h3>
-                    </div>
-                    <div class="input-group">
-                        <input id="inputField" />
-                        <p class="text-error" *ngIf="commissionError">{{ commissionError | translate }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="keyboard">
-                <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
-            </div>
-        </div>
-    </div> -->
 </div>

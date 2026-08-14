@@ -5,7 +5,6 @@
 }
 
 .show-cv-status {
-    // height: calc(100% - 100px);
 
     height: 100%;
     text-align: center;
@@ -28,7 +27,6 @@
     }
 
     .content {
-        // width: 600px;
         min-width: 900px;
         margin: auto;
         flex-grow: 1;
@@ -40,24 +38,6 @@
             height: 100%;
         }
 
-        // ul {
-        //     li {
-        //         font-size: 28px;
-        //         padding: 18px 12px;
-        //         text-align: left;
-        //         background-color: $madt-bg-dark-2;
-        //         cursor: pointer;
-
-        //         &:not(:last-child) {
-        //             margin-bottom: 8px;
-        //         }
-
-        //         &.selected {
-        //             background-color: $madt-bg-light-1 !important;
-        //             font-weight: $font-weight-bold !important;
-        //         }
-        //     }
-        // }
     }
 
     .ng-scrollbar {
@@ -86,7 +66,6 @@
         align-items: center;
         justify-content: space-between;
         background-color: $madt-bg-dark-2;
-        // margin-top: 8px;
 
         + .row {
             border-top: 2px solid #010d10;
@@ -104,17 +83,10 @@
             flex-grow: 1;
             font-size: 28px;
             padding: 16px;
-            // border-left: 2px solid $madt-bg-dark-1;
-            // color: $madt-bg-light-1;
             text-align: left;
-            // color: $color-red-light;
-            // font-weight: $font-weight-bold;
             font-style: italic;
             text-transform: uppercase;
 
-            // &.auto {
-            //     color: #92ce3d;
-            // }
         }
     }
 
@@ -142,7 +114,6 @@
 
         &-content {
             font-size: 28px;
-            // margin-bottom: 20px;
             padding: 6px;
 
             .table {

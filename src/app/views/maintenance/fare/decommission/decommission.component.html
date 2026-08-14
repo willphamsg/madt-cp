@@ -1,25 +1,15 @@
 <div class="decommission">
-    <!-- @if (decommission.status === ResponseStatus.SUCCESS) {
-  <div class="confirmation">
-    <img src="/assets/images/svg/big-success.svg" alt="" />
-    <h2 class="title">{{ 'SUCCESS' | translate }}</h2>
-    <div class="content">
-      <div class="confirm">{{ 'DECOMMISSION' | translate }}</div>
-      <div class="btn-group">
-        <button class="btn btn-confirm" (click)="handleButtonSound(); handleClosePopup()">
-          <img src="/assets/images/icons/main/confirm.svg" alt="" />
-          <span>{{ 'OK' | translate }}</span>
-        </button>
-      </div>
-    </div>
-  </div>
-} @else { -->
     <div class="decommission-block">
         <h2 class="title">{{ 'DECOMMISSION' | translate }}</h2>
         <div class="content">
             <div class="input-group">
                 <p>{{ 'ENTER_PIN' | translate }}</p>
-                <input id="inputField" type="password" [class.hasError]="commissionError" />
+                <input
+                    id="inputField"
+                    type="password"
+                    [class.hasError]="commissionError"
+                    [attr.aria-label]="'ENTER_PIN' | translate"
+                />
                 @if (commissionError) {
                     <p class="error">{{ commissionError | translate }}</p>
                 }
@@ -27,7 +17,7 @@
         </div>
 
         <div class="keyboard">
-            <custom-keyboard [layout]="'numeric'" (onKeyPress)="handleChangeInput($event)"></custom-keyboard>
+            <custom-keyboard [layout]="'numeric'" (keyPress)="handleChangeInput($event)"></custom-keyboard>
         </div>
     </div>
     <!-- } -->

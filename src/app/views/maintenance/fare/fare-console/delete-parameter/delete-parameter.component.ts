@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -16,8 +16,8 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './delete-parameter.component.html',
     styleUrls: ['./delete-parameter.component.scss'],
 })
-export class DeleteParameterComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class DeleteParameterComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
 
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
@@ -39,10 +39,10 @@ export class DeleteParameterComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.fareConsoleSetting$ = this.store.select(fareConsole);
     }

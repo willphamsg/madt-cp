@@ -16,7 +16,7 @@ import { IBootUp } from '@models';
     styleUrl: './boot-up.component.scss',
 })
 export class BootUpComponent implements OnDestroy, OnInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     bootUp$: Observable<IBootUp>;
     bootUpdata: IBootUp = {
         softwareVersion: '',
@@ -27,8 +27,8 @@ export class BootUpComponent implements OnDestroy, OnInit {
         service: '',
     };
     constructor(
-        private router: Router,
-        private store: Store<AppState>,
+        private readonly router: Router,
+        private readonly store: Store<AppState>,
     ) {
         this.bootUp$ = this.store.select(bootUp);
     }

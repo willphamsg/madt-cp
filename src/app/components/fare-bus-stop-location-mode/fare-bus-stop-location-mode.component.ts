@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -11,26 +11,20 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './fare-bus-stop-location-mode.component.html',
     styleUrl: './fare-bus-stop-location-mode.component.scss',
 })
-export class FareBusStopLocationMode implements OnDestroy, OnInit {
+export class FareBusStopLocationMode {
     @Input() disabled?: boolean = false;
     @Input() fullScreen?: boolean = false;
-    @Output() onOk: EventEmitter<string> = new EventEmitter<string>();
-    @Output() onCancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() ok: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private soundService: SoundService) {}
-
-    ngOnInit() {}
+    constructor(private readonly soundService: SoundService) {}
 
     handleConfirm() {
-        this.onOk.emit();
+        this.ok.emit();
     }
 
     handleCancel() {
-        this.onCancel.emit();
-    }
-
-    ngOnDestroy() {
-        // Emit to destroy all active subscriptions
+        this.cancel.emit();
     }
 
     handleButtonSound(): void {

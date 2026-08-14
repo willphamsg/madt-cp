@@ -15,11 +15,11 @@ import { SoundService } from '@services/sound.service';
 export class BusOffRouteComponent implements OnDestroy, OnInit {
     @Input() disabled?: boolean = false;
     @Input() fullScreen?: boolean = false;
-    @Output() onOk: EventEmitter<string> = new EventEmitter<string>();
+    @Output() ok: EventEmitter<string> = new EventEmitter<string>();
 
     intervalId;
 
-    constructor(private soundService: SoundService) {}
+    constructor(private readonly soundService: SoundService) {}
 
     ngOnInit() {
         clearTimeout(this.intervalId);
@@ -29,7 +29,7 @@ export class BusOffRouteComponent implements OnDestroy, OnInit {
     }
 
     handleClick() {
-        this.onOk.emit();
+        this.ok.emit();
     }
 
     ngOnDestroy() {

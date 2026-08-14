@@ -45,8 +45,8 @@ describe('DagwOperationComponent', () => {
     });
 
     describe('handleCancelDagwOperation', () => {
-        it('should emit onCancel event', () => {
-            const emitSpy = spyOn(component.onCancel, 'emit');
+        it('should emit cancel event', () => {
+            const emitSpy = spyOn(component.cancel, 'emit');
             component.handleCancelDagwOperation();
             expect(emitSpy).toHaveBeenCalled();
         });

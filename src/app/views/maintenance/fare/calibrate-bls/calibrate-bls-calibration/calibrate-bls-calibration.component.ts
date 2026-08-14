@@ -23,8 +23,8 @@ export class CalibrateBLSCalibrationComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
     MsgID = MsgID;
 
-    private destroy$ = new Subject<void>();
-    private blsCalibration$: Observable<IBlsCalibration>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly blsCalibration$: Observable<IBlsCalibration>;
     blsCalibration: IBlsCalibration = {};
     inputValue: string = '';
     topics;
@@ -32,10 +32,10 @@ export class CalibrateBLSCalibrationComponent implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.blsCalibration$ = this.store.select(blsCalibration);
     }

@@ -42,28 +42,28 @@ describe('ConfirmDialogComponent', () => {
     });
 
     describe('handleClick', () => {
-        it('should emit onCancel for cancel type', () => {
-            const emitSpy = spyOn(component.onCancel, 'emit');
+        it('should emit cancel for cancel type', () => {
+            const emitSpy = spyOn(component.cancel, 'emit');
             component.handleClick('cancel');
             expect(emitSpy).toHaveBeenCalledWith('cancel');
         });
 
-        it('should emit onConfirm for confirm type', () => {
-            const emitSpy = spyOn(component.onConfirm, 'emit');
+        it('should emit confirm for confirm type', () => {
+            const emitSpy = spyOn(component.confirm, 'emit');
             component.handleClick('confirm');
             expect(emitSpy).toHaveBeenCalledWith('confirm');
         });
 
-        it('should emit onOK for ok type', () => {
-            const emitSpy = spyOn(component.onOK, 'emit');
+        it('should emit ok for ok type', () => {
+            const emitSpy = spyOn(component.ok, 'emit');
             component.handleClick('ok');
             expect(emitSpy).toHaveBeenCalledWith('ok');
         });
 
         it('should not emit for unknown type', () => {
-            const cancelSpy = spyOn(component.onCancel, 'emit');
-            const confirmSpy = spyOn(component.onConfirm, 'emit');
-            const okSpy = spyOn(component.onOK, 'emit');
+            const cancelSpy = spyOn(component.cancel, 'emit');
+            const confirmSpy = spyOn(component.confirm, 'emit');
+            const okSpy = spyOn(component.ok, 'emit');
 
             component.handleClick('unknown');
 
@@ -74,9 +74,9 @@ describe('ConfirmDialogComponent', () => {
     });
 
     describe('ngAfterContentInit', () => {
-        it('should emit onOK after DEFAULT_TIMEOUT if btnOK is true', fakeAsync(() => {
+        it('should emit ok after DEFAULT_TIMEOUT if btnOK is true', fakeAsync(() => {
             component.btnOK = true;
-            const okSpy = spyOn(component.onOK, 'emit');
+            const okSpy = spyOn(component.ok, 'emit');
 
             component.ngAfterContentInit();
 
@@ -88,7 +88,7 @@ describe('ConfirmDialogComponent', () => {
 
         it('should not setup timeout if btnOK is false', fakeAsync(() => {
             component.btnOK = false;
-            const okSpy = spyOn(component.onOK, 'emit');
+            const okSpy = spyOn(component.ok, 'emit');
 
             component.ngAfterContentInit();
 

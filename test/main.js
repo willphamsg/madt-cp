@@ -141,7 +141,15 @@ let defaultTargetSelector = 'button, a'; // replace with Angular button selector
 const fallbackClickSelector = 'button, .btn, .button, .back-button';
 
 function mergeSelectors(...selectors) {
-    return [...new Set(selectors.join(',').split(',').map((selector) => selector.trim()).filter(Boolean))].join(', ');
+    return [
+        ...new Set(
+            selectors
+                .join(',')
+                .split(',')
+                .map((selector) => selector.trim())
+                .filter(Boolean),
+        ),
+    ].join(', ');
 }
 
 function getRouteExtraSelector(currentURL) {
@@ -249,11 +257,17 @@ function getRouteExtraSelector(currentURL) {
         return '.transaction-page .btn, .transaction-page .button, .transaction-page .back-button';
     }
 
-    if (currentURL?.indexOf(routerUrls.private.fare.cancelRideCV1) > -1 || currentURL?.indexOf(routerUrls.private.fare.cancelRideCV2) > -1) {
+    if (
+        currentURL?.indexOf(routerUrls.private.fare.cancelRideCV1) > -1 ||
+        currentURL?.indexOf(routerUrls.private.fare.cancelRideCV2) > -1
+    ) {
         return '.cancel-ride .btn, .cancel-ride .button';
     }
 
-    if (currentURL?.indexOf(routerUrls.private.fare.concessionCV1) > -1 || currentURL?.indexOf(routerUrls.private.fare.concessionCV2) > -1) {
+    if (
+        currentURL?.indexOf(routerUrls.private.fare.concessionCV1) > -1 ||
+        currentURL?.indexOf(routerUrls.private.fare.concessionCV2) > -1
+    ) {
         return '.concession .btn, .concession .button';
     }
 
@@ -289,7 +303,10 @@ function getRouteExtraSelector(currentURL) {
         return '.device-operation-content .back-button, .device-operation-content .device-operation-button';
     }
 
-    if (currentURL?.indexOf(routerUrls.private.fare.blsOperation.manualLocation) > -1 || currentURL?.indexOf(routerUrls.private.fare.blsOperation.autoLocation) > -1) {
+    if (
+        currentURL?.indexOf(routerUrls.private.fare.blsOperation.manualLocation) > -1 ||
+        currentURL?.indexOf(routerUrls.private.fare.blsOperation.autoLocation) > -1
+    ) {
         return '.device-operation-content .btn, .device-operation-content .back-button, .device-operation-content .device-operation-button';
     }
 
@@ -525,11 +542,24 @@ function startAutoClicker(interval = 1000) {
             //     targetSelector = 'button, .btn';
             // }
 
-            let targetSelector = mergeSelectors(getRouteExtraSelector(currentURL), defaultTargetSelector, fallbackClickSelector);
+            let targetSelector = mergeSelectors(
+                getRouteExtraSelector(currentURL),
+                defaultTargetSelector,
+                fallbackClickSelector,
+            );
             console.log('Current URL:', currentURL, 'Using selector:', targetSelector);
 
             const allEls = document.querySelectorAll(targetSelector);
-            const els = [...allEls].filter((el) => el.id !== 'settings-btn' && el.id !== 'lock-btn' && el.id !== 'log-out-btn' && !el.classList.contains('disabled') && !el.classList.contains('hidden') && !el.classList.contains('mdc-switch') && !el.disabled);
+            const els = [...allEls].filter(
+                (el) =>
+                    el.id !== 'settings-btn' &&
+                    el.id !== 'lock-btn' &&
+                    el.id !== 'log-out-btn' &&
+                    !el.classList.contains('disabled') &&
+                    !el.classList.contains('hidden') &&
+                    !el.classList.contains('mdc-switch') &&
+                    !el.disabled,
+            );
             const elmIdex = getRandomInt(0, els.length - 1);
             const el = els[elmIdex];
             if (el) {

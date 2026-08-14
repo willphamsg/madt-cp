@@ -18,7 +18,7 @@ import { SettingsComponent as SettingCpn } from '@components/settings/settings.c
 })
 export class SettingsComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     commissionError: string | null = null;
     topics;
@@ -26,8 +26,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     constructor(
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private localStorageService: LocalStorageService,
+        private readonly mqttService: MqttService,
+        private readonly localStorageService: LocalStorageService,
     ) {}
 
     ngOnInit() {

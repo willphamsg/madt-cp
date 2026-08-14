@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -13,7 +13,7 @@ export type PopUpType = 'success' | 'error' | 'warning' | 'info';
     templateUrl: './common-pop-up.component.html',
     styleUrl: './common-pop-up.component.scss',
 })
-export class CommonPopUp implements OnDestroy, OnInit {
+export class CommonPopUp implements OnDestroy, OnInit, OnChanges {
     @Input() type: PopUpType = 'success';
     @Input() disabled?: boolean = false;
     @Input() title?: string = '';
@@ -23,9 +23,9 @@ export class CommonPopUp implements OnDestroy, OnInit {
     @Input() overrideAll: boolean = false;
     @Input() timeout?: number = DEFAULT_TIMEOUT;
     @Input() disableTimeout: boolean = false;
-    @Output() onOk: EventEmitter<string> = new EventEmitter<string>();
-    @Output() onConfirm: EventEmitter<string> = new EventEmitter<string>();
-    @Output() onCancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() ok: EventEmitter<string> = new EventEmitter<string>();
+    @Output() confirm: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
 
     @Input() isOk: boolean = false;
     @Input() isConfirm: boolean = false;
@@ -33,7 +33,7 @@ export class CommonPopUp implements OnDestroy, OnInit {
     timeoutId;
 
     constructor(
-        private soundService: SoundService, // private store: Store<AppState> (if needed in future)
+        private readonly soundService: SoundService, // private store: Store<AppState> (if needed in future)
     ) {}
 
     ngOnInit() {
@@ -50,15 +50,15 @@ export class CommonPopUp implements OnDestroy, OnInit {
     }
 
     handleConfirm() {
-        this.onConfirm.emit();
+        this.confirm.emit();
     }
 
     handleCancel() {
-        this.onCancel.emit();
+        this.cancel.emit();
     }
 
     handleOk() {
-        this.onOk.emit();
+        this.ok.emit();
     }
 
     handleButtonSound(): void {

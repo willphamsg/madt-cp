@@ -12,39 +12,6 @@
     }
 }
 
-// .tc-date-time {
-//     position: fixed;
-//     @include flex-center;
-//     font-size: 22px;
-//     z-index: 10000;
-//     right: 24px;
-//     top: 96px;
-//     width: 320px;
-
-//     &.down {
-//         top: 148px;
-//     }
-
-//     .date {
-//         padding: 5px 12px;
-//         @include flex-center;
-
-//         &:after {
-//             content: '';
-//             display: block;
-//             width: 2px;
-//             height: 28px;
-//             background-color: #99bad9;
-//             margin-left: 15px;
-//             opacity: 0.25;
-//         }
-//     }
-
-//     .time {
-//         flex: 1;
-//     }
-// }
-
 .loading {
     position: fixed;
     height: 100vh;

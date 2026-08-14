@@ -4,7 +4,6 @@ import {
     IFareBusStop,
     IUserInfoMain,
     ICurrenNowDest,
-    StrNum,
     IDeviation,
     INextBusInfo,
     ICvsStatus,

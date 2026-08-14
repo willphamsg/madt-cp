@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,12 +18,12 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './external-devices.component.html',
     styleUrls: ['./external-devices.component.scss'],
 })
-export class ExternalDevicesComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class ExternalDevicesComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
-    private externalDevices$: Observable<IExternalDevice>;
+    private readonly externalDevices$: Observable<IExternalDevice>;
     initialExternalDevices: IExternalDevice = {
         testPrinter: {
             status: ResponseStatus.NA,
@@ -72,10 +72,10 @@ export class ExternalDevicesComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.externalDevices$ = this.store.select(externalDevices);
     }

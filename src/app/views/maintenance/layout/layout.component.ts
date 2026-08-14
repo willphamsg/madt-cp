@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Router, RouterOutlet, NavigationEnd, NavigationStart } from '@angular/router';
+import { Router, RouterOutlet, NavigationStart } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -9,16 +9,7 @@ import { routerUrls } from '@app/app.routes';
 import { AppState } from '@store/app.state';
 import { MqttService } from '@services/mqtt.service';
 import { LocalStorageService } from '@services/local-storage.service';
-import {
-    MsgSubID,
-    MsgID,
-    ResponseStatus,
-    IAuth,
-    TopicsKeys,
-    IPopUpControl,
-    LocalStorageKey,
-    MaintenanceScreen,
-} from '@models';
+import { MsgSubID, MsgID, ResponseStatus, TopicsKeys, IPopUpControl, MaintenanceScreen } from '@models';
 import {
     updateFareConsole,
     updateBusIdInformation,
@@ -59,10 +50,10 @@ import { BootUpCommissioningComponent } from '@components/boot-up-commissioning/
     templateUrl: './layout.component.html',
     styleUrls: ['./layout.component.scss'],
 })
-export class MaintenanceLayoutComponent implements OnInit {
+export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
     MaintenanceScreen = MaintenanceScreen;
-    private destroy$ = new Subject<void>();
-    private mqttSubscriptions: Array<{
+    private readonly destroy$ = new Subject<void>();
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
@@ -95,9 +86,9 @@ export class MaintenanceLayoutComponent implements OnInit {
     constructor(
         protected router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private translate: TranslateService,
-        private localStorageService: LocalStorageService,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
+        private readonly localStorageService: LocalStorageService,
     ) {
         this.dateTimeOnly = [
             `/${routerUrls.private.maintenance.accessDenied}`,

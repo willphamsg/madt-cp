@@ -11,9 +11,9 @@ type Layout = 'numeric' | 'text';
 })
 export class CustomKeyboardComponent {
     @Input() layout?: Layout;
-    @Output() onKeyPress: EventEmitter<Event> = new EventEmitter<Event>();
+    @Output() keyPress: EventEmitter<Event> = new EventEmitter<Event>();
 
-    constructor(private soundService: SoundService) {}
+    constructor(private readonly soundService: SoundService) {}
 
     handleChangeInput(event: Event): void {
         const target = <HTMLDivElement>event.target;
@@ -23,7 +23,7 @@ export class CustomKeyboardComponent {
             return;
         }
 
-        this.onKeyPress.emit(event);
+        this.keyPress.emit(event);
     }
 
     handleButtonSound(): void {

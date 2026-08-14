@@ -27,14 +27,6 @@ describe('InspectorTicketComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    describe('ngOnInit / ngOnDestroy', () => {
-        it('should initialize and destroy without errors', () => {
-            expect(() => {
-                component.ngOnInit();
-            }).not.toThrow();
-        });
-    });
-
     describe('goBack', () => {
         it('should execute without errors', () => {
             expect(() => {

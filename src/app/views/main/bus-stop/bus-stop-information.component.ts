@@ -23,17 +23,7 @@ import { AppState } from '@store/app.state';
 import { Observable, Subject, combineLatest, switchMap } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
-import {
-    IFmsBusStop,
-    ICurrenNowDest,
-    IDeviation,
-    IUserInfoMain,
-    StrNum,
-    // INextBusInfo,
-    IFareBusStop,
-    MsgID,
-    MsgSubID,
-} from '@models';
+import { IFmsBusStop, ICurrenNowDest, IDeviation, IUserInfoMain, IFareBusStop, MsgID, MsgSubID } from '@models';
 import { ButtonSoundDirective } from '@directives/button-sound.directive';
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
 
@@ -45,7 +35,7 @@ import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component'
     providers: [DatePipe],
 })
 export class BusStopInformationComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>(); // A single Subject to manage all cleanup
+    private readonly destroy$ = new Subject<void>(); // A single Subject to manage all cleanup
     headwayBars: number[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     displayFareBusStopList$: Observable<boolean> = this.store.select(displayFareBusStopList);
@@ -77,10 +67,10 @@ export class BusStopInformationComponent implements OnInit, OnDestroy {
     backToTop: boolean = false;
 
     constructor(
-        private router: Router,
-        private store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly store: Store<AppState>,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         // Store selectors
         this.currentFareBusStop$ = this.store.select(currentFareBusStop);

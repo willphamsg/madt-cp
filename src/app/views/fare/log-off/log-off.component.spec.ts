@@ -26,12 +26,4 @@ describe('FareLogoffComponent', () => {
     it('should create the component', () => {
         expect(component).toBeTruthy();
     });
-
-    describe('ngOnInit / ngOnDestroy', () => {
-        it('should initialize and destroy without errors', () => {
-            expect(() => {
-                component.ngOnInit();
-            }).not.toThrow();
-        });
-    });
 });

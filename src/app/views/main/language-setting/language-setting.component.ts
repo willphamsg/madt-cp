@@ -9,7 +9,7 @@ import { LocalStorageService } from '@services/local-storage.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SoundService } from '@services/sound.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { SoundService } from '@services/sound.service';
     styleUrl: './language-setting.component.scss',
 })
 export class LanguageSettingComponent implements OnDestroy, OnInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     topics;
     languageOptions = [
@@ -30,12 +30,12 @@ export class LanguageSettingComponent implements OnDestroy, OnInit {
     language: string = '';
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
-        private translate: TranslateService,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
         protected store: Store<AppState>,
-        private localStorageService: LocalStorageService,
+        private readonly localStorageService: LocalStorageService,
     ) {}
 
     ngOnInit() {

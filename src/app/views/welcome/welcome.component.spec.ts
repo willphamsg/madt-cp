@@ -13,15 +13,8 @@ describe('WelcomeComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [
-                TranslateModule.forRoot(),
-                WelcomeComponent,
-            ],
-            providers: [
-                provideHttpClient(),
-                provideMockStore({ initialState: mockInitialState }),
-                provideRouter([]),
-            ],
+            imports: [TranslateModule.forRoot(), WelcomeComponent],
+            providers: [provideHttpClient(), provideMockStore({ initialState: mockInitialState }), provideRouter([])],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 

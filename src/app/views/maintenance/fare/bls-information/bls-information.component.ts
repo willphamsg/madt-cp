@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,11 +18,11 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './bls-information.component.html',
     styleUrls: ['./bls-information.component.scss'],
 })
-export class BLSInformationComponent implements OnInit {
+export class BLSInformationComponent implements OnInit, OnDestroy {
     sort = { name: 'asc', value: 'asc' };
 
-    private destroy$ = new Subject<void>();
-    private blsInformation$: Observable<IBlsInformation> = this.store.select(blsInformation);
+    private readonly destroy$ = new Subject<void>();
+    private readonly blsInformation$: Observable<IBlsInformation> = this.store.select(blsInformation);
     blsInformation: IBlsInformation = {
         blsList: [],
     };
@@ -32,10 +32,10 @@ export class BLSInformationComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

@@ -15,7 +15,7 @@ const MOMENTUM_FRICTION = 0.95;
     styleUrls: ['./app-scrollbar.component.scss'],
 })
 export class AppScrollBar implements AfterViewInit, OnChanges, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private resizeObserver?: ResizeObserver;
     private momentumFrameId?: number;
 

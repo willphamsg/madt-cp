@@ -37,7 +37,6 @@ import {
     IFmsBusStop,
     ICurrenNowDest,
     IUserInfoMain,
-    ICurrentFareBusStop,
     IDeviation,
     INextBusInfo,
     ICvsStatus,

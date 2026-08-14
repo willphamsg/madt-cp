@@ -3,12 +3,7 @@
 $font-size-variable: 16px;
 $active-color: #fed000;
 
-// :host {
-//     // height: 100%;
-// }
-
 .main-layout-page {
-    // height: 100%;
     height: calc(100vh - $header-footer-height);
 
     @keyframes fadeIn {
@@ -130,7 +125,6 @@ $active-color: #fed000;
                     .status-icon {
                         @include flex-center;
                         flex: 1;
-                        // padding: 7px;
                         height: 100%;
                         font-size: 32px;
                         background-color: $madt-bg-dark-2;
@@ -328,10 +322,6 @@ $active-color: #fed000;
 
         .main-content {
             flex: 1;
-            // padding: 10px;
-            // background-color: #17333d;
-            // height: 100%;
-            // padding-bottom: 16px;
             position: relative;
             margin-bottom: 8px;
             border-radius: 4px;
@@ -446,7 +436,6 @@ $active-color: #fed000;
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
-    // padding-top: 120px;
     border-radius: 4px;
 
     &.has-loading {

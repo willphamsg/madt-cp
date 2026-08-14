@@ -27,14 +27,6 @@ describe('TestReceiptComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    describe('ngOnInit / ngOnDestroy', () => {
-        it('should initialize and destroy without errors', () => {
-            expect(() => {
-                component.ngOnInit();
-            }).not.toThrow();
-        });
-    });
-
     describe('handlePrint', () => {
         it('should execute without errors', () => {
             expect(() => {

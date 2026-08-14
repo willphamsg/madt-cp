@@ -64,12 +64,6 @@
             background-color: $madt-color-red;
         }
 
-        // &:disabled {
-        //     background-color: $madt-bg-light-1 !important;
-        //     opacity: 0.5;
-        //     cursor: not-allowed;
-        // }
-
         &::before {
             content: none;
         }

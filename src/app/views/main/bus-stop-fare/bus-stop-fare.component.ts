@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -20,14 +20,14 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './bus-stop-fare.component.html',
     styleUrls: ['./bus-stop-fare.component.scss'],
 })
-export class BusStopFareComponent {
-    private destroy$ = new Subject<void>();
+export class BusStopFareComponent implements OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     selectedBusStop$: Observable<IFmsBusStop | null>;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private store: Store<AppState>,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly store: Store<AppState>,
     ) {
         this.selectedBusStop$ = this.store.select(selectedBusStop);
     }

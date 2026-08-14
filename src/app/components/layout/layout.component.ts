@@ -40,7 +40,7 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     private connectionSubscription: Subscription | null = null;
     private messageSubscription: Subscription | null = null;
     isConnecting: boolean = true;
@@ -61,21 +61,21 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
     lang: string = '';
 
-    private mqttSubscriptions: Array<{
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
-        private translate: TranslateService,
-        private dummyInit: DummyInitService,
-        private safeJsonService: SafeJsonService,
-        private store: Store<AppState>,
-        private localStorageService: LocalStorageService,
-        private cdr: ChangeDetectorRef,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
+        private readonly dummyInit: DummyInitService,
+        private readonly safeJsonService: SafeJsonService,
+        private readonly store: Store<AppState>,
+        private readonly localStorageService: LocalStorageService,
+        private readonly cdr: ChangeDetectorRef,
     ) {
         this.translate.setDefaultLang('en');
     }

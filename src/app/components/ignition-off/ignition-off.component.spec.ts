@@ -28,8 +28,8 @@ describe('IgnitionOffComponent', () => {
     });
 
     describe('handleClick', () => {
-        it('should emit onConfirm event', () => {
-            const emitSpy = spyOn(component.onConfirm, 'emit');
+        it('should emit confirm event', () => {
+            const emitSpy = spyOn(component.confirm, 'emit');
             component.handleClick();
             expect(emitSpy).toHaveBeenCalled();
         });

@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { RouterModule, Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { RouterModule, Router } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -13,7 +13,7 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './cjb.component.html',
     styleUrls: ['./cjb.component.scss'],
 })
-export class CJBComponent implements OnInit {
+export class CJBComponent {
     safeUrl: SafeResourceUrl;
     url = config.iFrameURL;
     isBroken = false;
@@ -21,11 +21,15 @@ export class CJBComponent implements OnInit {
     @ViewChild('myElement') myElementRef!: ElementRef;
 
     constructor(
-        private soundService: SoundService,
-        private sanitizer: DomSanitizer,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly sanitizer: DomSanitizer,
+        private readonly router: Router,
     ) {
-        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+        // this.url comes from the bundled, developer-controlled src/assets/config.json,
+        // not from user input; the scheme check guards against a malformed config value.
+        this.safeUrl = /^https:\/\//.test(this.url)
+            ? this.sanitizer.bypassSecurityTrustResourceUrl(this.url)
+            : this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
     }
 
     onIframeLoad(iframe: HTMLIFrameElement) {
@@ -57,8 +61,6 @@ export class CJBComponent implements OnInit {
     backToMaintenance() {
         this.router.navigate(['/maintenance']);
     }
-
-    ngOnInit() {}
 
     handleButtonSound(): void {
         this.soundService.playButton();

@@ -35,6 +35,8 @@
                                             class="close-btn"
                                             src="/assets/images/icons/main/close-icon.svg"
                                             alt=""
+                                            tabindex="0"
+                                            (keydown.enter)="handleButtonSound(); closeErrorCv(cvData.id)"
                                         />
                                     </div>
                                 } @else {
@@ -202,16 +204,16 @@
                 @if (disableBls.show) {
                     <auto-disable-bls
                         [disabled]="disableBls.disabled"
-                        (onOk)="handleConfirmDisableBls(true)"
-                        (onCancel)="handleConfirmDisableBls(false)"
+                        (ok)="handleConfirmDisableBls(true)"
+                        (cancel)="handleConfirmDisableBls(false)"
                     >
                     </auto-disable-bls>
                 }
                 @if (fareBusStopMode.show) {
                     <fare-bus-stop-location-mode
                         [disabled]="fareBusStopMode.disabled"
-                        (onOk)="handleConfirmFareBusStopMode(true)"
-                        (onCancel)="handleConfirmFareBusStopMode(false)"
+                        (ok)="handleConfirmFareBusStopMode(true)"
+                        (cancel)="handleConfirmFareBusStopMode(false)"
                     >
                     </fare-bus-stop-location-mode>
                 }
@@ -223,7 +225,7 @@
                             invalidInspectorCard.message === 'INVALID_INSPECTOR_CARD' ? '' : 'PLEASE_TAP_CARD_AGAIN'
                         "
                         [isOk]="true"
-                        (onOk)="handleInvalidInspectorCard()"
+                        (ok)="handleInvalidInspectorCard()"
                     >
                     </common-pop-up>
                 }
@@ -235,14 +237,13 @@
                         [timeout]="commonPopup.timeout"
                         [isOk]="true"
                         [disableTimeout]="commonPopup.disableTimeout || false"
-                        (onOk)="handleCloseCommonPopup(commonPopup.closeMsgID)"
+                        (ok)="handleCloseCommonPopup(commonPopup.closeMsgID)"
                     >
                     </common-pop-up>
                 }
 
                 @if (displayLockPopUp) {
-                    <lock-pop-up (onConfirm)="handleConfirmLock(true)" (onCancel)="handleConfirmLock(false)">
-                    </lock-pop-up>
+                    <lock-pop-up (confirm)="handleConfirmLock(true)" (cancel)="handleConfirmLock(false)"> </lock-pop-up>
                 }
 
                 @if (displayLockScreen) {
@@ -251,9 +252,9 @@
 
                 @if (displaySettingsPopUp) {
                     <madt-setting
-                        (onClose)="displaySettingsPopUp = false"
-                        (onConfirmLanguage)="handleConfirmLanguage($event)"
-                        (onChangeAudioVolume)="handleChangeAudioVolume($event)"
+                        (close)="displaySettingsPopUp = false"
+                        (confirmLanguage)="handleConfirmLanguage($event)"
+                        (changeAudioVolume)="handleChangeAudioVolume($event)"
                     >
                     </madt-setting>
                 }
@@ -267,7 +268,7 @@
                     [timeout]="commonPopup.timeout"
                     [isOk]="true"
                     [disableTimeout]="commonPopup.disableTimeout || false"
-                    (onOk)="handleCloseCommonPopup(commonPopup.closeMsgID)"
+                    (ok)="handleCloseCommonPopup(commonPopup.closeMsgID)"
                     [fullScreen]="true"
                 >
                 </common-pop-up>
@@ -283,7 +284,7 @@
         <ignition-off
             [time]="ignitionOff.message || ''"
             [delay]="ignitionOff.delay"
-            (onConfirm)="handleIgnitionOff()"
+            (confirm)="handleIgnitionOff()"
             [disabled]="ignitionOff.disabled"
         >
         </ignition-off>

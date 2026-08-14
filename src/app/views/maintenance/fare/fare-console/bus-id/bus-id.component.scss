@@ -150,16 +150,12 @@
         min-width: 680px;
 
         &-title {
-            // @include flex-center;
-            // display: inline-flex;
-            // cursor: pointer;
             padding-top: 60px;
             text-align: center;
 
             h3 {
                 font-size: 32px;
                 font-weight: $font-weight-semi-bold;
-                // margin-left: 12px;
             }
         }
 
@@ -201,7 +197,6 @@
 
         .input-group {
             text-align: left;
-            // width: 700px;
             margin-left: auto;
             margin-right: auto;
             position: relative;
@@ -359,8 +354,6 @@
 }
 
 ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
-    // padding-top: 0px;
-    // padding-bottom: 0px;
     margin-top: 3%; /*you can tweak around with this, */
     margin-bottom: 4px; /*and this*/
 }

@@ -21,7 +21,7 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./free.component.scss'],
 })
 export class FreeComponent implements OnDestroy, OnInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     free$: Observable<IFree> = this.store.select(free);
     free: IFree = {
         freeMode: false,
@@ -33,11 +33,11 @@ export class FreeComponent implements OnDestroy, OnInit {
     timeOutId;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
-        private translate: TranslateService,
-        private store: Store<AppState>,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
+        private readonly store: Store<AppState>,
     ) {}
 
     ngOnInit() {

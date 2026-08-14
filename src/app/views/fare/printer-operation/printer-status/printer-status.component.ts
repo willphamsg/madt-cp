@@ -19,9 +19,9 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./printer-status.component.scss'],
 })
 export class PrinterStatusComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
-    private printStatus$: Observable<IPrintStatus>;
+    private readonly printStatus$: Observable<IPrintStatus>;
     printStatus: IPrintStatus = {
         printerStatus: 0,
     };
@@ -30,10 +30,10 @@ export class PrinterStatusComponent implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.printStatus$ = this.store.select(printStatus);
     }

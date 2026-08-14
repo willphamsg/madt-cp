@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -16,20 +16,20 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './load-parameter.component.html',
     styleUrls: ['./load-parameter.component.scss'],
 })
-export class LoadParameterComponent implements OnInit {
+export class LoadParameterComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
 
-    private destroy$ = new Subject<void>();
-    private loadParameter$: Observable<ILoadParameter>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly loadParameter$: Observable<ILoadParameter>;
     loadParameter: ILoadParameter = {};
 
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.loadParameter$ = this.store.select(loadParameter);
     }

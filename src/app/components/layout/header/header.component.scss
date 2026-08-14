@@ -27,8 +27,6 @@ $active-color: #fed000;
     @include flex-center;
     justify-content: space-between;
     height: $header-footer-height;
-    // position: fixed;
-    // top: 0;
     width: 100%;
     padding: 0 20px;
     background: $madt-bg-black-1;
@@ -48,7 +46,6 @@ $active-color: #fed000;
             }
 
             &.active {
-                // background: linear-gradient(to bottom, #017a8d, #076c7c);
                 cursor: pointer !important;
                 pointer-events: all !important;
                 opacity: 1 !important;
@@ -72,7 +69,6 @@ $active-color: #fed000;
 
     .status-indicators {
         @include flex-center;
-        // width: 300px;
         gap: 8px;
         flex: 1;
         padding: 0 20px;
@@ -92,10 +88,6 @@ $active-color: #fed000;
             .mode-ps {
                 color: #fed000;
             }
-
-            // .mat-icon {
-            //     color: $madt-color-green;
-            // }
 
             &.error {
                 background-color: $madt-color-red;

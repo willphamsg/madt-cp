@@ -1,6 +1,6 @@
 import { Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { LocalStorageService } from '@services/local-storage.service';
 
 import { AppState } from '@store/app.state';
@@ -11,7 +11,7 @@ import { IAudioVolume, LocalStorageKey } from '@models';
     providedIn: 'root',
 })
 export class SoundService implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     // private audio$: Observable<IAudioVolume> = this.store.select(audioVolume);
     audioVolume: IAudioVolume = { value: 100 };
     private playingAudios: HTMLAudioElement[] = [];
@@ -19,8 +19,8 @@ export class SoundService implements OnInit, OnDestroy {
     buttonAudio: HTMLAudioElement = new Audio('assets/audios/AUD1.wav');
 
     constructor(
-        private store: Store<AppState>,
-        private localStorageService: LocalStorageService,
+        private readonly store: Store<AppState>,
+        private readonly localStorageService: LocalStorageService,
     ) {
         // this.audio$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
         //     this.audioVolume = data;

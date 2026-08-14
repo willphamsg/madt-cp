@@ -16,7 +16,12 @@
             <div class="title">{{ 'SUCCESS' | translate }}</div>
             <div class="content">{{ 'ALL_PARAMS_FILE_DELETED' | translate }}</div>
             <div class="btn-group">
-                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
+                <div
+                    class="btn btn-ok"
+                    (click)="handleButtonSound(); handleClearDeleteParameter()"
+                    tabindex="0"
+                    (keydown.enter)="handleButtonSound(); handleClearDeleteParameter()"
+                >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'OK' | translate }}</span>
                 </div>
@@ -37,7 +42,12 @@
                 }}
             </div>
             <div class="btn-group">
-                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
+                <div
+                    class="btn btn-ok"
+                    (click)="handleButtonSound(); handleClearDeleteParameter()"
+                    tabindex="0"
+                    (keydown.enter)="handleButtonSound(); handleClearDeleteParameter()"
+                >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'OK' | translate }}</span>
                 </div>
@@ -45,17 +55,34 @@
         </div>
     } @else {
         <ng-container>
-            <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
+            <div
+                class="back-button"
+                (click)="handleButtonSound(); goBack()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); goBack()"
+            >
+                {{ 'BACK' | translate }}
+            </div>
             <div>
                 <h2 class="title">{{ 'THIS_WILL_DEL_ALL_PARAMS_FILE' | translate }}</h2>
                 <div class="content">
                     <p class="label">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}?</p>
                     <div class="btn-group">
-                        <div class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
+                        <div
+                            class="btn btn-cancel"
+                            (click)="handleButtonSound(); goBack()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); goBack()"
+                        >
                             <img src="/assets/images/icons/main/close.svg" alt="" />
                             <span>{{ 'CANCEL' | translate }}</span>
                         </div>
-                        <div class="btn btn-confirm" (click)="handleButtonSound(); handleDeleteParameter()">
+                        <div
+                            class="btn btn-confirm"
+                            (click)="handleButtonSound(); handleDeleteParameter()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); handleDeleteParameter()"
+                        >
                             <img src="/assets/images/icons/main/confirm.svg" alt="" />
                             <span>{{ 'CONFIRM' | translate }}</span>
                         </div>

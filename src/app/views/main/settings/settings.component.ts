@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
@@ -14,7 +14,7 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent {
+export class SettingsComponent implements OnInit {
     step: string = '';
     languages = ['EN', 'CH'];
     currentLanguage: string = 'EN';
@@ -29,9 +29,9 @@ export class SettingsComponent {
     ];
 
     constructor(
-        private soundService: SoundService,
-        private translate: TranslateService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly translate: TranslateService,
+        private readonly router: Router,
     ) {}
 
     ngOnInit() {

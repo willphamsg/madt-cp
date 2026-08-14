@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -8,12 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './disconnect.component.html',
     styleUrl: './disconnect.component.scss',
 })
-export class Disconnect implements OnDestroy, OnInit {
+export class Disconnect {
     constructor() {}
-
-    ngOnInit() {}
-
-    ngOnDestroy() {
-        // Emit to destroy all active subscriptions
-    }
 }

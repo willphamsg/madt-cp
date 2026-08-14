@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogComponent } from '@components/confirm-dialog/confirm-dialog.component';
@@ -11,14 +11,12 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './reset-bls.component.html',
     styleUrls: ['./reset-bls.component.scss'],
 })
-export class ResetBLSComponent implements OnInit {
+export class ResetBLSComponent {
     step: number;
 
-    constructor(private soundService: SoundService) {
+    constructor(private readonly soundService: SoundService) {
         this.step = 1;
     }
-
-    ngOnInit() {}
 
     handleSelect() {
         this.step = 2;

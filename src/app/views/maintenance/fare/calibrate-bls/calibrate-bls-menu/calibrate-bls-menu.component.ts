@@ -14,13 +14,13 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./calibrate-bls-menu.component.scss'],
 })
 export class CalibrateBLSMenuComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private mqttService: MqttService,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

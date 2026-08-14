@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -10,8 +10,6 @@ import { TranslateModule } from '@ngx-translate/core';
     templateUrl: './redetect-fms.component.html',
     styleUrls: ['./redetect-fms.component.scss'],
 })
-export class RedetectFMSComponent implements OnInit {
+export class RedetectFMSComponent {
     constructor() {}
-
-    ngOnInit() {}
 }

@@ -9,15 +9,15 @@ import { SoundService } from '@services/sound.service';
     styleUrl: './custom-radio-button.component.scss',
 })
 export class CustomRadioButtonComponent {
-    constructor(private soundService: SoundService) {}
+    constructor(private readonly soundService: SoundService) {}
 
-    @Output() onSelect = new EventEmitter<StrNum>();
+    @Output() select = new EventEmitter<StrNum>();
     @Input() value!: StrNum;
     @Input() label!: StrNum;
     @Input() isSelected!: boolean;
 
     onClickHandler(e: string | number) {
-        this.onSelect.emit(e);
+        this.select.emit(e);
     }
 
     handleButtonSound(): void {

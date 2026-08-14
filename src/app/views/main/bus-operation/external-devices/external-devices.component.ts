@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,12 +17,12 @@ import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component'
     templateUrl: './external-devices.component.html',
     styleUrls: ['./external-devices.component.scss'],
 })
-export class ExternalDevicesComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class ExternalDevicesComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
-    private externalDevices$: Observable<IExternalDevice>;
+    private readonly externalDevices$: Observable<IExternalDevice>;
     initialExternalDevices: IExternalDevice = {
         testPrinter: {
             status: 0,
@@ -71,10 +71,10 @@ export class ExternalDevicesComponent implements OnInit {
     topics;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.externalDevices$ = this.store.select(externalDevices);
     }

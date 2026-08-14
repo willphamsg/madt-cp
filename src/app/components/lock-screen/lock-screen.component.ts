@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
@@ -19,10 +19,10 @@ import { NotificationSoundDirective } from '@directives/notification-sound.direc
     templateUrl: './lock-screen.component.html',
     styleUrls: ['./lock-screen.component.scss'],
 })
-export class LockScreenComponent implements OnInit {
+export class LockScreenComponent implements OnInit, OnDestroy {
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     lockScreen$: Observable<ILockScreen> = this.store.select(lockScreen);
     lockScreen: ILockScreen = {};
@@ -36,11 +36,11 @@ export class LockScreenComponent implements OnInit {
     @Input() topic: string = '';
 
     constructor(
-        private router: Router,
-        private activeRoute: ActivatedRoute,
-        private mqttService: MqttService,
-        private store: Store<AppState>,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly activeRoute: ActivatedRoute,
+        private readonly mqttService: MqttService,
+        private readonly store: Store<AppState>,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit() {

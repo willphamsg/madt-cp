@@ -7,7 +7,6 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule to use ngMod
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import MainPageDummy, {
     dagwOperation,
-    services,
     bootUpAndShutdown,
     commissioningFlows,
     outOfServices,
@@ -23,9 +22,6 @@ import MainPageDummy, {
     cashPaymentFlows,
 } from '@dummyData/main-page';
 import {
-    parameters,
-    versionInfoList,
-    blsList,
     maintenanceAppUpgradeFlows,
     maintenanceViewParameterFlows,
     maintenanceFareConsoleFlows,
@@ -44,13 +40,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { Subject, takeUntil } from 'rxjs';
 import {
-    AuthStatus,
     MessageId,
     MqttTypes,
     HTTimeColor,
     MsgID,
     MsgSubID,
-    DagwOperationStatus,
     CvDirTypeArray,
     ResponseStatus,
     CommissioningType,
@@ -898,7 +892,7 @@ export class MqttComponent implements OnInit, OnDestroy {
     maintenanceScreen: number = 1;
     fareScreen: number = 1;
 
-    constructor(private mqttService: MqttService) {}
+    constructor(private readonly mqttService: MqttService) {}
 
     onCheckboxChange(event: any, option: any) {
         if (event.checked) {

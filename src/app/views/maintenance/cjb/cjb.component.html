@@ -1,8 +1,12 @@
 <ng-container>
     <div class="maintenance-fare-layout">
         <div class="layout">
-            <div class="button" (click)="handleButtonSound(); backToMaintenance()">
-                <!-- <img src="/assets/images/icons/main/close-circle.svg" alt="" /> -->
+            <div
+                class="button"
+                (click)="handleButtonSound(); backToMaintenance()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); backToMaintenance()"
+            >
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
             <iframe

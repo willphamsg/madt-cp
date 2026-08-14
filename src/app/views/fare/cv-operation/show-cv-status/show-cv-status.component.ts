@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,10 +17,10 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './show-cv-status.component.html',
     styleUrls: ['./show-cv-status.component.scss'],
 })
-export class ShowCVStatusComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class ShowCVStatusComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
 
-    private cvsStatus$: Observable<IShowCVStatus>;
+    private readonly cvsStatus$: Observable<IShowCVStatus>;
     showCVStatus: IShowCVStatus = {
         cvStatus: [],
     };
@@ -30,10 +30,10 @@ export class ShowCVStatusComponent implements OnInit {
     FareCVSubStatus = FareCVSubStatus;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.cvsStatus$ = this.store.select(showCVStatus);
     }

@@ -7,5 +7,5 @@ import { MatButton } from '@angular/material/button';
     imports: [MatButton],
 })
 export class DialogComponent {
-    constructor(private ele: ElementRef) {}
+    constructor(private readonly ele: ElementRef) {}
 }

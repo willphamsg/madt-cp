@@ -20,7 +20,7 @@ import { MsgID, MsgSubID, ResponseStatus, IRedeem } from '@models';
     styleUrls: ['./redeem.component.scss'],
 })
 export class RedeemComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     redeem$: Observable<IRedeem>;
     redeem: IRedeem = {};
@@ -28,10 +28,10 @@ export class RedeemComponent implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
-        private store: Store<AppState>,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly store: Store<AppState>,
+        private readonly soundService: SoundService,
     ) {
         this.redeem$ = this.store.select(redeem);
     }

@@ -1,16 +1,5 @@
 <div class="printer-status">
     @if (printStatus.printerStatus === 2) {
-        <!-- <ng-container>
-            <img src="/assets/images/svg/big-error.svg" alt="" />
-            <div class="title">{{ 'OUT_OF_SERVICE' | translate }}</div>
-            <div class="content">{{ 'PRINTER_NOT_IN_SERVICE' | translate }}</div>
-            <div class="btn-group">
-                <div class="button button-ok" (click)="handleButtonSound(); backToPrinterOperation()" appButtonSound>
-                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                    <span>{{ 'OK' | translate }}</span>
-                </div>
-            </div>
-        </ng-container> -->
         <common-pop-up
             [type]="'error'"
             [title]="'OUT_OF_SERVICE'"
@@ -18,21 +7,10 @@
             [fullScreen]="true"
             [disableSound]="true"
             [isOk]="true"
-            (onOk)="backToPrinterOperation()"
+            (ok)="backToPrinterOperation()"
         >
         </common-pop-up>
     } @else if (printStatus.printerStatus === 3) {
-        <!-- <ng-container>
-            <img src="/assets/images/svg/big-error.svg" alt="" />
-            <div class="title">{{ 'ERROR' | translate }}</div>
-            <div class="content" [innerHTML]="'UNABLE_TO_COM_PRINTER' | translate"></div>
-            <div class="btn-group">
-                <div class="button button-ok" (click)="handleButtonSound(); backToPrinterOperation()" appButtonSound>
-                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                    <span>{{ 'OK' | translate }}</span>
-                </div>
-            </div>
-        </ng-container> -->
         <common-pop-up
             [type]="'error'"
             [title]="'ERROR'"
@@ -40,21 +18,10 @@
             [fullScreen]="true"
             [disableSound]="true"
             [isOk]="true"
-            (onOk)="backToPrinterOperation()"
+            (ok)="backToPrinterOperation()"
         >
         </common-pop-up>
     } @else {
-        <!-- <ng-container>
-            <img src="/assets/images/svg/big-success.svg" alt="" />
-            <div class="title">{{ 'IN_SERVICE' | translate }}</div>
-            <div class="content">{{ 'PRINTER_IS_IN_SERVICE' | translate }}</div>
-            <div class="btn-group">
-                <div class="button button-ok" (click)="handleButtonSound(); backToPrinterOperation()" appButtonSound>
-                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                    <span>{{ 'OK' | translate }}</span>
-                </div>
-            </div>
-        </ng-container> -->
         <common-pop-up
             [type]="'success'"
             [title]="'IN_SERVICE'"
@@ -62,7 +29,7 @@
             [fullScreen]="true"
             [disableSound]="true"
             [isOk]="true"
-            (onOk)="backToPrinterOperation()"
+            (ok)="backToPrinterOperation()"
         >
         </common-pop-up>
     }

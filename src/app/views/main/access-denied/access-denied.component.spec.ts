@@ -28,12 +28,6 @@ describe('MainAccessDeniedComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should initialize component without errors on ngOnInit', () => {
-        expect(() => {
-            (component as any).ngOnInit();
-        }).not.toThrow();
-    });
-
     it('should render pre-login component with correct title and content', () => {
         const preLoginElement = fixture.debugElement.query(By.css('pre-login'));
         expect(preLoginElement).toBeTruthy();

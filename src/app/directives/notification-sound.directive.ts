@@ -1,4 +1,4 @@
-import { Directive, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Directive, Input, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { OnInit } from '@angular/core';
 
 import { AudioService } from '@services/audio.service';
@@ -15,16 +15,16 @@ import { IAudioVolume, LocalStorageKey } from '@app/models';
     selector: '[appNotificationSound]',
     standalone: true,
 })
-export class NotificationSoundDirective implements OnInit, OnChanges {
+export class NotificationSoundDirective implements OnChanges, OnDestroy {
     @Input('appNotificationSound') isVisible: boolean = false;
 
-    private destroy$ = new Subject<void>();
-    private audio$: Observable<IAudioVolume> = this.store.select(audioVolume);
+    private readonly destroy$ = new Subject<void>();
+    private readonly audio$: Observable<IAudioVolume> = this.store.select(audioVolume);
     audioVolume: IAudioVolume = { value: 0 };
 
     constructor(
         protected store: Store<AppState>,
-        private localStorageService: LocalStorageService,
+        private readonly localStorageService: LocalStorageService,
     ) {
         // this.audio$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
         //     this.audioVolume = data;
@@ -43,8 +43,6 @@ export class NotificationSoundDirective implements OnInit, OnChanges {
                 }
             });
     }
-
-    ngOnInit() {}
 
     ngOnDestroy() {
         this.destroy$.next();

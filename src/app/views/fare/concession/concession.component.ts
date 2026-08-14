@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { DEFAULT_TIMEOUT, IConcession, MsgID, MsgSubID, ResponseStatus } from '@models';
+import { IConcession, MsgID, MsgSubID, ResponseStatus } from '@models';
 
 import { Subject, takeUntil, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';

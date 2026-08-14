@@ -30,8 +30,8 @@ describe('BusOffRouteComponent', () => {
     });
 
     describe('handleClick', () => {
-        it('should emit onOk event', () => {
-            const emitSpy = spyOn(component.onOk, 'emit');
+        it('should emit ok event', () => {
+            const emitSpy = spyOn(component.ok, 'emit');
             component.handleClick();
             expect(emitSpy).toHaveBeenCalled();
         });

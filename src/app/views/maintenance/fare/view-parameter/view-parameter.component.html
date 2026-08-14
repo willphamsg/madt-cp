@@ -12,7 +12,7 @@
             [fullScreen]="true"
             [disableSound]="true"
             [isOk]="true"
-            (onOk)="handleRetry()"
+            (ok)="handleRetry()"
         >
         </common-pop-up>
     } @else if (ResponseStatus.SUCCESS === viewParameter.status && !viewParameter.parameters.length) {
@@ -30,6 +30,8 @@
                                 alt=""
                                 [class]="sort['fullName']"
                                 (click)="handleButtonSound(); handleSort('fullName')"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleSort('fullName')"
                             />
                         </div>
                     </th>
@@ -41,6 +43,8 @@
                                 alt=""
                                 [class]="sort['version']"
                                 (click)="handleButtonSound(); handleSort('version')"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleSort('version')"
                             />
                         </div>
                     </th>
@@ -52,6 +56,8 @@
                                 alt=""
                                 [class]="sort['date']"
                                 (click)="handleButtonSound(); handleSort('date')"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleSort('date')"
                             />
                         </div>
                     </th>
@@ -63,6 +69,8 @@
                                 alt=""
                                 [class]="sort['status']"
                                 (click)="handleButtonSound(); handleSort('status')"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleSort('status')"
                             />
                         </div>
                     </th>
@@ -80,6 +88,8 @@
                                         alt=""
                                         [class]="sort['fullName']"
                                         (click)="handleButtonSound(); handleSort('fullName')"
+                                        tabindex="0"
+                                        (keydown.enter)="handleButtonSound(); handleSort('fullName')"
                                     />
                                 </div>
                             </th>
@@ -91,6 +101,8 @@
                                         alt=""
                                         [class]="sort['version']"
                                         (click)="handleButtonSound(); handleSort('version')"
+                                        tabindex="0"
+                                        (keydown.enter)="handleButtonSound(); handleSort('version')"
                                     />
                                 </div>
                             </th>
@@ -102,6 +114,8 @@
                                         alt=""
                                         [class]="sort['date']"
                                         (click)="handleButtonSound(); handleSort('date')"
+                                        tabindex="0"
+                                        (keydown.enter)="handleButtonSound(); handleSort('date')"
                                     />
                                 </div>
                             </th>
@@ -113,6 +127,8 @@
                                         alt=""
                                         [class]="sort['status']"
                                         (click)="handleButtonSound(); handleSort('status')"
+                                        tabindex="0"
+                                        (keydown.enter)="handleButtonSound(); handleSort('status')"
                                     />
                                 </div>
                             </th>

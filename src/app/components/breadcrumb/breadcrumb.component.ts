@@ -21,8 +21,8 @@ export class BreadcrumbComponent implements OnInit {
     @Input() dateTime?: Date | null;
 
     constructor(
-        private router: Router,
-        private activatedRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly activatedRoute: ActivatedRoute,
     ) {
         this.router.events.subscribe((ev) => {
             if (ev instanceof NavigationEnd) {

@@ -28,27 +28,18 @@ describe('AutoDisableBlsComponent', () => {
     });
 
     describe('handleConfirm', () => {
-        it('should emit onOk event', () => {
-            const emitSpy = spyOn(component.onOk, 'emit');
+        it('should emit ok event', () => {
+            const emitSpy = spyOn(component.ok, 'emit');
             component.handleConfirm();
             expect(emitSpy).toHaveBeenCalled();
         });
     });
 
     describe('handleCancel', () => {
-        it('should emit onCancel event', () => {
-            const emitSpy = spyOn(component.onCancel, 'emit');
+        it('should emit cancel event', () => {
+            const emitSpy = spyOn(component.cancel, 'emit');
             component.handleCancel();
             expect(emitSpy).toHaveBeenCalled();
-        });
-    });
-
-    describe('ngOnInit / ngOnDestroy', () => {
-        it('should initialize and destroy without errors', () => {
-            expect(() => {
-                component.ngOnInit();
-                component.ngOnDestroy();
-            }).not.toThrow();
         });
     });
 });

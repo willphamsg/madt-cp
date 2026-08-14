@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,19 +15,19 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './dagw-operation.component.html',
     styleUrls: ['./dagw-operation.component.scss'],
 })
-export class DagwOperationComponent implements OnInit {
+export class DagwOperationComponent implements OnInit, OnDestroy {
     MsgID = MsgID;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     dagwStatus = DagwOperationStatus;
     dagwOperation$: Observable<IDagwOperation> = this.store.select(dagwOperation);
     dagwOperationData: IDagwOperation = { msgID: 0, title: '', message: '' };
-    @Output() onCancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
 
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private store: Store<AppState>,
+        private readonly soundService: SoundService,
+        private readonly store: Store<AppState>,
     ) {}
 
     ngOnInit() {
@@ -43,7 +43,7 @@ export class DagwOperationComponent implements OnInit {
     }
 
     handleCancelDagwOperation() {
-        this.onCancel.emit();
+        this.cancel.emit();
     }
 
     handleButtonSound(): void {

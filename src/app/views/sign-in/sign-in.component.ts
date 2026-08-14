@@ -18,8 +18,8 @@ export class SignInComponent implements OnInit {
     form!: FormGroup;
     error: boolean = false;
     constructor(
-        private fb: FormBuilder,
-        private router: Router,
+        private readonly fb: FormBuilder,
+        private readonly router: Router,
     ) {}
 
     ngOnInit() {

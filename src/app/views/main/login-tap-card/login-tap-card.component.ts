@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -31,8 +31,8 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './login-tap-card.component.html',
     styleUrl: './login-tap-card.component.scss',
 })
-export class LoginTapCardComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class LoginTapCardComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
@@ -53,12 +53,12 @@ export class LoginTapCardComponent implements OnInit {
     timeoutId;
 
     constructor(
-        private soundService: SoundService,
-        private translate: TranslateService,
-        private store: Store<AppState>,
-        private router: Router,
-        private mqttService: MqttService,
-        private localStorageService: LocalStorageService,
+        private readonly soundService: SoundService,
+        private readonly translate: TranslateService,
+        private readonly store: Store<AppState>,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly localStorageService: LocalStorageService,
     ) {}
 
     ngOnInit() {

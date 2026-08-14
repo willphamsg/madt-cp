@@ -24,7 +24,7 @@ import { startTrip, updateStartTrip } from '@store/main/main.reducer';
 })
 export class StartTripComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     step: number = 0;
 
     topics;
@@ -36,7 +36,7 @@ export class StartTripComponent implements OnInit, OnDestroy {
 
     services: IServiceData[] = [];
     busStops: IBusStop[] = [];
-    private mqttSubscriptions: Array<{
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
@@ -53,7 +53,7 @@ export class StartTripComponent implements OnInit, OnDestroy {
     };
     tripTypeDetails = StartTripTypes;
 
-    private startTrip$: Observable<IStartTrip> = this.store.select(startTrip);
+    private readonly startTrip$: Observable<IStartTrip> = this.store.select(startTrip);
     startTripData: IStartTrip = {
         type: this.tripTypeDetails.FMS_NO_INFO,
     };
@@ -62,12 +62,12 @@ export class StartTripComponent implements OnInit, OnDestroy {
     inputValue: string = '';
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
-        private activeRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly activeRoute: ActivatedRoute,
         protected store: Store<AppState>,
-        private soundService: SoundService,
-        @Inject(DOCUMENT) private _document: Document,
+        private readonly soundService: SoundService,
+        @Inject(DOCUMENT) private readonly _document: Document,
     ) {}
 
     ngOnInit() {
@@ -351,8 +351,6 @@ export class StartTripComponent implements OnInit, OnDestroy {
 
         inputField.focus();
     }
-
-    handleCloseManuallyInput() {}
 
     handleSearchService(value: string) {
         this.isShowKeyboard = false;

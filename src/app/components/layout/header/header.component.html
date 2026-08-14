@@ -43,7 +43,7 @@
             </div>
         } @else {
             <div class="status-indicators" id="main-status">
-                @if (screen === 'maintenance' && locationConfigVisible ) {
+                @if (screen === 'maintenance' && locationConfigVisible) {
                     @if (locationConfigStatus$ | async; as status) {
                         <div class="status">
                             <span
@@ -52,15 +52,7 @@
                                     'mode-ps': status === 2 || status === 3
                                 }"
                             >
-                                {{
-                                    status === 1
-                                        ? 'A'
-                                        : status === 2
-                                          ? 'P'
-                                          : status === 3
-                                            ? 'S'
-                                            : ''
-                                }}
+                                {{ status === 1 ? 'A' : status === 2 ? 'P' : status === 3 ? 'S' : '' }}
                             </span>
                             Location
                         </div>
@@ -86,17 +78,6 @@
                         {{ status.label | translate }}
                     </div>
                 }
-                <!-- <div *ngFor="let status of statusIndicators" class="status" [ngClass]="status.connected ? '' : 'error'">
-                <img
-                    [src]="
-                        status.connected
-                            ? '/assets/images/icons/main/check.svg'
-                            : '/assets/images/icons/main/delete.svg'
-                    "
-                    alt=""
-                />
-                {{ status.label }}
-            </div> -->
             </div>
         }
     } @else {

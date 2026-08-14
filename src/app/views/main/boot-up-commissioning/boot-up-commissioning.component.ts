@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
@@ -10,12 +10,12 @@ import { CommissioningType } from '@models';
     templateUrl: './boot-up-commissioning.component.html',
     styleUrl: './boot-up-commissioning.component.scss',
 })
-export class BootUpCommissioningComponent {
+export class BootUpCommissioningComponent implements OnInit {
     pageData!: string;
     commissioningType = CommissioningType;
     constructor(
-        private router: Router,
-        private activeRoute: ActivatedRoute,
+        private readonly router: Router,
+        private readonly activeRoute: ActivatedRoute,
     ) {}
     ngOnInit() {
         this.pageData = this.activeRoute.snapshot.data['pageType'] || this.commissioningType?.IN_PROGRESS;

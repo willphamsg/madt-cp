@@ -20,8 +20,8 @@ export class PrintRetentionTicket implements OnInit, OnDestroy {
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
-    private destroy$ = new Subject<void>();
-    private retentionTicket$: Observable<IRetentionTicket>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly retentionTicket$: Observable<IRetentionTicket>;
     retentionTicket: IRetentionTicket = {};
 
     selectedCV: number | null = null;
@@ -30,10 +30,10 @@ export class PrintRetentionTicket implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.retentionTicket$ = this.store.select(retentionTicket);
     }

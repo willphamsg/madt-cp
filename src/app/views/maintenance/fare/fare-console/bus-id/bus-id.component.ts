@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, DOCUMENT } from '@angular/core';
+import { Component, OnInit, Inject, DOCUMENT, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterModule } from '@angular/router';
@@ -37,16 +37,16 @@ import {
     templateUrl: './bus-id.component.html',
     styleUrls: ['./bus-id.component.scss'],
 })
-export class BusIdComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class BusIdComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
 
     ResponseStatus = ResponseStatus;
     MsgID = MsgID;
 
     isShowKeyboard: boolean = false;
 
-    private fareConsoleSetting$: Observable<IFareConsole>;
-    private busIdInformation$: Observable<IBusID>;
+    private readonly fareConsoleSetting$: Observable<IFareConsole>;
+    private readonly busIdInformation$: Observable<IBusID>;
 
     busIdTemp: string = '';
     busIdData: IBusID = {
@@ -82,11 +82,11 @@ export class BusIdComponent implements OnInit {
     };
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        @Inject(DOCUMENT) private _document: Document,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        @Inject(DOCUMENT) private readonly _document: Document,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.step = 1;
         this.fareConsoleSetting$ = this.store.select(fareConsole);

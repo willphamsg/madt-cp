@@ -52,8 +52,8 @@ describe('CustomKeyboardComponent', () => {
             expect(component.layout).toBe('numeric');
         });
 
-        it('should emit onKeyPress event for normal keys', () => {
-            const emitSpy = spyOn(component.onKeyPress, 'emit');
+        it('should emit keyPress event for normal keys', () => {
+            const emitSpy = spyOn(component.keyPress, 'emit');
             const event = { target: { id: 'normalKey' } } as unknown as Event;
             component.handleChangeInput(event);
             expect(emitSpy).toHaveBeenCalledWith(event);

@@ -14,7 +14,7 @@ export class RedetectCRPComponent implements OnInit {
     progress: number;
     step: number;
 
-    constructor(private soundService: SoundService) {
+    constructor(private readonly soundService: SoundService) {
         this.progress = 0;
         this.step = 1;
     }

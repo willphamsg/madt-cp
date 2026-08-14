@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { routerUrls } from '@app/app.routes';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { Subject, takeUntil, Observable } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { IStartTrip, StartTripTypes, MsgID, MsgSubID } from '@models';
+import { MsgID, MsgSubID } from '@models';
 import { MqttService } from '@services/mqtt.service';
 import { AppState } from '@store/app.state';
 import { startTrip } from '@store/main/main.reducer';
@@ -18,10 +18,10 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './start-trip-details-issue.component.html',
     styleUrl: './start-trip-details-issue.component.scss',
 })
-export class StartTripDetailsIssueComponent implements OnInit {
+export class StartTripDetailsIssueComponent implements OnInit, OnDestroy {
     // tripTypeDetails = StartTripTypes;
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     // private startTrip$: Observable<IStartTrip> = this.store.select(startTrip);
     // startTripData: IStartTrip = {
     //     type: this.tripTypeDetails.FMS_NO_INFO,
@@ -29,10 +29,10 @@ export class StartTripDetailsIssueComponent implements OnInit {
 
     topics;
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {}
 
     ngOnInit() {

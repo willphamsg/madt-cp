@@ -34,10 +34,10 @@ export class TransactionComponent implements OnInit, OnDestroy {
     private timeOutId: ReturnType<typeof setTimeout> | undefined;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.transaction$ = this.store.select(transaction);
     }

@@ -12,7 +12,7 @@
         @if (displayWarning && isLandingPage) {
             <div class="warning-box">
                 <div class="warning-icon">
-                    <img src="/assets/images/svg/bell.svg" />
+                    <img src="/assets/images/svg/bell.svg" alt="" />
                 </div>
                 <div class="warning-text">{{ 'BYPASS_BLACKLIST_IS_ACTIVE' | translate }}</div>
             </div>
@@ -30,16 +30,16 @@
                     [title]="this.showPopUp.title"
                     [fullScreen]="true"
                     [isOk]="true"
-                    (onOk)="closePopUpHandler()"
+                    (ok)="closePopUpHandler()"
                 >
                 </common-pop-up>
             }
             @if (displaySettingsPopUp) {
                 <madt-setting
                     [fullScreen]="true"
-                    (onClose)="displaySettingsPopUp = false"
-                    (onConfirmLanguage)="handleConfirmLanguage($event)"
-                    (onChangeAudioVolume)="handleChangeAudioVolume($event)"
+                    (close)="displaySettingsPopUp = false"
+                    (confirmLanguage)="handleConfirmLanguage($event)"
+                    (changeAudioVolume)="handleChangeAudioVolume($event)"
                 ></madt-setting>
             }
 
@@ -51,8 +51,8 @@
                     [fullScreen]="true"
                     [isConfirm]="true"
                     [isCancel]="true"
-                    (onConfirm)="handleConfirmLock(true)"
-                    (onCancel)="handleConfirmLock(false)"
+                    (confirm)="handleConfirmLock(true)"
+                    (cancel)="handleConfirmLock(false)"
                 ></common-pop-up>
             }
 
@@ -60,7 +60,6 @@
                 <lock-screen [topic]="topics.fareTab?.get || ''"></lock-screen>
             }
 
-            
             @if (bootUpCommissioning.show) {
                 <boot-up-commissioning [type]="bootUpCommissioning.title || ''"></boot-up-commissioning>
             }

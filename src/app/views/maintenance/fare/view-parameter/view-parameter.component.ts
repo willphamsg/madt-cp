@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,10 +20,10 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './view-parameter.component.html',
     styleUrls: ['./view-parameter.component.scss'],
 })
-export class ViewParameterComponent implements OnInit {
+export class ViewParameterComponent implements OnInit, OnDestroy {
     sort = { fullName: 'asc', version: 'asc', date: 'asc', status: 'asc' };
-    private destroy$ = new Subject<void>();
-    private viewParameter$: Observable<IViewParameter> = this.store.select(viewParameter);
+    private readonly destroy$ = new Subject<void>();
+    private readonly viewParameter$: Observable<IViewParameter> = this.store.select(viewParameter);
     viewParameter: IViewParameter = { parameters: [] };
 
     isLoading: boolean = true;
@@ -31,11 +31,11 @@ export class ViewParameterComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private utilsService: UtilsServices,
+        private readonly mqttService: MqttService,
+        private readonly utilsService: UtilsServices,
     ) {}
 
     ngOnInit() {

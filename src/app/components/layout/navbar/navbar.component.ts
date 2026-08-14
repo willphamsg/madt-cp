@@ -13,8 +13,8 @@ export class NavbarComponent implements OnInit {
     activeTab: string = 'main';
     urls: any = routerUrls;
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
     ) {}
 
     buttonList: any[] = [

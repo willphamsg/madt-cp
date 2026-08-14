@@ -6,7 +6,7 @@
             [title]="cashPayment.message || ''"
             [fullScreen]="true"
             [isOk]="true"
-            (onOk)="handleCloseErrorPopup()"
+            (ok)="handleCloseErrorPopup()"
         >
         </common-pop-up>
     } @else {
@@ -26,6 +26,8 @@
                                 class="tk-button"
                                 [class.active]="fareMode === ECashMode.SINGLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
                             >
                                 {{ 'SINGLE_TICKET' | translate }}
                             </div>
@@ -33,11 +35,18 @@
                                 class="tk-button"
                                 [class.active]="fareMode === ECashMode.MULTIPLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
                             >
                                 {{ 'MULTIPLE_TICKET' | translate }}
                             </div>
                         </div>
-                        <div class="button" (click)="handleButtonSound(); handleTerminate()">
+                        <div
+                            class="button"
+                            (click)="handleButtonSound(); handleTerminate()"
+                            tabindex="0"
+                            (keydown.enter)="handleButtonSound(); handleTerminate()"
+                        >
                             <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                             <span>{{ 'CLOSE' | translate }}</span>
                         </div>
@@ -54,13 +63,9 @@
                                     <div
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
+                                        tabindex="0"
+                                        (keydown.enter)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
                                     >
-                                        <!-- <div
-                    class="cash-btn"
-                                            [ngClass]="{
-                                                active: selectedIndex === $index && cashType === ECashType.ADULT
-                                            }"
-                    > -->
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
                                         </div>
@@ -78,13 +83,11 @@
                                     <div
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)"
+                                        tabindex="0"
+                                        (keydown.enter)="
+                                            handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)
+                                        "
                                     >
-                                        <!-- <div
-                    class="cash-btn"
-                                            [ngClass]="{
-                                                active: selectedIndex === $index && cashType === ECashType.SENIOR
-                                            }"
-                    > -->
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
                                         </div>
@@ -102,6 +105,10 @@
                                     <div
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)"
+                                        tabindex="0"
+                                        (keydown.enter)="
+                                            handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)
+                                        "
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
@@ -130,9 +137,6 @@
             } @else if (cashPayment.msgID === MsgID.MAIN_CASH_MULTI_SUBMIT) {
                 <div class="multiple">
                     <div class="page-header center">
-                        <!-- <div  class="back-button abs" (click)="handleButtonSound(); handleBack()">
-            {{ 'BACK' | translate }}
-          </div> -->
                         <h2>
                             {{ cashType + '_' + 'CASH_FARE' | translate }}: ${{ (selectedAmount / 100).toFixed(2) }}
                         </h2>
@@ -140,7 +144,12 @@
                     <div class="confirm">
                         <div class="input-group">
                             <p>{{ 'INPUT_NUM_CASH_RECEIPT' | translate }}</p>
-                            <input [value]="quantity" id="inputField" [class.hasError]="quantityError" />
+                            <input
+                                [value]="quantity"
+                                id="inputField"
+                                [class.hasError]="quantityError"
+                                [attr.aria-label]="'INPUT_NUM_CASH_RECEIPT' | translate"
+                            />
                             @if (quantityError) {
                                 <p class="error">
                                     {{ quantityError | translate }}
@@ -174,7 +183,7 @@
                             <div class="keyboard">
                                 <custom-keyboard
                                     [layout]="'numeric'"
-                                    (onKeyPress)="handleChangeInput($event)"
+                                    (keyPress)="handleChangeInput($event)"
                                 ></custom-keyboard>
                             </div>
                         }
@@ -187,7 +196,12 @@
                     <!-- set exit bus stop -->
                     <ng-container>
                         <div class="page-header">
-                            <div class="back-button" (click)="handleButtonSound(); handleResetBusStopPopup()">
+                            <div
+                                class="back-button"
+                                (click)="handleButtonSound(); handleResetBusStopPopup()"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleResetBusStopPopup()"
+                            >
                                 {{ 'BACK' | translate }}
                             </div>
                         </div>
@@ -227,6 +241,10 @@
                                                         (click)="
                                                             handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
                                                         "
+                                                        tabindex="0"
+                                                        (keydown.enter)="
+                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
+                                                        "
                                                     >
                                                         <div class="left">
                                                             {{ busStop.Name }}
@@ -258,7 +276,12 @@
                 } @else if (cashPayment.msgID === MsgID.MAIN_CASH_FARE_CALCULATION_SUBMIT_BUS_STOP_CHANGE) {
                     <ng-container>
                         <div class="page-header">
-                            <div class="back-button" (click)="handleButtonSound(); handleBackFareCalculator()">
+                            <div
+                                class="back-button"
+                                (click)="handleButtonSound(); handleBackFareCalculator()"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleBackFareCalculator()"
+                            >
                                 {{ 'BACK' | translate }}
                             </div>
                         </div>
@@ -270,7 +293,12 @@
                                 <div class="scrollbar">
                                     <app-scrollbar>
                                         <ul>
-                                            <li class="row" (click)="handleButtonSound(); handleChangeBusStop('ENTRY')">
+                                            <li
+                                                class="row"
+                                                (click)="handleButtonSound(); handleChangeBusStop('ENTRY')"
+                                                tabindex="0"
+                                                (keydown.enter)="handleButtonSound(); handleChangeBusStop('ENTRY')"
+                                            >
                                                 <div class="left">{{ 'ENTRY_BUS_STOP' | translate }}</div>
                                                 <div class="right">
                                                     <p class="value">
@@ -279,7 +307,12 @@
                                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                                                 </div>
                                             </li>
-                                            <li class="row" (click)="handleButtonSound(); handleChangeBusStop('EXIT')">
+                                            <li
+                                                class="row"
+                                                (click)="handleButtonSound(); handleChangeBusStop('EXIT')"
+                                                tabindex="0"
+                                                (keydown.enter)="handleButtonSound(); handleChangeBusStop('EXIT')"
+                                            >
                                                 <div class="left">{{ 'EXIT_BUS_STOP' | translate }}</div>
                                                 <div class="right">
                                                     <p class="value">

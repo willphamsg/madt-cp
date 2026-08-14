@@ -14,9 +14,6 @@
                             <span class="number">{{ currentUserIfo?.plateNum }}</span>
                         </div>
                         <div class="route">
-                            <!-- <div class="label-data">
-              SPID: <span class="data">{{ currentUserIfo?.spid }}</span>
-            </div> -->
                             <div class="label-data">
                                 {{ 'DIR' | translate }}: <span class="data">{{ currentUserIfo?.dir }}</span>
                                 @if (currentUserIfo?.offRoute) {
@@ -25,9 +22,6 @@
                                     </div>
                                 }
                             </div>
-                            <!-- <div class="label-data">
-            KM: <span class="data">{{ currentUserIfo?.km }}</span>
-          </div> -->
                         </div>
                     </div>
                 </div>
@@ -45,8 +39,7 @@
                         } @else {
                             <img src="/assets/images/icons/main/load-unknown-icon.svg" alt="Bus Occupancy" />
                         }
-                        <img src="/assets/images/icons/main/arrow-left-icon.svg" />
-                        <!-- <h1>{{ convertSecondsToMinutes(deviation?.busBehindTime || 0) }}’</h1> -->
+                        <img src="/assets/images/icons/main/arrow-left-icon.svg" alt="" />
                         <h1>{{ deviation?.busBehindTime || 0 }}’</h1>
                     </div>
                 </div>
@@ -98,15 +91,6 @@
                                     }"
                                     #indicatorDiv
                                 >
-                                    <!-- <div *ngIf="currentNowNext.includes(item.Busid)" class="left">
-              {{
-              currentNowNext[0] === item?.Busid
-              ? 'NOW'
-              : currentNowNext[1] === item?.Busid
-              ? 'NEXT'
-              : ''
-              }}
-            </div> -->
                                     <div class="matd-indicatior">
                                         <div class="name">{{ item.Name }}</div>
                                         <div class="time">
@@ -131,6 +115,8 @@
                         class="back-to-top"
                         alt=""
                         (click)="handleButtonSound(); triggerScrollTop()"
+                        tabindex="0"
+                        (keydown.enter)="handleButtonSound(); triggerScrollTop()"
                     />
                 }
             </div>
@@ -147,6 +133,8 @@
                 class="indicator bus-stop"
                 (click)="handleButtonSound(); handleDisplayFareBusStop()"
                 [ngClass]="{ 'mis-match': fareBusStop?.misMatch, 'full-width': allBusStopList.length <= 3 }"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); handleDisplayFareBusStop()"
             >
                 <div class="left">
                     <img src="/assets/images/icons/main/fare-bus-stop.svg" alt="" />
@@ -154,7 +142,6 @@
                 </div>
                 <div class="matd-indicatior">
                     <div class="name">{{ fareBusStop?.Busid }} - {{ fareBusStop?.Name }}</div>
-                    <!-- <div class="time">KM {{ fareBusStop?.km }}</div> -->
                 </div>
                 <div class="right">
                     @if (fareBusStop?.autoBls) {
@@ -178,7 +165,12 @@
     @if (displayFareBusStop) {
         <div class="bus-stop-fare-page">
             <div class="page-header full-row">
-                <div class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleCloseBusStopFare()"
+                    tabindex="0"
+                    (keydown.enter)="handleButtonSound(); handleCloseBusStopFare()"
+                >
                     <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                     <span>{{ 'CLOSE' | translate }}</span>
                 </div>
@@ -195,6 +187,8 @@
                                     selected: item?.Busid === selectFareBusStop
                                 }"
                                 (click)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
+                                tabindex="0"
+                                (keydown.enter)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                             >
                                 <div class="left">{{ item.Busid }}</div>
                                 <div class="matd-indicatior">
@@ -213,12 +207,6 @@
 
     @if (displayCfmBusStopFare) {
         <div class="confirm-bus-stop-fare-container">
-            <!-- <div class="page-header full-row">
-    <div class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
-      <img src="/assets/images/icons/main/close-circle.svg" alt="" />
-      <span>{{ 'CLOSE' | translate }}</span>
-    </div>
-  </div> -->
             <div class="confirm">
                 <div
                     class="confirm-header"

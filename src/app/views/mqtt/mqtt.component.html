@@ -94,14 +94,6 @@
                             }
                         </mat-select>
                     </mat-form-field>
-                    <!-- <mat-form-field>
-          <mat-label>Tick Button</mat-label>
-          <mat-select [compareWith]="compareObjects" [(ngModel)]="dagwOperationPublish.tickButton">
-            <mat-option *ngFor="let tickButton of dagwOperation.tickButton" [value]="tickButton">
-              {{ tickButton }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> -->
                     <button
                         [disabled]="!dagwOperationPublish.message"
                         mat-raised-button
@@ -173,14 +165,6 @@
                     </p>
                     <br />
                     <br />
-                    <!-- <mat-slide-toggle [(ngModel)]="connectionStatus.connection.statusFARE">FARE</mat-slide-toggle>
-                <p>
-                  FARE is:<span [style.color]="connectionStatus.connection.statusFARE ? 'green' : 'red'">
-                  {{ connectionStatus.connection.statusFARE ? 'Connected' : 'Disconnected' }}
-                </span>
-              </p>
-              <br />
-              <br /> -->
                     <mat-slide-toggle
                         [(ngModel)]="connectionStatus.connection.statusFMS"
                         (change)="
@@ -410,38 +394,6 @@
                     </button>
                 </div>
 
-                <!-- <div class="">
-                    <h6>Publish bus DIR(Now, Next, Dest)</h6>
-                    <br />
-                    <mat-form-field>
-                      <mat-label>Bus route now</mat-label>
-                      <mat-select
-                        [compareWith]="compareObjects"
-                        (selectionChange)="onRouteChange($event.value, 'now')"
-                        [(value)]="currentRoute.now"
-                        >
-                        <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
-                          {{ busRoute.Name }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                      <mat-label>Bus route dest</mat-label>
-                      <mat-select
-                        [compareWith]="compareObjects"
-                        (selectionChange)="onRouteChange($event.value, 'dest')"
-                        [(value)]="currentRoute.dest"
-                        >
-                        <mat-option *ngFor="let busRoute of busRouteList" [value]="busRoute?.Busid">
-                          {{ busRoute.Name }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendDirRoute()" color="primary">
-                      Send
-                    </button>
-                  </div> -->
-
                 <div class="cv-icon-cont">
                     <h6>Publish Current Fare Bus stop</h6>
                     <br />
@@ -574,30 +526,6 @@
                         Send
                     </button>
                 </div>
-
-                <!-- <div class="cv-icon-cont">
-                    <h6>Next Bus Info</h6>
-                    <br />
-                    <mat-form-field>
-                      <mat-label>Bus Behind occupancy</mat-label>
-                      <mat-select [compareWith]="compareObjects" [(ngModel)]="nextBusInfo.busBehindOccupancy">
-                        <mat-option *ngFor="let barCount of [0, 1, 2, 3]" [value]="barCount">
-                          {{ barCount }}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field>
-                      <mat-label>Seconds</mat-label>
-                      <input matInput type="'number" placeholder="Name" [(ngModel)]="nextBusInfo.busBehindTime" />
-                    </mat-form-field>
-                    <br />
-                    <mat-slide-toggle [(ngModel)]="nextBusInfo.show">Show next Bus info</mat-slide-toggle>
-                    <br />
-                    <br />
-                    <button [disabled]="!currentRoute" mat-raised-button (click)="sendNextBusInfo()" color="primary">
-                      Send
-                    </button>
-                  </div> -->
 
                 <div class="cv-icon-cont">
                     <h3>Free flows</h3>
@@ -1300,26 +1228,6 @@
                         Send
                     </button>
                 </div>
-
-                <!-- <div class="cv-icon-cont">
-                  <h2>Changes Start Trip flow</h2>
-
-                  <mat-form-field>
-                    <mat-label>Choose flow</mat-label>
-                    <mat-select
-                      (selectionChange)="onIconTypeChange($event.value)"
-                      [(ngModel)]="currentStartTripFlow"
-                      >
-                      <mat-option *ngFor="let iconName of startTripList" [value]="iconName">
-                        {{ replaceUnderscore(iconName) }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                  <br />
-                  <mat-slide-toggle [(ngModel)]="startTripNotification">Notification</mat-slide-toggle>
-                  <br />
-                  <button mat-raised-button (click)="sendStartTripFlow()" color="primary">Send</button>
-                </div> -->
             </div>
         }
     </div>

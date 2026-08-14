@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, AfterContentInit, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Input, Output, AfterContentInit, EventEmitter } from '@angular/core';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
@@ -11,24 +11,22 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './notification.component.html',
     styleUrl: './notification.component.scss',
 })
-export class Notification implements OnDestroy, OnInit, AfterContentInit {
-    private destroy$ = new Subject<void>();
+export class Notification implements OnDestroy, AfterContentInit {
+    private readonly destroy$ = new Subject<void>();
     @Input() type?: 'info' | 'warning' | 'error' | 'success' = 'success';
     @Input() message: string = '';
     @Input() disabled?: boolean = false;
-    @Output() onOK: EventEmitter<string> = new EventEmitter<string>();
+    @Output() ok: EventEmitter<string> = new EventEmitter<string>();
 
-    constructor(private soundService: SoundService) {}
-    ngOnInit() {}
-
+    constructor(private readonly soundService: SoundService) {}
     handleClick() {
-        this.onOK.emit();
+        this.ok.emit();
     }
 
     ngAfterContentInit() {
-        if (this.onOK) {
+        if (this.ok) {
             window.setTimeout(() => {
-                this.onOK.emit();
+                this.ok.emit();
                 // this.ele.nativeElement.remove();
             }, DEFAULT_NOTIFICATION_TIMEOUT);
         }

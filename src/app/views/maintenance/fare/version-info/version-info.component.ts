@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,9 +19,9 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './version-info.component.html',
     styleUrls: ['./version-info.component.scss'],
 })
-export class VersionInfoComponent implements OnInit {
-    private destroy$ = new Subject<void>();
-    private versionInfo$: Observable<IVersionInfo>;
+export class VersionInfoComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
+    private readonly versionInfo$: Observable<IVersionInfo>;
     versionInfo: IVersionInfo = {
         versionInfoList: [],
     };
@@ -31,10 +31,10 @@ export class VersionInfoComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.versionInfo$ = this.store.select(versionInfo);
     }

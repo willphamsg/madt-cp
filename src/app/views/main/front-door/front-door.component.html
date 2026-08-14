@@ -1,7 +1,12 @@
 <div class="toggle-cv-container">
     @if (frontDoor.msgID === MsgID.MAIN_FRONT_DOOR) {
         <div class="page-header">
-            <div class="button" (click)="handleButtonSound(); handleClose()">
+            <div
+                class="button"
+                (click)="handleButtonSound(); handleClose()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); handleClose()"
+            >
                 <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
@@ -12,7 +17,12 @@
             </div>
             <div class="button-control">
                 @for (cv of frontDoor.cvList; track cv) {
-                    <div class="button" (click)="handleButtonSound(); handleChangeCvMode(cv)">
+                    <div
+                        class="button"
+                        (click)="handleButtonSound(); handleChangeCvMode(cv)"
+                        tabindex="0"
+                        (keydown.enter)="handleButtonSound(); handleChangeCvMode(cv)"
+                    >
                         <div class="icon-text">
                             <div class="text">{{ 'CV_COUNT' | translate: { count: cv } }}</div>
                         </div>
@@ -21,23 +31,6 @@
             </div>
         </div>
     } @else if (frontDoor.msgID === MsgID.MAIN_FRONT_DOOR_SELECT_CV) {
-        <!-- <div class="dialog">
-            <div class="dialog-header">
-                <p>{{ 'TOGGLE_CV' + cvNum + '_EXIT' | translate }}</p>
-            </div>
-            <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
-            <div class="cf-btn-group">
-                <button  class="btn btn-cancel" (click)="handleButtonSound(); handleCancel()">
-                    <img src="/assets/images/icons/main/close.svg" alt="" />
-                    <span>{{ 'CANCEL' | translate }}</span>
-                </button>
-                <button  class="btn btn-confirm" (click)="handleButtonSound(); handleUpdateCV()">
-                    <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                    <span>{{ 'CONFIRM' | translate }}</span>
-                </button>
-            </div>
-        </div> -->
-
         <common-pop-up
             [type]="'info'"
             [title]="'TOGGLE_CV' + frontDoor.cvNum + '_EXIT'"
@@ -45,8 +38,8 @@
             [isConfirm]="true"
             [isCancel]="true"
             [disableSound]="true"
-            (onConfirm)="handleUpdateCV()"
-            (onCancel)="handleCancel()"
+            (confirm)="handleUpdateCV()"
+            (cancel)="handleCancel()"
         ></common-pop-up>
     }
 </div>

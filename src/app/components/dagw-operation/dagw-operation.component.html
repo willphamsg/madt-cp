@@ -23,16 +23,6 @@
             </div>
         }
 
-        <!-- @if (
-    MsgID.NEW_DAGW_OPERATION === dagwOperationData.msgID ||
-    dagwOperationData.message.toLowerCase().includes('attempting')
-    ) {
-    <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelDagwOperation()">
-      <img src="/assets/images/icons/main/close.svg" alt="" />
-      <span>{{ 'CANCEL' | translate }}</span>
-    </button>
-    } -->
-
         @if (MsgID.NEW_DAGW_OPERATION === dagwOperationData.msgID) {
             <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelDagwOperation()">
                 <img src="/assets/images/icons/main/close.svg" alt="" />

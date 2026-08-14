@@ -1,6 +1,13 @@
 <div class="show-cv-status">
     <div class="page-header">
-        <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+        <div
+            class="back-button"
+            (click)="handleButtonSound(); handleBack()"
+            tabindex="0"
+            (keydown.enter)="handleButtonSound(); handleBack()"
+        >
+            {{ 'BACK' | translate }}
+        </div>
     </div>
     <h2 class="title">{{ 'SHOW_CV_STATUS' | translate }}</h2>
     <div class="content">

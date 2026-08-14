@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,9 +18,9 @@ import { cvEntryExitControl } from '@store/fare/fare.reducer';
     templateUrl: './set-cv-entry-exit.component.html',
     styleUrls: ['./set-cv-entry-exit.component.scss'],
 })
-export class SetCVEntryExitComponent implements OnInit {
-    private destroy$ = new Subject<void>();
-    private cvEntryExitControl$: Observable<ICVEntryExitControl>;
+export class SetCVEntryExitComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
+    private readonly cvEntryExitControl$: Observable<ICVEntryExitControl>;
     cvEntryExitControl: ICVEntryExitControl = {
         cvType: 0,
     };
@@ -29,10 +29,10 @@ export class SetCVEntryExitComponent implements OnInit {
     topics;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.cvEntryExitControl$ = this.store.select(cvEntryExitControl);
     }

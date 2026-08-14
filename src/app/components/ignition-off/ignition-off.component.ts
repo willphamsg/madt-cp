@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -15,28 +15,21 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './ignition-off.component.html',
     styleUrl: './ignition-off.component.scss',
 })
-export class IgnitionOffComponent implements OnDestroy, OnInit {
-    private destroy$ = new Subject<void>();
+export class IgnitionOffComponent implements OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     @Input() time?: string = '';
     @Input() delay?: string | number = '';
     @Input() disabled?: boolean = false;
-    @Output() onConfirm: EventEmitter<string> = new EventEmitter<string>();
+    @Output() confirm: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
-        private store: Store<AppState>,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
+        private readonly store: Store<AppState>,
     ) {}
 
-    ngOnInit() {
-        // const audio = new Audio();
-        // audio.src = '../../assets/audios/AUD2.wav';
-        // audio.load();
-        // audio.play();
-    }
-
     handleClick() {
-        this.onConfirm.emit();
+        this.confirm.emit();
     }
 
     ngOnDestroy() {

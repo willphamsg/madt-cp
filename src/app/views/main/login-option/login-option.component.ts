@@ -4,10 +4,10 @@ import { MatButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { AppState } from '@store/app.state';
 import { Store } from '@ngrx/store';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MsgID, MsgSubID, ILoginOption, DEFAULT_TIMEOUT } from '@models';
+import { MsgID, MsgSubID, ILoginOption } from '@models';
 import { MqttService } from '@services/mqtt.service';
 import { loginOption } from '@store/main/main.reducer';
 import { SoundService } from '@services/sound.service';
@@ -19,7 +19,7 @@ import { SoundService } from '@services/sound.service';
     styleUrl: './login-option.component.scss',
 })
 export class LoginOptionComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     topics;
     loginOption$: Observable<ILoginOption> = this.store.select(loginOption);
     loginOptionData: ILoginOption = {};
@@ -55,10 +55,10 @@ export class LoginOptionComponent implements OnInit, OnDestroy {
     ];
 
     constructor(
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
         protected store: Store<AppState>,
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
     ) {}
 
     ngOnInit() {

@@ -12,7 +12,6 @@ import {
     MsgID,
     MsgSubID,
     LocalStorageKey,
-    TopicsKeys,
     ResponseStatus,
     IDagwOperation,
     DEFAULT_TIMEOUT,
@@ -30,7 +29,7 @@ import { SoundService } from '@services/sound.service';
     styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     ResponseStatus = ResponseStatus;
     currentLanguage: string = '';
@@ -43,23 +42,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     dagwOperation$: Observable<IDagwOperation> = this.store.select(dagwOperation);
     dagwOperationData: IDagwOperation = { msgID: 0, title: '', message: '' };
 
-    private mqttSubscriptions: Array<{
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
     commissionError: string | null = null;
 
-    private language$: Observable<string> = this.store.select(language);
+    private readonly language$: Observable<string> = this.store.select(language);
 
     topics;
     timeOutId;
 
     constructor(
-        private soundService: SoundService,
-        private translate: TranslateService,
+        private readonly soundService: SoundService,
+        private readonly translate: TranslateService,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private localStorageService: LocalStorageService,
+        private readonly mqttService: MqttService,
+        private readonly localStorageService: LocalStorageService,
     ) {
         // this.currentLanguage = this.translate.currentLang?.toUpperCase() || 'EN';
     }

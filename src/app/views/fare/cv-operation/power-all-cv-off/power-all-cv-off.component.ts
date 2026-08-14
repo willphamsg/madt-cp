@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,17 +18,17 @@ import { routerUrls } from '@app/app.routes';
     templateUrl: './power-all-cv-off.component.html',
     styleUrls: ['./power-all-cv-off.component.scss'],
 })
-export class PowerAllCVOffComponent implements OnInit {
-    private destroy$ = new Subject<void>();
-    private cvPowerOnOff$: Observable<IPowerAllCvOnOff>;
+export class PowerAllCVOffComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
+    private readonly cvPowerOnOff$: Observable<IPowerAllCvOnOff>;
     topics;
     timeOutId;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.cvPowerOnOff$ = this.store.select(powerCvOnOff);
     }

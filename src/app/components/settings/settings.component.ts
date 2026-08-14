@@ -5,7 +5,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { LocalStorageService } from '@services/local-storage.service';
 
 import { IAudioVolume, LocalStorageKey } from '@app/models';
@@ -18,7 +18,7 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     step: string = '';
     languages = ['EN', 'CH'];
@@ -32,19 +32,19 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     @Input() fullScreen?: boolean = false;
     @Input() fromMaintenance?: boolean = false;
-    @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
-    @Output() onConfirmLanguage: EventEmitter<string> = new EventEmitter<string>();
+    @Output() close: EventEmitter<void> = new EventEmitter<void>();
+    @Output() confirmLanguage: EventEmitter<string> = new EventEmitter<string>();
 
     //audio
     audio: IAudioVolume = { value: 100 };
-    @Output() onChangeAudioVolume: EventEmitter<number> = new EventEmitter<number>();
+    @Output() changeAudioVolume: EventEmitter<number> = new EventEmitter<number>();
 
     constructor(
-        private soundService: SoundService,
-        private translate: TranslateService,
+        private readonly soundService: SoundService,
+        private readonly translate: TranslateService,
         protected store: Store<AppState>,
-        private localStorageService: LocalStorageService,
-        private cdr: ChangeDetectorRef,
+        private readonly localStorageService: LocalStorageService,
+        private readonly cdr: ChangeDetectorRef,
     ) {}
 
     ngOnInit() {
@@ -82,7 +82,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     onLanguageChange(isConfirm: boolean): void {
         if (isConfirm) {
             this.currentLanguage = this.selectedLanguage?.id || 'EN';
-            this.onConfirmLanguage.emit(this.currentLanguage);
+            this.confirmLanguage.emit(this.currentLanguage);
             if (this.fromMaintenance) {
                 this.goBack();
             } else this.handleClose();
@@ -93,7 +93,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     handleClose(): void {
-        this.onClose.emit();
+        this.close.emit();
     }
 
     handleSelectLang(lang: string): void {
@@ -112,7 +112,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     handleChangeAudioVolume(value: number): void {
-        this.onChangeAudioVolume.emit(value);
+        this.changeAudioVolume.emit(value);
     }
 
     handleButtonSound(): void {

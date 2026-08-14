@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
@@ -20,8 +20,8 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './date-setting.component.html',
     styleUrls: ['./date-setting.component.scss'],
 })
-export class DateSettingComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class DateSettingComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     fareConsoleSetting$: Observable<IFareConsole>;
     fareConsoleSetting: IFareConsole = {
         deckType: {
@@ -52,12 +52,12 @@ export class DateSettingComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private datePipe: DatePipe,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly datePipe: DatePipe,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private translate: TranslateService,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
     ) {
         this.fareConsoleSetting$ = this.store.select(fareConsole);
     }

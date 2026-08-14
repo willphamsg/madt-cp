@@ -18,7 +18,7 @@ import { NotificationSoundDirective } from '@directives/notification-sound.direc
     styleUrl: './shutting-down.component.scss',
 })
 export class ShuttingDownComponent implements OnDestroy, OnInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     @Input() isUpgrading: boolean = false;
     @Input() message: string = '';
 
@@ -30,8 +30,8 @@ export class ShuttingDownComponent implements OnDestroy, OnInit {
         serialNumber: '',
     };
     constructor(
-        private router: Router,
-        private store: Store<AppState>,
+        private readonly router: Router,
+        private readonly store: Store<AppState>,
     ) {
         this.bootUp$ = this.store.select(bootUp);
     }

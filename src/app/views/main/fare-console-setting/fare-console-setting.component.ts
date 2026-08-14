@@ -38,7 +38,7 @@ import { SoundService } from '@services/sound.service';
     styleUrl: './fare-console-setting.component.scss',
 })
 export class FareConsoleSettingComponent implements OnDestroy, OnInit {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
 
@@ -69,7 +69,7 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
 
     //bus id
     isShowKeyboard: boolean = false;
-    private busIdInformation$: Observable<IBusID>;
+    private readonly busIdInformation$: Observable<IBusID>;
     busIdTemp: string = '';
     busIdData: IBusID = {
         busId: '',
@@ -102,13 +102,13 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
     missingFields: { value?: string | number; label: string }[] = [];
 
     constructor(
-        private soundService: SoundService,
-        private datePipe: DatePipe,
-        private router: Router,
-        private mqttService: MqttService,
-        @Inject(DOCUMENT) private _document: Document,
-        private store: Store<AppState>,
-        private translate: TranslateService,
+        private readonly soundService: SoundService,
+        private readonly datePipe: DatePipe,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        @Inject(DOCUMENT) private readonly _document: Document,
+        private readonly store: Store<AppState>,
+        private readonly translate: TranslateService,
     ) {
         this.fareConsole$ = this.store.select(fareConsole);
         this.busIdInformation$ = this.store.select(cmBusIdInformation);

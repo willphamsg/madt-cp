@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -18,9 +18,9 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './application-upgrade.component.html',
     styleUrls: ['./application-upgrade.component.scss'],
 })
-export class ApplicationUpgrade implements OnInit {
-    private destroy$ = new Subject<void>();
-    private appUpgrade$: Observable<IAppUpgrade>;
+export class ApplicationUpgrade implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
+    private readonly appUpgrade$: Observable<IAppUpgrade>;
     appUpgrade: IAppUpgrade = {
         upgradeStatus: false,
     };
@@ -30,10 +30,10 @@ export class ApplicationUpgrade implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.appUpgrade$ = this.store.select(appUpgrade);
     }

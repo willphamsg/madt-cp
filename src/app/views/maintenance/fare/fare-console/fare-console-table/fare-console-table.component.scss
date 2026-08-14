@@ -17,7 +17,6 @@
     }
 
     &-list {
-        // flex-grow: 1;
         overflow: hidden;
 
         .scrollbar {
@@ -54,18 +53,10 @@
                 font-weight: $font-weight-bold;
             }
         }
-        // &:last-child {
-        //     .left {
-        //         color: #ef2626;
-        //         font-weight: $font-weight-bold;
-        //         border-right: none;
-        //     }
-        // }
     }
 
     .ng-scrollbar {
         @include scrollbar;
-        //     height: 100%;
     }
 
     ::ng-deep {

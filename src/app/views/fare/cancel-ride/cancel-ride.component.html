@@ -1,7 +1,7 @@
 <div class="cancel-ride">
     <div class="layout">
         <div class="madt-breadcrumb">
-            <img src="/assets/images/icons/ticketing/ticket.svg" />
+            <img src="/assets/images/icons/ticketing/ticket.svg" alt="" />
             <a>{{ 'FARE_SYSTEM' | translate }}</a>
             <span><img src="/assets/images/svg/chevron-right.svg" alt="arrow" /></span>
             <p>{{ (cv === 'CV1' ? 'CANCEL_RIDE_CV1' : 'CANCEL_RIDE_CV2') | translate }}</p>
@@ -29,7 +29,7 @@
                         [fullScreen]="true"
                         [disableSound]="true"
                         [isOk]="true"
-                        (onOk)="backToFare()"
+                        (ok)="backToFare()"
                     >
                     </common-pop-up>
                 } @else if (ResponseStatus.ERROR === cancelRide.status) {
@@ -40,7 +40,7 @@
                         [fullScreen]="true"
                         [disableSound]="true"
                         [isOk]="true"
-                        (onOk)="backToProgressScreen()"
+                        (ok)="backToProgressScreen()"
                     >
                     </common-pop-up>
                 }

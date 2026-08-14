@@ -16,7 +16,7 @@ import { printerStatus } from '@store/fare/fare.reducer';
     templateUrl: './printer-off.component.html',
     styleUrls: ['./printer-off.component.scss'],
 })
-export class PrinterOffComponent implements OnInit {
+export class PrinterOffComponent implements OnInit, OnDestroy {
     responseStatus = ResponseStatus;
     $destroy = new Subject<void>();
     printerStatus$: Observable<IPrinterStatus> = this.store.select(printerStatus);

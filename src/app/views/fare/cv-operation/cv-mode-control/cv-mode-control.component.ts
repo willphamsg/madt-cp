@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,11 +17,11 @@ import { routerUrls } from '@app/app.routes';
     templateUrl: './cv-mode-control.component.html',
     styleUrls: ['./cv-mode-control.component.scss'],
 })
-export class CVModeControlComponent implements OnInit {
+export class CVModeControlComponent implements OnInit, OnDestroy {
     MsgID = MsgID;
     ResponseStatus = ResponseStatus;
-    private destroy$ = new Subject<void>();
-    private cvModeControl$: Observable<ICVModeControl>;
+    private readonly destroy$ = new Subject<void>();
+    private readonly cvModeControl$: Observable<ICVModeControl>;
     cvModeControl: ICVModeControl = {};
     cvMode: number | null = null;
 
@@ -29,10 +29,10 @@ export class CVModeControlComponent implements OnInit {
     timeOutId;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {
         this.cvModeControl$ = this.store.select(cvModeControl);
     }

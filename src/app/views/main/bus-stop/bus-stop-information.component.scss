@@ -10,7 +10,6 @@ $font-size-label: 20px;
     border-radius: 4px;
     height: 100%;
     position: relative;
-    // z-index: 100;
 
     .info {
         display: flex;
@@ -29,7 +28,6 @@ $font-size-label: 20px;
 
             .information {
                 display: grid;
-                // padding: 20px 10px 20px 0;
                 gap: 10px;
 
                 .info-items {
@@ -40,7 +38,6 @@ $font-size-label: 20px;
 
                     .number {
                         font-size: 64px;
-                        // color: #fed000;
                         font-weight: $font-weight-extra-bold;
                         text-transform: uppercase;
                     }
@@ -237,10 +234,6 @@ $font-size-label: 20px;
             background-color: $madt-bg-charcoal-2;
             border-top: 2px solid $madt-bg-dark-1;
         }
-
-        // &.now {
-        //     background-color: $black;
-        // }
 
         &.active {
             background-color: #046a7b !important;

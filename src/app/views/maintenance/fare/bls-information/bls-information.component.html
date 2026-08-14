@@ -18,30 +18,6 @@
         <div class="table-container">
             <app-scrollbar>
                 <table class="table">
-                    <!-- <tr>
-                <th>
-                    <div class="table-header">
-                        <p>{{ 'NAME' | translate }}</p>
-                        <img
-                            src="/assets/images/icons/maintenance/sort-asc.svg"
-                            alt=""
-                            [class]="sort['name']"
-                            (click)="handleButtonSound(); handleSort('name')"
-                        />
-                    </div>
-                </th>
-                <th>
-                    <div class="table-header">
-                        <p>{{ 'STATUS' | translate }}</p>
-                        <img
-                            src="/assets/images/icons/maintenance/sort-asc.svg"
-                            alt=""
-                            [class]="sort['status']"
-                            (click)="handleButtonSound(); handleSort('status')"
-                        />
-                    </div>
-                </th>
-            </tr> -->
                     @for (bls of this.blsInformation.blsList; track bls.name) {
                         <tr>
                             <td>{{ bls.name | translate }}</td>

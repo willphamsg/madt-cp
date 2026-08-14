@@ -23,8 +23,8 @@ export class FareBusStopMode implements OnInit, OnDestroy {
     mode: number = 0; // 1 Manual, 2: Auto
     finaleMode: number = 0;
 
-    private destroy$ = new Subject<void>();
-    private fareBusStopMode$: Observable<IFareBusStopMode> = this.store.select(fareBusStopMode);
+    private readonly destroy$ = new Subject<void>();
+    private readonly fareBusStopMode$: Observable<IFareBusStopMode> = this.store.select(fareBusStopMode);
     public posnStatus$: Observable<IPosnStatus | undefined> = this.store.select(posnStatus);
     fareBusStopMode: IFareBusStopMode = {};
     topics;
@@ -32,10 +32,10 @@ export class FareBusStopMode implements OnInit, OnDestroy {
     timeOutId;
 
     constructor(
-        private router: Router,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private soundService: SoundService,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit(): void {

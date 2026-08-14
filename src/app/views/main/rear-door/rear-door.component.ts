@@ -11,7 +11,7 @@ import { SoundService } from '@services/sound.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { takeUntil } from 'rxjs/operators';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 @Component({
     selector: 'rear-door',
     imports: [TranslateModule],
@@ -20,15 +20,15 @@ import { Observable, Subject } from 'rxjs';
 })
 export class RearDoorComponent implements OnDestroy, OnInit {
     cvMode: string = '';
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     topics;
 
     constructor(
-        private router: Router,
-        private mqttService: MqttService,
-        private translate: TranslateService,
-        private store: Store<AppState>,
-        private soundService: SoundService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
+        private readonly store: Store<AppState>,
+        private readonly soundService: SoundService,
     ) {}
 
     ngOnInit(): void {

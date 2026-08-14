@@ -1,16 +1,16 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 import { routerUrls } from '@app/app.routes';
-import { IStatusIndicators, MsgID, MsgSubID, IConnectionStatus, IAuth, LocalStorageKey } from '@models';
+import { IStatusIndicators, MsgID, MsgSubID, IConnectionStatus } from '@models';
 import { MqttService } from '@services/mqtt.service';
-import { Observable, Subject, interval, combineLatest } from 'rxjs';
+import { Observable, Subject, interval } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { LocalStorageService } from '@services/local-storage.service';
 import { SoundService } from '@app/services/sound.service';
 import initialDeviceStatus from '@data/device-status';
@@ -25,7 +25,7 @@ import { startAutoClicker, stopAutoClicker } from '../../../../../test/main';
     providers: [DatePipe],
 })
 // routerUrls?.private?.main?.busOperation?.startTrip
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
     env = environment;
     @Input({ required: true }) screen!: string; // main/ ticketing/ maintenance
     @Input() onlyDateTime: boolean = false;
@@ -178,7 +178,7 @@ export class HeaderComponent implements OnInit, OnChanges {
         { label: 'CRP', connected: false, hidden: false }, // You can modify this condition as needed
     ];
 
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
     connectionStatusState$: Observable<IConnectionStatus> = this.store.select(allConnectionStatus);
     locationConfigStatus$: Observable<number> = this.store.select(locationMode);
 
@@ -186,11 +186,11 @@ export class HeaderComponent implements OnInit, OnChanges {
 
     constructor(
         public datePipe: DatePipe,
-        private router: Router,
-        private mqttService: MqttService,
-        private soundService: SoundService,
-        private store: Store<AppState>,
-        private localStorageService: LocalStorageService,
+        private readonly router: Router,
+        private readonly mqttService: MqttService,
+        private readonly soundService: SoundService,
+        private readonly store: Store<AppState>,
+        private readonly localStorageService: LocalStorageService,
     ) {}
 
     ngOnInit() {

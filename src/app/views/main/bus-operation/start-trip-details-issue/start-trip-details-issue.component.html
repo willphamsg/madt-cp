@@ -1,6 +1,13 @@
 <div class="wrapper">
     <div class="page-header">
-        <div class="back-button" (click)="handleButtonSound(); backToBusOperation()">{{ 'BACK' | translate }}</div>
+        <div
+            class="back-button"
+            (click)="handleButtonSound(); backToBusOperation()"
+            tabindex="0"
+            (keydown.enter)="handleButtonSound(); backToBusOperation()"
+        >
+            {{ 'BACK' | translate }}
+        </div>
     </div>
     <div [ngClass]="{ content: true }">
         <h2 class="text-bold">

@@ -19,7 +19,6 @@
     } @else if (retentionTicket.msgID === MsgID.FARE_PO_PRINT_RTK_CONFIRM) {
         @if (retentionTicket.status === ResponseStatus.PROGRESS) {
             <div class="dialog">
-                <!-- <img class="error-icon" src="/assets/images/svg/big-error.svg" alt="" /> -->
                 <p class="confirm-msg">
                     {{ 'CARD_DETECTION_IN_PROGRESS' | translate: { cv: 'CV' + selectedCV } }}
                 </p>
@@ -61,7 +60,14 @@
         }
     } @else {
         <div>
-            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+            <div
+                class="back-button"
+                (click)="handleButtonSound(); handleBack()"
+                tabindex="0"
+                (keydown.enter)="handleButtonSound(); handleBack()"
+            >
+                {{ 'BACK' | translate }}
+            </div>
             <h2 class="title">{{ 'PRINT_RETENTION_TICKET' | translate }}</h2>
             <div class="content">
                 <div class="button-control">

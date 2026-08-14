@@ -1,8 +1,8 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NavigationStart, Router, RouterOutlet } from '@angular/router';
-import { Observable, Subject, timer, combineLatest } from 'rxjs';
-import { takeUntil, map, filter, take } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
@@ -31,7 +31,6 @@ import {
     updateCommissionBusIdInformation,
     updateExternalDevices,
     updateTestPrinter,
-    updateLanguage,
     updateStartTrip,
     updateCvUpgradeStatus,
     updateBreakDownInfo,
@@ -50,16 +49,13 @@ import { AuthService } from '@app/services/auth.service';
 import {
     CvIcons,
     IUserInfoMain,
-    ICurrentFareBusStop,
     IFmsBusStop,
     MsgSubID,
     MsgID,
     CvStatusType,
     ResponseStatus,
     CVLabels,
-    CommissioningType,
     MainPagePopUp,
-    IAuth,
     StartTripTypes,
     TopicsKeys,
     LocalStorageKey,
@@ -105,7 +101,7 @@ import { SoundService } from '@services/sound.service';
     providers: [DatePipe],
 })
 export class MainComponent implements OnInit, OnDestroy {
-    private destroy$ = new Subject<void>();
+    private readonly destroy$ = new Subject<void>();
 
     MsgID = MsgID;
     MainButtons = MainButton;
@@ -178,7 +174,7 @@ export class MainComponent implements OnInit, OnDestroy {
     displaySettingsPopUp = false;
     bootUpCommissioning: IPopUpControl = { show: false };
 
-    private mqttSubscriptions: Array<{
+    private readonly mqttSubscriptions: Array<{
         topic: string;
         topicKey: string;
     }> = []; // Track MQTT topics for cleanup
@@ -193,12 +189,12 @@ export class MainComponent implements OnInit, OnDestroy {
         public datePipe: DatePipe,
         protected router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
-        private translate: TranslateService,
-        private localStorageService: LocalStorageService,
-        private utilsService: UtilsServices,
-        private soundService: SoundService,
-        private authService: AuthService,
+        private readonly mqttService: MqttService,
+        private readonly translate: TranslateService,
+        private readonly localStorageService: LocalStorageService,
+        private readonly utilsService: UtilsServices,
+        private readonly soundService: SoundService,
+        private readonly authService: AuthService,
     ) {
         this.activeCVs$ = this.store.select(activeCVs);
         this.free$ = this.store.select(free);

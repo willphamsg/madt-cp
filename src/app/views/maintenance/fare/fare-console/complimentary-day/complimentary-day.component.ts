@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,8 +17,8 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './complimentary-day.component.html',
     styleUrls: ['./complimentary-day.component.scss'],
 })
-export class ComplimentaryDayComponent implements OnInit {
-    private destroy$ = new Subject<void>();
+export class ComplimentaryDayComponent implements OnInit, OnDestroy {
+    private readonly destroy$ = new Subject<void>();
     fareConsoleSetting$: Observable<IFareConsole>;
     fareConsoleSetting: IFareConsole = {
         deckType: {
@@ -37,10 +37,10 @@ export class ComplimentaryDayComponent implements OnInit {
     topics;
 
     constructor(
-        private soundService: SoundService,
-        private router: Router,
+        private readonly soundService: SoundService,
+        private readonly router: Router,
         protected store: Store<AppState>,
-        private mqttService: MqttService,
+        private readonly mqttService: MqttService,
     ) {
         this.fareConsoleSetting$ = this.store.select(fareConsole);
     }

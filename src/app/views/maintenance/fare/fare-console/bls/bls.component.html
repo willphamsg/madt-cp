@@ -1,14 +1,7 @@
 <div class="bls">
     @if (step === 1) {
         <div>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); goBack()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); goBack()"
-            >
-                {{ 'BACK' | translate }}
-            </div>
+            <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
             <h2 class="title">{{ 'SECONDARY_BLS_STATUS' | translate }}</h2>
             <div class="content">
                 <p class="label">
@@ -18,19 +11,11 @@
                     }}</span>
                 </p>
                 <div class="btn-group">
-                    <button
-                        class="btn"
-                        [disabled]="fareConsoleSetting.blsStatus === 2"
-                        (click)="handleButtonSound(); handleSelectStatus(2)"
-                    >
+                    <button class="btn" [disabled]="fareConsoleSetting.blsStatus === 2" (click)="handleButtonSound(); handleSelectStatus(2)">
                         <img src="/assets/images/icons/maintenance/stop.svg" alt="" />
                         <div class="text">{{ 'DISABLED' | translate }}</div>
                     </button>
-                    <button
-                        class="btn"
-                        [disabled]="fareConsoleSetting.blsStatus === 1"
-                        (click)="handleButtonSound(); handleSelectStatus(1)"
-                    >
+                    <button class="btn" [disabled]="fareConsoleSetting.blsStatus === 1" (click)="handleButtonSound(); handleSelectStatus(1)">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <div class="text">{{ 'ENABLE' | translate }}</div>
                     </button>
@@ -49,21 +34,11 @@
                     {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
                 </div>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-cancel"
-                        (click)="handleButtonSound(); handleConfirmBlsStatus(false)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleConfirmBlsStatus(false)"
-                    >
+                    <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirmBlsStatus(false)">
                         <img src="/assets/images/icons/main/close.svg" alt="" />
                         <span>{{ 'CANCEL' | translate }}</span>
                     </div>
-                    <div
-                        class="btn btn-confirm"
-                        (click)="handleButtonSound(); handleConfirmBlsStatus(true)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleConfirmBlsStatus(true)"
-                    >
+                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmBlsStatus(true)">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'CONFIRM' | translate }}</span>
                     </div>

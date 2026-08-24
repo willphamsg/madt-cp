@@ -31,7 +31,6 @@ import {
 import { ShuttingDownComponent } from '@components/shutting-down/shutting-down.component';
 import { Disconnect } from '@components/disconnect/disconnect.component';
 import { HeaderComponent } from './header/header.component';
-import { updateLanguage } from '@app/store/main/main.action';
 import { SoundService } from '@services/sound.service';
 @Component({
     selector: 'app-layout',
@@ -198,7 +197,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
     }
 
     private handleGlobalError(error: IGlobalError): void {
-        if (error && (error.code || error.message)) {
+        if (error && (error.esn || error.code || error.description)) {
             if (this.errorTimeout) {
                 clearTimeout(this.errorTimeout);
             }
@@ -206,12 +205,29 @@ export class LayoutComponent implements OnInit, OnDestroy {
             if (error.timeout && error.timeout > 0) {
                 this.errorTimeout = setTimeout(() => {
                     this.error = null;
-                    this.store.dispatch(updateGlobalError({ payload: { code: '', message: '' } }));
+                    this.store.dispatch(updateGlobalError({ payload: { code: '', description: '' } }));
                 }, error.timeout);
             } else {
-                this.store.dispatch(updateGlobalError({ payload: { code: '', message: '' } }));
+                this.store.dispatch(updateGlobalError({ payload: { code: '', description: '' } }));
             }
         }
+    }
+
+    buildErrorText(error: IGlobalError | null): string {
+        if (!error) {
+            return '';
+        }
+        const parts: string[] = [];
+        if (error.esn) {
+            parts.push(`${this.translate.instant('ESN')}: ${error.esn}`);
+        }
+        if (error.code) {
+            parts.push(`${this.translate.instant('ERROR')} ${error.code}`);
+        }
+        if (error.description) {
+            parts.push(this.translate.instant(error.description));
+        }
+        return parts.join(' | ');
     }
 
     private handleTCNoResponse(msgIDs: number[]): void {
@@ -263,10 +279,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
                             this.mqttService.subscribe({
                                 topic: this.topics?.tcToAllTabs,
                                 topicKey: TopicsKeys.ALL_TAB,
-                                callback: (message, _, packet) => {
+                                callback: (message) => {
                                     const formatMess = JSON.parse(message);
                                     const { header, payload } = formatMess || {};
-                                    const isRetainMsg = packet?.retain || false;
 
                                     if (header?.msgID) {
                                         switch (header.msgID) {
@@ -440,34 +455,36 @@ export class LayoutComponent implements OnInit, OnDestroy {
                                 },
                             });
 
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.tcToAllTabs,
-                                topicKey: TopicsKeys.ALL_TAB,
-                            });
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.bolcStatus?.response,
-                                topicKey: TopicsKeys.BOLC_STATUS,
-                            });
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.fmsStatus?.response,
-                                topicKey: TopicsKeys.FMS_STATUS,
-                            });
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.crpStatus?.response,
-                                topicKey: TopicsKeys.CRP_STATUS,
-                            });
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.btsStatus?.response,
-                                topicKey: TopicsKeys.BTS_STATUS,
-                            });
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.posnStatus?.response,
-                                topicKey: TopicsKeys.POSN_STATUS,
-                            });
-                            this.mqttSubscriptions.push({
-                                topic: this.topics?.configStatus?.response,
-                                topicKey: TopicsKeys.LOCATION_CONFIG_STATUS,
-                            });
+                            this.mqttSubscriptions.push(
+                                {
+                                    topic: this.topics?.tcToAllTabs,
+                                    topicKey: TopicsKeys.ALL_TAB,
+                                },
+                                {
+                                    topic: this.topics?.bolcStatus?.response,
+                                    topicKey: TopicsKeys.BOLC_STATUS,
+                                },
+                                {
+                                    topic: this.topics?.fmsStatus?.response,
+                                    topicKey: TopicsKeys.FMS_STATUS,
+                                },
+                                {
+                                    topic: this.topics?.crpStatus?.response,
+                                    topicKey: TopicsKeys.CRP_STATUS,
+                                },
+                                {
+                                    topic: this.topics?.btsStatus?.response,
+                                    topicKey: TopicsKeys.BTS_STATUS,
+                                },
+                                {
+                                    topic: this.topics?.posnStatus?.response,
+                                    topicKey: TopicsKeys.POSN_STATUS,
+                                },
+                                {
+                                    topic: this.topics?.configStatus?.response,
+                                    topicKey: TopicsKeys.LOCATION_CONFIG_STATUS,
+                                },
+                            );
                         }
                     });
                 }

@@ -136,9 +136,9 @@ describe('FareConsoleSettingComponent - extended coverage', () => {
         return input;
     }
 
-    function createDateInput(id: string, value: string, tabIndex: number): HTMLInputElement {
+    function createDateInput(id: string, value: string, order: number): HTMLInputElement {
         const input = createTextInput(id, value);
-        input.tabIndex = tabIndex;
+        input.dataset['order'] = String(order);
         return input;
     }
 
@@ -802,7 +802,7 @@ describe('FareConsoleSettingComponent - extended coverage', () => {
             message: '',
         };
         expect(component.validateFareConsoleForm()).toBeTrue();
-        expect(component.missingFields.length).toBe(0);
+        expect(component.missingFields).toHaveSize(0);
     });
 
     it('validates fare console form as invalid when fields missing', () => {

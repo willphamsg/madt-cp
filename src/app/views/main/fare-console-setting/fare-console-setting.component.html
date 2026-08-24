@@ -12,12 +12,7 @@
                     }
                 </ul>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-ok"
-                        (click)="handleButtonSound(); handleBackToConfiguration()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleBackToConfiguration()"
-                    >
+                    <div class="btn btn-ok" (click)="handleButtonSound(); handleBackToConfiguration()">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'OK' | translate }}</span>
                     </div>
@@ -32,7 +27,7 @@
             [isConfirm]="true"
             [isCancel]="true"
             (confirm)="handleDeleteParameter()"
-            (cancel)="handleClickBack()"
+            (cancelled)="handleClickBack()"
         >
         </common-pop-up>
     } @else if (settingType === 'deckType') {
@@ -54,8 +49,6 @@
                                             <li
                                                 (click)="handleButtonSound(); handleChangeDeckType(deck.id)"
                                                 [ngClass]="{ selected: selectedDeckTypeId === deck.id }"
-                                                tabindex="0"
-                                                (keydown.enter)="handleButtonSound(); handleChangeDeckType(deck.id)"
                                             >
                                                 {{ deck.label | translate }}
                                             </li>
@@ -68,8 +61,6 @@
                             <div
                                 class="button button-cancel"
                                 (click)="handleButtonSound(); handleConfirmDeckType(false)"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleConfirmDeckType(false)"
                             >
                                 <img src="/assets/images/icons/main/close.svg" alt="" />
                                 <span>{{ 'CANCEL' | translate }}</span>
@@ -77,8 +68,6 @@
                             <div
                                 class="button button-confirm"
                                 (click)="handleButtonSound(); handleConfirmDeckType(true)"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleConfirmDeckType(true)"
                             >
                                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                 <span class="text">{{ 'CONFIRM' | translate }}</span>
@@ -146,8 +135,6 @@
                                     <div
                                         class="btn btn-cancel"
                                         (click)="handleButtonSound(); handleConfirmBlsStatus(false)"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleConfirmBlsStatus(false)"
                                     >
                                         <img src="/assets/images/icons/main/close.svg" alt="" />
                                         <span>{{ 'CANCEL' | translate }}</span>
@@ -155,8 +142,6 @@
                                     <div
                                         class="btn btn-confirm"
                                         (click)="handleButtonSound(); handleConfirmBlsStatus(true)"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleConfirmBlsStatus(true)"
                                     >
                                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                         <span>{{ 'CONFIRM' | translate }}</span>
@@ -177,12 +162,7 @@
             </div>
             <div class="madt-content">
                 <div class="time-setting">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); handleClickBack()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleClickBack()"
-                    >
+                    <div class="back-button" (click)="handleButtonSound(); handleClickBack()">
                         {{ 'BACK' | translate }}
                     </div>
                     <div>
@@ -193,9 +173,9 @@
                             <div class="input-group">
                                 <p>{{ 'INPUT_TIME' | translate }}</p>
                                 <input
+                                    [attr.aria-label]="'INPUT_TIME' | translate"
                                     id="inputField"
                                     [class.hasError]="hasInputError"
-                                    [attr.aria-label]="'INPUT_TIME' | translate"
                                 />
                                 @if (hasInputError) {
                                     <p class="error">{{ 'INVALID_ENTRY' | translate }}</p>
@@ -222,12 +202,7 @@
             </div>
             <div class="madt-content">
                 <div class="time-setting">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); handleClickBack()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleClickBack()"
-                    >
+                    <div class="back-button" (click)="handleButtonSound(); handleClickBack()">
                         {{ 'BACK' | translate }}
                     </div>
                     <div>
@@ -243,20 +218,22 @@
                                                 type="text"
                                                 id="day"
                                                 placeholder="--"
+                                                data-order="1"
+                                                [attr.aria-label]="'DAY' | translate"
                                                 [value]="this.dateValue.day"
                                                 (click)="handleButtonSound(); dateTimeInputType = 'day'"
-                                                tabindex="1"
-                                                [attr.aria-label]="'INPUT_DATE' | translate"
+                                                tabindex="0"
                                             />
                                             <div>/</div>
                                             <input
                                                 type="text"
                                                 id="month"
                                                 placeholder="--"
+                                                data-order="2"
+                                                [attr.aria-label]="'MONTH' | translate"
                                                 [value]="this.dateValue.month"
                                                 (click)="handleButtonSound(); dateTimeInputType = 'month'"
-                                                tabindex="2"
-                                                [attr.aria-label]="'INPUT_DATE' | translate"
+                                                tabindex="0"
                                             />
                                             <div>/</div>
                                             <input
@@ -264,10 +241,11 @@
                                                 id="year"
                                                 class="year"
                                                 placeholder="----"
+                                                data-order="3"
+                                                [attr.aria-label]="'YEAR' | translate"
                                                 [value]="this.dateValue.year"
                                                 (click)="handleButtonSound(); dateTimeInputType = 'year'"
-                                                tabindex="3"
-                                                [attr.aria-label]="'INPUT_DATE' | translate"
+                                                tabindex="0"
                                             />
                                         </div>
                                         @if (!!dateTimeErrorMessage) {
@@ -283,30 +261,33 @@
                                                 type="text"
                                                 id="hour"
                                                 placeholder="--"
+                                                data-order="4"
+                                                [attr.aria-label]="'HOUR' | translate"
                                                 [value]="this.dateValue.hour"
                                                 (click)="handleButtonSound(); dateTimeInputType = 'hour'"
-                                                tabindex="4"
-                                                [attr.aria-label]="'INPUT_TIME' | translate"
+                                                tabindex="0"
                                             />
                                             <div>:</div>
                                             <input
                                                 type="text"
                                                 id="minute"
                                                 placeholder="--"
+                                                data-order="5"
+                                                [attr.aria-label]="'MINUTE' | translate"
                                                 [value]="this.dateValue.minute"
                                                 (click)="handleButtonSound(); dateTimeInputType = 'minute'"
-                                                tabindex="5"
-                                                [attr.aria-label]="'INPUT_TIME' | translate"
+                                                tabindex="0"
                                             />
                                             <div>:</div>
                                             <input
                                                 type="text"
                                                 id="second"
                                                 placeholder="--"
+                                                data-order="6"
+                                                [attr.aria-label]="'SECOND' | translate"
                                                 [value]="this.dateValue.second"
                                                 (click)="handleButtonSound(); dateTimeInputType = 'second'"
-                                                tabindex="6"
-                                                [attr.aria-label]="'INPUT_TIME' | translate"
+                                                tabindex="0"
                                             />
                                         </div>
                                         @if (hasTimeInputError) {
@@ -336,12 +317,7 @@
             </div>
             <div class="madt-content">
                 <div class="complimentary-day">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); handleClickBack()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleClickBack()"
-                    >
+                    <div class="back-button" (click)="handleButtonSound(); handleClickBack()">
                         {{ 'BACK' | translate }}
                     </div>
                     <div>
@@ -354,9 +330,9 @@
                             <div class="input-group">
                                 <p>{{ 'INPUT_CURRENT_DAYS' | translate }}</p>
                                 <input
+                                    [attr.aria-label]="'INPUT_CURRENT_DAYS' | translate"
                                     id="inputField"
                                     [class.hasError]="hasInputError"
-                                    [attr.aria-label]="'INPUT_CURRENT_DAYS' | translate"
                                 />
                                 @if (hasInputError) {
                                     <p class="error">
@@ -405,12 +381,7 @@
                             <div class="title">{{ 'SUCCESS' | translate }}</div>
                             <div class="content">{{ 'ALL_PARAMS_FILE_DELETED' | translate }}</div>
                             <div class="btn-group">
-                                <div
-                                    class="btn btn-ok"
-                                    (click)="handleButtonSound(); handleClearDeleteParameter()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleClearDeleteParameter()"
-                                >
+                                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
                                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                     <span>{{ 'OK' | translate }}</span>
                                 </div>
@@ -427,12 +398,7 @@
                                 {{ fareConsoleSetting.message || 'FAILED_TO_DELETE_ALL_PARAMETERS' | translate }}
                             </div>
                             <div class="btn-group">
-                                <div
-                                    class="btn btn-ok"
-                                    (click)="handleButtonSound(); handleClearDeleteParameter()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleClearDeleteParameter()"
-                                >
+                                <div class="btn btn-ok" (click)="handleButtonSound(); handleClearDeleteParameter()">
                                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                     <span>{{ 'OK' | translate }}</span>
                                 </div>
@@ -444,21 +410,11 @@
                             <div class="content">
                                 <p class="label">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}?</p>
                                 <div class="btn-group">
-                                    <div
-                                        class="btn btn-cancel"
-                                        (click)="handleButtonSound(); handleClickBack()"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleClickBack()"
-                                    >
+                                    <div class="btn btn-cancel" (click)="handleButtonSound(); handleClickBack()">
                                         <img src="/assets/images/icons/main/close.svg" alt="" />
                                         <span>{{ 'CANCEL' | translate }}</span>
                                     </div>
-                                    <div
-                                        class="btn btn-confirm"
-                                        (click)="handleButtonSound(); handleDeleteParameter()"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleDeleteParameter()"
-                                    >
+                                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleDeleteParameter()">
                                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                         <span>{{ 'CONFIRM' | translate }}</span>
                                     </div>
@@ -489,12 +445,7 @@
                                     {{ busIdData.message || 'PLEASE_RETRY_AGAIN' | translate }}
                                 </div>
                                 <div class="btn-group">
-                                    <div
-                                        class="btn btn-ok"
-                                        (click)="handleButtonSound(); handleRetrySetBusId()"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleRetrySetBusId()"
-                                    >
+                                    <div class="btn btn-ok" (click)="handleButtonSound(); handleRetrySetBusId()">
                                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                         <span>{{ 'OK' | translate }}</span>
                                     </div>
@@ -507,24 +458,14 @@
                             <ul class="list">
                                 <li class="row">
                                     <div class="left">{{ 'BUS_ID' | translate }}</div>
-                                    <div
-                                        class="right"
-                                        (click)="handleButtonSound(); handleChangeStep(2)"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleChangeStep(2)"
-                                    >
+                                    <div class="right" (click)="handleButtonSound(); handleChangeStep(2)">
                                         <p class="value">{{ busIdTemp }}</p>
                                         <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                                     </div>
                                 </li>
                                 <li class="row">
                                     <div class="left">{{ 'OPERATOR' | translate }}</div>
-                                    <div
-                                        class="right"
-                                        (click)="handleButtonSound(); handleChangeStep(3)"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleChangeStep(3)"
-                                    >
+                                    <div class="right" (click)="handleButtonSound(); handleChangeStep(3)">
                                         <p class="value">
                                             @if (
                                                 busIdData.operator?.['label'] && busIdData.operator?.['serviceProvider']
@@ -551,21 +492,11 @@
                                 </li>
                             </ul>
                             <div class="btn-group">
-                                <div
-                                    class="btn btn-cancel"
-                                    (click)="handleButtonSound(); handleCancelSubmitBusId()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleCancelSubmitBusId()"
-                                >
+                                <div class="btn btn-cancel" (click)="handleButtonSound(); handleCancelSubmitBusId()">
                                     <img src="/assets/images/icons/main/close.svg" alt="" />
                                     <span>{{ 'CANCEL' | translate }}</span>
                                 </div>
-                                <div
-                                    class="btn btn-confirm"
-                                    (click)="handleButtonSound(); handleSubmitForm()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleSubmitForm()"
-                                >
+                                <div class="btn btn-confirm" (click)="handleButtonSound(); handleSubmitForm()">
                                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                     <span class="text">{{ 'CONFIRM' | translate }}</span>
                                 </div>
@@ -596,7 +527,7 @@
                                                 id="inputField"
                                                 [placeholder]="'INPUT_NUMBER' | translate"
                                                 [class.hasError]="hasBusIdNumberError"
-                                                [attr.aria-label]="'INPUT_NUMBER' | translate"
+                                                [attr.aria-label]="'PLEASE_ENTER_BUS_PLATE_NUMBER' | translate"
                                             />
                                             @if (hasBusIdNumberError) {
                                                 <p class="error">
@@ -635,12 +566,7 @@
 
                         @if (busIdStep === 3) {
                             <div class="operator">
-                                <div
-                                    class="back-button"
-                                    (click)="handleButtonSound(); handleOperatorBack()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleOperatorBack()"
-                                >
+                                <div class="back-button" (click)="handleButtonSound(); handleOperatorBack()">
                                     {{ 'BACK' | translate }}
                                 </div>
                                 <h3 class="title">{{ 'SELECT_OPERATOR' | translate }}</h3>
@@ -661,11 +587,6 @@
                                                                 handleChangeOperator(operator?.id || 0)
                                                             "
                                                             [ngClass]="{ selected: operatorIdTemp === operator.id }"
-                                                            tabindex="0"
-                                                            (keydown.enter)="
-                                                                handleButtonSound();
-                                                                handleChangeOperator(operator?.id || 0)
-                                                            "
                                                         >
                                                             {{ operator?.label || '' | translate }} -
                                                             {{ operator.serviceProvider }}
@@ -691,12 +612,7 @@
 
                         @if (busIdStep === 4) {
                             <div class="spid">
-                                <div
-                                    class="back-button"
-                                    (click)="handleButtonSound(); handleSpidBack()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleSpidBack()"
-                                >
+                                <div class="back-button" (click)="handleButtonSound(); handleSpidBack()">
                                     {{ 'BACK' | translate }}
                                 </div>
                                 <div>
@@ -704,7 +620,7 @@
                                     <div class="content">
                                         <div class="input-group">
                                             <p>{{ 'SPID' | translate }}</p>
-                                            <input id="inputField" [attr.aria-label]="'SPID' | translate" />
+                                            <input [attr.aria-label]="'SPID' | translate" id="inputField" />
                                         </div>
                                     </div>
                                     <div class="keyboard">
@@ -736,8 +652,6 @@
                                         required: !fareConsoleSetting.deckType.label,
                                         highlight: highlightMissingFields
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleChangeSetting('deckType')"
                                 >
                                     @if (fareConsoleSetting.deckType.label) {
                                         <p class="value">{{ fareConsoleSetting.deckType.label | translate }}</p>
@@ -756,8 +670,6 @@
                                         required: !fareConsoleSetting.busId,
                                         highlight: highlightMissingFields
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleChangeSetting('busId')"
                                 >
                                     @if (fareConsoleSetting.busId) {
                                         <p class="value">{{ fareConsoleSetting.busId }}</p>
@@ -776,8 +688,6 @@
                                         required: !fareConsoleSetting.complimentaryDays,
                                         highlight: highlightMissingFields
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleChangeSetting('complimentaryDays')"
                                 >
                                     @if (fareConsoleSetting.complimentaryDays) {
                                         <p class="value">{{ fareConsoleSetting.complimentaryDays }}</p>
@@ -792,12 +702,7 @@
                 </div>
             </div>
             <div class="btn-group w-900 mb-20">
-                <div
-                    class="btn btn-confirm"
-                    (click)="handleButtonSound(); handleConfirmFareConsole(true)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleConfirmFareConsole(true)"
-                >
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmFareConsole(true)">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'CONFIRM' | translate }}</span>
                 </div>
@@ -805,8 +710,6 @@
                 <div
                     class="btn btn-cancel pos-abs"
                     (click)="handleButtonSound(); handleChangeSetting('deleteParameter')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleChangeSetting('deleteParameter')"
                 >
                     <img src="/assets/images/icons/main/trash.svg" alt="" />
                     <span>{{ 'DELETE_PARAMETERS' | translate }}</span>

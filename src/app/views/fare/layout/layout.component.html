@@ -37,7 +37,7 @@
             @if (displaySettingsPopUp) {
                 <madt-setting
                     [fullScreen]="true"
-                    (close)="displaySettingsPopUp = false"
+                    (closed)="displaySettingsPopUp = false"
                     (confirmLanguage)="handleConfirmLanguage($event)"
                     (changeAudioVolume)="handleChangeAudioVolume($event)"
                 ></madt-setting>
@@ -52,7 +52,7 @@
                     [isConfirm]="true"
                     [isCancel]="true"
                     (confirm)="handleConfirmLock(true)"
-                    (cancel)="handleConfirmLock(false)"
+                    (cancelled)="handleConfirmLock(false)"
                 ></common-pop-up>
             }
 

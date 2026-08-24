@@ -12,11 +12,9 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./reset-bls.component.scss'],
 })
 export class ResetBLSComponent {
-    step: number;
+    step = 1;
 
-    constructor(private readonly soundService: SoundService) {
-        this.step = 1;
-    }
+    constructor(private readonly soundService: SoundService) {}
 
     handleSelect() {
         this.step = 2;

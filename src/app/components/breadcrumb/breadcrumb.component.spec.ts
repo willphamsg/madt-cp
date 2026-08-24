@@ -74,7 +74,7 @@ describe('BreadcrumbComponent', () => {
 
             mockRouterEvents.next(new NavigationEnd(1, '/url', '/url'));
 
-            expect(component.breadcrumbs.length).toBe(0);
+            expect(component.breadcrumbs).toHaveSize(0);
             expect(spy).toHaveBeenCalledWith(mockActivatedRoute);
         });
 
@@ -85,7 +85,7 @@ describe('BreadcrumbComponent', () => {
 
             mockRouterEvents.next({ type: 'OtherEvent' });
 
-            expect(component.breadcrumbs.length).toBe(1);
+            expect(component.breadcrumbs).toHaveSize(1);
             expect(spy).not.toHaveBeenCalled();
         });
     });
@@ -98,7 +98,7 @@ describe('BreadcrumbComponent', () => {
             component.breadcrumbs = [];
             component.buildBreadcrumb(mockActivatedRoute);
 
-            expect(component.breadcrumbs.length).toBe(1);
+            expect(component.breadcrumbs).toHaveSize(1);
             expect(component.breadcrumbs[0]).toEqual({
                 label: 'Home',
                 link: '/home',
@@ -112,7 +112,7 @@ describe('BreadcrumbComponent', () => {
             component.breadcrumbs = [{ label: 'Users', link: '/users' }];
             component.buildBreadcrumb(mockActivatedRoute);
 
-            expect(component.breadcrumbs.length).toBe(2);
+            expect(component.breadcrumbs).toHaveSize(2);
             expect(component.breadcrumbs[1].link).toBe('/users/user/123');
         });
 
@@ -140,7 +140,7 @@ describe('BreadcrumbComponent', () => {
             component.breadcrumbs = [];
             component.buildBreadcrumb(mockActivatedRoute);
 
-            expect(component.breadcrumbs.length).toBe(2);
+            expect(component.breadcrumbs).toHaveSize(2);
             expect(component.breadcrumbs[0].label).toBe('Parent');
             expect(component.breadcrumbs[1].label).toBe('Child');
             expect(component.breadcrumbs[1].link).toBe('/parent/child');

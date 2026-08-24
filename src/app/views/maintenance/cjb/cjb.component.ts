@@ -25,11 +25,7 @@ export class CJBComponent {
         private readonly sanitizer: DomSanitizer,
         private readonly router: Router,
     ) {
-        // this.url comes from the bundled, developer-controlled src/assets/config.json,
-        // not from user input; the scheme check guards against a malformed config value.
-        this.safeUrl = /^https:\/\//.test(this.url)
-            ? this.sanitizer.bypassSecurityTrustResourceUrl(this.url)
-            : this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     }
 
     onIframeLoad(iframe: HTMLIFrameElement) {

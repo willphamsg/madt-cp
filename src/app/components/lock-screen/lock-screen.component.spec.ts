@@ -78,6 +78,17 @@ describe('LockScreenComponent', () => {
             component.ngOnInit();
             expect(component.topics).toEqual({ mainTab: { get: 'test/topic' } });
         });
+
+        it('should not schedule a timeout when data.timeout is not set', fakeAsync(() => {
+            component.lockScreen$ = of({ msgID: MsgID.NOTIFY_TO_LOCK });
+
+            component.ngOnInit();
+            tick(10000);
+
+            expect(mqttServiceSpy.publishWithMessageFormat).not.toHaveBeenCalledWith(
+                jasmine.objectContaining({ msgID: MsgID.TIMEOUT_MESSAGE }),
+            );
+        }));
     });
 
     describe('backToMain', () => {
@@ -137,6 +148,61 @@ describe('LockScreenComponent', () => {
                 msgSubID: MsgSubID.REQUEST,
                 payload: { pin: '1234' },
             });
+        });
+    });
+
+    describe('handleChangeInput', () => {
+        let inputField: HTMLInputElement;
+
+        beforeEach(() => {
+            inputField = document.createElement('input');
+            spyOn(document, 'getElementById').and.callFake((id: string) => (id === 'inputField' ? inputField : null));
+        });
+
+        function makeEvent(targetId: string, innerText = ''): Event {
+            const target = document.createElement('div');
+            target.id = targetId;
+            target.innerText = innerText;
+            return { target } as unknown as Event;
+        }
+
+        it('should delete char before cursor on backspaceKey with no selection', () => {
+            inputField.value = '1234';
+            inputField.selectionStart = 4;
+            inputField.selectionEnd = 4;
+            component.handleChangeInput(makeEvent('backspaceKey'));
+            expect(inputField.value).toBe('123');
+            expect(component.pinValue).toBe('123');
+        });
+
+        it('should delete selected text on backspaceKey with a selection', () => {
+            inputField.value = '1234';
+            inputField.selectionStart = 0;
+            inputField.selectionEnd = 2;
+            component.handleChangeInput(makeEvent('backspaceKey'));
+            expect(inputField.value).toBe('34');
+        });
+
+        it('should do nothing on enterKey when value is empty', () => {
+            inputField.value = '';
+            const confirmSpy = spyOn(component, 'handleConfirmUnlock');
+            component.handleChangeInput(makeEvent('enterKey'));
+            expect(confirmSpy).not.toHaveBeenCalled();
+        });
+
+        it('should confirm unlock on enterKey with a value', () => {
+            inputField.value = '1234';
+            const confirmSpy = spyOn(component, 'handleConfirmUnlock');
+            component.handleChangeInput(makeEvent('enterKey'));
+            expect(confirmSpy).toHaveBeenCalledWith('1234');
+        });
+
+        it('should append the pressed digit key value', () => {
+            inputField.value = '1';
+            inputField.selectionStart = 1;
+            inputField.selectionEnd = 1;
+            component.handleChangeInput(makeEvent('digitKey', '5'));
+            expect(inputField.value).toBe('15');
         });
     });
 

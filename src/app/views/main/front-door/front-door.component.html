@@ -1,12 +1,7 @@
 <div class="toggle-cv-container">
     @if (frontDoor.msgID === MsgID.MAIN_FRONT_DOOR) {
         <div class="page-header">
-            <div
-                class="button"
-                (click)="handleButtonSound(); handleClose()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleClose()"
-            >
+            <div class="button" (click)="handleButtonSound(); handleClose()">
                 <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
@@ -17,12 +12,7 @@
             </div>
             <div class="button-control">
                 @for (cv of frontDoor.cvList; track cv) {
-                    <div
-                        class="button"
-                        (click)="handleButtonSound(); handleChangeCvMode(cv)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleChangeCvMode(cv)"
-                    >
+                    <div class="button" (click)="handleButtonSound(); handleChangeCvMode(cv)">
                         <div class="icon-text">
                             <div class="text">{{ 'CV_COUNT' | translate: { count: cv } }}</div>
                         </div>
@@ -39,7 +29,7 @@
             [isCancel]="true"
             [disableSound]="true"
             (confirm)="handleUpdateCV()"
-            (cancel)="handleCancel()"
+            (cancelled)="handleCancel()"
         ></common-pop-up>
     }
 </div>

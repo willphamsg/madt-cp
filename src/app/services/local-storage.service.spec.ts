@@ -180,7 +180,7 @@ describe('LocalStorageService', () => {
 
             service.clear();
 
-            expect(localStorage.length).toBe(0);
+            expect(localStorage).toHaveSize(0);
         });
 
         it('should complete all watched subjects', () => {

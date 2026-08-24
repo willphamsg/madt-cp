@@ -1,12 +1,7 @@
 <ng-container>
     <div class="maintenance-fare-layout">
         <div class="layout">
-            <div
-                class="button"
-                (click)="handleButtonSound(); backToMaintenance()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); backToMaintenance()"
-            >
+            <div class="button" (click)="handleButtonSound(); backToMaintenance()">
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
             <iframe
@@ -17,7 +12,6 @@
                 width="1280"
                 height="720"
                 title="CJB Iframe"
-                frameborder="0"
                 allowfullscreen
             ></iframe>
         </div>

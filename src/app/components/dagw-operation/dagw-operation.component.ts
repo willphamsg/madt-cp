@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,7 +21,7 @@ export class DagwOperationComponent implements OnInit, OnDestroy {
     dagwStatus = DagwOperationStatus;
     dagwOperation$: Observable<IDagwOperation> = this.store.select(dagwOperation);
     dagwOperationData: IDagwOperation = { msgID: 0, title: '', message: '' };
-    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancelled: EventEmitter<string> = new EventEmitter<string>();
 
     topics;
 
@@ -43,7 +43,7 @@ export class DagwOperationComponent implements OnInit, OnDestroy {
     }
 
     handleCancelDagwOperation() {
-        this.cancel.emit();
+        this.cancelled.emit();
     }
 
     handleButtonSound(): void {

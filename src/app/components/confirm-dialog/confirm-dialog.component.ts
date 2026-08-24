@@ -1,4 +1,4 @@
-import { Component, Input, Output, ElementRef, EventEmitter, AfterContentInit } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { DEFAULT_TIMEOUT } from '@models';
 import { TranslateModule } from '@ngx-translate/core';
@@ -16,7 +16,7 @@ export class ConfirmDialogComponent implements AfterContentInit {
     @Input() btnCancel?: boolean;
     @Input() btnOK?: boolean;
     @Input() style?: string;
-    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancelled: EventEmitter<string> = new EventEmitter<string>();
     @Output() confirm: EventEmitter<string> = new EventEmitter<string>();
     @Output() ok: EventEmitter<string> = new EventEmitter<string>();
 
@@ -28,7 +28,7 @@ export class ConfirmDialogComponent implements AfterContentInit {
     handleClick(type: string) {
         switch (type) {
             case 'cancel':
-                this.cancel.emit(type);
+                this.cancelled.emit(type);
                 break;
             case 'confirm':
                 this.confirm.emit(type);

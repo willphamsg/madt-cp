@@ -7,6 +7,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 import { MqttService } from '@services/mqtt.service';
+import { of } from 'rxjs';
 
 describe('LoadParameterComponent', () => {
     let component: LoadParameterComponent;
@@ -47,5 +48,12 @@ describe('LoadParameterComponent', () => {
         const dispatchSpy = spyOn(store, 'dispatch');
         component.handleClickOK();
         expect(dispatchSpy).toHaveBeenCalled();
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { maintenance: { get: 'maintenance/get' } } } as any;
+        component.ngOnInit();
+        expect((component as any).topics).toEqual({ maintenance: { get: 'maintenance/get' } });
     });
 });

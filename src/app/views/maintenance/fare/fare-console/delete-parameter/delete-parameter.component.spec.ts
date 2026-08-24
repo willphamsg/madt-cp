@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
 import { MqttService } from '@services/mqtt.service';
+import { of } from 'rxjs';
 
 describe('DeleteParameterComponent', () => {
     let component: DeleteParameterComponent;
@@ -54,5 +55,12 @@ describe('DeleteParameterComponent', () => {
         const navigateSpy = spyOn(router, 'navigate');
         component.goBack();
         expect(navigateSpy).toHaveBeenCalledWith(['/maintenance/fare/fare-console']);
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { maintenance: { get: 'maintenance/get' } } } as any;
+        component.ngOnInit();
+        expect((component as any).topics).toEqual({ maintenance: { get: 'maintenance/get' } });
     });
 });

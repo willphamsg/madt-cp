@@ -42,13 +42,13 @@ describe('ConfirmDialogComponent', () => {
     });
 
     describe('handleClick', () => {
-        it('should emit cancel for cancel type', () => {
-            const emitSpy = spyOn(component.cancel, 'emit');
+        it('should emit onCancel for cancel type', () => {
+            const emitSpy = spyOn(component.cancelled, 'emit');
             component.handleClick('cancel');
             expect(emitSpy).toHaveBeenCalledWith('cancel');
         });
 
-        it('should emit confirm for confirm type', () => {
+        it('should emit onConfirm for confirm type', () => {
             const emitSpy = spyOn(component.confirm, 'emit');
             component.handleClick('confirm');
             expect(emitSpy).toHaveBeenCalledWith('confirm');
@@ -61,7 +61,7 @@ describe('ConfirmDialogComponent', () => {
         });
 
         it('should not emit for unknown type', () => {
-            const cancelSpy = spyOn(component.cancel, 'emit');
+            const cancelSpy = spyOn(component.cancelled, 'emit');
             const confirmSpy = spyOn(component.confirm, 'emit');
             const okSpy = spyOn(component.ok, 'emit');
 

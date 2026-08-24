@@ -11,13 +11,13 @@ import { SoundService } from '@services/sound.service';
 export class CustomRadioButtonComponent {
     constructor(private readonly soundService: SoundService) {}
 
-    @Output() select = new EventEmitter<StrNum>();
+    @Output() selected = new EventEmitter<StrNum>();
     @Input() value!: StrNum;
     @Input() label!: StrNum;
     @Input() isSelected!: boolean;
 
     onClickHandler(e: string | number) {
-        this.select.emit(e);
+        this.selected.emit(e);
     }
 
     handleButtonSound(): void {

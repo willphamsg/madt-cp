@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -24,6 +24,7 @@ import {
 
 import { NotificationSoundDirective } from '@directives/notification-sound.directive';
 import { SoundService } from '@services/sound.service';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 @Component({
     selector: 'app-login-tap-card',
@@ -128,21 +129,10 @@ export class LoginTapCardComponent implements OnInit, OnDestroy {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
         const start = inputField?.selectionStart || 4;
         const end = inputField?.selectionEnd || 4;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                this.removeErrorMessage(type);
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                this.removeErrorMessage(type);
-            }
-        } else if (target.id === 'enterKey') {
+        const value = applyKeyboardInput(inputField, target, start, end);
+
+        if (target.id === 'enterKey') {
             if (!value) return;
             this.inputValue = value;
             if (type === 'PIN') {
@@ -151,9 +141,6 @@ export class LoginTapCardComponent implements OnInit, OnDestroy {
                 this.submitDutyNumber();
             }
         } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
             this.removeErrorMessage(type);
         }
         inputField.focus();

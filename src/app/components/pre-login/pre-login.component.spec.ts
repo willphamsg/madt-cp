@@ -13,8 +13,15 @@ describe('PreLoginComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), PreLoginComponent],
-            providers: [provideHttpClient(), provideMockStore({ initialState: mockInitialState }), provideRouter([])],
+            imports: [
+                TranslateModule.forRoot(),
+                PreLoginComponent,
+            ],
+            providers: [
+                provideHttpClient(),
+                provideMockStore({ initialState: mockInitialState }),
+                provideRouter([]),
+            ],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 

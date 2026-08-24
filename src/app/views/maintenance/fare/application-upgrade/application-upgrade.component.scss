@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 .app-upgrade-page {
     text-align: center;
@@ -6,73 +7,12 @@
     margin-right: -20px;
 
     .loading {
-        @include flex-center;
-        flex-direction: column;
-        height: 100%;
-
-        > div {
-            font-size: 40px;
-            font-weight: $font-weight-bold;
-            margin-top: 20px;
-            @include dot-loading;
-            white-space: pre-line;
-        }
-
-        .loader {
-            @include spinner;
-        }
+        @include audit-page-loading-styles($pre-line: true);
     }
 
     .error,
     .success {
-        @include flex-center;
-        flex-direction: column;
-        height: 100%;
-
-        .title {
-            margin-bottom: 12px;
-            margin-top: 8px;
-        }
-
-        .content {
-            margin: 0 auto;
-            width: 700px;
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 12px;
-        }
-
-        .btn-group {
-            @include flex-center;
-            gap: 32px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            @include flex-center;
-            min-height: 80px;
-            padding: 0 25px;
-            border-radius: 5px;
-            transition: 0.2s ease-in-out 0s;
-            min-width: 145px;
-
-            &:active {
-                transform: scale(1.01);
-            }
-
-            span {
-                font-size: 22px;
-                font-weight: $font-weight-bold;
-                padding-left: 6px;
-                color: $white;
-            }
-
-            &-confirm,
-            &-ok {
-                background-color: $madt-bg-light-1;
-                min-width: 145px;
-            }
-        }
+        @include standard-error-success-dialog-styles($include-ok-min-width: true);
     }
 
     .title {

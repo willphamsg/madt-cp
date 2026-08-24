@@ -6,21 +6,11 @@
                 {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
             </p>
             <div class="btn-group">
-                <div
-                    class="btn btn-cancel"
-                    (click)="handleButtonSound(); handleConfirm(false)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleConfirm(false)"
-                >
+                <div class="btn btn-cancel" (click)="handleButtonSound(); handleConfirm(false)">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
                 </div>
-                <div
-                    class="btn btn-confirm"
-                    (click)="handleButtonSound(); handleConfirm(true)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleConfirm(true)"
-                >
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm(true)">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'CONFIRM' | translate }}</span>
                 </div>
@@ -63,21 +53,11 @@
                     </li>
                 </ul>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-cancel"
-                        (click)="handleButtonSound(); handleCancelEndTrip()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleCancelEndTrip()"
-                    >
+                    <div class="btn btn-cancel" (click)="handleButtonSound(); handleCancelEndTrip()">
                         <img src="/assets/images/icons/main/close.svg" alt="" />
                         <span>{{ 'CANCEL' | translate }}</span>
                     </div>
-                    <div
-                        class="btn btn-confirm"
-                        (click)="handleButtonSound(); handleConfirmValue()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleConfirmValue()"
-                    >
+                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmValue()">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span class="text">{{ 'CONFIRM' | translate }}</span>
                     </div>

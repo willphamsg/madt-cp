@@ -353,7 +353,7 @@ export const mainReducer = createReducer(
         };
     }),
 
-    on(updateCurrentFareBusStop, (state, { payload, manualBls, autoBls, misMatch, idx }) => {
+    on(updateCurrentFareBusStop, (state, { payload, manualBls, autoBls, misMatch, isUpstage, idx }) => {
         let currentFareBusStop: IFareBusStop;
         // console.log('updateCurrentFareBusStop', payload, manualBls, misMatch, idx);
         if (idx !== undefined && idx > -1) {
@@ -373,6 +373,9 @@ export const mainReducer = createReducer(
         }
         if (typeof misMatch === 'boolean' && currentFareBusStop) {
             nextFareBusStop['misMatch'] = misMatch;
+        }
+        if (typeof isUpstage === 'boolean' && currentFareBusStop) {
+            nextFareBusStop['isUpstage'] = isUpstage;
         }
         return {
             ...state,

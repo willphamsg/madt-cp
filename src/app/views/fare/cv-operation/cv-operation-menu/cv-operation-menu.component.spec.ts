@@ -6,6 +6,8 @@ import { CVOperationMenuComponent } from './cv-operation-menu.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
+import { MqttService } from '@services/mqtt.service';
+import { of } from 'rxjs';
 
 describe('CVOperationMenuComponent', () => {
     let component: CVOperationMenuComponent;
@@ -58,5 +60,13 @@ describe('CVOperationMenuComponent', () => {
                 (component as any).handleBack();
             }).not.toThrow();
         });
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        const mqttService = TestBed.inject(MqttService);
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { fareTab: { get: 'fare/get' } } } as any;
+        component.ngOnInit();
+        expect((component as any).topics).toEqual({ fareTab: { get: 'fare/get' } });
     });
 });

@@ -67,24 +67,17 @@
     } @else if (signInTapCardData.message === 'LOGIN_SUCCESS_NEED_PIN') {
         <div class="wrapper">
             <div class="page-header">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); backToLogin()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToLogin()"
-                >
-                    {{ 'BACK' | translate }}
-                </div>
+                <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
             </div>
             <div>
                 <div class="content">
                     <div class="input-group">
                         <p>{{ 'ENTER_PIN' | translate }}</p>
                         <input
+                            [attr.aria-label]="'ENTER_PIN' | translate"
                             type="password"
                             id="inputField"
                             [class.hasError]="pinError"
-                            [attr.aria-label]="'ENTER_PIN' | translate"
                         />
                         @if (pinError) {
                             <p class="error">
@@ -115,25 +108,18 @@
         } @else {
             <div class="wrapper">
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToLogin()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToLogin()"
-                    >
-                        {{ 'BACK' | translate }}
-                    </div>
+                    <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
                 </div>
                 <div>
                     <div class="content">
                         <div class="input-group">
                             <p>{{ 'ENTER_PIN' | translate }}</p>
                             <input
+                                [attr.aria-label]="'ENTER_PIN' | translate"
                                 type="password"
                                 id="inputField"
                                 [value]="signInTapCardData['pin'] || ''"
                                 [class.hasError]="!!signInTapCardData.message"
-                                [attr.aria-label]="'ENTER_PIN' | translate"
                             />
                             @if (signInTapCardData.message) {
                                 <p class="error">
@@ -167,10 +153,10 @@
                     <div class="input-group">
                         <p>{{ 'ENTER_DUTY_NUMBER' | translate }}</p>
                         <input
+                            [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                             id="inputField"
                             [value]="signInTapCardData.dutyNumber"
                             [class.hasError]="!!dutyError"
-                            [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                         />
                         @if (dutyError) {
                             <p class="error">
@@ -196,10 +182,10 @@
                     <div class="input-group">
                         <p>{{ 'ENTER_DUTY_NUMBER' | translate }}</p>
                         <input
+                            [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                             id="inputField"
                             [value]="signInTapCardData['dutyNumber'] || ''"
                             [class.hasError]="!!signInTapCardData.message || dutyError"
-                            [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                         />
                         @if (signInTapCardData.message || dutyError) {
                             <p class="error">
@@ -284,21 +270,14 @@
     } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
         <div class="wrapper">
             <div class="page-header">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); backToLogin(true)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToLogin(true)"
-                >
-                    {{ 'BACK' | translate }}
-                </div>
+                <div class="back-button" (click)="handleButtonSound(); backToLogin(true)">{{ 'BACK' | translate }}</div>
             </div>
             <div>
                 <div class="content">
                     <div class="input-group">
                         <p>{{ 'MAINTENANCE_CARD_DETECTED' | translate }}</p>
-                        <label for="maintenancePin">{{ 'ENTER_PIN' | translate }}</label>
-                        <input type="password" id="maintenancePin" [class.hasError]="pinError" />
+                        <label for="inputField">{{ 'ENTER_PIN' | translate }}</label>
+                        <input type="password" id="inputField" [class.hasError]="pinError" />
                         @if (pinError) {
                             <p class="error">
                                 {{ pinError | translate }}
@@ -319,23 +298,16 @@
     <div class="wrapper">
         @if (signInTapCardData.status === ResponseStatus.ERROR) {
             <div class="page-header">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); backToLogin(true)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToLogin(true)"
-                >
-                    {{ 'BACK' | translate }}
-                </div>
+                <div class="back-button" (click)="handleButtonSound(); backToLogin(true)">{{ 'BACK' | translate }}</div>
             </div>
             <div>
                 <div class="content">
                     <div class="input-group">
                         <p>{{ 'MAINTENANCE_CARD_DETECTED' | translate }}</p>
-                        <label for="maintenancePinConfirm">{{ 'ENTER_PIN' | translate }}</label>
+                        <label for="inputField">{{ 'ENTER_PIN' | translate }}</label>
                         <input
                             type="password"
-                            id="maintenancePinConfirm"
+                            id="inputField"
                             [value]="signInTapCardData['pin'] || ''"
                             [class.hasError]="!!signInTapCardData.message"
                         />
@@ -356,23 +328,16 @@
         } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
             <div class="wrapper">
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToLogin()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToLogin()"
-                    >
-                        {{ 'BACK' | translate }}
-                    </div>
+                    <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
                 </div>
                 <div>
                     <div class="content">
                         <div class="input-group">
                             <p>{{ 'ENTER_DUTY_NUMBER' | translate }}</p>
                             <input
+                                [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                                 id="inputField"
                                 [class.hasError]="dutyError"
-                                [attr.aria-label]="'ENTER_DUTY_NUMBER' | translate"
                             />
                             @if (dutyError) {
                                 <p class="error">

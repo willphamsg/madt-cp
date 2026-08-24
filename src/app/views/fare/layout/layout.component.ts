@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router, RouterOutlet, NavigationEnd, NavigationStart } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -222,22 +222,21 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             }
                             this.handleUnlockSuccess();
                             break;
-                            // case MsgID.LOGIN_SUCCESS:
-                            //     this.store.dispatch(updateAuth({ payload }));
-                            //     break;
-                            // case MsgID.LOGOUT_SUCCESS:
-                            //     this.store.dispatch(updateIsOnTrip({ payload: false }));
-                            //     this.store.dispatch(
-                            //         updateAuth({ payload: { isLoggedIn: false, loggedInType: undefined } }),
-                            //     );
-                            //     break;
-                            // case MsgID.START_TRIP_SUCCESS:
-                            //     this.store.dispatch(updateIsOnTrip({ payload: true }));
-                            //     this.router.navigate([`${routerUrls.private.fare.url}`]);
-                            //     break;
-                            // case MsgID.END_TRIP_SUCCESS:
-                            //     this.store.dispatch(updateIsOnTrip({ payload: false }));
-                            break;
+                        // case MsgID.LOGIN_SUCCESS:
+                        //     this.store.dispatch(updateAuth({ payload }));
+                        //     break;
+                        // case MsgID.LOGOUT_SUCCESS:
+                        //     this.store.dispatch(updateIsOnTrip({ payload: false }));
+                        //     this.store.dispatch(
+                        //         updateAuth({ payload: { isLoggedIn: false, loggedInType: undefined } }),
+                        //     );
+                        //     break;
+                        // case MsgID.START_TRIP_SUCCESS:
+                        //     this.store.dispatch(updateIsOnTrip({ payload: true }));
+                        //     this.router.navigate([`${routerUrls.private.fare.url}`]);
+                        //     break;
+                        // case MsgID.END_TRIP_SUCCESS:
+                        //     this.store.dispatch(updateIsOnTrip({ payload: false }));
 
                         //fare screen button
                         case MsgID.FARE_CANCEL_RIDE_CV1:
@@ -273,7 +272,10 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
 
                                 if (payload.cvNum) {
                                     const endPoint = 'cancelRideCV' + payload.cvNum;
-                                    this.navigate(routerUrls?.private?.fare[endPoint]); // Navigate based on cvNum
+                                    const targetRoute = routerUrls?.private?.fare[endPoint];
+                                    if (targetRoute) {
+                                        this.navigate(targetRoute); // Navigate based on cvNum
+                                    }
                                 }
                             });
                             break;
@@ -309,7 +311,10 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                                 );
                                 if (payload.cvNum) {
                                     const endPoint = 'concessionCV' + payload.cvNum;
-                                    this.navigate(routerUrls?.private?.fare[endPoint]); // Navigate based on cvNum
+                                    const targetRoute = routerUrls?.private?.fare[endPoint];
+                                    if (targetRoute) {
+                                        this.navigate(targetRoute); // Navigate based on cvNum
+                                    }
                                 }
                             });
                             break;
@@ -317,7 +322,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentFareBusStopModeMsg = this.messValidation(dateTime, currentFareBusStopModeMsg, () => {
                                 this.store.dispatch(
                                     updateFareBusStopMode({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.blsOperation.url);
@@ -327,7 +332,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentTopUpMsg = this.messValidation(dateTime, currentTopUpMsg, () => {
                                 this.store.dispatch(
                                     updateTopUp({
-                                        payload: Object.assign({}, payload),
+                                        payload: { ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.topUp);
@@ -337,7 +342,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentTransactionMsg = this.messValidation(dateTime, currentTransactionMsg, () => {
                                 this.store.dispatch(
                                     updateTransaction({
-                                        payload: Object.assign({}, payload),
+                                        payload: { ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.transaction);
@@ -348,7 +353,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentTransactionMsg = this.messValidation(dateTime, currentTransactionMsg, () => {
                                 this.store.dispatch(
                                     updateTransaction({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.transaction);
@@ -363,7 +368,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentCvStatusMsg = this.messValidation(dateTime, currentCvStatusMsg, () => {
                                 this.store.dispatch(
                                     updateShowCVStatus({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.cvOperation.showCVStatus);
@@ -373,7 +378,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentCVEXitEntryMsg = this.messValidation(dateTime, currentCVEXitEntryMsg, () => {
                                 this.store.dispatch(
                                     updateCVEntryExit({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.cvOperation.setCV);
@@ -383,7 +388,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentCVModeCtrlMsg = this.messValidation(dateTime, currentCVModeCtrlMsg, () => {
                                 this.store.dispatch(
                                     updateCVModeControl({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.cvOperation.cvModeControl);
@@ -391,17 +396,13 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             break;
                         case MsgID.FARE_CO_POWER_ALL_CV_ON:
                             currentPowerCvOnMsg = this.messValidation(dateTime, currentPowerCvOnMsg, () => {
-                                this.store.dispatch(
-                                    updatePowerCvOnOff({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updatePowerCvOnOff({ payload: { ...header, ...payload } }));
                                 this.navigate(routerUrls.private.fare.cvOperation.powerAllCVOn);
                             });
                             break;
                         case MsgID.FARE_CO_POWER_ALL_CV_OFF:
                             currentPowerCvOffMsg = this.messValidation(dateTime, currentPowerCvOffMsg, () => {
-                                this.store.dispatch(
-                                    updatePowerCvOnOff({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updatePowerCvOnOff({ payload: { ...header, ...payload } }));
                                 this.navigate(routerUrls.private.fare.cvOperation.powerAllCVOff);
                             });
                             break;
@@ -409,7 +410,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentCVPowerCtrlMsg = this.messValidation(dateTime, currentCVPowerCtrlMsg, () => {
                                 this.store.dispatch(
                                     updateCVPowerControl({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.cvOperation.cvPowerControl);
@@ -419,7 +420,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentResetAllCvMsg = this.messValidation(dateTime, currentResetAllCvMsg, () => {
                                 this.store.dispatch(
                                     updateResetAllCV({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.cvOperation.resetAllCV);
@@ -444,7 +445,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentRetentionTicketMsg = this.messValidation(dateTime, currentRetentionTicketMsg, () => {
                                 this.store.dispatch(
                                     updateRetentionTicket({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.printerOperation.retentionTicket);
@@ -452,17 +453,13 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             break;
                         case MsgID?.FARE_PO_PRINTER_ON:
                             currentPrinterOnMsg = this.messValidation(dateTime, currentPrinterOnMsg, () => {
-                                this.store.dispatch(
-                                    updatePrinterStatus({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updatePrinterStatus({ payload: { ...header, ...payload } }));
                                 this.navigate(routerUrls.private.fare.printerOperation.printerOn);
                             });
                             break;
                         case MsgID?.FARE_PO_PRINTER_OFF:
                             currentPrinterOffMsg = this.messValidation(dateTime, currentPrinterOffMsg, () => {
-                                this.store.dispatch(
-                                    updatePrinterStatus({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updatePrinterStatus({ payload: { ...header, ...payload } }));
                                 this.navigate(routerUrls.private.fare.printerOperation.printerOff);
                             });
                             break;
@@ -470,12 +467,12 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                         case MsgID?.EXTERNAL_DEVICES_NOTIFY:
                             this.store.dispatch(
                                 updateFareExternalDevices({
-                                    payload: Object.assign({}, header, payload),
+                                    payload: { ...header, ...payload },
                                 }),
                             );
 
                             // console.log({ status: payload?.status, isRetainMsg });
-                            if (payload?.isNavigationRequired || false) {
+                            if (payload?.isNavigationRequired) {
                                 this.navigate(routerUrls.private.fare.externalDevices);
                             }
                             break;
@@ -507,10 +504,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentLockScreen = this.messValidation(dateTime, currentLockScreen, () => {
                                 this.store.dispatch(
                                     updateLockScreen({
-                                        payload: Object.assign({}, header, {
-                                            ...payload,
-                                            timeout: payload.timeout || undefined,
-                                        }),
+                                        payload: { ...header, ...payload, timeout: payload.timeout || undefined },
                                     }),
                                 );
                             });
@@ -592,7 +586,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentCVModeCtrlMsg = this.messValidation(dateTime, currentCVModeCtrlMsg, () => {
                                 this.store.dispatch(
                                     updateCVModeControl({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.cvOperation.cvModeControl);
@@ -609,7 +603,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentRetentionTicketMsg = this.messValidation(dateTime, currentRetentionTicketMsg, () => {
                                 this.store.dispatch(
                                     updateRetentionTicket({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls?.private?.fare?.printerOperation?.retentionTicket);
@@ -633,7 +627,10 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                                 );
                                 if (payload.cvNum) {
                                     const endPoint = 'cancelRideCV' + payload.cvNum;
-                                    this.navigate(routerUrls?.private?.fare[endPoint]); // Navigate based on cvNum
+                                    const targetRoute = routerUrls?.private?.fare[endPoint];
+                                    if (targetRoute) {
+                                        this.navigate(targetRoute); // Navigate based on cvNum
+                                    }
                                 }
                             });
                             break;
@@ -648,7 +645,10 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                                 );
                                 if (payload.cvNum) {
                                     const endPoint = 'concessionCV' + payload.cvNum;
-                                    this.navigate(routerUrls?.private?.fare[endPoint]); // Navigate based on cvNum
+                                    const targetRoute = routerUrls?.private?.fare[endPoint];
+                                    if (targetRoute) {
+                                        this.navigate(targetRoute); // Navigate based on cvNum
+                                    }
                                 }
                             });
                             break;
@@ -659,7 +659,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentFareBusStopModeMsg = this.messValidation(dateTime, currentFareBusStopModeMsg, () => {
                                 this.store.dispatch(
                                     updateFareBusStopMode({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.blsOperation.url);
@@ -671,7 +671,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentTopUpMsg = this.messValidation(dateTime, currentTopUpMsg, () => {
                                 this.store.dispatch(
                                     updateTopUp({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.topUp);
@@ -690,7 +690,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                             currentTransactionMsg = this.messValidation(dateTime, currentTransactionMsg, () => {
                                 this.store.dispatch(
                                     updateTransaction({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 this.navigate(routerUrls.private.fare.transaction);
@@ -700,7 +700,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                         case MsgID?.EXTERNAL_DEVICES:
                             this.store.dispatch(
                                 updateFareExternalDevices({
-                                    payload: Object.assign({}, header, payload),
+                                    payload: { ...header, ...payload },
                                 }),
                             );
                             this.navigate(routerUrls.private.fare.externalDevices);
@@ -732,10 +732,7 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                                 } else {
                                     this.store.dispatch(
                                         updateLockScreen({
-                                            payload: Object.assign({}, header, {
-                                                ...payload,
-                                                timeout: payload.timeout || undefined,
-                                            }),
+                                            payload: { ...header, ...payload, timeout: payload.timeout || undefined },
                                         }),
                                     );
                                 }

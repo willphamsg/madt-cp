@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 .loading {
     position: fixed;
@@ -14,79 +15,49 @@
 }
 
 .lta-full-screen {
-    position: relative;
-    height: calc(100vh - $header-footer-height);
-    padding: 5px 20px;
-
-    .lta-wrapper {
-        width: 100%;
-        height: 100%;
-        @include flex-center;
-        flex-direction: column;
-        background-color: $madt-bg-dark-3;
-        border-radius: 4px;
-    }
-
-    .lta-logo {
-        width: 272px;
-        height: 170px;
-        background: url('/assets/images/icons/bus-operation/lta-logo-light.svg') no-repeat center;
-        background-size: cover;
-    }
-
-    .title {
-        margin-top: 20px;
-        font-size: 32px;
-        font-weight: $font-weight-semi-bold;
-        padding-bottom: 24px;
-        text-align: center;
-    }
-
-    .content {
-        font-size: 28px;
-    }
-
-    .link-button {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        > img {
-            margin-right: 1rem;
+    @include lta-full-screen-wrapper-styles {
+        .link-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            > img {
+                margin-right: 1rem;
+            }
         }
-    }
 
-    .btn-group {
-        @include flex-center;
-        gap: 32px;
-
-        .btn {
+        .btn-group {
             @include flex-center;
-            min-height: 80px;
-            min-width: 210px;
-            border-radius: 5px;
-            transition: 0.2s ease-in-out 0s;
+            gap: 32px;
 
-            &:active {
-                transform: scale(1.01);
-            }
+            .btn {
+                @include flex-center;
+                min-height: 80px;
+                min-width: 210px;
+                border-radius: 5px;
+                transition: 0.2s ease-in-out 0s;
 
-            + .btn {
-                background-color: $madt-color-red;
-            }
+                &:active {
+                    transform: scale(1.01);
+                }
 
-            span {
-                font-size: 24px;
-                font-weight: $font-weight-bold;
-                padding-left: 6px;
-                color: $white;
-            }
+                + .btn {
+                    background-color: $madt-color-red;
+                }
 
-            &-cancel {
-                background-color: $madt-color-red;
-            }
+                span {
+                    font-size: 24px;
+                    font-weight: $font-weight-bold;
+                    padding-left: 6px;
+                    color: $white;
+                }
 
-            &-confirm {
-                background-color: $madt-bg-light-1;
+                &-cancel {
+                    background-color: $madt-color-red;
+                }
+
+                &-confirm {
+                    background-color: $madt-bg-light-1;
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { routerUrls } from '@app/app.routes';
 import { MqttService } from '@services/mqtt.service';
 import { SoundService } from '@services/sound.service';
 import { MsgID, MsgSubID } from '@models';

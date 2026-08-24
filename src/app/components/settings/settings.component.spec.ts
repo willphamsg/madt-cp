@@ -74,9 +74,9 @@ describe('SettingsComponent', () => {
     });
 
     describe('onLanguageChange', () => {
-        it('should emit confirmLanguage if isConfirm is true and handling close', () => {
+        it('should emit onConfirmLanguage if isConfirm is true and handling close', () => {
             const emitSpy = spyOn(component.confirmLanguage, 'emit');
-            const closeSpy = spyOn(component.close, 'emit');
+            const closeSpy = spyOn(component.closed, 'emit');
 
             component.selectedLanguage = { id: 'CH', label: '华语' };
             component.fromMaintenance = false;
@@ -113,8 +113,8 @@ describe('SettingsComponent', () => {
     });
 
     describe('handleClose', () => {
-        it('should emit close', () => {
-            const emitSpy = spyOn(component.close, 'emit');
+        it('should emit onClose', () => {
+            const emitSpy = spyOn(component.closed, 'emit');
             component.handleClose();
             expect(emitSpy).toHaveBeenCalled();
         });

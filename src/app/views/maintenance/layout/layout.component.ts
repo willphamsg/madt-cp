@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router, RouterOutlet, NavigationStart } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -29,7 +29,6 @@ import {
     updateBlsCalibration,
     updateFareBusStopMode,
 } from '@store/maintenance/maintenance.reducer';
-import { auth, updateAuth } from '@store/global/global.reducer';
 import { HeaderComponent } from '@components/layout/header/header.component';
 import { IgnitionOffComponent } from '@components/ignition-off/ignition-off.component';
 import { Notification } from '@components/notification/notification.component';
@@ -264,9 +263,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
                             break;
                         case MsgID?.EXTERNAL_DEVICES_NOTIFY:
                             currentExternalDevices = this.messValidation(dateTime, currentExternalDevices, () => {
-                                this.store.dispatch(
-                                    updateExternalDevices({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updateExternalDevices({ payload: { ...header, ...payload } }));
                                 if (isRetain) this.navigate(routerUrls.private.maintenance.fare.externalDevices);
                             });
                             break;
@@ -282,9 +279,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
                                 this.navigate(
                                     routerUrls?.private?.maintenance.fare.calibrateBLS.calibrateBlsManualInput,
                                 );
-                                this.store.dispatch(
-                                    updateManualCalibrateBls({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updateManualCalibrateBls({ payload: { ...header, ...payload } }));
                             });
                             break;
                         case MsgID?.MAINTENANCE_CALIBRATE_BLS_CALIBRATION:
@@ -292,9 +287,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
                                 this.navigate(
                                     routerUrls?.private?.maintenance.fare.calibrateBLS.calibrateBlsCalibration,
                                 );
-                                this.store.dispatch(
-                                    updateBlsCalibration({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updateBlsCalibration({ payload: { ...header, ...payload } }));
                             });
                             break;
                         case MsgID.FARE_TC_DATETIME:
@@ -348,7 +341,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
                             currentFareBusStopMode = this.messValidation(dateTime, currentFareBusStopMode, () => {
                                 this.store.dispatch(
                                     updateFareBusStopMode({
-                                        payload: Object.assign({}, header, payload),
+                                        payload: { ...header, ...payload },
                                     }),
                                 );
                                 if (isRetain)
@@ -374,9 +367,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
 
                         case MsgID?.EXTERNAL_DEVICES:
                             currentExternalDevices = this.messValidation(dateTime, currentExternalDevices, () => {
-                                this.store.dispatch(
-                                    updateExternalDevices({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updateExternalDevices({ payload: { ...header, ...payload } }));
                             });
                             break;
                         case MsgID?.MAINTENANCE_TEST_PRINT:
@@ -458,9 +449,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
                         case MsgID?.MAINTENANCE_CALIBRATE_BLS_MANUAL_INPUT:
                         case MsgID?.MAINTENANCE_CALIBRATE_BLS_MANUAL_CONFIRM:
                             currentCalibrateBls = this.messValidation(dateTime, currentCalibrateBls, () => {
-                                this.store.dispatch(
-                                    updateManualCalibrateBls({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updateManualCalibrateBls({ payload: { ...header, ...payload } }));
                             });
                             break;
 
@@ -469,9 +458,7 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
                         case MsgID?.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_DISTANCE:
                         case MsgID?.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_RESULT:
                             currentCalibrateBls = this.messValidation(dateTime, currentCalibrateBls, () => {
-                                this.store.dispatch(
-                                    updateBlsCalibration({ payload: Object.assign({}, header, payload) }),
-                                );
+                                this.store.dispatch(updateBlsCalibration({ payload: { ...header, ...payload } }));
                             });
                             break;
                         case MsgID.LOGOUT:

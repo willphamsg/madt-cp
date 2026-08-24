@@ -1,7 +1,5 @@
-import { Directive, Input, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
-import { OnInit } from '@angular/core';
+import { Directive, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 
-import { AudioService } from '@services/audio.service';
 import { LocalStorageService } from '@services/local-storage.service';
 
 import { Store } from '@ngrx/store';

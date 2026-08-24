@@ -10,7 +10,7 @@ export class CustomSwitchComponent implements OnInit {
     @Input() checked?: boolean;
     @Input() disabled?: boolean;
     @Input() displayText?: boolean;
-    @Output() change: EventEmitter<Event> = new EventEmitter<Event>();
+    @Output() toggled: EventEmitter<Event> = new EventEmitter<Event>();
 
     innerChecked: boolean = false;
 
@@ -22,6 +22,6 @@ export class CustomSwitchComponent implements OnInit {
 
     handleChangeSwitch(event: Event): void {
         this.innerChecked = !this.innerChecked;
-        this.change.emit(event);
+        this.toggled.emit(event);
     }
 }

@@ -7,8 +7,6 @@
                     src="/assets/images/icons/maintenance/back.svg"
                     alt=""
                     icon
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleBack()"
                 />
             </app-breadcrumb>
             <div class="madt-main">
@@ -32,12 +30,7 @@
                     </ng-scrollbar>
 
                     @if (isScrollTop) {
-                        <div
-                            class="menu-direction"
-                            (click)="handleButtonSound(); handleScrollBottom()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleScrollBottom()"
-                        >
+                        <div class="menu-direction" (click)="handleButtonSound(); handleScrollBottom()">
                             <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
                         </div>
                     } @else {
@@ -45,8 +38,6 @@
                             class="menu-direction"
                             style="transform: rotate(180deg); transition: all 0.2s ease"
                             (click)="handleButtonSound(); handleScrollTop()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleScrollTop()"
                         >
                             <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
                         </div>

@@ -12,11 +12,9 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./test-print.component.scss'],
 })
 export class TestPrintComponent {
-    step: number;
+    step = 1;
 
-    constructor(private readonly soundService: SoundService) {
-        this.step = 1;
-    }
+    constructor(private readonly soundService: SoundService) {}
 
     handleSelect() {
         this.step = 2;

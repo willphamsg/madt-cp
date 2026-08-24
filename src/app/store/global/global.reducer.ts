@@ -38,7 +38,7 @@ export const initialGlobalState: GlobalState = {
     },
     globalError: {
         code: '',
-        message: '',
+        description: '',
     },
     audioVolume: { value: 100 },
     locationMode: 0,

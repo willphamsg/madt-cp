@@ -39,16 +39,14 @@ import { CVOperationMenuComponent } from '@views/fare/cv-operation/cv-operation-
 import { ShowCVStatusComponent } from '@views/fare/cv-operation/show-cv-status/show-cv-status.component';
 import { SetCVEntryExitComponent } from '@views/fare/cv-operation/set-cv-entry-exit/set-cv-entry-exit.component';
 import { CVModeControlComponent } from '@views/fare/cv-operation/cv-mode-control/cv-mode-control.component';
-import { PowerAllCVOnComponent } from '@views/fare/cv-operation/power-all-cv-on/power-all-cv-on.component';
-import { PowerAllCVOffComponent } from '@views/fare/cv-operation/power-all-cv-off/power-all-cv-off.component';
+import { PowerAllCVComponent } from '@views/fare/cv-operation/power-all-cv/power-all-cv.component';
 import { CVPowerControlComponent } from '@views/fare/cv-operation/cv-power-control/cv-power-control.component';
 import { ResetAllCVComponent } from '@views/fare/cv-operation/reset-all-cv/reset-all-cv.component';
 import { FareBusStopMode } from '@views/fare/bls-operation/fare-bus-stop-mode/fare-bus-stop-mode.component';
 import { PrinterOperationMenuComponent } from '@views/fare/printer-operation/printer-operation-menu/printer-operation-menu.component';
 import { PrintRetentionTicket } from '@views/fare/printer-operation/retention-ticket/retention-ticket.component';
 import { PrinterStatusComponent } from '@views/fare/printer-operation/printer-status/printer-status.component';
-import { PrinterOnComponent } from '@views/fare/printer-operation/printer-on/printer-on.component';
-import { PrinterOffComponent } from '@views/fare/printer-operation/printer-off/printer-off.component';
+import { PrinterOnOffComponent } from '@views/fare/printer-operation/printer-on-off/printer-on-off.component';
 import { ExternalDevicesComponent as FareExternalDevicesComponent } from '@views/fare/external-devices/external-devices.component';
 
 //maintenance tab components
@@ -71,13 +69,11 @@ import { Decommission } from '@views/maintenance/fare/decommission/decommission.
 import { SettingsComponent } from '@views/maintenance/fare/settings/settings.component';
 import { FareConsoleTableComponent } from '@views/maintenance/fare/fare-console/fare-console-table/fare-console-table.component';
 import { DeckTypeComponent } from '@views/maintenance/fare/fare-console/deck-type/deck-type.component';
-import { BLSStatusComponent } from '@views/maintenance/fare/fare-console/bls/bls.component';
 import { FareBusStopMode as MaintenanceFareBusStopMode } from '@views/maintenance/fare/fare-console/fare-bus-stop-mode/fare-bus-stop-mode.component';
 import { DateSettingComponent } from '@views/maintenance/fare/fare-console/date-setting/date-setting.component';
 import { BusIdComponent } from '@views/maintenance/fare/fare-console/bus-id/bus-id.component';
 import { ComplimentaryDayComponent } from '@views/maintenance/fare/fare-console/complimentary-day/complimentary-day.component';
 import { DeleteParameterComponent } from '@views/maintenance/fare/fare-console/delete-parameter/delete-parameter.component';
-import { externalDevices } from './store/main/main.reducer';
 
 export const routerUrls = {
     private: {
@@ -629,16 +625,16 @@ export const routes: Routes = [
                                             routerUrls?.private?.fare?.cvOperation?.powerAllCVOn,
                                             `${routerUrls?.private?.fare?.cvOperation?.url}/`,
                                         ),
-                                        component: PowerAllCVOnComponent,
-                                        data: { rootRoute: '/fare', breadcrumb: 'POWER_ALL_CV_ON' },
+                                        component: PowerAllCVComponent,
+                                        data: { rootRoute: '/fare', breadcrumb: 'POWER_ALL_CV_ON', powerOn: true },
                                     },
                                     {
                                         path: nestedUrlHandler(
                                             routerUrls?.private?.fare?.cvOperation?.powerAllCVOff,
                                             `${routerUrls?.private?.fare?.cvOperation?.url}/`,
                                         ),
-                                        component: PowerAllCVOffComponent,
-                                        data: { rootRoute: '/fare', breadcrumb: 'POWER_ALL_CV_OFF' },
+                                        component: PowerAllCVComponent,
+                                        data: { rootRoute: '/fare', breadcrumb: 'POWER_ALL_CV_OFF', powerOn: false },
                                     },
                                     {
                                         path: nestedUrlHandler(
@@ -738,16 +734,16 @@ export const routes: Routes = [
                                             routerUrls?.private?.fare?.printerOperation?.printerOn,
                                             `${routerUrls?.private?.fare?.printerOperation?.url}/`,
                                         ),
-                                        component: PrinterOnComponent,
-                                        data: { rootRoute: '/fare', breadcrumb: 'PRINTER_ON' },
+                                        component: PrinterOnOffComponent,
+                                        data: { rootRoute: '/fare', breadcrumb: 'PRINTER_ON', printerOn: true },
                                     },
                                     {
                                         path: nestedUrlHandler(
                                             routerUrls?.private?.fare?.printerOperation?.printerOff,
                                             `${routerUrls?.private?.fare?.printerOperation?.url}/`,
                                         ),
-                                        component: PrinterOffComponent,
-                                        data: { rootRoute: '/fare', breadcrumb: 'PRINTER_OFF' },
+                                        component: PrinterOnOffComponent,
+                                        data: { rootRoute: '/fare', breadcrumb: 'PRINTER_OFF', printerOn: false },
                                     },
                                 ],
                             },

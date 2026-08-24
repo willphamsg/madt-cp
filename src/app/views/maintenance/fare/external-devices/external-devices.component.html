@@ -14,12 +14,7 @@
                         externalDevices.status === ResponseStatus.ERROR ||
                         externalDevices.status === ResponseStatus.NA
                     ) {
-                        <div
-                            class="refresh-button"
-                            (click)="handleButtonSound(); handleRefresh()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleRefresh()"
-                        >
+                        <div class="refresh-button" (click)="handleButtonSound(); handleRefresh()">
                             <img src="/assets/images/icons/bus-operation/refresh.svg" alt="" />
                         </div>
                     }
@@ -27,9 +22,9 @@
                 <div class="external-devices-content">
                     <div class="scrollbar">
                         <app-scrollbar>
-                            <table class="table">
-                                <tr>
-                                    <td>
+                            <div class="table">
+                                <div class="tr">
+                                    <div class="td">
                                         <div class="row">
                                             <div class="label">{{ 'TEST_PRINT' | translate }}:</div>
                                             @if (externalDevices.status === ResponseStatus.NA) {
@@ -45,17 +40,12 @@
                                             } @else {
                                                 <p class="value loading">{{ 'TESTING' | translate }}</p>
                                             }
-                                            <div
-                                                class="button"
-                                                (click)="handleButtonSound(); handlePrintTest()"
-                                                tabindex="0"
-                                                (keydown.enter)="handleButtonSound(); handlePrintTest()"
-                                            >
+                                            <div class="button" (click)="handleButtonSound(); handlePrintTest()">
                                                 <img src="/assets/images/icons/maintenance/print.svg" alt="" />
                                             </div>
                                         </div>
-                                    </td>
-                                    <td>
+                                    </div>
+                                    <div class="td">
                                         <div class="row">
                                             <div class="label">{{ 'PRINTER' | translate }}:</div>
                                             @if (externalDevices.status === ResponseStatus.NA) {
@@ -70,10 +60,10 @@
                                                 <p class="value loading">{{ 'TESTING' | translate }}</p>
                                             }
                                         </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
+                                    </div>
+                                </div>
+                                <div class="tr">
+                                    <div class="td">
                                         <div class="row">
                                             <div class="label">{{ 'GNSS_ANTENNA' | translate }}:</div>
                                             @if (externalDevices.status === ResponseStatus.NA) {
@@ -88,8 +78,8 @@
                                                 <p class="value loading">{{ 'TESTING' | translate }}</p>
                                             }
                                         </div>
-                                    </td>
-                                    <td>
+                                    </div>
+                                    <div class="td">
                                         <div class="row">
                                             <div class="label">{{ 'BUS_ETA_UNIT' | translate }}:</div>
                                             @if (externalDevices.status === ResponseStatus.NA) {
@@ -104,8 +94,8 @@
                                                 <p class="value loading">{{ 'TESTING' | translate }}</p>
                                             }
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </div>
                                 @for (
                                     cvs of [
                                         [0, 1],
@@ -115,9 +105,9 @@
                                     track $index
                                 ) {
                                     @if (existingCvs()[cvs[0]]) {
-                                        <tr>
+                                        <div class="tr">
                                             @if (existingCvs()[cvs[0]]) {
-                                                <td>
+                                                <div class="td">
                                                     <div class="row">
                                                         <div class="label">
                                                             {{ existingCvs()[cvs[0]]?.toUpperCase() }}:
@@ -134,10 +124,10 @@
                                                             <p class="value loading">{{ 'TESTING' | translate }}</p>
                                                         }
                                                     </div>
-                                                </td>
+                                                </div>
                                             }
                                             @if (existingCvs()[cvs[1]]) {
-                                                <td>
+                                                <div class="td">
                                                     <div class="row">
                                                         <div class="label">
                                                             {{ existingCvs()[cvs[1]]?.toUpperCase() }}:
@@ -154,12 +144,12 @@
                                                             <p class="value loading">{{ 'TESTING' | translate }}</p>
                                                         }
                                                     </div>
-                                                </td>
+                                                </div>
                                             }
-                                        </tr>
+                                        </div>
                                     }
                                 }
-                            </table>
+                            </div>
                         </app-scrollbar>
                     </div>
                 </div>

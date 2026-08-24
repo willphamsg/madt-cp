@@ -1,65 +1,9 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 @mixin lta-custom-keyboard-theme($light-theme: false) {
     @if $light-theme {
-        .numeric-keyboard {
-            background-color: $white !important;
-
-            .btn {
-                color: $black !important;
-                background: linear-gradient(to bottom right, #e5e5e5 18%, #e5e5e5 50%) !important;
-                box-shadow: inset 0px -5px 8px #ccc;
-
-                &::before {
-                    background: $white !important;
-                    box-shadow: inset 0px -5px 8px #ccc;
-                }
-
-                &-delete {
-                    &:before {
-                        background-image: url('/assets/images/icons/maintenance/keyboard-delete-dark.svg') !important;
-                        background-position: center !important;
-                        background-repeat: no-repeat !important;
-                    }
-                }
-                &-confirm {
-                    background: $madt-bg-light-1 !important;
-                    &:before {
-                        background: $madt-bg-light-1 !important;
-                        box-shadow: none !important;
-                    }
-                }
-            }
-        }
-
-        .text-keyboard {
-            background-color: $white !important;
-
-            .btn {
-                color: $black !important;
-                background: linear-gradient(to bottom right, #e5e5e5 18%, #e5e5e5 50%) !important;
-                box-shadow: inset 0px -5px 8px #ccc;
-
-                &::before {
-                    background: $white !important;
-                    box-shadow: inset 0px -5px 8px #ccc;
-                }
-
-                &-delete {
-                    &:before {
-                        background-image: url('/assets/images/icons/maintenance/keyboard-delete-dark.svg') !important;
-                        background-position: center !important;
-                        background-repeat: no-repeat !important;
-                    }
-                }
-                &-confirm {
-                    background: $madt-bg-light-1 !important;
-                    &:before {
-                        background: $madt-bg-light-1 !important;
-                        box-shadow: none !important;
-                    }
-                }
-            }
-        }
+        @include lta-keyboard-theme-content('numeric-keyboard');
+        @include lta-keyboard-theme-content('text-keyboard');
     }
 }

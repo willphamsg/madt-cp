@@ -1,17 +1,23 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { Subject, takeUntil, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MqttService } from '@services/mqtt.service';
-import { IFareConsole, MsgID, MsgSubID } from '@models';
-import { AppState } from '@store/app.state';
-import { fareConsole, updateFareConsole } from '@store/maintenance/maintenance.reducer';
 import { SoundService } from '@services/sound.service';
+import { AppState } from '@store/app.state';
+import { MsgID, MsgSubID } from '@models';
+import { updateFareConsole } from '@store/maintenance/maintenance.reducer';
+import {
+    buildDateFromSegments,
+    clampDateSegment,
+    focusNextDateSegment,
+    DateTimeInputType,
+} from '@utils/date-segment-input.util';
+import { FareConsoleScreenBase } from '@components/fare-console-screen-base/fare-console-screen.base';
 
 @Component({
     selector: 'date-setting',
@@ -20,27 +26,12 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './date-setting.component.html',
     styleUrls: ['./date-setting.component.scss'],
 })
-export class DateSettingComponent implements OnInit, OnDestroy {
-    private readonly destroy$ = new Subject<void>();
-    fareConsoleSetting$: Observable<IFareConsole>;
-    fareConsoleSetting: IFareConsole = {
-        deckType: {
-            id: 0,
-            label: '',
-        },
-        blsStatus: 0,
-        busId: '',
-        date: '',
-        time: '',
-        complimentaryDays: 0,
-        message: '',
-    };
-
+export class DateSettingComponent extends FareConsoleScreenBase {
     // hasDateInputError: boolean = false;
     dateTimeErrorMessage: string = '';
     hasTimeInputError: boolean = false;
 
-    dateTimeInputType: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day';
+    dateTimeInputType: DateTimeInputType = 'day';
     dateValue = {
         year: '',
         month: '',
@@ -49,35 +40,16 @@ export class DateSettingComponent implements OnInit, OnDestroy {
         minute: '',
         second: '',
     };
-    topics;
 
     constructor(
-        private readonly soundService: SoundService,
+        soundService: SoundService,
         private readonly datePipe: DatePipe,
-        private readonly router: Router,
-        protected store: Store<AppState>,
-        private readonly mqttService: MqttService,
+        router: Router,
+        store: Store<AppState>,
+        mqttService: MqttService,
         private readonly translate: TranslateService,
     ) {
-        this.fareConsoleSetting$ = this.store.select(fareConsole);
-    }
-
-    ngOnInit() {
-        this.mqttService.mqttConfigLoaded$.pipe(takeUntil(this.destroy$)).subscribe((configLoaded) => {
-            if (configLoaded) {
-                this.topics = this.mqttService.mqttConfig?.topics;
-            }
-        });
-
-        this.fareConsoleSetting$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
-            this.fareConsoleSetting = data;
-
-            // this.setDefaultDateTime();
-        });
-    }
-
-    goBack() {
-        this.router.navigate(['/maintenance/fare/fare-console']);
+        super(soundService, router, store, mqttService);
     }
 
     private setDefaultDateTime() {
@@ -147,47 +119,13 @@ export class DateSettingComponent implements OnInit, OnDestroy {
 
     private setValueForDateElement(value: string): string {
         if (!this.dateTimeInputType) return '';
-        let outPutVal: string = value.trim();
-        switch (this.dateTimeInputType) {
-            case 'month':
-                outPutVal = Number(value) > 12 ? '12' : value;
-                break;
-            case 'day':
-                outPutVal = Number(value) > 31 ? '31' : value;
-                break;
-            case 'hour':
-                outPutVal = Number(value) > 23 ? '23' : value;
-                break;
-            case 'minute':
-                outPutVal = Number(value) > 59 ? '59' : value;
-                break;
-            case 'second':
-                outPutVal = Number(value) > 59 ? '59' : value;
-                break;
-        }
-        this.dateValue[this.dateTimeInputType] = outPutVal;
-        return outPutVal;
+        return clampDateSegment(this.dateValue, this.dateTimeInputType, value);
     }
 
     private autoFocusOnInput(inputField: HTMLInputElement, value: string, isBackspace: boolean, firstCursor: boolean) {
-        const nextTabIndex = inputField.tabIndex + (isBackspace ? -1 : 1);
-        const nextInputField = document.querySelector<HTMLInputElement>(`input[tabindex="${nextTabIndex}"]`);
-        const inputType = inputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
-
-        if (!nextInputField) return;
-        const nextInputValueLength = nextInputField?.value?.length ?? 0;
-
-        //next
-        if (value.length === (inputType === 'year' ? 4 : 2) && !isBackspace) {
-            nextInputField.focus();
-            // Set cursor at the end of the next input field
-            nextInputField.setSelectionRange(nextInputValueLength, nextInputValueLength);
-            this.dateTimeInputType = nextInputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
-        } else if ((firstCursor || !value) && isBackspace) {
-            nextInputField.focus();
-            // Set cursor at the end of the next input field
-            nextInputField.setSelectionRange(nextInputValueLength, nextInputValueLength);
-            this.dateTimeInputType = nextInputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
+        const nextType = focusNextDateSegment(inputField, value, isBackspace, firstCursor);
+        if (nextType) {
+            this.dateTimeInputType = nextType;
         }
     }
 
@@ -208,36 +146,8 @@ export class DateSettingComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const date = new Date(
-            Number(this.dateValue.year),
-            Number(this.dateValue.month) - 1, // Subtract 1 because months are 0-indexed
-            Number(this.dateValue.day),
-            Number(this.dateValue.hour),
-            Number(this.dateValue.minute),
-            Number(this.dateValue.second),
-        );
-
-        // if (isNaN(Number(value)) || value.length !== 8) {
-        //     this.hasInputError = true;
-        //     return;
-        // }
-
-        // const dateArray = value.match(/.{1,2}/g);
-        // const ddValue = Number(dateArray?.[0] || 0);
-        // const mmValue = Number(dateArray?.[1] || 0);
-        // const yyyyValue = Number((dateArray?.[2] || '') + (dateArray?.[3] || ''));
-        // // const newDate = new Date(`${yyyyValue}/${mmValue}/${ddValue}`);
-
-        // const date = new Date(yyyyValue, mmValue - 1, ddValue);
-        // // console.log(
-        // //     date,
-        // //     date.getFullYear() == yyyyValue && date.getMonth() + 1 == mmValue && date.getDate() == ddValue,
-        // // );
-        const validDate =
-            date.getFullYear() == Number(this.dateValue.year) &&
-            date.getMonth() + 1 == Number(this.dateValue.month) &&
-            date.getDate() == Number(this.dateValue.day);
-        if (!validDate) {
+        const { date, isValid } = buildDateFromSegments(this.dateValue);
+        if (!isValid) {
             // this.hasDateInputError = true;
             this.dateTimeErrorMessage = 'INVALID_ENTRY';
             return;
@@ -298,13 +208,4 @@ export class DateSettingComponent implements OnInit, OnDestroy {
 
     //     inputField.focus();
     // }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
-    handleButtonSound(): void {
-        this.soundService.playButton();
-    }
 }

@@ -8,12 +8,7 @@
                     {{ busIdData.message ? (busIdData.message | translate) : ('PLEASE_RETRY_AGAIN' | translate) }}
                 </div>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-ok"
-                        (click)="handleButtonSound(); handleRetrySetBusId()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleRetrySetBusId()"
-                    >
+                    <div class="btn btn-ok" (click)="handleButtonSound(); handleRetrySetBusId()">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'OK' | translate }}</span>
                     </div>
@@ -26,12 +21,7 @@
             <ul class="list">
                 <li class="row">
                     <div class="left">{{ 'BUS_ID' | translate }}</div>
-                    <div
-                        class="right"
-                        (click)="handleButtonSound(); handleChangeStep(2)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleChangeStep(2)"
-                    >
+                    <div class="right" (click)="handleButtonSound(); handleChangeStep(2)">
                         <p class="value">{{ busIdTemp }}</p>
                         <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                     </div>
@@ -58,21 +48,11 @@
                 </li>
             </ul>
             <div class="btn-group">
-                <div
-                    class="btn btn-cancel"
-                    (click)="handleButtonSound(); handleCancelSubmitBusId()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleCancelSubmitBusId()"
-                >
+                <div class="btn btn-cancel" (click)="handleButtonSound(); handleCancelSubmitBusId()">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
                 </div>
-                <div
-                    class="btn btn-confirm"
-                    (click)="handleButtonSound(); handleSubmitForm()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleSubmitForm()"
-                >
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleSubmitForm()">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span class="text">{{ 'CONFIRM' | translate }}</span>
                 </div>
@@ -99,7 +79,7 @@
                                 id="inputField"
                                 [placeholder]="'INPUT_NUMBER' | translate"
                                 [class.hasError]="hasBusIdNumberError"
-                                [attr.aria-label]="'INPUT_NUMBER' | translate"
+                                [attr.aria-label]="'PLEASE_ENTER_BUS_PLATE_NUMBER' | translate"
                             />
                             @if (hasBusIdNumberError) {
                                 <p class="error">
@@ -135,12 +115,7 @@
 
         @if (step === 3) {
             <div class="operator">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); handleOperatorBack()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleOperatorBack()"
-                >
+                <div class="back-button" (click)="handleButtonSound(); handleOperatorBack()">
                     {{ 'BACK' | translate }}
                 </div>
                 <h3 class="title">{{ 'SELECT_OPERATOR' | translate }}</h3>
@@ -158,10 +133,6 @@
                                         <li
                                             (click)="handleButtonSound(); handleChangeOperator(operator?.id || 0)"
                                             [ngClass]="{ selected: operatorIdTemp === operator.id }"
-                                            tabindex="0"
-                                            (keydown.enter)="
-                                                handleButtonSound(); handleChangeOperator(operator?.id || 0)
-                                            "
                                         >
                                             {{ operator?.label || '' | translate }} - {{ operator.serviceProvider }}
                                         </li>

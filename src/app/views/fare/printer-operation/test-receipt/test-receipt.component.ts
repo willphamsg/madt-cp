@@ -24,10 +24,7 @@ export class TestReceiptComponent {
     //     this.router.navigate(['/ticketing/device-operation/printer']);
     // }
 
-    handlePrint() {
-        // No MsgID is defined yet for this print action; placeholder until the backend request is specified.
-        console.warn('TestReceiptComponent: print not yet implemented');
-    }
+    handlePrint() {}
 
     handleButtonSound(): void {
         this.soundService.playButton();

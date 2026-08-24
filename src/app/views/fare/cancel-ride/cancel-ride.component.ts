@@ -175,7 +175,7 @@ export class CancelRideComponent implements OnInit, OnDestroy {
 
     removeTimeout(): void {
         this.clearExistingTimeout();
-        this.updateCancelRideState(undefined, undefined);
+        this.updateCancelRideState();
     }
 
     private updateCancelRideState(status?: number, timeout?: number, msgID?: number): void {
@@ -195,7 +195,7 @@ export class CancelRideComponent implements OnInit, OnDestroy {
     }
 
     private resetCancelRideState(): void {
-        this.updateCancelRideState(undefined, undefined);
+        this.updateCancelRideState();
     }
 
     handleButtonSound(): void {

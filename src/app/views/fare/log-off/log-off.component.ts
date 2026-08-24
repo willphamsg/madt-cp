@@ -5,7 +5,6 @@ import { PreLoginComponent } from '@components/pre-login/pre-login.component';
     selector: 'log-off',
     imports: [PreLoginComponent],
     templateUrl: './log-off.component.html',
-    styleUrls: ['./log-off.component.scss'],
 })
 export class FareLogoffComponent {
     constructor() {}

@@ -49,8 +49,8 @@ describe('CustomSwitchComponent', () => {
     });
 
     describe('handleChangeSwitch', () => {
-        it('should toggle innerChecked and emit change event', () => {
-            const emitSpy = spyOn(component.change, 'emit');
+        it('should toggle innerChecked and emit onChange event', () => {
+            const emitSpy = spyOn(component.toggled, 'emit');
             const event = {} as Event;
 
             component.innerChecked = false;

@@ -36,12 +36,7 @@
             <p class="confirm-content">{{ 'NEW_VERSION' | translate }}: {{ appUpgrade.version || '' }}</p>
             <p class="confirm-msg">{{ 'PRESS_BTN_TO_UPGRADE' | translate }}</p>
             <div class="cf-btn-group">
-                <div
-                    class="btn btn-confirm"
-                    (click)="handleButtonSound(); handleUpgrade()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleUpgrade()"
-                >
+                <div class="btn btn-confirm" (click)="handleButtonSound(); handleUpgrade()">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'UPGRADE' | translate }}</span>
                 </div>

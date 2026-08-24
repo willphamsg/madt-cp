@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 @mixin lta-breakdown-theme($light-theme: false) {
     @if $light-theme {
@@ -7,60 +8,7 @@
             background-color: #f2f2f2 !important;
             color: $black;
 
-            .back-button {
-                background-color: #3e515b !important;
-                color: $white !important;
-
-                &::before {
-                    background-color: #3e515b !important;
-                }
-            }
-
-            .content {
-                .row {
-                    background-color: $white !important;
-
-                    .right {
-                        border-left-color: #e5e5e5 !important;
-                        color: $black !important;
-
-                        .value {
-                            color: $black !important;
-                        }
-                    }
-                }
-            }
-
-            .reason,
-            .information {
-                color: $black;
-
-                &-header {
-                    h3 {
-                        color: $black !important;
-                    }
-                }
-
-                &-content {
-                    .table {
-                        tr {
-                            td {
-                                border-left-color: #e5e5e5 !important;
-                            }
-                        }
-
-                        tr:nth-child(odd) > th,
-                        tr:nth-child(odd) > td {
-                            background-color: $white !important;
-                        }
-
-                        tr:nth-child(even) > th,
-                        tr:nth-child(even) > td {
-                            background-color: #dedede !important;
-                        }
-                    }
-                }
-            }
+            @include lta-trip-summary-theme-shared-content;
         }
     }
 }

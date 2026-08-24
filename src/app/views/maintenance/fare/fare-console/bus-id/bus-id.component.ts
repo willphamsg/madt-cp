@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, Inject, DOCUMENT, OnDestroy } from '@angular/core';
+import { Component, DOCUMENT, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { Router, RouterModule } from '@angular/router';
@@ -15,6 +15,7 @@ import { MqttService } from '@services/mqtt.service';
 import { IFareConsole, IBusID, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { AppState } from '@store/app.state';
 import { SoundService } from '@services/sound.service';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 import {
     fareConsole,
     busIdInformation,
@@ -60,7 +61,7 @@ export class BusIdComponent implements OnInit, OnDestroy {
     };
 
     topics;
-    step: number;
+    step = 1;
     busIdPrefix: string = '';
     busIdNumber: string = '';
     hasBusIdNumberError: boolean = false;
@@ -88,7 +89,6 @@ export class BusIdComponent implements OnInit, OnDestroy {
         protected store: Store<AppState>,
         private readonly mqttService: MqttService,
     ) {
-        this.step = 1;
         this.fareConsoleSetting$ = this.store.select(fareConsole);
         this.busIdInformation$ = this.store.select(busIdInformation);
     }
@@ -155,7 +155,7 @@ export class BusIdComponent implements OnInit, OnDestroy {
 
     private _handleOnDocumentClick(): void {
         this._document.addEventListener('click', (event: Event) => {
-            const target = event.target || event.srcElement || event.currentTarget;
+            const target = event.target || event.currentTarget;
             const idAttr = target?.['id'];
             const parentNode = target?.['parentNode']?.['className'];
             // console.log('event', event);
@@ -196,29 +196,15 @@ export class BusIdComponent implements OnInit, OnDestroy {
 
     handleChangeInput(event: Event): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                this.busIdNumber = inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-            } else {
-                // There is a selection, delete the selected text
-                this.busIdNumber = inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-            }
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             this.isShowKeyboard = false;
             if (!value) return;
             this.handleEnterBusId(value);
         } else {
-            const keyValue = target.innerText.trim();
-            this.busIdNumber = inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
+            this.busIdNumber = value;
         }
 
         inputField.focus();

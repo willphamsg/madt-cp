@@ -5,10 +5,10 @@
             <div class="input-group">
                 <p>{{ 'ENTER_PIN' | translate }}</p>
                 <input
+                    [attr.aria-label]="'ENTER_PIN' | translate"
                     id="inputField"
                     type="password"
                     [class.hasError]="commissionError"
-                    [attr.aria-label]="'ENTER_PIN' | translate"
                 />
                 @if (commissionError) {
                     <p class="error">{{ commissionError | translate }}</p>

@@ -2,12 +2,7 @@
     @if (blsCalibration.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_START) {
         @if (blsCalibration.status === ResponseStatus.PROGRESS) {
             <div>
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); handleBackToCalibrateBls()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleBackToCalibrateBls()"
-                >
+                <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">
                     {{ 'BACK' | translate }}
                 </div>
                 <h2 class="title">{{ 'BLS_CALIBRATION' | translate }}</h2>
@@ -27,12 +22,7 @@
                 <div class="content">
                     <div class="confirm">{{ 'BLS_IS_DISABLED' | translate }}</div>
                     <div class="btn-group">
-                        <div
-                            class="btn btn-confirm"
-                            (click)="handleButtonSound(); handleSendCommandToBls()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleSendCommandToBls()"
-                        >
+                        <div class="btn btn-confirm" (click)="handleButtonSound(); handleSendCommandToBls()">
                             <img src="/assets/images/icons/main/confirm.svg" alt="" />
                             <span>{{ 'OK' | translate }}</span>
                         </div>
@@ -69,7 +59,7 @@
             [isConfirm]="true"
             [isCancel]="true"
             (confirm)="handleConfirmDistance(true)"
-            (cancel)="handleConfirmDistance(false)"
+            (cancelled)="handleConfirmDistance(false)"
         >
         </common-pop-up>
     } @else if (blsCalibration.msgID === MsgID.MAINTENANCE_CALIBRATE_BLS_CALIBRATION_RESULT) {
@@ -83,12 +73,7 @@
         </common-pop-up>
     } @else {
         <div>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); handleBackToCalibrateBls()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleBackToCalibrateBls()"
-            >
+            <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">
                 {{ 'BACK' | translate }}
             </div>
             <h2 class="title">{{ 'BLS_CALIBRATION' | translate }}</h2>

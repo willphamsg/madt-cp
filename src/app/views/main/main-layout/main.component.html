@@ -35,8 +35,6 @@
                                             class="close-btn"
                                             src="/assets/images/icons/main/close-icon.svg"
                                             alt=""
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); closeErrorCv(cvData.id)"
                                         />
                                     </div>
                                 } @else {
@@ -205,7 +203,7 @@
                     <auto-disable-bls
                         [disabled]="disableBls.disabled"
                         (ok)="handleConfirmDisableBls(true)"
-                        (cancel)="handleConfirmDisableBls(false)"
+                        (cancelled)="handleConfirmDisableBls(false)"
                     >
                     </auto-disable-bls>
                 }
@@ -213,7 +211,7 @@
                     <fare-bus-stop-location-mode
                         [disabled]="fareBusStopMode.disabled"
                         (ok)="handleConfirmFareBusStopMode(true)"
-                        (cancel)="handleConfirmFareBusStopMode(false)"
+                        (cancelled)="handleConfirmFareBusStopMode(false)"
                     >
                     </fare-bus-stop-location-mode>
                 }
@@ -243,7 +241,7 @@
                 }
 
                 @if (displayLockPopUp) {
-                    <lock-pop-up (confirm)="handleConfirmLock(true)" (cancel)="handleConfirmLock(false)"> </lock-pop-up>
+                    <lock-pop-up (confirm)="handleConfirmLock(true)" (cancelled)="handleConfirmLock(false)"> </lock-pop-up>
                 }
 
                 @if (displayLockScreen) {
@@ -252,7 +250,7 @@
 
                 @if (displaySettingsPopUp) {
                     <madt-setting
-                        (close)="displaySettingsPopUp = false"
+                        (closed)="displaySettingsPopUp = false"
                         (confirmLanguage)="handleConfirmLanguage($event)"
                         (changeAudioVolume)="handleChangeAudioVolume($event)"
                     >

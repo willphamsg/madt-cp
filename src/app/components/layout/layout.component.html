@@ -1,17 +1,9 @@
 <main>
-    @if (!!error) {
+    @if (!!error && (error.esn || error.code || error.description)) {
         <div class="error-wrapper">
             <div>
                 <div>
-                    @if (!!error.code && !!error.message) {
-                        <h2 class="text-bold">
-                            {{ 'ERROR' | translate }}: {{ error.code }} | {{ error.message | translate }}
-                        </h2>
-                    } @else if (!!error.code) {
-                        <h1 class="text-bold">{{ error.code }}</h1>
-                    } @else if (!!error.message) {
-                        <h1 class="text-bold">{{ error.message | translate }}</h1>
-                    }
+                    <h2 class="text-bold">{{ buildErrorText(error) }}</h2>
                 </div>
             </div>
         </div>
@@ -34,7 +26,6 @@
             <app-header screen="" [disconnect]="true"></app-header>
             <disconnect></disconnect>
         </div>
-        <!-- <div class="conneting-warpper">Connecting...</div> -->
     }
     <router-outlet></router-outlet>
     @if (shuttingDown.show) {

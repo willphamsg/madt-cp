@@ -28,14 +28,14 @@ describe('CustomRadioButtonComponent', () => {
     });
 
     describe('onClickHandler', () => {
-        it('should emit select event with the provided value (string)', () => {
-            const emitSpy = spyOn(component.select, 'emit');
+        it('should emit onSelect event with the provided value (string)', () => {
+            const emitSpy = spyOn(component.selected, 'emit');
             component.onClickHandler('test_value');
             expect(emitSpy).toHaveBeenCalledWith('test_value');
         });
 
-        it('should emit select event with the provided value (number)', () => {
-            const emitSpy = spyOn(component.select, 'emit');
+        it('should emit onSelect event with the provided value (number)', () => {
+            const emitSpy = spyOn(component.selected, 'emit');
             component.onClickHandler(12345);
             expect(emitSpy).toHaveBeenCalledWith(12345);
         });

@@ -7,6 +7,8 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { provideRouter } from '@angular/router';
+import { MqttService } from '@services/mqtt.service';
+import { of } from 'rxjs';
 
 describe('MaintenanceMenuComponent', () => {
     let component: MaintenanceMenuComponent;
@@ -31,7 +33,7 @@ describe('MaintenanceMenuComponent', () => {
     });
 
     it('should have 3 buttons defined', () => {
-        expect(component.buttons.length).toBe(3);
+        expect(component.buttons).toHaveSize(3);
     });
 
     it('should have FARE_SYSTEM, FMS and CJB buttons', () => {
@@ -59,5 +61,13 @@ describe('MaintenanceMenuComponent', () => {
         const cjbButton = component.buttons.find((b) => b.title === 'CJB');
         cjbButton?.onClick(cjbButton.link);
         expect(navigateSpy).toHaveBeenCalledWith(['/maintenance/cjb']);
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        const mqttService = TestBed.inject(MqttService);
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { maintenance: { get: 'maintenance/get' } } } as any;
+        (component as any).ngOnInit();
+        expect((component as any).topics).toEqual({ maintenance: { get: 'maintenance/get' } });
     });
 });

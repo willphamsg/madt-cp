@@ -5,11 +5,14 @@
     font-size: 28px;
     border: 3px solid $madt-bg-dark-1;
 
-    td {
+    td,
+    th {
         background-color: $madt-bg-dark-2;
         color: white;
         border: 5px solid $madt-bg-dark-1;
         padding: 10px 15px;
+        font-weight: normal;
+        text-align: left;
     }
 }
 
@@ -49,7 +52,8 @@
 
 .ver-table {
     tr {
-        > td {
+        > td,
+        > th {
             padding: 20px 30px;
         }
     }

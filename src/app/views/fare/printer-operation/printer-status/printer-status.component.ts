@@ -8,7 +8,6 @@ import { MqttService } from '@services/mqtt.service';
 import { IPrintStatus, DEFAULT_TIMEOUT } from '@models';
 import { AppState } from '@store/app.state';
 import { printStatus } from '@store/fare/fare.reducer';
-import { ButtonSoundDirective } from '@directives/button-sound.directive';
 import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
 import { SoundService } from '@services/sound.service';
 

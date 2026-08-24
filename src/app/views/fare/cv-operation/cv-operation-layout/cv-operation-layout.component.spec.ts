@@ -13,8 +13,15 @@ describe('CVOperationLayoutComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [TranslateModule.forRoot(), CVOperationLayoutComponent],
-            providers: [provideHttpClient(), provideMockStore({ initialState: mockInitialState }), provideRouter([])],
+            imports: [
+                TranslateModule.forRoot(),
+                CVOperationLayoutComponent,
+            ],
+            providers: [
+                provideHttpClient(),
+                provideMockStore({ initialState: mockInitialState }),
+                provideRouter([]),
+            ],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
 

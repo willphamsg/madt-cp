@@ -151,7 +151,7 @@ export class ConcessionComponent implements OnInit, OnDestroy {
 
     removeTimeout(): void {
         this.clearExistingTimeout();
-        this.updateConcessionState(undefined, undefined);
+        this.updateConcessionState();
     }
 
     private updateConcessionState(status?: number, timeout?: number, msgID?: number): void {
@@ -171,7 +171,7 @@ export class ConcessionComponent implements OnInit, OnDestroy {
     }
 
     private resetConcessionState(): void {
-        this.updateConcessionState(undefined, undefined);
+        this.updateConcessionState();
     }
 
     handleButtonSound(): void {

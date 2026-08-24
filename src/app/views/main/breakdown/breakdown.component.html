@@ -1,13 +1,9 @@
 <div class="breakdown-container">
+
     @if (step === 1) {
         <ng-container>
             <div class="page-header">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); backToInformation()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToInformation()"
-                >
+                <div class="back-button" (click)="handleButtonSound(); backToInformation()">
                     {{ 'BACK' | translate }}
                 </div>
             </div>
@@ -33,8 +29,6 @@
                                                 selected: selectedLastBusStop['Busid'] == busStop.Busid
                                             }"
                                             (click)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
                                         >
                                             {{ busStop.Name }}
                                         </li>
@@ -92,12 +86,7 @@
                         </li>
                         <li class="row">
                             <div class="left">{{ 'LAST_BUS_STOP' | translate }}</div>
-                            <div
-                                class="right"
-                                (click)="handleButtonSound(); handleChangeEndBusStop()"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChangeEndBusStop()"
-                            >
+                            <div class="right" (click)="handleButtonSound(); handleChangeEndBusStop()">
                                 <p class="value">{{ breakDownInfoData['lastBusStop']['Name'] }}</p>
                                 <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                             </div>
@@ -120,12 +109,7 @@
     } @else if (screen === 'REASON') {
         <ng-container>
             <div class="page-header">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.MAIN_BREAKDOWN)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleBackToPreviousPage(MsgID.MAIN_BREAKDOWN)"
-                >
+                <div class="back-button" (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.MAIN_BREAKDOWN)">
                     {{ 'BACK' | translate }}
                 </div>
             </div>
@@ -143,8 +127,6 @@
                                             selected: reason === _reason.id
                                         }"
                                         (click)="handleButtonSound(); handleSelectReason(_reason.id)"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleSelectReason(_reason.id)"
                                     >
                                         {{ _reason.label }}
                                     </li>
@@ -171,8 +153,6 @@
                 <div
                     class="back-button"
                     (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.BREAKDOWN_SUBMIT)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleBackToPreviousPage(MsgID.BREAKDOWN_SUBMIT)"
                 >
                     {{ 'BACK' | translate }}
                 </div>
@@ -214,8 +194,6 @@
                 <div
                     class="back-button"
                     (click)="handleButtonSound(); handleBackToPreviousPage(MsgID.BREAKDOWN_SUBMIT_REASON)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleBackToPreviousPage(MsgID.BREAKDOWN_SUBMIT_REASON)"
                 >
                     {{ 'BACK' | translate }}
                 </div>

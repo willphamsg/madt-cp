@@ -57,9 +57,9 @@ export class UtilsServices {
         hex = hex.replace(/^0x/, '');
 
         // Parse the red, green, and blue components from the hex string
-        const r = parseInt(hex.slice(0, 2), 16);
-        const g = parseInt(hex.slice(2, 4), 16);
-        const b = parseInt(hex.slice(4, 6), 16);
+        const r = Number.parseInt(hex.slice(0, 2), 16);
+        const g = Number.parseInt(hex.slice(2, 4), 16);
+        const b = Number.parseInt(hex.slice(4, 6), 16);
 
         return `rgb(${r}, ${g}, ${b})`;
     }

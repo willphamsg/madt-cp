@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
@@ -12,6 +12,12 @@ import { IDateTime, MsgID, MsgSubID } from '@models';
 import { AppState } from '@store/app.state';
 import { dateTimeSetting, updateDateTimeSetting } from '@store/main/main.reducer';
 import { SoundService } from '@services/sound.service';
+import {
+    buildDateFromSegments,
+    clampDateSegment,
+    focusNextDateSegment,
+    DateTimeInputType,
+} from '@utils/date-segment-input.util';
 
 @Component({
     selector: 'date-time-setting',
@@ -31,7 +37,7 @@ export class DateTimeSettingComponent implements OnInit, OnDestroy {
     dateTimeErrorMessage: string = '';
     hasTimeInputError: boolean = false;
 
-    dateTimeInputType: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day';
+    dateTimeInputType: DateTimeInputType = 'day';
     dateValue = {
         year: '',
         month: '',
@@ -152,47 +158,13 @@ export class DateTimeSettingComponent implements OnInit, OnDestroy {
 
     private setValueForDateElement(value: string): string {
         if (!this.dateTimeInputType) return '';
-        let outPutVal: string = value.trim();
-        switch (this.dateTimeInputType) {
-            case 'month':
-                outPutVal = Number(value) > 12 ? '12' : value;
-                break;
-            case 'day':
-                outPutVal = Number(value) > 31 ? '31' : value;
-                break;
-            case 'hour':
-                outPutVal = Number(value) > 23 ? '23' : value;
-                break;
-            case 'minute':
-                outPutVal = Number(value) > 59 ? '59' : value;
-                break;
-            case 'second':
-                outPutVal = Number(value) > 59 ? '59' : value;
-                break;
-        }
-        this.dateValue[this.dateTimeInputType] = outPutVal;
-        return outPutVal;
+        return clampDateSegment(this.dateValue, this.dateTimeInputType, value);
     }
 
     private autoFocusOnInput(inputField: HTMLInputElement, value: string, isBackspace: boolean, firstCursor: boolean) {
-        const nextTabIndex = inputField.tabIndex + (isBackspace ? -1 : 1);
-        const nextInputField = document.querySelector<HTMLInputElement>(`input[tabindex="${nextTabIndex}"]`);
-        const inputType = inputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
-
-        if (!nextInputField) return;
-        const nextInputValueLength = nextInputField?.value?.length ?? 0;
-
-        //next
-        if (value.length === (inputType === 'year' ? 4 : 2) && !isBackspace) {
-            nextInputField.focus();
-            // Set cursor at the end of the next input field
-            nextInputField.setSelectionRange(nextInputValueLength, nextInputValueLength);
-            this.dateTimeInputType = nextInputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
-        } else if ((firstCursor || !value) && isBackspace) {
-            nextInputField.focus();
-            // Set cursor at the end of the next input field
-            nextInputField.setSelectionRange(nextInputValueLength, nextInputValueLength);
-            this.dateTimeInputType = nextInputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
+        const nextType = focusNextDateSegment(inputField, value, isBackspace, firstCursor);
+        if (nextType) {
+            this.dateTimeInputType = nextType;
         }
     }
 
@@ -213,20 +185,8 @@ export class DateTimeSettingComponent implements OnInit, OnDestroy {
             return;
         }
 
-        const date = new Date(
-            Number(this.dateValue.year),
-            Number(this.dateValue.month) - 1, // Subtract 1 because months are 0-indexed
-            Number(this.dateValue.day),
-            Number(this.dateValue.hour),
-            Number(this.dateValue.minute),
-            Number(this.dateValue.second),
-        );
-
-        const validDate =
-            date.getFullYear() == Number(this.dateValue.year) &&
-            date.getMonth() + 1 == Number(this.dateValue.month) &&
-            date.getDate() == Number(this.dateValue.day);
-        if (!validDate) {
+        const { date, isValid } = buildDateFromSegments(this.dateValue);
+        if (!isValid) {
             // this.hasDateInputError = true;
             this.dateTimeErrorMessage = 'INVALID_ENTRY';
             return;

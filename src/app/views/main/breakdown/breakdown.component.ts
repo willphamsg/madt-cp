@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { routerUrls } from '@app/app.routes';
 import { TranslateModule } from '@ngx-translate/core';
@@ -72,7 +72,7 @@ export class BreakdownComponent implements OnInit, OnDestroy {
                     this.topics = this.mqttService.mqttConfig?.topics;
                 }
                 if (data) {
-                    this.breakDownInfoData = data || {};
+                    this.breakDownInfoData = data;
                     console.log('breakDownInfoData', this.breakDownInfoData);
 
                     if (!this.selectedFirstBusStop) this.selectedFirstBusStop = this.breakDownInfoData.firstBusStop;

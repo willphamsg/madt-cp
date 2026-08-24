@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -54,7 +54,7 @@ export class VersionInfoComponent implements OnInit, OnDestroy {
 
         this.versionInfo$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
             this.versionInfo = data;
-            if (data && data?.versionInfoList?.length) {
+            if (data?.versionInfoList?.length) {
                 this.isLoading = false;
             } else if (data.status === ResponseStatus.PROGRESS) {
                 this.isLoading = true;

@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { CommonModule, DOCUMENT, NgTemplateOutlet } from '@angular/common';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
@@ -15,10 +15,19 @@ import { Subject, takeUntil, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { startTrip, updateStartTrip } from '@store/main/main.reducer';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 @Component({
     selector: 'start-trip',
-    imports: [CommonModule, MatIconModule, RouterModule, AppScrollBar, CustomKeyboardComponent, TranslateModule],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        RouterModule,
+        AppScrollBar,
+        CustomKeyboardComponent,
+        TranslateModule,
+        NgTemplateOutlet,
+    ],
     templateUrl: './start-trip.component.html',
     styleUrls: ['./start-trip.component.scss'],
 })
@@ -255,7 +264,7 @@ export class StartTripComponent implements OnInit, OnDestroy {
                 payload: {
                     ...this.startTripData,
                     fare: {
-                        busStop: this.busStops?.filter((item) => item.Busid === this.selectedBusStop)[0],
+                        busStop: this.busStops?.find((item) => item.Busid === this.selectedBusStop),
                         serviceNumber: this.selectedService?.serviceNumber || this.startTripData?.fare?.serviceNumber,
                         dir: this.selectedService?.dir || this.startTripData?.fare?.dir,
                         variantName: this.selectedService?.variantName || this.startTripData?.fare?.variantName,
@@ -321,32 +330,12 @@ export class StartTripComponent implements OnInit, OnDestroy {
 
     handleChangeInput(event: Event): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                // this.manualServiceIdError = false;
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                // this.manualServiceIdError = false;
-            }
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             this.inputValue = value;
             this.handleSearchService(value);
-            // this.handleConfirmManuallyInput(value);
-        } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
-            // this.manualServiceIdError = false;
         }
 
         inputField.focus();
@@ -433,7 +422,7 @@ export class StartTripComponent implements OnInit, OnDestroy {
 
     private _handleOnDocumentClick(): void {
         this._document.addEventListener('click', (event: Event) => {
-            const target = event.target || event.srcElement || event.currentTarget;
+            const target = event.target || event.currentTarget;
             const idAttr = target?.['id'];
             const parentNode = target?.['parentNode']?.['className'];
             // console.log('event', event);

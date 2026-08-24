@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -25,7 +25,7 @@ export class CommonPopUp implements OnDestroy, OnInit, OnChanges {
     @Input() disableTimeout: boolean = false;
     @Output() ok: EventEmitter<string> = new EventEmitter<string>();
     @Output() confirm: EventEmitter<string> = new EventEmitter<string>();
-    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancelled: EventEmitter<string> = new EventEmitter<string>();
 
     @Input() isOk: boolean = false;
     @Input() isConfirm: boolean = false;
@@ -54,7 +54,7 @@ export class CommonPopUp implements OnDestroy, OnInit, OnChanges {
     }
 
     handleCancel() {
-        this.cancel.emit();
+        this.cancelled.emit();
     }
 
     handleOk() {

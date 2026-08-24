@@ -29,7 +29,6 @@
         font-weight: $font-weight-bold;
         text-align: center;
         margin-top: 8px;
-
     }
 
     .sub-title {
@@ -107,24 +106,22 @@
 
         .table {
             width: 100%;
+            display: flex;
+            flex-direction: column;
 
-            th {
-                border-right: 1px solid $madt-bg-dark-2;
-            }
-
-            th,
-            tr {
+            .tr {
+                display: flex;
                 font-size: 28px;
                 text-align: left;
 
-                + tr {
-                    td {
+                + .tr {
+                    .td {
                         border-top: 2px solid #010d10;
                     }
                 }
             }
 
-            td {
+            .td {
                 width: 50%;
                 padding: 15px;
                 background-color: $madt-bg-dark-2;

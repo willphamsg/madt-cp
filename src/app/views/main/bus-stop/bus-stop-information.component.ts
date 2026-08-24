@@ -23,8 +23,16 @@ import { AppState } from '@store/app.state';
 import { Observable, Subject, combineLatest, switchMap } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
-import { IFmsBusStop, ICurrenNowDest, IDeviation, IUserInfoMain, IFareBusStop, MsgID, MsgSubID } from '@models';
-import { ButtonSoundDirective } from '@directives/button-sound.directive';
+import {
+    IFmsBusStop,
+    ICurrenNowDest,
+    IDeviation,
+    IUserInfoMain,
+    // INextBusInfo,
+    IFareBusStop,
+    MsgID,
+    MsgSubID,
+} from '@models';
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
 
 @Component({
@@ -157,7 +165,7 @@ export class BusStopInformationComponent implements OnInit, OnDestroy {
     // }
 
     filterById(data, id) {
-        return data?.filter((item) => item?.Busid === id)?.[0];
+        return data?.find((item) => item?.Busid === id);
     }
 
     ngOnInit(): void {
@@ -209,8 +217,8 @@ export class BusStopInformationComponent implements OnInit, OnDestroy {
             return km.toFixed(1);
         }
         if (typeof km === 'string') {
-            const num = parseFloat(km);
-            return isNaN(num) ? '0.0' : num.toFixed(1);
+            const num = Number.parseFloat(km);
+            return Number.isNaN(num) ? '0.0' : num.toFixed(1);
         }
         return km;
     }

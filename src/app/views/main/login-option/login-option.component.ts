@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 
 import { Router } from '@angular/router';
 import { AppState } from '@store/app.state';

@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter, OnDestroy, OnInit, ChangeDetect
 import { CommonModule } from '@angular/common';
 import { MatSliderModule } from '@angular/material/slider';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { Subject, takeUntil } from 'rxjs';
@@ -32,7 +31,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
 
     @Input() fullScreen?: boolean = false;
     @Input() fromMaintenance?: boolean = false;
-    @Output() close: EventEmitter<void> = new EventEmitter<void>();
+    @Output() closed: EventEmitter<void> = new EventEmitter<void>();
     @Output() confirmLanguage: EventEmitter<string> = new EventEmitter<string>();
 
     //audio
@@ -93,7 +92,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
     }
 
     handleClose(): void {
-        this.close.emit();
+        this.closed.emit();
     }
 
     handleSelectLang(lang: string): void {

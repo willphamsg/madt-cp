@@ -1,6 +1,7 @@
 export interface IGlobalError {
+    esn?: string;
     code: string;
-    message: string;
+    description: string;
     timeout?: number;
 }
 

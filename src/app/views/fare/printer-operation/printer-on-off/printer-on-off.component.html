@@ -1,0 +1,28 @@
+@if (printerStatus.status === responseStatus.PROGRESS) {
+    <div class="loading">
+        <img class="loader" src="/assets/images/svg/spinner.svg" alt="" />
+        <div>{{ (printerOn ? 'TURN_PRINTER_ON' : 'TURN_PRINTER_OFF') | translate }}</div>
+    </div>
+} @else if (printerStatus.status === responseStatus.ERROR) {
+    <common-pop-up
+        [type]="'error'"
+        [title]="'ERROR'"
+        [message]="'PRINTER_FUNCTIONS'"
+        [fullScreen]="true"
+        [disableSound]="true"
+        [isOk]="true"
+        (ok)="backToPrinterOperation()"
+    >
+    </common-pop-up>
+} @else {
+    <common-pop-up
+        [type]="'success'"
+        [title]="'SUCCESS'"
+        [message]="printerOn ? 'PRINTER_ON' : 'PRINTER_OFF'"
+        [fullScreen]="true"
+        [disableSound]="true"
+        [isOk]="true"
+        (ok)="backToPrinterOperation()"
+    >
+    </common-pop-up>
+}

@@ -19,6 +19,7 @@ export class Notification implements OnDestroy, AfterContentInit {
     @Output() ok: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private readonly soundService: SoundService) {}
+
     handleClick() {
         this.ok.emit();
     }

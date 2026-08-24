@@ -247,7 +247,7 @@ describe('CalibrateBLSCalibrationComponent - extended coverage', () => {
         const calls = mockMqttService.publishWithMessageFormat.calls
             .all()
             .filter((c: any) => c.args[0].msgID === MsgID.TIMEOUT_MESSAGE);
-        expect(calls.length).toBe(1);
+        expect(calls).toHaveSize(1);
     });
 
     // ---------------- ngOnDestroy ----------------

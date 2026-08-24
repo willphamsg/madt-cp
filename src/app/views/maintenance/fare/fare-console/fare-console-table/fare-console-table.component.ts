@@ -14,6 +14,7 @@ import { IFareConsole, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
 import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
 import { SoundService } from '@services/sound.service';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 @Component({
     selector: 'maintenance-fare-console-table',
@@ -143,7 +144,7 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
                 msgID: MsgID.BLS_STATUS_SUBMIT,
                 msgSubID: MsgSubID.NOTIFY,
                 payload: {
-                    blsStatus: this.selectedBlsStatus === 1 ? true : false,
+                    blsStatus: this.selectedBlsStatus === 1,
                 },
             });
             this.store.dispatch(
@@ -173,22 +174,10 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
 
     handleChangeInput(event: Event, type: string): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-            }
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             if (!value) return;
             if (type === 'time') {
                 this.handleConfirmTime(value);
@@ -197,17 +186,13 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
             } else {
                 this.handleConfirmComplimentaryDays(value);
             }
-        } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
         }
 
         inputField.focus();
     }
 
     private handleConfirmTime(value: string) {
-        if (isNaN(Number(value)) || value.length !== 6) {
+        if (Number.isNaN(Number(value)) || value.length !== 6) {
             this.hasInputError = true;
             return;
         }
@@ -230,26 +215,34 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
         this.submitTime(`${hhValue}:${mmValue}:${ssValue}`);
     }
 
-    private submitTime(time: string) {
+    /**
+     * Publishes a single-field update, merges it into the fareConsole store
+     * slice, and closes the current setting panel. Shared by the time, date,
+     * and complimentary-days "submit" handlers below, which differ only in
+     * which IFareConsole field they write.
+     */
+    private submitFareConsoleField<K extends keyof IFareConsole>(msgID: number, field: K, value: IFareConsole[K]) {
         this.mqttService.publishWithMessageFormat({
             topic: this.topics?.mainTab?.get,
-            msgID: MsgID.TIME_SUBMIT,
+            msgID,
             msgSubID: MsgSubID.NOTIFY,
-            payload: {
-                time,
-            },
+            payload: { [field]: value },
         });
         this.store.dispatch(
             updateFareConsole({
-                payload: { ...this.fareConsoleSetting, time },
+                payload: { ...this.fareConsoleSetting, [field]: value },
                 msgID: MsgID.FARE_CONSOLE,
             }),
         );
         this.settingType = '';
     }
 
+    private submitTime(time: string) {
+        this.submitFareConsoleField(MsgID.TIME_SUBMIT, 'time', time);
+    }
+
     private handleConfirmDate(value: string) {
-        if (isNaN(Number(value)) || value.length !== 8) {
+        if (Number.isNaN(Number(value)) || value.length !== 8) {
             this.hasInputError = true;
             return;
         }
@@ -277,25 +270,11 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
     }
 
     private submitDate(date: string) {
-        this.mqttService.publishWithMessageFormat({
-            topic: this.topics?.mainTab?.get,
-            msgID: MsgID.DATE_SUBMIT,
-            msgSubID: MsgSubID.NOTIFY,
-            payload: {
-                date,
-            },
-        });
-        this.store.dispatch(
-            updateFareConsole({
-                payload: { ...this.fareConsoleSetting, date },
-                msgID: MsgID.FARE_CONSOLE,
-            }),
-        );
-        this.settingType = '';
+        this.submitFareConsoleField(MsgID.DATE_SUBMIT, 'date', date);
     }
 
     private handleConfirmComplimentaryDays(value: string) {
-        if (isNaN(Number(value))) {
+        if (Number.isNaN(Number(value))) {
             this.hasInputError = true;
             return;
         }
@@ -306,21 +285,7 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
 
     // COMPLIMENTARY DAYS HANDLE
     private submitComplimentaryDays(days: number) {
-        this.mqttService.publishWithMessageFormat({
-            topic: this.topics?.mainTab?.get,
-            msgID: MsgID.COMPLIMENTARY_DAYS_SUBMIT,
-            msgSubID: MsgSubID.NOTIFY,
-            payload: {
-                complimentaryDays: days,
-            },
-        });
-        this.store.dispatch(
-            updateFareConsole({
-                payload: { ...this.fareConsoleSetting, complimentaryDays: days },
-                msgID: MsgID.FARE_CONSOLE,
-            }),
-        );
-        this.settingType = '';
+        this.submitFareConsoleField(MsgID.COMPLIMENTARY_DAYS_SUBMIT, 'complimentaryDays', days);
     }
 
     // DELETE PARAMETERS HANDLE
@@ -396,7 +361,7 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
                 payload: {},
             });
 
-            if (url.indexOf('delete-parameter') === -1) {
+            if (!url.includes('delete-parameter')) {
                 // request when edit
                 this.store.dispatch(
                     updateFareConsole({
@@ -412,7 +377,7 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
         this.router.navigate([this.urlPrefix + url]);
 
         //display confirm popup when data is not submitted
-        if (url.indexOf('delete-parameter') > -1 && !this.fareConsoleSetting.isSubmitted) {
+        if (url.includes('delete-parameter') && !this.fareConsoleSetting.isSubmitted) {
             // request when edit
             this.store.dispatch(
                 updateFareConsole({

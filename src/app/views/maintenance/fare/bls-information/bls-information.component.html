@@ -20,7 +20,7 @@
                 <table class="table">
                     @for (bls of this.blsInformation.blsList; track bls.name) {
                         <tr>
-                            <td>{{ bls.name | translate }}</td>
+                            <th scope="row">{{ bls.name | translate }}</th>
                             <td>{{ bls.value | translate }}</td>
                         </tr>
                     }

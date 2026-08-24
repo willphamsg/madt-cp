@@ -10,6 +10,7 @@ import { IDeCommission, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { AppState } from '@store/app.state';
 import { decommission, updateDecommission } from '@store/maintenance/maintenance.reducer';
 import { SoundService } from '@services/sound.service';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 @Component({
     selector: 'decommission',
@@ -68,28 +69,12 @@ export class Decommission implements OnInit, OnDestroy {
 
     handleChangeInput(event: Event): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                this.commissionError = null;
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                this.commissionError = null;
-            }
-        } else if (target.id === 'enterKey') {
+        const value = applyKeyboardInput(inputField, target);
+
+        if (target.id === 'enterKey') {
             this.handleSubmit(value);
         } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
             this.commissionError = null;
         }
         inputField.focus();

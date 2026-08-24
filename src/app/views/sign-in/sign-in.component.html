@@ -9,12 +9,12 @@
             <br />
             <mat-form-field appearance="fill">
                 <mat-label>Username</mat-label>
-                <input matInput formControlName="username" type="text" required />
+                <input matInput formControlName="username" type="text" required aria-label="Username" />
             </mat-form-field>
             <br />
             <mat-form-field appearance="fill">
                 <mat-label>Password</mat-label>
-                <input matInput formControlName="password" type="password" required />
+                <input matInput formControlName="password" type="password" required aria-label="Password" />
             </mat-form-field>
             <br />
             <button [disabled]="!form.valid" mat-raised-button color="accent" type="submit">Login</button>

@@ -11,4 +11,6 @@ import { TranslateModule } from '@ngx-translate/core';
 export class PreLoginComponent {
     @Input() title: string = '';
     @Input() content?: string = '';
+
+    constructor() {}
 }

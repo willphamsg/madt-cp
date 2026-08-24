@@ -60,14 +60,7 @@
         }
     } @else {
         <div>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); handleBack()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleBack()"
-            >
-                {{ 'BACK' | translate }}
-            </div>
+            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
             <h2 class="title">{{ 'PRINT_RETENTION_TICKET' | translate }}</h2>
             <div class="content">
                 <div class="button-control">

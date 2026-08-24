@@ -78,18 +78,16 @@
         th {
             border-right: 1px solid $madt-bg-dark-2;
             background-color: $black;
+            width: 480px;
+            text-align: left;
+            padding: 15px;
+            font-weight: normal;
         }
 
         th,
         tr {
             font-size: 28px;
             text-align: left;
-        }
-
-        th {
-            width: 480px;
-            text-align: left;
-            padding: 15px;
         }
 
         td {

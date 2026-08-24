@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 import { MqttService } from '@services/mqtt.service';
 import { LocalStorageService } from '@services/local-storage.service';
+import { of } from 'rxjs';
 
 describe('SettingsComponent', () => {
     let component: SettingsComponent;
@@ -55,5 +56,12 @@ describe('SettingsComponent', () => {
         component.handleChangeAudioVolume(50);
         expect(publishSpy).toHaveBeenCalled();
         expect(setItemSpy).toHaveBeenCalled();
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { maintenance: { get: 'maintenance/get' } } } as any;
+        component.ngOnInit();
+        expect((component as any).topics).toEqual({ maintenance: { get: 'maintenance/get' } });
     });
 });

@@ -5,7 +5,6 @@ import { PreLoginComponent } from '@components/pre-login/pre-login.component';
     selector: 'access-denied',
     imports: [PreLoginComponent],
     templateUrl: './access-denied.component.html',
-    styleUrls: ['./access-denied.component.scss'],
 })
 export class FareAccessDeniedComponent {
     constructor() {}

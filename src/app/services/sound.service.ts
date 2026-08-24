@@ -1,4 +1,4 @@
-import { Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject, takeUntil } from 'rxjs';
 import { LocalStorageService } from '@services/local-storage.service';
@@ -10,7 +10,7 @@ import { IAudioVolume, LocalStorageKey } from '@models';
 @Injectable({
     providedIn: 'root',
 })
-export class SoundService implements OnInit, OnDestroy {
+export class SoundService implements OnDestroy {
     private readonly destroy$ = new Subject<void>();
     // private audio$: Observable<IAudioVolume> = this.store.select(audioVolume);
     audioVolume: IAudioVolume = { value: 100 };
@@ -39,9 +39,7 @@ export class SoundService implements OnInit, OnDestroy {
                     // console.log('volume', this.audioVolume);
                 }
             });
-    }
 
-    ngOnInit() {
         this.popUpAudio.load();
         this.buttonAudio.load();
     }

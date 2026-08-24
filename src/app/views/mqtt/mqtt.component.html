@@ -59,6 +59,7 @@
                     <mat-form-field>
                         <mat-label>Message Text</mat-label>
                         <input
+                            aria-label="Message Text"
                             matInput
                             type="'text"
                             placeholder="Message Text"
@@ -78,6 +79,7 @@
                     <mat-form-field>
                         <mat-label>Percentage</mat-label>
                         <input
+                            aria-label="Percentage"
                             matInput
                             type="'number"
                             placeholder="Percentage"
@@ -415,13 +417,14 @@
                     <br />
                     <mat-form-field>
                         <mat-label>Index</mat-label>
-                        <input matInput placeholder="Change Index" [(ngModel)]="fareBusStopIndex" />
+                        <input aria-label="Index" matInput placeholder="Change Index" [(ngModel)]="fareBusStopIndex" />
                     </mat-form-field>
                     <br />
                     <br />
                     <mat-slide-toggle [(ngModel)]="autoBls">Auto BLS</mat-slide-toggle>
                     <mat-slide-toggle [(ngModel)]="manualBls">Manual BLS</mat-slide-toggle>
                     <mat-slide-toggle [(ngModel)]="misMatch">Mis Match</mat-slide-toggle>
+                    <mat-slide-toggle [(ngModel)]="isUpstage">Upstage</mat-slide-toggle>
                     <br />
                     <br />
                     <button mat-raised-button (click)="sendCurrentFareBusStop()" color="primary">Send</button>
@@ -432,24 +435,24 @@
                     <br />
                     <mat-form-field>
                         <mat-label>Bus Service Number</mat-label>
-                        <input matInput [(ngModel)]="fmsBusStop.busServiceNum" />
+                        <input aria-label="Bus Service Number" matInput [(ngModel)]="fmsBusStop.busServiceNum" />
                     </mat-form-field>
                     <br />
                     <mat-form-field>
                         <mat-label>Plate Number</mat-label>
-                        <input matInput [(ngModel)]="fmsBusStop.plateNum" />
+                        <input aria-label="Plate Number" matInput [(ngModel)]="fmsBusStop.plateNum" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>SPID</mat-label>
-                        <input matInput [(ngModel)]="fmsBusStop.spid" />
+                        <input aria-label="SPID" matInput [(ngModel)]="fmsBusStop.spid" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Dir</mat-label>
-                        <input matInput [(ngModel)]="fmsBusStop.dir" />
+                        <input aria-label="Dir" matInput [(ngModel)]="fmsBusStop.dir" />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>KM</mat-label>
-                        <input matInput [(ngModel)]="fmsBusStop.km" />
+                        <input aria-label="KM" matInput [(ngModel)]="fmsBusStop.km" />
                     </mat-form-field>
                     <br />
                     <mat-slide-toggle [(ngModel)]="fmsBusStop.updateBusStopList"
@@ -464,7 +467,12 @@
                     <br />
                     <mat-form-field>
                         <mat-label>Current Block</mat-label>
-                        <input matInput placeholder="Name" [(ngModel)]="headTimeTTable.currentBlock" />
+                        <input
+                            aria-label="Current Block"
+                            matInput
+                            placeholder="Name"
+                            [(ngModel)]="headTimeTTable.currentBlock"
+                        />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Bar count</mat-label>
@@ -481,7 +489,12 @@
                     <br />
                     <mat-form-field>
                         <mat-label>Min Sec 00:00</mat-label>
-                        <input matInput placeholder="Name" [(ngModel)]="headTimeTTable.minSec" />
+                        <input
+                            aria-label="Min Sec 00:00"
+                            matInput
+                            placeholder="Name"
+                            [(ngModel)]="headTimeTTable.minSec"
+                        />
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Color</mat-label>
@@ -518,7 +531,13 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Minutes</mat-label>
-                        <input matInput type="'number" placeholder="Name" [(ngModel)]="nextBusInfo.busBehindTime" />
+                        <input
+                            aria-label="Minutes"
+                            matInput
+                            type="'number"
+                            placeholder="Name"
+                            [(ngModel)]="nextBusInfo.busBehindTime"
+                        />
                     </mat-form-field>
                     <br />
                     <mat-slide-toggle [(ngModel)]="nextBusInfo.show">Show next Bus info</mat-slide-toggle>

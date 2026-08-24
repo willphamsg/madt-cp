@@ -1,15 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { Subject, takeUntil, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { MqttService } from '@services/mqtt.service';
-import { IFareConsole, MsgID, MsgSubID } from '@models';
-import { AppState } from '@store/app.state';
-import { fareConsole, updateFareConsole } from '@store/maintenance/maintenance.reducer';
-import { SoundService } from '@services/sound.service';
+import { MsgID, MsgSubID } from '@models';
+import { updateFareConsole } from '@store/maintenance/maintenance.reducer';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
+import { FareConsoleScreenBase } from '@components/fare-console-screen-base/fare-console-screen.base';
 
 @Component({
     selector: 'complimentary-day',
@@ -17,52 +14,11 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './complimentary-day.component.html',
     styleUrls: ['./complimentary-day.component.scss'],
 })
-export class ComplimentaryDayComponent implements OnInit, OnDestroy {
-    private readonly destroy$ = new Subject<void>();
-    fareConsoleSetting$: Observable<IFareConsole>;
-    fareConsoleSetting: IFareConsole = {
-        deckType: {
-            id: 0,
-            label: '',
-        },
-        blsStatus: 0,
-        busId: '',
-        date: '',
-        time: '',
-        complimentaryDays: 0,
-        message: '',
-    };
-
+export class ComplimentaryDayComponent extends FareConsoleScreenBase {
     hasInputError: boolean = false;
-    topics;
-
-    constructor(
-        private readonly soundService: SoundService,
-        private readonly router: Router,
-        protected store: Store<AppState>,
-        private readonly mqttService: MqttService,
-    ) {
-        this.fareConsoleSetting$ = this.store.select(fareConsole);
-    }
-
-    ngOnInit() {
-        this.mqttService.mqttConfigLoaded$.pipe(takeUntil(this.destroy$)).subscribe((configLoaded) => {
-            if (configLoaded) {
-                this.topics = this.mqttService.mqttConfig?.topics;
-            }
-        });
-
-        this.fareConsoleSetting$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
-            this.fareConsoleSetting = data;
-        });
-    }
-
-    goBack() {
-        this.router.navigate(['/maintenance/fare/fare-console']);
-    }
 
     private handleConfirmComplimentaryDays(value: string) {
-        if (isNaN(Number(value))) {
+        if (Number.isNaN(Number(value))) {
             this.hasInputError = true;
             return;
         }
@@ -99,42 +55,16 @@ export class ComplimentaryDayComponent implements OnInit, OnDestroy {
 
     handleChangeInput(event: Event): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                this.hasInputError = false;
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                this.hasInputError = false;
-            }
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             if (!value) return;
             this.handleConfirmComplimentaryDays(value);
         } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
             this.hasInputError = false;
         }
 
         inputField.focus();
-    }
-
-    ngOnDestroy() {
-        this.destroy$.next();
-        this.destroy$.complete();
-    }
-
-    handleButtonSound(): void {
-        this.soundService.playButton();
     }
 }

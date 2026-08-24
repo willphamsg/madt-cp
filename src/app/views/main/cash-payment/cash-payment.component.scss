@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 .cash-payment-container {
     background-color: $madt-bg-dark-1;
@@ -49,7 +50,6 @@
         margin-right: auto;
 
         .tk-button {
-            border-radius: 5px;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -207,36 +207,7 @@
         flex-direction: column;
         flex: 1;
 
-        .confirm-header {
-            @include flex-center;
-            gap: 10px;
-            font-size: 32px;
-            font-weight: $font-weight-semi-bold;
-        }
-
-        .dialog-title {
-            display: flex;
-            font-size: 32px;
-            font-weight: $font-weight-semi-bold;
-            min-width: 400px;
-            margin-bottom: 12px;
-
-            .title {
-                width: 70%;
-            }
-        }
-
-        .confirm-msg {
-            margin-top: 10px;
-            font-size: 28px;
-        }
-
-        .content {
-            font-size: 24px;
-            margin-top: 20px;
-            width: 400px;
-            text-align: center;
-        }
+        @include confirm-header-dialog-title-styles($include-standard-content: true);
 
         .quantity-list {
             margin-top: 20px;
@@ -411,6 +382,98 @@
         display: flex;
         flex-direction: column;
         position: relative;
+
+        // .calculator {
+
+        //     .header {
+        //     }
+
+        //     .title {
+        //     }
+
+        //     .close-btn {
+
+        //         span {
+        //         }
+        //     }
+
+        //     .confirm-button {
+
+        //         &:active {
+        //         }
+
+        //         span {
+        //         }
+        //     }
+
+        //     .calculator-content {
+
+        //         .scrollbar {
+        //         }
+
+        //         .table {
+
+        //             tr {
+        //                 &.selected {
+        //                     th,
+        //                     td {
+        //                     }
+        //                 }
+
+        //                 th {
+
+        //                     // .radio {
+        //                     //     height: 100%;
+        //                     //     width: 100%;
+        //                     //     @include flex-center;
+        //                     // }
+
+        //                     &:first-child {
+        //                     }
+        //                 }
+
+        //                 .table-header {
+        //                 }
+
+        //                 td {
+
+        //                     &:not(:first-child) {
+        //                         // font-weight: $font-weight-bold;
+        //                     }
+        //                 }
+
+        //                 &:not(:first-child) {
+        //                     td {
+        //                     }
+        //                 }
+
+        //                 // .radio {
+        //                 //     display: flex;
+        //                 //     align-items: center;
+        //                 //     gap: 6px;
+        //                 // }
+        //             }
+
+        //             tr:nth-child(odd) > td {
+        //             }
+
+        //             tr:nth-child(even) > td {
+        //             }
+        //         }
+        //     }
+
+        //     ng-scrollbar {
+        //     }
+
+        //     ::ng-deep {
+        //         .scrollbar-track {
+        //         }
+        //         .scrollbar-thumb {
+        //         }
+        //         .scrollbar-button {
+        //         }
+        //     }
+        // }
 
         .fare-calculator-result {
             height: 100%;

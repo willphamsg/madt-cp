@@ -14,6 +14,7 @@ import { Observable, Subject } from 'rxjs';
 import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 type BUS_STOP_MODE = 'ENTRY' | 'EXIT';
 
@@ -114,7 +115,7 @@ export class CashPaymentComponent implements OnInit, OnDestroy {
 
     private _handleOnDocumentClick(): void {
         this._document.addEventListener('click', (event: Event) => {
-            const target = event.target || event.srcElement || event.currentTarget;
+            const target = event.target || event.currentTarget;
             const idAttr = target?.['id'];
             const parentNode = target?.['parentNode']?.['className'];
             const isClickKeyboard = parentNode?.includes('numeric-keyboard');
@@ -138,8 +139,8 @@ export class CashPaymentComponent implements OnInit, OnDestroy {
             return km.toFixed(1);
         }
         if (typeof km === 'string') {
-            const num = parseFloat(km);
-            return isNaN(num) ? '0.0' : num.toFixed(1);
+            const num = Number.parseFloat(km);
+            return Number.isNaN(num) ? '0.0' : num.toFixed(1);
         }
         return km;
     }
@@ -363,31 +364,15 @@ export class CashPaymentComponent implements OnInit, OnDestroy {
 
     handleChangeInput(event: Event): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                this.quantity = inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                this.quantityError = '';
-            } else {
-                // There is a selection, delete the selected text
-                this.quantity = inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                this.quantityError = '';
-            }
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             this.isShowKeyboard = false;
             if (!value) return;
             this.handleEnterNumberOfTicket();
         } else {
-            const keyValue = target.innerText.trim();
-            this.quantity = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
+            this.quantity = value;
             this.quantityError = '';
         }
 
@@ -397,7 +382,6 @@ export class CashPaymentComponent implements OnInit, OnDestroy {
     handleEnterNumberOfTicket(): void {
         if (!this.validateQuantity()) {
             this.quantityError = 'CAN_NOT_PRINT_MORE_THEN_10_TICKET';
-            return;
         }
     }
 

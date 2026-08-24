@@ -17,6 +17,7 @@
             "@views/*": ["app/views/*"],
             "@store/*": ["app/store/*"],
             "@services/*": ["app/services/*"],
+            "@utils/*": ["app/utils/*"],
             "@assets/*": ["assets/*"]
         }
     },

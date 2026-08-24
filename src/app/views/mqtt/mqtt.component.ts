@@ -165,6 +165,7 @@ export class MqttComponent implements OnInit, OnDestroy {
     autoBls: undefined | boolean;
     manualBls: undefined | boolean;
     misMatch: undefined | boolean;
+    isUpstage: undefined | boolean;
     fareBusStopIndex = -1;
     fmsBusStop: any = {
         busServiceNum: '105m',
@@ -921,7 +922,7 @@ export class MqttComponent implements OnInit, OnDestroy {
     sendCvStatus() {
         const formatMess = this.cvStatusChanger.map((item) => ({
             cvNumber: item,
-            statuses: this.activeCvDir?.map((cv) => Number(cv)),
+            statuses: this.activeCvDir?.map(Number),
         }));
 
         this.mqttService.publishWithMessageFormat({
@@ -1221,6 +1222,7 @@ export class MqttComponent implements OnInit, OnDestroy {
                 manualBls: this.manualBls,
                 autoBls: this.autoBls,
                 misMatch: this.misMatch,
+                isUpstage: this.isUpstage,
                 index: Number(this.fareBusStopIndex),
             },
             opts: { retain: true },
@@ -1290,7 +1292,7 @@ export class MqttComponent implements OnInit, OnDestroy {
     }
 
     replaceUnderscore(e: string) {
-        return e.replace(/_/g, ' ');
+        return e.replaceAll('_', ' ');
     }
 
     changeFareTabScreen() {

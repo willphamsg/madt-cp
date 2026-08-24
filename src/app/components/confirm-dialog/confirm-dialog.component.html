@@ -12,34 +12,19 @@
         <ng-content></ng-content>
         <div class="btn-group">
             @if (btnCancel) {
-                <div
-                    class="button button-cancel"
-                    (click)="handleButtonSound(); handleClick('cancel')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClick('cancel')"
-                >
+                <div class="button button-cancel" (click)="handleButtonSound(); handleClick('cancel')">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
                 </div>
             }
             @if (btnConfirm) {
-                <div
-                    class="button button-confirm"
-                    (click)="handleButtonSound(); handleClick('confirm')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClick('confirm')"
-                >
+                <div class="button button-confirm" (click)="handleButtonSound(); handleClick('confirm')">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'CONFIRM' | translate }}</span>
                 </div>
             }
             @if (btnOK) {
-                <div
-                    class="button button-ok"
-                    (click)="handleButtonSound(); handleClick('ok')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClick('ok')"
-                >
+                <div class="button button-ok" (click)="handleButtonSound(); handleClick('ok')">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'OK' | translate }}</span>
                 </div>

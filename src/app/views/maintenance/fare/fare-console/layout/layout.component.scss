@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 .fare-console-page {
     height: 100%;
@@ -41,36 +42,6 @@
     }
 
     .content {
-        margin: 0 auto;
-        width: 500px;
-        text-align: center;
-        p {
-            font-size: 28px;
-            line-height: 2;
-        }
-
-        .button {
-            @include dark-button;
-            font-size: 18px;
-            font-weight: $font-weight-bold;
-            height: 54px;
-            width: 216px;
-            margin: auto;
-            margin-top: 20px;
-            flex-direction: row;
-            background: $madt-bg-light-1;
-
-            &::before {
-                content: none;
-            }
-
-            .text {
-                padding-left: 10px;
-            }
-
-            &:active {
-                transform: scale(1.01);
-            }
-        }
+        @include fare-console-confirm-content-styles;
     }
 }

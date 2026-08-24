@@ -15,7 +15,7 @@ export class AutoDisableBlsComponent {
     @Input() disabled?: boolean = false;
     @Input() fullScreen?: boolean = false;
     @Output() ok: EventEmitter<string> = new EventEmitter<string>();
-    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancelled: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private readonly soundService: SoundService) {}
 
@@ -24,7 +24,7 @@ export class AutoDisableBlsComponent {
     }
 
     handleCancel() {
-        this.cancel.emit();
+        this.cancelled.emit();
     }
 
     handleButtonSound(): void {

@@ -22,6 +22,13 @@ import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyb
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
 import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
 import { SoundService } from '@services/sound.service';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
+import {
+    buildDateFromSegments,
+    clampDateSegment,
+    focusNextDateSegment,
+    DateTimeInputType,
+} from '@utils/date-segment-input.util';
 
 @Component({
     selector: 'fare-console-setting',
@@ -87,7 +94,7 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
     operatorIdTemp: number | null = null;
     busIdPrefixList = ['SBS', 'SMB', 'SG', 'PC'];
 
-    dateTimeInputType: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' = 'day';
+    dateTimeInputType: DateTimeInputType = 'day';
     dateValue = {
         year: '',
         month: '',
@@ -369,49 +376,13 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
 
     private setValueForDateElement(value: string): string {
         if (!this.dateTimeInputType) return '';
-        let outPutVal: string = value.trim();
-        switch (this.dateTimeInputType) {
-            case 'month':
-                outPutVal = Number(value) > 12 ? '12' : value;
-                break;
-            case 'day':
-                outPutVal = Number(value) > 31 ? '31' : value;
-                break;
-            case 'hour':
-                outPutVal = Number(value) > 23 ? '23' : value;
-                break;
-            case 'minute':
-                outPutVal = Number(value) > 59 ? '59' : value;
-                break;
-            case 'second':
-                outPutVal = Number(value) > 59 ? '59' : value;
-                break;
-        }
-
-        this.dateValue[this.dateTimeInputType] = outPutVal;
-
-        return outPutVal;
+        return clampDateSegment(this.dateValue, this.dateTimeInputType, value);
     }
 
     private autoFocusOnInput(inputField: HTMLInputElement, value: string, isBackspace: boolean, firstCursor: boolean) {
-        const nextTabIndex = inputField.tabIndex + (isBackspace ? -1 : 1);
-        const nextInputField = document.querySelector<HTMLInputElement>(`input[tabindex="${nextTabIndex}"]`);
-        const inputType = inputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
-
-        if (!nextInputField) return;
-        const nextInputValueLength = nextInputField?.value?.length ?? 0;
-
-        //next
-        if (value.length === (inputType === 'year' ? 4 : 2) && !isBackspace) {
-            nextInputField.focus();
-            // Set cursor at the end of the next input field
-            nextInputField.setSelectionRange(nextInputValueLength, nextInputValueLength);
-            this.dateTimeInputType = nextInputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
-        } else if ((firstCursor || !value) && isBackspace) {
-            nextInputField.focus();
-            // Set cursor at the end of the next input field
-            nextInputField.setSelectionRange(nextInputValueLength, nextInputValueLength);
-            this.dateTimeInputType = nextInputField.id as 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second';
+        const nextType = focusNextDateSegment(inputField, value, isBackspace, firstCursor);
+        if (nextType) {
+            this.dateTimeInputType = nextType;
         }
     }
 
@@ -430,20 +401,8 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
             return;
         }
 
-        const date = new Date(
-            Number(this.dateValue.year),
-            Number(this.dateValue.month) - 1, // Subtract 1 because months are 0-indexed
-            Number(this.dateValue.day),
-            Number(this.dateValue.hour),
-            Number(this.dateValue.minute),
-            Number(this.dateValue.second),
-        );
-
-        const validDate =
-            date.getFullYear() == Number(this.dateValue.year) &&
-            date.getMonth() + 1 == Number(this.dateValue.month) &&
-            date.getDate() == Number(this.dateValue.day);
-        if (!validDate) {
+        const { date, isValid } = buildDateFromSegments(this.dateValue);
+        if (!isValid) {
             this.dateTimeErrorMessage = 'INVALID_ENTRY';
             return;
         }
@@ -461,24 +420,10 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
 
     handleChangeInput(event: Event, type: string): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                this.hasInputError = false;
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                this.hasInputError = false;
-            }
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             if (!value) return;
             if (type === 'spid') {
                 this.handleConfirmSPID(value);
@@ -486,9 +431,6 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
                 this.handleConfirmComplimentaryDays(value);
             }
         } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
             this.hasInputError = false;
         }
 
@@ -558,7 +500,7 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
 
     // COMPLIMENTARY DAYS HANDLE
     private handleConfirmComplimentaryDays(value: string) {
-        if (isNaN(Number(value))) {
+        if (Number.isNaN(Number(value))) {
             this.hasInputError = true;
             return;
         }
@@ -622,7 +564,7 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
     // BUS ID HANDLE
     private _handleOnDocumentClick(): void {
         this._document.addEventListener('click', (event: Event) => {
-            const target = event.target || event.srcElement || event.currentTarget;
+            const target = event.target || event.currentTarget;
             const idAttr = target?.['id'];
             const parentNode = target?.['parentNode']?.['className'];
             // console.log('event', event);
@@ -808,7 +750,7 @@ export class FareConsoleSettingComponent implements OnDestroy, OnInit {
             updateCommissionBusIdInformation({
                 payload: {
                     ...this.busIdData,
-                    operator: { ...(this.busIdData.operator || {}), serviceProvider: Number(value) },
+                    operator: { ...this.busIdData.operator, serviceProvider: Number(value) },
                 },
                 msgID: this.busIdData.msgID,
             }),

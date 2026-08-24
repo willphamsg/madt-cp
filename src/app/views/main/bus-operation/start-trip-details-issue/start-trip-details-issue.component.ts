@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { routerUrls } from '@app/app.routes';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -9,7 +9,6 @@ import { Store } from '@ngrx/store';
 import { MsgID, MsgSubID } from '@models';
 import { MqttService } from '@services/mqtt.service';
 import { AppState } from '@store/app.state';
-import { startTrip } from '@store/main/main.reducer';
 import { SoundService } from '@services/sound.service';
 
 @Component({

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -53,7 +53,7 @@ export class BLSInformationComponent implements OnInit, OnDestroy {
 
         this.blsInformation$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
             this.blsInformation = data;
-            if (data && data?.blsList?.length) {
+            if (data?.blsList?.length) {
                 this.isLoading = false;
             } else if (data.status === ResponseStatus.PROGRESS) {
                 this.isLoading = true;
@@ -81,16 +81,17 @@ export class BLSInformationComponent implements OnInit, OnDestroy {
     handleSort(key: string): void {
         this.sort[key] = this.sort[key] === 'asc' ? 'desc' : 'asc';
         const nextParameters = [...this.blsInformation.blsList];
+        nextParameters.sort((a, b) => {
+            const key1 = a[key]?.toUpperCase();
+            const key2 = b[key]?.toUpperCase();
+            const sortResult = key1.localeCompare(key2, undefined, { numeric: true, sensitivity: 'base' });
+            return this.sort[key] === 'asc' ? sortResult : sortResult * -1;
+        });
         this.store.dispatch(
             updateBlsInformation({
                 payload: {
                     ...this.blsInformation,
-                    blsList: nextParameters.sort((a, b) => {
-                        const key1 = a[key]?.toUpperCase();
-                        const key2 = b[key]?.toUpperCase();
-                        const sortResult = key1.localeCompare(key2, undefined, { numeric: true, sensitivity: 'base' });
-                        return this.sort[key] === 'asc' ? sortResult : sortResult * -1;
-                    }),
+                    blsList: nextParameters,
                 },
             }),
         );

@@ -7,6 +7,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter, Router } from '@angular/router';
 import { MqttService } from '@services/mqtt.service';
+import { of } from 'rxjs';
 
 describe('StartTripDetailsIssueComponent', () => {
     let component: StartTripDetailsIssueComponent;
@@ -57,5 +58,13 @@ describe('StartTripDetailsIssueComponent', () => {
         component.handleSettingTrip();
 
         expect(publishSpy).toHaveBeenCalled();
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        const mqttService = TestBed.inject(MqttService);
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { mainTab: { get: 'test' } } } as any;
+        component.ngOnInit();
+        expect(component.topics).toEqual({ mainTab: { get: 'test' } });
     });
 });

@@ -115,8 +115,6 @@
                         class="back-to-top"
                         alt=""
                         (click)="handleButtonSound(); triggerScrollTop()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); triggerScrollTop()"
                     />
                 }
             </div>
@@ -133,8 +131,6 @@
                 class="indicator bus-stop"
                 (click)="handleButtonSound(); handleDisplayFareBusStop()"
                 [ngClass]="{ 'mis-match': fareBusStop?.misMatch, 'full-width': allBusStopList.length <= 3 }"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleDisplayFareBusStop()"
             >
                 <div class="left">
                     <img src="/assets/images/icons/main/fare-bus-stop.svg" alt="" />
@@ -144,6 +140,12 @@
                     <div class="name">{{ fareBusStop?.Busid }} - {{ fareBusStop?.Name }}</div>
                 </div>
                 <div class="right">
+                    @if (fareBusStop?.isUpstage) {
+                        <div class="upstage">
+                            <img src="/assets/images/icons/main/madt-icondefault-alert.svg" alt="upstage" />
+                            Upstage
+                        </div>
+                    }
                     @if (fareBusStop?.autoBls) {
                         <div class="auto">
                             <img src="/assets/images/icons/main/madt-icon-tickstatus.svg" alt="auto" />
@@ -152,7 +154,7 @@
                     }
                     @if (fareBusStop?.manualBls) {
                         <div class="manual">
-                            <img src="/assets/images/icons/main/madt-icondefault-alert.svg" alt="manual" />
+                            <img src="/assets/images/icons/main/radio.svg" alt="manual" />
                             {{ 'MANUAL' | translate }}
                         </div>
                     }
@@ -165,12 +167,7 @@
     @if (displayFareBusStop) {
         <div class="bus-stop-fare-page">
             <div class="page-header full-row">
-                <div
-                    class="button"
-                    (click)="handleButtonSound(); handleCloseBusStopFare()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleCloseBusStopFare()"
-                >
+                <div class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
                     <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                     <span>{{ 'CLOSE' | translate }}</span>
                 </div>
@@ -187,8 +184,6 @@
                                     selected: item?.Busid === selectFareBusStop
                                 }"
                                 (click)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                             >
                                 <div class="left">{{ item.Busid }}</div>
                                 <div class="matd-indicatior">

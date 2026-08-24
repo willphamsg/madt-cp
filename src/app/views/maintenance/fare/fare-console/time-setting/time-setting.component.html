@@ -1,12 +1,5 @@
 <div class="time-setting">
-    <div
-        class="back-button"
-        (click)="handleButtonSound(); goBack()"
-        tabindex="0"
-        (keydown.enter)="handleButtonSound(); goBack()"
-    >
-        {{ 'BACK' | translate }}
-    </div>
+    <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
     <div>
         <h2 class="title">{{ 'SET_TIME' | translate }}</h2>
         <div class="content">
@@ -14,7 +7,7 @@
             <p class="value">{{ fareConsoleSetting.time }}</p>
             <div class="input-group">
                 <p>{{ 'INPUT_TIME' | translate }}</p>
-                <input id="inputField" [attr.aria-label]="'INPUT_TIME' | translate" />
+                <input [attr.aria-label]="'INPUT_TIME' | translate" id="inputField" />
                 @if (hasInputError) {
                     <p class="error">{{ 'INVALID_ENTRY' | translate }}</p>
                 }

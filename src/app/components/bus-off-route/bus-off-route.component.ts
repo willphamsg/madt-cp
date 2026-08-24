@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
-import { DEFAULT_TIMEOUT } from '@models';
 
 import { NotificationSoundDirective } from '@directives/notification-sound.directive';
-import { SoundService } from '@services/sound.service';
+import { AutoTimeoutPopupBase } from '@components/auto-timeout-popup/auto-timeout-popup.base';
 
 @Component({
     selector: 'bus-off-route',
@@ -12,32 +11,4 @@ import { SoundService } from '@services/sound.service';
     templateUrl: './bus-off-route.component.html',
     styleUrl: './bus-off-route.component.scss',
 })
-export class BusOffRouteComponent implements OnDestroy, OnInit {
-    @Input() disabled?: boolean = false;
-    @Input() fullScreen?: boolean = false;
-    @Output() ok: EventEmitter<string> = new EventEmitter<string>();
-
-    intervalId;
-
-    constructor(private readonly soundService: SoundService) {}
-
-    ngOnInit() {
-        clearTimeout(this.intervalId);
-        this.intervalId = setTimeout(() => {
-            this.handleClick();
-        }, DEFAULT_TIMEOUT);
-    }
-
-    handleClick() {
-        this.ok.emit();
-    }
-
-    ngOnDestroy() {
-        // Emit to destroy all active subscriptions
-        clearTimeout(this.intervalId);
-    }
-
-    handleButtonSound(): void {
-        this.soundService.playButton();
-    }
-}
+export class BusOffRouteComponent extends AutoTimeoutPopupBase {}

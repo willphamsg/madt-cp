@@ -1,12 +1,7 @@
 <div class="settings-container">
     @if (step === '') {
         <div class="page-header full-row">
-            <div
-                class="button"
-                (click)="handleButtonSound(); backToMain()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); backToMain()"
-            >
+            <div class="button" (click)="handleButtonSound(); backToMain()">
                 <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
@@ -15,12 +10,7 @@
         <ul>
             <li class="row">
                 <div class="left">{{ 'LANGUAGE' | translate }}</div>
-                <div
-                    class="right"
-                    (click)="handleButtonSound(); setStep('language')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); setStep('language')"
-                >
+                <div class="right" (click)="handleButtonSound(); setStep('language')">
                     <p class="value">{{ currentLanguage | translate }}</p>
                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                 </div>
@@ -30,12 +20,7 @@
 
     @if (step === 'lightMode') {
         <div class="page-header full-row">
-            <div
-                class="button"
-                (click)="handleButtonSound(); backToMain()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); backToMain()"
-            >
+            <div class="button" (click)="handleButtonSound(); backToMain()">
                 <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
@@ -55,23 +40,13 @@
             </div>
             <p class="confirm-msg">{{ 'PRESS_ENTER_CONFIRM' | translate }}</p>
             <div class="btn-group">
-                <div
-                    class="btn btn-cancel"
-                    (click)="handleButtonSound(); goBack()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); goBack()"
-                >
+                <div class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
                 </div>
                 <div
                     class="btn btn-confirm"
                     (click)="
-                        handleButtonSound();
-                        toggleDarkMode(themeMode === themeType.LIGHT ? themeType.DARK : themeType.LIGHT)
-                    "
-                    tabindex="0"
-                    (keydown.enter)="
                         handleButtonSound();
                         toggleDarkMode(themeMode === themeType.LIGHT ? themeType.DARK : themeType.LIGHT)
                     "
@@ -86,12 +61,7 @@
     @if (step === 'language') {
         @if (languageStep === 1) {
             <div class="page-header full-row">
-                <div
-                    class="button"
-                    (click)="handleButtonSound(); backToMain()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToMain()"
-                >
+                <div class="button" (click)="handleButtonSound(); backToMain()">
                     <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                     <span>{{ 'CLOSE' | translate }}</span>
                 </div>
@@ -104,8 +74,6 @@
                             class="language-opt"
                             [ngClass]="{ active: currentLanguage === lang.id }"
                             (click)="handleButtonSound(); handleSelectLang(lang.id)"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleSelectLang(lang.id)"
                         >
                             {{ lang.label }}
                         </p>
@@ -115,12 +83,7 @@
         }
         @if (languageStep === 2) {
             <div class="page-header full-row">
-                <div
-                    class="button"
-                    (click)="handleButtonSound(); backToMain()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToMain()"
-                >
+                <div class="button" (click)="handleButtonSound(); backToMain()">
                     <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                     <span>{{ 'CLOSE' | translate }}</span>
                 </div>
@@ -131,21 +94,11 @@
                 </div>
                 <p class="confirm-msg">{{ 'PRESS_ENTER_CONFIRM' | translate }}</p>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-cancel"
-                        (click)="handleButtonSound(); onLanguageChange(false)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); onLanguageChange(false)"
-                    >
+                    <div class="btn btn-cancel" (click)="handleButtonSound(); onLanguageChange(false)">
                         <img src="/assets/images/icons/main/close.svg" alt="" />
                         <span>{{ 'CANCEL' | translate }}</span>
                     </div>
-                    <div
-                        class="btn btn-confirm"
-                        (click)="handleButtonSound(); onLanguageChange(true)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); onLanguageChange(true)"
-                    >
+                    <div class="btn btn-confirm" (click)="handleButtonSound(); onLanguageChange(true)">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'CONFIRM' | translate }}</span>
                     </div>

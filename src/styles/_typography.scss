@@ -99,6 +99,18 @@ h6,
     font-size: 18px;
 }
 
+// Links
+// a {
+
+//     &:not(.mat-button):not(.mat-raised-button):not(.mat-flat-button):not(.mat-stroked-button):not(.mat-icon-button):not(
+//             .mat-fab
+//         ):not(.mat-mini-fab) {
+//         &:hover,
+//         &:active {
+//         }
+//     }
+// }
+
 // Abbr
 abbr {
     cursor: help;

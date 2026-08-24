@@ -20,6 +20,9 @@ module.exports = tseslint.config(
             '@typescript-eslint/no-explicit-any': 'warn',
             '@typescript-eslint/no-unused-vars': 'warn',
             '@typescript-eslint/no-var-requires': 'off',
+            // typescript-eslint v8 renamed the rule above; keep both disabled
+            // so CommonJS config files (karma.conf.js, eslint.*.js) can use require().
+            '@typescript-eslint/no-require-imports': 'off',
         },
     },
 );

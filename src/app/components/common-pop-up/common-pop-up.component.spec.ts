@@ -103,14 +103,14 @@ describe('CommonPopUp', () => {
     });
 
     describe('Event Handlers', () => {
-        it('should emit confirm on handleConfirm', () => {
+        it('should emit onConfirm on handleConfirm', () => {
             const emitSpy = spyOn(component.confirm, 'emit');
             component.handleConfirm();
             expect(emitSpy).toHaveBeenCalled();
         });
 
-        it('should emit cancel on handleCancel', () => {
-            const emitSpy = spyOn(component.cancel, 'emit');
+        it('should emit onCancel on handleCancel', () => {
+            const emitSpy = spyOn(component.cancelled, 'emit');
             component.handleCancel();
             expect(emitSpy).toHaveBeenCalled();
         });

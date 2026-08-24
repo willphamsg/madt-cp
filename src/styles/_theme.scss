@@ -4,6 +4,9 @@
 @include mat.elevation-classes();
 @include mat.app-background();
 
+// // @import '../app/views/bus-operation/end-shift/end-shift.theme';
+// // @import '../app/views/bus-operation/external-devices/external-devices.theme';
+
 $lta-white: (
     500: white,
     contrast: (
@@ -82,6 +85,32 @@ $md-dark-secondary: (
         A700: #000000,
     ),
 );
+
+// @mixin lta-core-theme($light-theme) {
+//     // // Theming for lta components
+
+//     // @include lta-device-operation-layout-theme($light-theme);
+//     // @include lta-cv-operation-menu-theme($light-theme);
+//     // @include lta-show-cv-status-theme($light-theme);
+//     // @include lta-set-cv-entry-exit-theme($light-theme);
+//     // @include lta-cv-mode-control-theme($light-theme);
+//     // @include lta-power-all-cv-theme($light-theme);
+//     // @include lta-reset-all-cv-theme($light-theme);
+//     // @include lta-cv-power-control-theme($light-theme);
+//     // @include lta-manual-location-theme($light-theme);
+//     // @include lta-auto-location-theme($light-theme);
+//     // @include lta-inspector-ticket-theme($light-theme);
+//     // @include lta-daily-trip-log-theme($light-theme);
+//     // @include lta-test-receipt-theme($light-theme);
+//     // @include lta-printer-on-off-theme($light-theme);
+//     // @include lta-printer-status-theme($light-theme);
+
+//     // @include lta-bus-operation-layout-theme($light-theme);
+//     // @include lta-bus-operation-menu-theme($light-theme);
+//     // @include lta-start-trip-theme($light-theme);
+//     // @include lta-end-shift-theme($light-theme);
+//     // @include lta-external-devices-theme($light-theme);
+// }
 
 // Angular Material typography
 $regular-font-family: "'Inter', sans-serif";

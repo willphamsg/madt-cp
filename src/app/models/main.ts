@@ -23,6 +23,7 @@ export interface IFareBusStop {
     misMatch?: boolean;
     manualBls?: boolean;
     autoBls?: boolean;
+    isUpstage?: boolean;
     idx?: number; // Optional index for tracking position in lists
 }
 

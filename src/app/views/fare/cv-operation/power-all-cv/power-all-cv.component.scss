@@ -1,0 +1,29 @@
+@use 'variables' as *;
+@use 'dedup-mixins' as *;
+
+.power-all-cv-on {
+    height: 100%;
+
+    .page-header {
+        display: flex;
+        justify-content: flex-end;
+
+        .button {
+            @include flex-center;
+        }
+
+        h2 {
+            font-weight: $font-weight-bold;
+        }
+
+        span {
+            padding-left: 5px;
+            font-size: 28px;
+            font-weight: $font-weight-bold;
+        }
+    }
+
+    .dialog {
+        @include error-confirm-dialog-styles($include-error-icon: false);
+    }
+}

@@ -1,12 +1,5 @@
 <div class="date-setting">
-    <div
-        class="back-button"
-        (click)="handleButtonSound(); goBack()"
-        tabindex="0"
-        (keydown.enter)="handleButtonSound(); goBack()"
-    >
-        {{ 'BACK' | translate }}
-    </div>
+    <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
     <div>
         <h2 class="title">{{ 'DATE_TIME' | translate }}</h2>
         <div class="content">
@@ -19,29 +12,32 @@
                             <input
                                 type="text"
                                 id="day"
+                                data-order="1"
+                                [attr.aria-label]="'DAY' | translate"
                                 placeholder="--"
                                 (click)="handleButtonSound(); dateTimeInputType = 'day'"
-                                tabindex="1"
-                                [attr.aria-label]="'INPUT_DATE' | translate"
+                                tabindex="0"
                             />
                             <div>/</div>
                             <input
                                 type="text"
                                 id="month"
+                                data-order="2"
+                                [attr.aria-label]="'MONTH' | translate"
                                 placeholder="--"
                                 (click)="handleButtonSound(); dateTimeInputType = 'month'"
-                                tabindex="2"
-                                [attr.aria-label]="'INPUT_DATE' | translate"
+                                tabindex="0"
                             />
                             <div>/</div>
                             <input
                                 type="text"
                                 id="year"
                                 class="year"
+                                data-order="3"
+                                [attr.aria-label]="'YEAR' | translate"
                                 placeholder="----"
                                 (click)="handleButtonSound(); dateTimeInputType = 'year'"
-                                tabindex="3"
-                                [attr.aria-label]="'INPUT_DATE' | translate"
+                                tabindex="0"
                             />
                         </div>
                         @if (!!dateTimeErrorMessage) {
@@ -54,28 +50,31 @@
                             <input
                                 type="text"
                                 id="hour"
+                                data-order="4"
+                                [attr.aria-label]="'HOUR' | translate"
                                 placeholder="--"
                                 (click)="handleButtonSound(); dateTimeInputType = 'hour'"
-                                tabindex="4"
-                                [attr.aria-label]="'INPUT_TIME' | translate"
+                                tabindex="0"
                             />
                             <div>:</div>
                             <input
                                 type="text"
                                 id="minute"
+                                data-order="5"
+                                [attr.aria-label]="'MINUTE' | translate"
                                 placeholder="--"
                                 (click)="handleButtonSound(); dateTimeInputType = 'minute'"
-                                tabindex="5"
-                                [attr.aria-label]="'INPUT_TIME' | translate"
+                                tabindex="0"
                             />
                             <div>:</div>
                             <input
                                 type="text"
                                 id="second"
+                                data-order="6"
+                                [attr.aria-label]="'SECOND' | translate"
                                 placeholder="--"
                                 (click)="handleButtonSound(); dateTimeInputType = 'second'"
-                                tabindex="6"
-                                [attr.aria-label]="'INPUT_TIME' | translate"
+                                tabindex="0"
                             />
                         </div>
                         @if (hasTimeInputError) {

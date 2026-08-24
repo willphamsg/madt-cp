@@ -17,27 +17,27 @@
         <h1 class="text-center text-bold">{{ 'VERSION_INFO' | translate }}</h1>
         <table class="custom-table ver-table">
             <tr>
-                <td>{{ 'SOFTWARE' | translate }}:</td>
+                <th scope="row">{{ 'SOFTWARE' | translate }}:</th>
                 <td>{{ bootUpdata.softwareVersion }}</td>
             </tr>
             <tr>
-                <td>{{ 'OS_VERSION' | translate }}:</td>
+                <th scope="row">{{ 'OS_VERSION' | translate }}:</th>
                 <td>{{ bootUpdata.osVersion }}</td>
             </tr>
             <tr>
-                <td>{{ ('DATE' | translate).toUpperCase() }}:</td>
+                <th scope="row">{{ ('DATE' | translate).toUpperCase() }}:</th>
                 <td>{{ bootUpdata.releaseDate }}</td>
             </tr>
             <tr>
-                <td>{{ ('SN' | translate).toUpperCase() }}:</td>
+                <th scope="row">{{ ('SN' | translate).toUpperCase() }}:</th>
                 <td>{{ bootUpdata.serialNumber }}</td>
             </tr>
             <tr>
-                <td>{{ ('SERVICE' | translate).toUpperCase() }}:</td>
+                <th scope="row">{{ ('SERVICE' | translate).toUpperCase() }}:</th>
                 <td>{{ bootUpdata.service }}</td>
             </tr>
             <tr>
-                <td>{{ ('BUS_ID' | translate).toUpperCase() }}:</td>
+                <th scope="row">{{ ('BUS_ID' | translate).toUpperCase() }}:</th>
                 <td>{{ bootUpdata.busId }}</td>
             </tr>
         </table>

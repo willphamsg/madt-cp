@@ -6,10 +6,14 @@ import { FareBusStopMode } from './fare-bus-stop-mode.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
+import { MqttService } from '@services/mqtt.service';
+import { MsgID } from '@models';
+import { of } from 'rxjs';
 
 describe('FareBusStopMode', () => {
     let component: FareBusStopMode;
     let fixture: ComponentFixture<FareBusStopMode>;
+    let mqttService: MqttService;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -19,6 +23,7 @@ describe('FareBusStopMode', () => {
         }).compileComponents();
         fixture = TestBed.createComponent(FareBusStopMode);
         component = fixture.componentInstance;
+        mqttService = TestBed.inject(MqttService);
         fixture.detectChanges();
     });
 
@@ -68,10 +73,11 @@ describe('FareBusStopMode', () => {
     });
 
     describe('mappingPosnStatus', () => {
-        it('should execute without errors', () => {
-            expect(() => {
-                (component as any).mappingPosnStatus();
-            }).not.toThrow();
+        it('should map known values and default to empty string', () => {
+            expect(component.mappingPosnStatus(1)).toBe('FMS');
+            expect(component.mappingPosnStatus(2)).toBe('FARE_SYSTEM');
+            expect(component.mappingPosnStatus(3)).toBe('NONE');
+            expect(component.mappingPosnStatus(99)).toBe('');
         });
     });
 
@@ -104,6 +110,48 @@ describe('FareBusStopMode', () => {
             expect(() => {
                 (component as any).handleRetainMessages();
             }).not.toThrow();
+        });
+
+        it('should set mode from fareBusStopMode.mode when mode is not already set', () => {
+            component.mode = 0;
+            component.fareBusStopMode = { mode: 2 };
+            (component as any).handleRetainMessages();
+            expect(component.mode).toBe(2);
+        });
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { fareTab: { get: 'fare/get' } } } as any;
+        component.ngOnInit();
+        expect((component as any).topics).toEqual({ fareTab: { get: 'fare/get' } });
+    });
+
+    describe('fareBusStopMode$ subscription', () => {
+        it('should not schedule a timeout when data.timeout is not set', () => {
+            const publishSpy = spyOn(mqttService, 'publishWithMessageFormat');
+            (component as any).fareBusStopMode$ = of({});
+            component.ngOnInit();
+            expect(publishSpy).not.toHaveBeenCalled();
+        });
+
+        it('should set finaleMode when msgID is FARE_BUS_STOP_MODE and finaleMode is unset', () => {
+            (component as any).fareBusStopMode$ = of({ msgID: MsgID.FARE_BUS_STOP_MODE, mode: 2 });
+            component.ngOnInit();
+            expect(component.finaleMode).toBe(2);
+        });
+
+        it('should set finaleMode when msgID is FARE_BUS_STOP_MODE_SUBMIT', () => {
+            (component as any).fareBusStopMode$ = of({ msgID: MsgID.FARE_BUS_STOP_MODE_SUBMIT, mode: 1 });
+            component.ngOnInit();
+            expect(component.finaleMode).toBe(1);
+        });
+
+        it('should not set finaleMode for an unrelated msgID', () => {
+            component.finaleMode = 0;
+            (component as any).fareBusStopMode$ = of({ msgID: MsgID.FARE_BACK_BUTTON, mode: 2 });
+            component.ngOnInit();
+            expect(component.finaleMode).toBe(0);
         });
     });
 });

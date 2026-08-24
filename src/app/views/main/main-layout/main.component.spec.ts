@@ -210,7 +210,7 @@ describe('MainComponent', () => {
     describe('MQTT connection wiring', () => {
         it('subscribes to all 7 main-tab topics once connected & config loaded', () => {
             expect(mockMqttService.subscribe).toHaveBeenCalledTimes(7);
-            expect((component as any).mqttSubscriptions.length).toBe(7);
+            expect((component as any).mqttSubscriptions).toHaveSize(7);
         });
 
         it('does not subscribe when not connected', () => {
@@ -739,7 +739,7 @@ describe('MainComponent', () => {
                 { cvNumber: 1, statuses: [CvStatusType.FREE] },
                 { cvNumber: 2, statuses: [CvStatusType.ENTRY] },
             ]);
-            expect(component.cvLists.length).toBe(2);
+            expect(component.cvLists).toHaveSize(2);
         });
 
         it('handles CV_ICONS and sets active icon / label / error, then clears after timeout', () => {
@@ -772,8 +772,9 @@ describe('MainComponent', () => {
         it('handles UPDATE_FARE_BUS_STOP via handleMainDataMessages', () => {
             component.fareBusStopList = [{ Busid: 'a', Name: 'A' } as any];
             expect(() =>
-                fireMain(notifyHeader(MsgID.UPDATE_FARE_BUS_STOP), { index: 0, manualBls: true }),
+                fireMain(notifyHeader(MsgID.UPDATE_FARE_BUS_STOP), { index: 0, manualBls: true, isUpstage: true }),
             ).not.toThrow();
+            expect(store.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({ manualBls: true, isUpstage: true }));
         });
 
         it('handles UPDATE_FMS_BUS_STOP via handleMainDataMessages', () => {
@@ -1128,7 +1129,10 @@ describe('MainComponent', () => {
         });
 
         it('MAIN_UP_DOWN_BTN dispatches when a bus stop id is present', () => {
-            expect(() => fireMain(responseHeader(MsgID.MAIN_UP_DOWN_BTN), { busStopId: 'a', index: 0 })).not.toThrow();
+            expect(() =>
+                fireMain(responseHeader(MsgID.MAIN_UP_DOWN_BTN), { busStopId: 'a', index: 0, isUpstage: true }),
+            ).not.toThrow();
+            expect(store.dispatch).toHaveBeenCalledWith(jasmine.objectContaining({ isUpstage: true }));
         });
 
         it('MAIN_UP_DOWN_BTN is a no-op without a bus stop id or index', () => {
@@ -1181,7 +1185,7 @@ describe('MainComponent', () => {
     describe('cv-tab MQTT callback (index 1)', () => {
         it('updates cvLists on CV_STATUS', () => {
             fireCv(notifyHeader(MsgID.CV_STATUS), [{ cvNumber: 1, statuses: [CvStatusType.ENTRY] }]);
-            expect(component.cvLists.length).toBe(1);
+            expect(component.cvLists).toHaveSize(1);
         });
 
         it('ignores non CV_STATUS messages', () => {

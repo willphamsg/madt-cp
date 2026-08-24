@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { updateActiveCVs } from '@app/store/main/main.reducer';
 import { MqttService } from '@services/mqtt.service';
 import { SoundService } from '@services/sound.service';
 import { Store } from '@ngrx/store';

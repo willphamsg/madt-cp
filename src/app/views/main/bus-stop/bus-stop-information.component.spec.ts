@@ -59,6 +59,22 @@ describe('BusStopInformationComponent', () => {
         }).not.toThrow();
     });
 
+    describe('fare bus stop indicators', () => {
+        it('renders the upstage badge when fareBusStop.isUpstage is true', () => {
+            component.fareBusStop = { Busid: '1', Name: 'Stop 1', isUpstage: true } as any;
+            fixture.detectChanges();
+            const upstageBadge = fixture.nativeElement.querySelector('.upstage');
+            expect(upstageBadge).toBeTruthy();
+            expect(upstageBadge.textContent).toContain('Upstage');
+        });
+
+        it('does not render the upstage badge when fareBusStop.isUpstage is falsy', () => {
+            component.fareBusStop = { Busid: '1', Name: 'Stop 1' } as any;
+            fixture.detectChanges();
+            expect(fixture.nativeElement.querySelector('.upstage')).toBeFalsy();
+        });
+    });
+
     describe('getNowNextDataById', () => {
         it('should return null if id is not found', () => {
             const data = [{ Busid: '1' }, { Busid: '2' }];

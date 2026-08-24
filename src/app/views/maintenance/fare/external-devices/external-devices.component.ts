@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -122,15 +122,15 @@ export class ExternalDevicesComponent implements OnInit, OnDestroy {
     // }
 
     fieldSuccess(field: string) {
-        return this.externalDevices[field] && this.externalDevices[field]['status'] === ResponseStatus.SUCCESS;
+        return this.externalDevices[field]?.['status'] === ResponseStatus.SUCCESS;
     }
 
     fieldError(field: string) {
-        return this.externalDevices[field] && this.externalDevices[field]['status'] === ResponseStatus.ERROR;
+        return this.externalDevices[field]?.['status'] === ResponseStatus.ERROR;
     }
 
     fieldInProgress(field: string) {
-        return this.externalDevices[field] && this.externalDevices[field]['status'] === ResponseStatus.PROGRESS;
+        return this.externalDevices[field]?.['status'] === ResponseStatus.PROGRESS;
     }
     errorText(field: string) {
         return this.externalDevices[field]['message'];

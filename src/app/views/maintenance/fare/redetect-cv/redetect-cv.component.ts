@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -9,7 +9,6 @@ import { IRedetectCV, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { AppState } from '@store/app.state';
 import { redetectCV, updateRedetectCV } from '@store/maintenance/maintenance.reducer';
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
-import { CommonPopUp } from '@components/common-pop-up/common-pop-up.component';
 import { SoundService } from '@services/sound.service';
 
 @Component({

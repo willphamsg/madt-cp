@@ -28,17 +28,12 @@
             [isConfirm]="true"
             [isCancel]="true"
             (confirm)="handleConfirmNewFactor(true)"
-            (cancel)="handleConfirmNewFactor(false)"
+            (cancelled)="handleConfirmNewFactor(false)"
         >
         </common-pop-up>
     } @else {
         <div>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); handleBackToCalibrateBls()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleBackToCalibrateBls()"
-            >
+            <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">
                 {{ 'BACK' | translate }}
             </div>
             <h2 class="title">{{ 'MANUAL_INPUT' | translate }}</h2>
@@ -54,10 +49,10 @@
                 <div class="input-group">
                     <p>{{ 'NEW_BLS_CALIB_FACTOR' | translate }}</p>
                     <input
+                        [attr.aria-label]="'NEW_BLS_CALIB_FACTOR' | translate"
                         id="inputField"
                         [class.hasError]="false"
                         [value]="inputValue"
-                        [attr.aria-label]="'NEW_BLS_CALIB_FACTOR' | translate"
                     />
                 </div>
             </div>

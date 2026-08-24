@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ import { updateManualLogin, manualLogin, outOfService } from '@store/main/main.r
 
 import { NotificationSoundDirective } from '@directives/notification-sound.directive';
 import { SoundService } from '@services/sound.service';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 @Component({
     selector: 'app-login-manual',
@@ -106,35 +107,13 @@ export class LoginManualComponent implements OnInit, OnDestroy {
         const inputField = <HTMLInputElement>document.getElementById(key);
         const start = inputField?.selectionStart || (key === 'inputDutyIdField' ? 4 : 0);
         const end = inputField?.selectionEnd || (key === 'inputDutyIdField' ? 4 : 0);
-
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-                this.removeErrorMessage(key);
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-                this.removeErrorMessage(key);
-            }
-        } else if (target.id === 'enterKey') {
+        const value = applyKeyboardInput(inputField, target, start, end);
+
+        if (target.id === 'enterKey') {
             if (!value) return;
             this.submitValue(value, key);
-
-            // this.inputValue = value;
-            // if (type === 'PIN') {
-            //     this.submitPIN(isMS);
-            // } else {
-            //     this.submitDutyNumber();
-            // }
         } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
             this.removeErrorMessage(key);
         }
 

@@ -5,7 +5,7 @@
     @if ((dagwOperationData.title || dagwOperationData.message) && !isDAGWProcAbortCompleted) {
         <div class="operation-overlay">
             <div class="overlay-hd-bg"></div>
-            <dagw-operation (cancel)="handleCancelDagwOperation()"></dagw-operation>
+            <dagw-operation (cancelled)="handleCancelDagwOperation()"></dagw-operation>
         </div>
     }
     <div class="lang-cont">

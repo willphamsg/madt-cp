@@ -286,6 +286,7 @@ describe('mainReducer', () => {
                     autoBls: true,
                     manualBls: true,
                     misMatch: true,
+                    isUpstage: true,
                 }),
             );
             expect(state.currentFareBusStop?.Busid).toBe('F1');
@@ -293,6 +294,7 @@ describe('mainReducer', () => {
             expect((state.currentFareBusStop as IFareBusStop)?.autoBls).toBe(true);
             expect((state.currentFareBusStop as IFareBusStop)?.manualBls).toBe(true);
             expect((state.currentFareBusStop as IFareBusStop)?.misMatch).toBe(true);
+            expect((state.currentFareBusStop as IFareBusStop)?.isUpstage).toBe(true);
         });
 
         it('should look up by payload in busStopList when idx is -1 (not > -1)', () => {
@@ -309,12 +311,14 @@ describe('mainReducer', () => {
                     autoBls: true,
                     manualBls: true,
                     misMatch: true,
+                    isUpstage: true,
                 }),
             );
             expect(state.currentFareBusStop?.Busid).toBeUndefined();
             expect((state.currentFareBusStop as IFareBusStop)?.autoBls).toBeUndefined();
             expect((state.currentFareBusStop as IFareBusStop)?.manualBls).toBeUndefined();
             expect((state.currentFareBusStop as IFareBusStop)?.misMatch).toBeUndefined();
+            expect((state.currentFareBusStop as IFareBusStop)?.isUpstage).toBeUndefined();
         });
     });
 

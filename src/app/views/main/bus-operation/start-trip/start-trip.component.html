@@ -1,4 +1,102 @@
 <div class class="start-trip-page">
+    <ng-template #fmsDetailRows>
+        <ul>
+            <li class="row">
+                <div class="left">{{ 'SERVICE' | translate }}</div>
+                <div class="right">
+                    <p class="value">
+                        @if (startTripData.fms?.serviceNumber) {
+                            {{ startTripData.fms?.serviceNumber }}
+                            {{ startTripData.fms?.variantName || '' }}
+                        }
+                    </p>
+                </div>
+            </li>
+            <li class="row">
+                <div class="left">{{ 'BUS_STOP' | translate }}</div>
+                <div class="right">
+                    <p class="value">{{ startTripData.fms?.busStop?.['Name'] }}</p>
+                </div>
+            </li>
+            <li class="row">
+                <div class="left">{{ 'DIRECTION' | translate }}</div>
+                <div class="right">
+                    <p class="value">{{ startTripData.fms?.dir }}</p>
+                </div>
+            </li>
+        </ul>
+    </ng-template>
+    <ng-template #fareDetailRows let-serviceEditable="serviceEditable" let-confirmAction="confirmAction">
+        <ul>
+            <li class="row">
+                <div class="left">{{ 'SERVICE' | translate }}</div>
+                <div
+                    class="right"
+                    (click)="handleButtonSound(); serviceEditable && handleChange('service')"
+                    [ngClass]="{
+                        required: !startTripData.fare?.serviceNumber
+                    }"
+                >
+                    <p class="value">
+                        @if (startTripData.fare?.serviceNumber) {
+                            {{ startTripData.fare?.serviceNumber }}
+                            {{ startTripData.fare?.variantName || '' }}
+                        } @else {
+                            {{ 'SELECT_SERVICE' | translate }}
+                        }
+                    </p>
+                    @if (serviceEditable) {
+                        <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                    }
+                </div>
+            </li>
+            <li class="row">
+                <div class="left">{{ 'BUS_STOP' | translate }}</div>
+                <div
+                    class="right"
+                    (click)="handleButtonSound(); handleChange('busStop')"
+                    [ngClass]="{
+                        required: !startTripData.fare?.busStop?.['Name'],
+                        disabled: !startTripData.fare?.serviceNumber
+                    }"
+                >
+                    <p class="value">
+                        @if (startTripData.fare?.busStop?.['Name']) {
+                            {{ startTripData.fare?.busStop?.['Name'] }}
+                        } @else {
+                            {{ 'SELECT_BUS_STOP' | translate }}
+                        }
+                    </p>
+                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
+                </div>
+            </li>
+            <li class="row">
+                <div class="left">{{ 'DIRECTION' | translate }}</div>
+                <div class="right">
+                    <p class="value">{{ startTripData.fare?.dir }}</p>
+                </div>
+            </li>
+        </ul>
+        <div class="btn-group">
+            <button class="btn btn-cancel" (click)="handleButtonSound(); backToBusOperation()">
+                <img src="/assets/images/icons/main/close.svg" alt="" />
+                <span>{{ 'CANCEL' | translate }}</span>
+            </button>
+            <button
+                class="btn btn-confirm"
+                [disabled]="!startTripData.fare?.busStop?.Name || !startTripData.fare?.serviceNumber"
+                (click)="
+                    handleButtonSound();
+                    confirmAction === 'toStep4' ? navigateToStep(4) : handleConfirmStartTrip()
+                "
+            >
+                <img src="/assets/images/icons/main/confirm.svg" alt="" />
+                <span class="text">
+                    {{ 'CONFIRM' | translate }}
+                </span>
+            </button>
+        </div>
+    </ng-template>
     @if (step === 0) {
         @if (startTripData.type === tripTypeDetails.FMS_TRIP_INFO_MISMATCH) {
             <ng-container>
@@ -9,12 +107,7 @@
                     <div class="warning-text">{{ 'UNABLE_TO_FIND_FARE' | translate }}</div>
                 </div>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToBusOperation()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToBusOperation()"
-                    >
+                    <div class="back-button" (click)="handleButtonSound(); backToBusOperation()">
                         {{ 'BACK' | translate }}
                     </div>
                 </div>
@@ -26,31 +119,7 @@
                         </div>
                     </div>
                     <div class="trip-detail-content">
-                        <ul>
-                            <li class="row">
-                                <div class="left">{{ 'SERVICE' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">
-                                        @if (startTripData.fms?.serviceNumber) {
-                                            {{ startTripData.fms?.serviceNumber }}
-                                            {{ startTripData.fms?.variantName || '' }}
-                                        }
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="row">
-                                <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">{{ startTripData.fms?.busStop?.['Name'] }}</p>
-                                </div>
-                            </li>
-                            <li class="row">
-                                <div class="left">{{ 'DIRECTION' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">{{ startTripData.fms?.dir }}</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <ng-container *ngTemplateOutlet="fmsDetailRows"></ng-container>
                         <div class="msg" [innerHTML]="'UNABLE_TO_FIND_FARE_CAPTION' | translate"></div>
                         <div class="btn-group">
                             <button class="btn btn-confirm" (click)="handleButtonSound(); navigateToStep(1)">
@@ -71,12 +140,7 @@
                     <div class="warning-text">{{ 'BUS_STOP_MISMATCH' | translate }}</div>
                 </div>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToBusOperation()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToBusOperation()"
-                    >
+                    <div class="back-button" (click)="handleButtonSound(); backToBusOperation()">
                         {{ 'BACK' | translate }}
                     </div>
                 </div>
@@ -88,31 +152,7 @@
                         </div>
                     </div>
                     <div class="trip-detail-content">
-                        <ul>
-                            <li class="row">
-                                <div class="left">{{ 'SERVICE' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">
-                                        @if (startTripData.fms?.serviceNumber) {
-                                            {{ startTripData.fms?.serviceNumber }}
-                                            {{ startTripData.fms?.variantName || '' }}
-                                        }
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="row">
-                                <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">{{ startTripData.fms?.busStop?.['Name'] }}</p>
-                                </div>
-                            </li>
-                            <li class="row">
-                                <div class="left">{{ 'DIRECTION' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">{{ startTripData.fms?.dir }}</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <ng-container *ngTemplateOutlet="fmsDetailRows"></ng-container>
                         <div class="msg" [innerHTML]="'BUS_STOP_MISMATCH_CAPTION' | translate"></div>
                         <div class="btn-group">
                             <button class="btn btn-confirm" (click)="handleButtonSound(); handleSettingFareDetails()">
@@ -130,12 +170,7 @@
         @if (startTripData.type === tripTypeDetails.FMS_VALID_INFO) {
             <ng-container>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToBusOperation()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToBusOperation()"
-                    >
+                    <div class="back-button" (click)="handleButtonSound(); backToBusOperation()">
                         {{ 'BACK' | translate }}
                     </div>
                 </div>
@@ -147,31 +182,7 @@
                         </div>
                     </div>
                     <div class="trip-detail-content">
-                        <ul>
-                            <li class="row">
-                                <div class="left">{{ 'SERVICE' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">
-                                        @if (startTripData.fms?.serviceNumber) {
-                                            {{ startTripData.fms?.serviceNumber }}
-                                            {{ startTripData.fms?.variantName || '' }}
-                                        }
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="row">
-                                <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">{{ startTripData.fms?.busStop?.['Name'] }}</p>
-                                </div>
-                            </li>
-                            <li class="row">
-                                <div class="left">{{ 'DIRECTION' | translate }}</div>
-                                <div class="right">
-                                    <p class="value">{{ startTripData.fms?.dir }}</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <ng-container *ngTemplateOutlet="fmsDetailRows"></ng-container>
                         <div class="btn-group">
                             <button
                                 class="btn btn-confirm"
@@ -195,74 +206,12 @@
                     </div>
                 </div>
                 <div class="trip-detail-content">
-                    <ul>
-                        <li class="row">
-                            <div class="left">{{ 'SERVICE' | translate }}</div>
-                            <div
-                                class="right"
-                                (click)="handleButtonSound(); handleChange('service')"
-                                [ngClass]="{
-                                    required: !startTripData.fare?.serviceNumber
-                                }"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChange('service')"
-                            >
-                                <p class="value">
-                                    @if (startTripData.fare?.serviceNumber) {
-                                        {{ startTripData.fare?.serviceNumber }}
-                                        {{ startTripData.fare?.variantName || '' }}
-                                    } @else {
-                                        {{ 'SELECT_SERVICE' | translate }}
-                                    }
-                                </p>
-                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                            <div
-                                class="right"
-                                (click)="handleButtonSound(); handleChange('busStop')"
-                                [ngClass]="{
-                                    required: !startTripData.fare?.busStop?.['Name'],
-                                    disabled: !startTripData.fare?.serviceNumber
-                                }"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChange('busStop')"
-                            >
-                                <p class="value">
-                                    @if (startTripData.fare?.busStop?.['Name']) {
-                                        {{ startTripData.fare?.busStop?.['Name'] }}
-                                    } @else {
-                                        {{ 'SELECT_BUS_STOP' | translate }}
-                                    }
-                                </p>
-                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="left">{{ 'DIRECTION' | translate }}</div>
-                            <div class="right">
-                                <p class="value">{{ startTripData.fare?.dir }}</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="btn-group">
-                        <button class="btn btn-cancel" (click)="handleButtonSound(); backToBusOperation()">
-                            <img src="/assets/images/icons/main/close.svg" alt="" />
-                            <span>{{ 'CANCEL' | translate }}</span>
-                        </button>
-                        <button
-                            class="btn btn-confirm"
-                            [disabled]="!startTripData.fare?.busStop?.Name || !startTripData.fare?.serviceNumber"
-                            (click)="handleButtonSound(); navigateToStep(4)"
-                        >
-                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                            <span class="text">
-                                {{ 'CONFIRM' | translate }}
-                            </span>
-                        </button>
-                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="
+                            fareDetailRows;
+                            context: { serviceEditable: true, confirmAction: 'toStep4' }
+                        "
+                    ></ng-container>
                 </div>
             </div>
         } @else if (startTripData.type === tripTypeDetails.FMS_TRIP_INFO_MISMATCH) {
@@ -274,74 +223,12 @@
                     </div>
                 </div>
                 <div class="trip-detail-content">
-                    <ul>
-                        <li class="row">
-                            <div class="left">{{ 'SERVICE' | translate }}</div>
-                            <div
-                                class="right"
-                                (click)="handleButtonSound(); handleChange('service')"
-                                [ngClass]="{
-                                    required: !startTripData.fare?.serviceNumber
-                                }"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChange('service')"
-                            >
-                                <p class="value">
-                                    @if (startTripData.fare?.serviceNumber) {
-                                        {{ startTripData.fare?.serviceNumber }}
-                                        {{ startTripData.fare?.variantName || '' }}
-                                    } @else {
-                                        {{ 'SELECT_SERVICE' | translate }}
-                                    }
-                                </p>
-                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                            <div
-                                class="right"
-                                (click)="handleButtonSound(); handleChange('busStop')"
-                                [ngClass]="{
-                                    required: !startTripData.fare?.busStop?.['Name'],
-                                    disabled: !startTripData.fare?.serviceNumber
-                                }"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChange('busStop')"
-                            >
-                                <p class="value">
-                                    @if (startTripData.fare?.busStop?.['Name']) {
-                                        {{ startTripData.fare?.busStop?.['Name'] }}
-                                    } @else {
-                                        {{ 'SELECT_BUS_STOP' | translate }}
-                                    }
-                                </p>
-                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="left">{{ 'DIRECTION' | translate }}</div>
-                            <div class="right">
-                                <p class="value">{{ startTripData.fare?.dir }}</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="btn-group">
-                        <button class="btn btn-cancel" (click)="handleButtonSound(); backToBusOperation()">
-                            <img src="/assets/images/icons/main/close.svg" alt="" />
-                            <span>{{ 'CANCEL' | translate }}</span>
-                        </button>
-                        <button
-                            class="btn btn-confirm"
-                            [disabled]="!startTripData.fare?.busStop?.Name || !startTripData.fare?.serviceNumber"
-                            (click)="handleButtonSound(); handleConfirmStartTrip()"
-                        >
-                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                            <span class="text">
-                                {{ 'CONFIRM' | translate }}
-                            </span>
-                        </button>
-                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="
+                            fareDetailRows;
+                            context: { serviceEditable: true, confirmAction: 'confirm' }
+                        "
+                    ></ng-container>
                 </div>
             </div>
         } @else if (startTripData.type === tripTypeDetails.FMS_BUS_STOP_MISMATCH) {
@@ -353,70 +240,12 @@
                     </div>
                 </div>
                 <div class="trip-detail-content">
-                    <ul>
-                        <li class="row">
-                            <div class="left">{{ 'SERVICE' | translate }}</div>
-                            <div
-                                class="right"
-                                [ngClass]="{
-                                    required: !startTripData.fare?.serviceNumber
-                                }"
-                            >
-                                <p class="value">
-                                    @if (startTripData.fare?.serviceNumber) {
-                                        {{ startTripData.fare?.serviceNumber }}
-                                        {{ startTripData.fare?.variantName || '' }}
-                                    } @else {
-                                        {{ 'SELECT_SERVICE' | translate }}
-                                    }
-                                </p>
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                            <div
-                                class="right"
-                                (click)="handleButtonSound(); handleChange('busStop')"
-                                [ngClass]="{
-                                    required: !startTripData.fare?.busStop?.['Name'],
-                                    disabled: !startTripData.fare?.serviceNumber
-                                }"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChange('busStop')"
-                            >
-                                <p class="value">
-                                    @if (startTripData.fare?.busStop?.['Name']) {
-                                        {{ startTripData.fare?.busStop?.['Name'] }}
-                                    } @else {
-                                        {{ 'SELECT_BUS_STOP' | translate }}
-                                    }
-                                </p>
-                                <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                            </div>
-                        </li>
-                        <li class="row">
-                            <div class="left">{{ 'DIRECTION' | translate }}</div>
-                            <div class="right">
-                                <p class="value">{{ startTripData.fare?.dir }}</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="btn-group">
-                        <button class="btn btn-cancel" (click)="handleButtonSound(); backToBusOperation()">
-                            <img src="/assets/images/icons/main/close.svg" alt="" />
-                            <span>{{ 'CANCEL' | translate }}</span>
-                        </button>
-                        <button
-                            class="btn btn-confirm"
-                            [disabled]="!startTripData.fare?.busStop?.Name || !startTripData.fare?.serviceNumber"
-                            (click)="handleButtonSound(); handleConfirmStartTrip()"
-                        >
-                            <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                            <span class="text">
-                                {{ 'CONFIRM' | translate }}
-                            </span>
-                        </button>
-                    </div>
+                    <ng-container
+                        *ngTemplateOutlet="
+                            fareDetailRows;
+                            context: { serviceEditable: false, confirmAction: 'confirm' }
+                        "
+                    ></ng-container>
                 </div>
             </div>
         }
@@ -424,14 +253,7 @@
 
     @if (step === 2) {
         <div class="page-header">
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); navigateToStep(1)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); navigateToStep(1)"
-            >
-                {{ 'BACK' | translate }}
-            </div>
+            <div class="back-button" (click)="handleButtonSound(); navigateToStep(1)">{{ 'BACK' | translate }}</div>
         </div>
         @if (currentValueChange === 'busStop') {
             <div class="bus-stop">
@@ -456,8 +278,6 @@
                                                 selected: selectedBusStop === busStop.Busid
                                             }"
                                             (click)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
                                         >
                                             {{ busStop.Name }}
                                         </li>
@@ -489,7 +309,7 @@
                 @if (services.length) {
                     <div class="search-group">
                         <img src="/assets/images/svg/search.svg" alt="search" />
-                        <input id="inputField" [attr.aria-label]="'SELECT_SERVICES' | translate" />
+                        <input id="inputField" [attr.aria-label]="'SEARCH' | translate" />
                     </div>
                 }
                 <div class="content">
@@ -512,8 +332,6 @@
                                                 selected: selectedService === service
                                             }"
                                             (click)="handleButtonSound(); handleSelectService(service)"
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); handleSelectService(service)"
                                         >
                                             {{ service.serviceNumber }} - {{ service.variantName }}
                                         </li>
@@ -544,14 +362,7 @@
 
     @if (step === 3) {
         <div class="page-header">
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); navigateToStep(2)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); navigateToStep(2)"
-            >
-                {{ 'BACK' | translate }}
-            </div>
+            <div class="back-button" (click)="handleButtonSound(); navigateToStep(2)">{{ 'BACK' | translate }}</div>
         </div>
         <div class="service-input">
             <div class="content">
@@ -560,7 +371,7 @@
                 </div>
                 <div class="input-group">
                     <p>{{ 'SERVICE_ID' | translate }}</p>
-                    <input id="inputField" [attr.aria-label]="'SERVICE_ID' | translate" />
+                    <input [attr.aria-label]="'SERVICE_ID' | translate" id="inputField" />
                     @if (manualServiceIdError || startTripData.status === ResponseStatus.ERROR) {
                         <p class="text-error">
                             {{ 'ERROR_SERVICE_ID_INVALID' | translate }}

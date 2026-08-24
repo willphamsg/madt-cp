@@ -22,7 +22,7 @@ module.exports = function karmaConfig(config) {
         coverageReporter: {
             dir: require('path').join(__dirname, './coverage/madt'),
             subdir: '.',
-            reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }],
+            reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly' }, { type: 'cobertura' }],
             check: {
                 global: {
                     statements: 80,

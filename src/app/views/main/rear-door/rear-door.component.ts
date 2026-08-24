@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
-import { updateActiveCVs } from '@app/store/main/main.reducer';
-
 import { routerUrls } from '@app/app.routes';
 import { MsgID, MsgSubID } from '@models';
 import { MqttService } from '@services/mqtt.service';

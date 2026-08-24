@@ -8,7 +8,7 @@
                 [isConfirm]="true"
                 [isCancel]="true"
                 (confirm)="handleDeleteParameter()"
-                (cancel)="handleClickBack()"
+                (cancelled)="handleClickBack()"
             >
             </common-pop-up>
         } @else {
@@ -24,8 +24,6 @@
                                     [ngClass]="{
                                         required: !fareConsoleSetting.deckType.label
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/deck-type')"
                                 >
                                     @if (fareConsoleSetting.deckType.label) {
                                         <p class="value">{{ fareConsoleSetting.deckType.label | translate }}</p>
@@ -43,8 +41,6 @@
                                     [ngClass]="{
                                         required: !fareConsoleSetting.fareBusStopMode
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
                                 >
                                     @if (!!fareConsoleSetting.fareBusStopMode) {
                                         <p class="value">
@@ -67,8 +63,6 @@
                                     [ngClass]="{
                                         required: !fareConsoleSetting.dateTime
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/date-setting')"
                                 >
                                     @if (fareConsoleSetting.dateTime) {
                                         <p class="value">
@@ -88,8 +82,6 @@
                                     [ngClass]="{
                                         required: !fareConsoleSetting.busId
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/bus-id')"
                                 >
                                     @if (fareConsoleSetting.busId) {
                                         <p class="value">{{ fareConsoleSetting.busId }}</p>
@@ -107,8 +99,6 @@
                                     [ngClass]="{
                                         required: !fareConsoleSetting.complimentaryDays
                                     }"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/complimentary-day')"
                                 >
                                     @if (fareConsoleSetting.complimentaryDays) {
                                         <p class="value">{{ fareConsoleSetting.complimentaryDays }}</p>

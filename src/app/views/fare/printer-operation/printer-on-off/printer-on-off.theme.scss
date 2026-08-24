@@ -1,0 +1,19 @@
+@use 'variables' as *;
+
+@mixin lta-printer-on-off-theme($light-theme: false) {
+    @if $light-theme {
+        .printer-on,
+        .printer-off {
+            color: $black;
+
+            .back-button {
+                background-color: #3e515b !important;
+                color: $white !important;
+
+                &::before {
+                    background-color: #3e515b !important;
+                }
+            }
+        }
+    }
+}

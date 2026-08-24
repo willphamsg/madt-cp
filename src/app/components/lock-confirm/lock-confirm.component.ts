@@ -14,7 +14,7 @@ export class LockConfirmPopUp {
     @Input() mqttTopic: string = '';
     @Input() fullScreen?: boolean = false;
     @Output() confirm: EventEmitter<string> = new EventEmitter<string>();
-    @Output() cancel: EventEmitter<string> = new EventEmitter<string>();
+    @Output() cancelled: EventEmitter<string> = new EventEmitter<string>();
 
     constructor(private readonly soundService: SoundService) {}
 
@@ -23,7 +23,7 @@ export class LockConfirmPopUp {
     }
 
     handleCancel() {
-        this.cancel.emit();
+        this.cancelled.emit();
     }
 
     handleButtonSound(): void {

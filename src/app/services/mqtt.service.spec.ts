@@ -511,7 +511,7 @@ describe('MqttService', () => {
             const messageOnCalls = (fakeClient.on as jasmine.Spy).calls
                 .allArgs()
                 .filter((args) => args[0] === 'message');
-            expect(messageOnCalls.length).toBe(1);
+            expect(messageOnCalls).toHaveSize(1);
         });
 
         it('logs a subscription error when the broker reports one', async () => {
@@ -635,7 +635,7 @@ describe('MqttService', () => {
             service.unsubscribe('MADT/UpdateMainTab', 'a');
 
             expect(fakeClient.unsubscribe).not.toHaveBeenCalled();
-            expect((service as any).topicHandlers['MADT/UpdateMainTab/WILL'].length).toBe(1);
+            expect((service as any).topicHandlers['MADT/UpdateMainTab/WILL']).toHaveSize(1);
         });
 
         it('unsubscribes from the broker once the last handler for a topicKey is removed', async () => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, takeUntil, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -45,7 +45,7 @@ export class DisplayAuditComponent implements OnInit, OnDestroy {
         this.auditRegistration$.pipe(takeUntil(this.destroy$)).subscribe((data) => {
             this.auditRegistration = data;
             // console.log('auditRegistration', this.auditRegistration);
-            if (data && data?.auditRegisterList?.length) {
+            if (data?.auditRegisterList?.length) {
                 this.isLoading = false;
             } else if (data.status === ResponseStatus.PROGRESS) {
                 this.isLoading = true;

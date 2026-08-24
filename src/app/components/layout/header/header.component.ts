@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,7 +13,6 @@ import { AppState } from '@store/app.state';
 import { takeUntil } from 'rxjs/operators';
 import { LocalStorageService } from '@services/local-storage.service';
 import { SoundService } from '@app/services/sound.service';
-import initialDeviceStatus from '@data/device-status';
 import { environment } from '@env/environment';
 import { allConnectionStatus, locationMode } from '@store/global/global.reducer';
 import { startAutoClicker, stopAutoClicker } from '../../../../../test/main';
@@ -221,7 +220,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
         const prevLoggedIn = changes['isLoggedIn']?.previousValue;
 
         if (isLoggedIn !== prevLoggedIn) {
-            this.statusIndicators[1].hidden = isLoggedIn ? false : true; //  BOLC indicator visibility based on login status
+            this.statusIndicators[1].hidden = !isLoggedIn; //  BOLC indicator visibility based on login status
         }
     }
 
@@ -286,7 +285,7 @@ export class HeaderComponent implements OnInit, OnChanges, OnDestroy {
                 };
             });
             this.statusIndicators = formatStatus;
-            this.statusIndicators[1].hidden = this.isLoggedIn ? false : true; //  BOLC indicator visibility based on login status
+            this.statusIndicators[1].hidden = !this.isLoggedIn; //  BOLC indicator visibility based on login status
         });
     }
 

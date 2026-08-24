@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomKeyboardComponent } from '@components/custom-keyboard/custom-keyboard.component';
@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '@store/app.state';
 import { lockScreen, updateLockScreen } from '@store/main/main.reducer';
 import { NotificationSoundDirective } from '@directives/notification-sound.directive';
+import { applyKeyboardInput } from '@utils/keyboard-input.util';
 
 @Component({
     selector: 'lock-screen',
@@ -114,30 +115,13 @@ export class LockScreenComponent implements OnInit, OnDestroy {
 
     handleChangeInput(event: Event): void {
         const inputField = <HTMLInputElement>document.getElementById('inputField');
-        const start = inputField?.selectionStart || 0;
-        const end = inputField?.selectionEnd || 0;
-        const value = inputField.value;
         const target = <HTMLDivElement>event.target;
-        // clearTimeout(this.timeOutId);
+        const value = applyKeyboardInput(inputField, target);
 
-        if (target.id === 'backspaceKey') {
-            if (start === end) {
-                // No selection, just delete the character before the cursor
-                inputField.value = value.slice(0, start - 1) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start - 1;
-            } else {
-                // There is a selection, delete the selected text
-                inputField.value = value.slice(0, start) + value.slice(end);
-                inputField.selectionStart = inputField.selectionEnd = start;
-            }
-            this.removeErrorMessage();
-        } else if (target.id === 'enterKey') {
+        if (target.id === 'enterKey') {
             if (!value) return;
             this.handleConfirmUnlock(value);
         } else {
-            const keyValue = target.innerText.trim();
-            inputField.value = value.slice(0, start) + keyValue + value.slice(end);
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
             this.removeErrorMessage();
         }
 

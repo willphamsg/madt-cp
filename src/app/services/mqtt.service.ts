@@ -87,7 +87,7 @@ export class MqttService implements OnDestroy {
         this.connectionStatusSubject.next(false);
 
         this.http
-            .get('/assets/mqtt-config.json', { params: { _: new Date().getTime().toString() } })
+            .get('/assets/mqtt-config.json', { params: { _: Date.now().toString() } })
             .pipe(
                 tap((mqttConfig: any) => {
                     this.mqttConfig = mqttConfig;
@@ -175,7 +175,7 @@ export class MqttService implements OnDestroy {
                 this.connectionStatusSubject.next(true);
 
                 this.connectionCount++;
-                this.isReconnectSubject.next(this.connectionCount > 1 ? true : false);
+                this.isReconnectSubject.next(this.connectionCount > 1);
             });
 
             this.client.on('error', (error) => {
@@ -219,7 +219,7 @@ export class MqttService implements OnDestroy {
             message,
         };
         const escapeCsv = (value: string): string => {
-            const str = value.replace(/"/g, '""');
+            const str = value.replaceAll('"', '""');
             return /[,"\n\r]/.test(str) ? `"${str}"` : str;
         };
         const row =
@@ -245,7 +245,7 @@ export class MqttService implements OnDestroy {
         anchor.style.display = 'none';
         document.body.appendChild(anchor);
         anchor.click();
-        document.body.removeChild(anchor);
+        anchor.remove();
         URL.revokeObjectURL(url);
     }
 
@@ -496,12 +496,10 @@ export class MqttService implements OnDestroy {
                     delete this.topicHandlers[formatTopic];
                 }
             }
-        } else {
+        } else if (this.topicHandlers[formatTopic]) {
             // Remove all handlers and unsubscribe from topic
-            if (this.topicHandlers[formatTopic]) {
-                this.unsubscribeFromTopic(formatTopic);
-                delete this.topicHandlers[formatTopic];
-            }
+            this.unsubscribeFromTopic(formatTopic);
+            delete this.topicHandlers[formatTopic];
         }
     }
 

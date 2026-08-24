@@ -40,7 +40,7 @@ export class BreadcrumbComponent implements OnInit {
 
     buildBreadcrumb(currentAR: ActivatedRoute): void {
         if (currentAR.snapshot.data['breadcrumb']) {
-            const lastBCLink = this.breadcrumbs.length !== 0 ? this.breadcrumbs[this.breadcrumbs.length - 1].link : '';
+            const lastBCLink = this.breadcrumbs.at(-1)?.link ?? '';
 
             let currentBCLink = '';
             if (currentAR?.routeConfig?.path?.startsWith(':')) {
@@ -58,7 +58,7 @@ export class BreadcrumbComponent implements OnInit {
 
             // console.log('this.breadcrumbs', this.breadcrumbs);
 
-            if (currentAR.snapshot.data['rootRoute'] && this.breadcrumbs.length >= 0) {
+            if (currentAR.snapshot.data['rootRoute']) {
                 this.breadcrumbs[0].link = currentAR.snapshot.data['rootRoute'];
             }
         }

@@ -1,12 +1,5 @@
 <div class="complimentary-day">
-    <div
-        class="back-button"
-        (click)="handleButtonSound(); goBack()"
-        tabindex="0"
-        (keydown.enter)="handleButtonSound(); goBack()"
-    >
-        {{ 'BACK' | translate }}
-    </div>
+    <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
     <div>
         <h2 class="title">{{ 'SET_COMPLIMENTARY_DAYS' | translate }}</h2>
         <div class="content">
@@ -16,9 +9,9 @@
             <div class="input-group">
                 <p>{{ 'INPUT_CURRENT_DAYS' | translate }}</p>
                 <input
+                    [attr.aria-label]="'INPUT_CURRENT_DAYS' | translate"
                     id="inputField"
                     [class.hasError]="hasInputError"
-                    [attr.aria-label]="'INPUT_CURRENT_DAYS' | translate"
                 />
                 @if (hasInputError) {
                     <p class="error">

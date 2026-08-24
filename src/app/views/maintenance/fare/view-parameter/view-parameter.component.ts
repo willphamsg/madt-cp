@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -16,7 +17,7 @@ import { SoundService } from '@services/sound.service';
 
 @Component({
     selector: 'view-parameter',
-    imports: [MatIconModule, RouterModule, AppScrollBar, CommonPopUp, TranslateModule],
+    imports: [MatIconModule, RouterModule, AppScrollBar, CommonPopUp, TranslateModule, NgTemplateOutlet],
     templateUrl: './view-parameter.component.html',
     styleUrls: ['./view-parameter.component.scss'],
 })
@@ -82,36 +83,39 @@ export class ViewParameterComponent implements OnInit, OnDestroy {
         this.sort[key] = this.sort[key] === 'asc' ? 'desc' : 'asc';
         const nextParameters = [...this.viewParameter.parameters];
         if (key === 'date') {
+            nextParameters.sort((a, b) => {
+                const date1 = this.utilsService.createDateFromString(`${a['date']} ${a['time']}`);
+                const date2 = this.utilsService.createDateFromString(`${b['date']} ${b['time']}`);
+                const sortResult = date1.getTime() - date2.getTime();
+                return this.sort[key] === 'asc' ? sortResult : sortResult * -1;
+            });
             this.store.dispatch(
                 updateViewParameter({
                     payload: {
                         ...this.viewParameter,
-                        parameters: nextParameters.sort((a, b) => {
-                            const date1 = this.utilsService.createDateFromString(`${a['date']} ${a['time']}`);
-                            const date2 = this.utilsService.createDateFromString(`${b['date']} ${b['time']}`);
-                            const sortResult = date1.getTime() - date2.getTime();
-                            return this.sort[key] === 'asc' ? sortResult : sortResult * -1;
-                        }),
+                        parameters: nextParameters,
                     },
                 }),
             );
-        } else
+        } else {
+            nextParameters.sort((a, b) => {
+                const key1 = a[key]?.toUpperCase();
+                const key2 = b[key]?.toUpperCase();
+                const sortResult = key1.localeCompare(key2, undefined, {
+                    numeric: true,
+                    sensitivity: 'base',
+                });
+                return this.sort[key] === 'asc' ? sortResult : sortResult * -1;
+            });
             this.store.dispatch(
                 updateViewParameter({
                     payload: {
                         ...this.viewParameter,
-                        parameters: nextParameters.sort((a, b) => {
-                            const key1 = a[key]?.toUpperCase();
-                            const key2 = b[key]?.toUpperCase();
-                            const sortResult = key1.localeCompare(key2, undefined, {
-                                numeric: true,
-                                sensitivity: 'base',
-                            });
-                            return this.sort[key] === 'asc' ? sortResult : sortResult * -1;
-                        }),
+                        parameters: nextParameters,
                     },
                 }),
             );
+        }
     }
 
     handleRetry(): void {

@@ -30,14 +30,7 @@
         </div>
     } @else {
         <ng-container>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); handleBack()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleBack()"
-            >
-                {{ 'BACK' | translate }}
-            </div>
+            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
             <div>
                 <h2 class="title">{{ 'CV_MODE_CONTROL' | translate }}</h2>
                 <div class="content">
@@ -53,4 +46,5 @@
             </div>
         </ng-container>
     }
+
 </div>

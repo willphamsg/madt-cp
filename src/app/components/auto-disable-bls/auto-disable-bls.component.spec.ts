@@ -36,8 +36,8 @@ describe('AutoDisableBlsComponent', () => {
     });
 
     describe('handleCancel', () => {
-        it('should emit cancel event', () => {
-            const emitSpy = spyOn(component.cancel, 'emit');
+        it('should emit onCancel event', () => {
+            const emitSpy = spyOn(component.cancelled, 'emit');
             component.handleCancel();
             expect(emitSpy).toHaveBeenCalled();
         });

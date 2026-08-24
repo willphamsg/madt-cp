@@ -11,13 +11,10 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./redetect-crp.component.scss'],
 })
 export class RedetectCRPComponent implements OnInit {
-    progress: number;
-    step: number;
+    progress = 0;
+    step = 1;
 
-    constructor(private readonly soundService: SoundService) {
-        this.progress = 0;
-        this.step = 1;
-    }
+    constructor(private readonly soundService: SoundService) {}
 
     ngOnInit() {
         const interval = setInterval(() => {

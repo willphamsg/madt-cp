@@ -392,40 +392,36 @@ export class MainComponent implements OnInit, OnDestroy {
     validatedAuth(topics) {
         const messageCounters = this.initializeMessageCounters();
         this.setupMqttSubscription(topics, messageCounters);
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.response,
-            topicKey: TopicsKeys.MAIN_TAB,
-        });
-
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.cv?.response,
-            topicKey: TopicsKeys.MAIN_TAB_CV,
-        });
-
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.fareBusStop?.response,
-            topicKey: TopicsKeys.MAIN_TAB_FARE_BUS_STOP,
-        });
-
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.fareBusStopList?.response,
-            topicKey: TopicsKeys.MAIN_TAB_FARE_BUS_STOP_LIST,
-        });
-
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.fmsBusStop?.response,
-            topicKey: TopicsKeys.MAIN_TAB_FMS_BUS_STOP,
-        });
-
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.headWayTimeTable?.response,
-            topicKey: TopicsKeys.MAIN_HEADWAY_TIME_TABLE,
-        });
-
-        this.mqttSubscriptions.push({
-            topic: topics.mainTab?.currentServiceInfo?.response,
-            topicKey: TopicsKeys.CURRENT_SERVICE_INFO,
-        });
+        this.mqttSubscriptions.push(
+            {
+                topic: topics.mainTab?.response,
+                topicKey: TopicsKeys.MAIN_TAB,
+            },
+            {
+                topic: topics.mainTab?.cv?.response,
+                topicKey: TopicsKeys.MAIN_TAB_CV,
+            },
+            {
+                topic: topics.mainTab?.fareBusStop?.response,
+                topicKey: TopicsKeys.MAIN_TAB_FARE_BUS_STOP,
+            },
+            {
+                topic: topics.mainTab?.fareBusStopList?.response,
+                topicKey: TopicsKeys.MAIN_TAB_FARE_BUS_STOP_LIST,
+            },
+            {
+                topic: topics.mainTab?.fmsBusStop?.response,
+                topicKey: TopicsKeys.MAIN_TAB_FMS_BUS_STOP,
+            },
+            {
+                topic: topics.mainTab?.headWayTimeTable?.response,
+                topicKey: TopicsKeys.MAIN_HEADWAY_TIME_TABLE,
+            },
+            {
+                topic: topics.mainTab?.currentServiceInfo?.response,
+                topicKey: TopicsKeys.CURRENT_SERVICE_INFO,
+            },
+        );
     }
 
     private initializeMessageCounters() {
@@ -887,7 +883,6 @@ export class MainComponent implements OnInit, OnDestroy {
                         imgName = 'workfare-icon';
                         break;
                     case 9:
-                        imgName = '';
                         break;
                     case 10:
                         imgName = 'madt-success';
@@ -945,6 +940,7 @@ export class MainComponent implements OnInit, OnDestroy {
                             manualBls: payload?.manualBls,
                             autoBls: payload?.autoBls,
                             misMatch: payload?.misMatch,
+                            isUpstage: payload?.isUpstage,
                             idx: currentIdx,
                         }),
                     );
@@ -1062,7 +1058,7 @@ export class MainComponent implements OnInit, OnDestroy {
     // }
 
     private async handleNotifyMessages(opts) {
-        const { header, payload, dateTime, messageCounters, isRetainMsg } = opts;
+        const { header, payload, dateTime, messageCounters } = opts;
 
         switch (header?.msgID) {
             case MsgID?.BOOT_UP:
@@ -1161,7 +1157,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     dateTime,
                     messageCounters.currentDgwOperation,
                     () => {
-                        this.store.dispatch(updateDagwOperation({ payload: Object.assign({}, header, payload) }));
+                        this.store.dispatch(updateDagwOperation({ payload: { ...header, ...payload } }));
                         this.navigate(this.loginUrl);
                         // this.navigate(routerUrls?.private?.main?.dagwOperation);
                     },
@@ -1183,13 +1179,14 @@ export class MainComponent implements OnInit, OnDestroy {
 
             case MsgID?.BC_TAP_CARD_LOGIN:
             case MsgID?.BC_TAP_CARD_PIN:
+            case MsgID?.MS_TAP_CARD_LOGIN:
                 messageCounters.currentLoginTapCard = this.messValidation(
                     dateTime,
                     messageCounters.currentLoginTapCard,
                     () => {
                         this.store.dispatch(
                             updateTapCardLogin({
-                                payload: Object.assign({}, header, payload),
+                                payload: { ...header, ...payload },
                                 msgID: header?.msgID,
                             }),
                         );
@@ -1204,12 +1201,11 @@ export class MainComponent implements OnInit, OnDestroy {
                     () => {
                         this.navigate(this.busOperationUrl);
                         // this.handleLoginSuccess(1);
-                        return;
                     },
                 );
                 break;
             case MsgID?.TAP_CARD_NOTIFICATION:
-                this.store.dispatch(updateLoginOption({ payload: Object.assign({}, header, payload) }));
+                this.store.dispatch(updateLoginOption({ payload: { ...header, ...payload } }));
                 this.navigate(this.loginOptionUrl);
                 break;
             case MsgID?.MANUAL_LOGIN_PIN:
@@ -1223,10 +1219,7 @@ export class MainComponent implements OnInit, OnDestroy {
                         () => {
                             this.store.dispatch(
                                 updateLockScreen({
-                                    payload: Object.assign({}, header, {
-                                        ...payload,
-                                        timeout: payload.timeout || undefined,
-                                    }),
+                                    payload: { ...header, ...payload, timeout: payload.timeout || undefined },
                                 }),
                             );
                         },
@@ -1240,10 +1233,7 @@ export class MainComponent implements OnInit, OnDestroy {
                             this.store.dispatch(
                                 updateManualLogin({
                                     msgID: header?.msgID,
-                                    payload: Object.assign({}, header, {
-                                        ...payload,
-                                        timeout: payload.timeout || undefined,
-                                    }),
+                                    payload: { ...header, ...payload, timeout: payload.timeout || undefined },
                                 }),
                             );
                             this.navigate(this.manualLoginUrl);
@@ -1259,22 +1249,6 @@ export class MainComponent implements OnInit, OnDestroy {
                     () => {
                         this.navigate(this.busOperationUrl);
                         // this.handleLoginSuccess(1);
-                    },
-                );
-                break;
-
-            case MsgID?.MS_TAP_CARD_LOGIN:
-                messageCounters.currentLoginTapCard = this.messValidation(
-                    dateTime,
-                    messageCounters.currentLoginTapCard,
-                    () => {
-                        this.store.dispatch(
-                            updateTapCardLogin({
-                                payload: Object.assign({}, header, payload),
-                                msgID: header?.msgID,
-                            }),
-                        );
-                        this.navigate(this.tapCardLoginUrl);
                     },
                 );
                 break;
@@ -1480,7 +1454,7 @@ export class MainComponent implements OnInit, OnDestroy {
             // for buttons on main screen
             case MsgID.MAIN_FREE:
                 messageCounters.currentFreeMsg = this.messValidation(dateTime, messageCounters.currentFreeMsg, () => {
-                    this.store.dispatch(updateFreeCVs({ payload: Object.assign({}, header, payload) }));
+                    this.store.dispatch(updateFreeCVs({ payload: { ...header, ...payload } }));
                     this.navigate(routerUrls?.private?.main?.free);
                 });
                 break;
@@ -1490,7 +1464,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     dateTime,
                     messageCounters.currentBreakDown,
                     () => {
-                        this.store.dispatch(updateBreakDownInfo({ payload: Object.assign({}, payload) }));
+                        this.store.dispatch(updateBreakDownInfo({ payload: { ...payload } }));
                         this.navigate(routerUrls?.private?.main?.breakdown);
                     },
                 );
@@ -1530,7 +1504,7 @@ export class MainComponent implements OnInit, OnDestroy {
                 break;
             case MsgID.MAIN_CASH:
                 messageCounters.currentCashMsg = this.messValidation(dateTime, messageCounters.currentCashMsg, () => {
-                    this.store.dispatch(updateCashPayment({ payload: Object.assign({}, header, payload) }));
+                    this.store.dispatch(updateCashPayment({ payload: { ...header, ...payload } }));
                     this.navigate(routerUrls?.private?.main?.cashPayment);
                 });
                 break;
@@ -1541,7 +1515,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     () => {
                         this.store.dispatch(
                             updateFrontDoor({
-                                payload: Object.assign({}, header, payload),
+                                payload: { ...header, ...payload },
                             }),
                         );
                         this.navigate(routerUrls?.private?.main?.frontDoor);
@@ -1603,7 +1577,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     () => {
                         this.store.dispatch(
                             updateExternalDevices({
-                                payload: Object.assign({}, header, payload),
+                                payload: { ...header, ...payload },
                             }),
                         );
 
@@ -1846,7 +1820,7 @@ export class MainComponent implements OnInit, OnDestroy {
                         this.store.dispatch(
                             updateTapCardLogin({
                                 msgID: header?.msgID,
-                                payload: Object.assign({}, header, payload),
+                                payload: { ...header, ...payload },
                             }),
                         );
                         this.navigate(this.tapCardLoginUrl);
@@ -1867,7 +1841,7 @@ export class MainComponent implements OnInit, OnDestroy {
                         this.store.dispatch(
                             updateTapCardLogin({
                                 msgID: header?.msgID,
-                                payload: Object.assign({}, header, payload),
+                                payload: { ...header, ...payload },
                             }),
                         );
                         this.navigate(this.tapCardLoginUrl);
@@ -1890,10 +1864,7 @@ export class MainComponent implements OnInit, OnDestroy {
                             () => {
                                 this.store.dispatch(
                                     updateLockScreen({
-                                        payload: Object.assign({}, header, {
-                                            ...payload,
-                                            timeout: payload.timeout || undefined,
-                                        }),
+                                        payload: { ...header, ...payload, timeout: payload.timeout || undefined },
                                     }),
                                 );
                             },
@@ -1908,10 +1879,7 @@ export class MainComponent implements OnInit, OnDestroy {
                             this.store.dispatch(
                                 updateManualLogin({
                                     msgID: header?.msgID,
-                                    payload: Object.assign({}, header, {
-                                        ...payload,
-                                        timeout: payload.timeout || undefined,
-                                    }),
+                                    payload: { ...header, ...payload, timeout: payload.timeout || undefined },
                                 }),
                             );
                             // this.navigate(routerUrls?.private?.main?.manualLogin);
@@ -1926,7 +1894,6 @@ export class MainComponent implements OnInit, OnDestroy {
                     if (payload?.status === ResponseStatus.SUCCESS) {
                         this.navigate(this.loginUrl);
                         // this.handleEndShiftSuccess();
-                        return;
                     }
                 });
                 break;
@@ -1968,7 +1935,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     () => {
                         this.store.dispatch(
                             updateExternalDevices({
-                                payload: Object.assign({}, header, payload),
+                                payload: { ...header, ...payload },
                             }),
                         );
                         this.navigate(this.busOperationUrl);
@@ -2032,21 +1999,12 @@ export class MainComponent implements OnInit, OnDestroy {
                 break;
             case MsgID.START_TRIP_BUS_STOP_LIST:
             case MsgID.START_TRIP_GET_SERVICE_LIST:
+            case MsgID.START_TRIP_SUBMIT_SERVICE:
                 this.store.dispatch(updateStartTrip({ payload, msgID: header?.msgID }));
                 this.navigate(this.busOperationStartTripUrl);
                 break;
             case MsgID.START_TRIP_GET_FARE_TRIP_DETAILS:
                 this.store.dispatch(updateStartTrip({ payload: { fare: { ...payload } }, msgID: header?.msgID }));
-                this.navigate(this.busOperationStartTripUrl);
-                break;
-            case MsgID.START_TRIP_SUBMIT_SERVICE:
-                // this.store.dispatch(
-                //     updateStartTrip({
-                //         payload: { status: payload?.status, dir: payload?.dir, variantName: payload?.variantName },
-                //         msgID: header?.msgID,
-                //     }),
-                // );
-                this.store.dispatch(updateStartTrip({ payload, msgID: header?.msgID }));
                 this.navigate(this.busOperationStartTripUrl);
                 break;
             case MsgID.START_TRIP_SUBMIT_FARE_TRIP:
@@ -2090,7 +2048,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     dateTime,
                     messageCounters.currentFrontDoorsMsg,
                     () => {
-                        this.store.dispatch(updateFrontDoor({ payload: Object.assign({}, header, payload) }));
+                        this.store.dispatch(updateFrontDoor({ payload: { ...header, ...payload } }));
                         this.navigate(routerUrls?.private?.main?.frontDoor);
                     },
                 );
@@ -2153,6 +2111,7 @@ export class MainComponent implements OnInit, OnDestroy {
                                     manualBls: payload?.manualBls,
                                     autoBls: payload?.autoBls,
                                     misMatch: payload?.misMatch,
+                                    isUpstage: payload?.isUpstage,
                                     idx: payload?.index,
                                 }),
                             );
@@ -2208,7 +2167,7 @@ export class MainComponent implements OnInit, OnDestroy {
                     dateTime,
                     messageCounters.currentBreakDown,
                     () => {
-                        this.store.dispatch(updateBreakDownInfo({ payload: Object.assign({}, payload) }));
+                        this.store.dispatch(updateBreakDownInfo({ payload: { ...payload } }));
                         this.navigate(routerUrls?.private?.main?.breakdown);
                     },
                 );
@@ -2228,7 +2187,7 @@ export class MainComponent implements OnInit, OnDestroy {
                         if (payload.status === ResponseStatus.SUCCESS && header?.msgID == MsgID.BREAKDOWN_CANCEL) {
                             this.displayTripInfoPage();
                         } else {
-                            this.store.dispatch(updateBreakDownInfo({ payload: Object.assign({}, header, payload) }));
+                            this.store.dispatch(updateBreakDownInfo({ payload: { ...header, ...payload } }));
                             this.navigate(routerUrls?.private?.main?.breakdown);
                         }
                     },
@@ -2262,7 +2221,7 @@ export class MainComponent implements OnInit, OnDestroy {
             case MsgID.MAIN_CASH_FARE_CALCULATION_BACK:
                 messageCounters.currentCashMsg = this.messValidation(dateTime, messageCounters.currentCashMsg, () => {
                     this.store.dispatch(
-                        updateCashPayment({ payload: Object.assign({}, header, payload, { fareResult: undefined }) }),
+                        updateCashPayment({ payload: { ...header, ...payload, fareResult: undefined } }),
                     );
                     this.navigate(routerUrls?.private?.main?.cashPayment);
                 });
@@ -2270,11 +2229,9 @@ export class MainComponent implements OnInit, OnDestroy {
             case MsgID.MAIN_CASH_FARE_CALCULATION_SUBMIT_BUS_STOP_CHANGE:
                 messageCounters.currentCashMsg = this.messValidation(dateTime, messageCounters.currentCashMsg, () => {
                     if (payload?.status === ResponseStatus.ERROR) {
-                        this.store.dispatch(updateCashPayment({ payload: Object.assign({}, payload) }));
+                        this.store.dispatch(updateCashPayment({ payload: { ...payload } }));
                     } else {
-                        this.store.dispatch(
-                            updateCashPayment({ payload: Object.assign({}, header, { fareResult: payload }) }),
-                        );
+                        this.store.dispatch(updateCashPayment({ payload: { ...header, fareResult: payload } }));
                     }
                     this.navigate(routerUrls?.private?.main?.cashPayment);
                 });
@@ -2396,13 +2353,14 @@ export class MainComponent implements OnInit, OnDestroy {
     }
 
     activeHeaderButton(): string[] {
-        const activeBtn = this.displayLockPopUp
-            ? 'lock-btn'
-            : this.displaySettingsPopUp
-              ? 'settings-btn'
-              : this.currentRoute === this.endTripUrl
-                ? 'end-trip-btn'
-                : null;
+        let activeBtn: string | null = null;
+        if (this.displayLockPopUp) {
+            activeBtn = 'lock-btn';
+        } else if (this.displaySettingsPopUp) {
+            activeBtn = 'settings-btn';
+        } else if (this.currentRoute === this.endTripUrl) {
+            activeBtn = 'end-trip-btn';
+        }
         return activeBtn ? [activeBtn] : [];
     }
 

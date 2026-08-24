@@ -261,6 +261,13 @@ describe('FareLayoutComponent', () => {
             expect(routerMock.navigate).not.toHaveBeenCalled();
         });
 
+        it('should not navigate on FARE_CANCEL_RIDE_SUBMIT_NOTIFY with an invalid cvNum', () => {
+            const cb = getCallback();
+            routerMock.navigate.calls.reset();
+            cb(buildMessage(MsgID.FARE_CANCEL_RIDE_SUBMIT_NOTIFY, MsgSubID.NOTIFY, { cvNum: 4 }));
+            expect(routerMock.navigate).not.toHaveBeenCalled();
+        });
+
         it('should handle FARE_CONCESSION_CV1 NOTIFY', () => {
             const cb = getCallback();
             cb(buildMessage(MsgID.FARE_CONCESSION_CV1, MsgSubID.NOTIFY, {}));
@@ -283,6 +290,13 @@ describe('FareLayoutComponent', () => {
             const cb = getCallback();
             routerMock.navigate.calls.reset();
             cb(buildMessage(MsgID.FARE_CONCESSION_SUBMIT_NOTIFY, MsgSubID.NOTIFY, {}));
+            expect(routerMock.navigate).not.toHaveBeenCalled();
+        });
+
+        it('should not navigate on FARE_CONCESSION_SUBMIT_NOTIFY with an invalid cvNum', () => {
+            const cb = getCallback();
+            routerMock.navigate.calls.reset();
+            cb(buildMessage(MsgID.FARE_CONCESSION_SUBMIT_NOTIFY, MsgSubID.NOTIFY, { cvNum: 4 }));
             expect(routerMock.navigate).not.toHaveBeenCalled();
         });
 
@@ -617,6 +631,13 @@ describe('FareLayoutComponent', () => {
             expect(routerMock.navigate).not.toHaveBeenCalled();
         });
 
+        it('should not navigate on FARE_CANCEL_RIDE_SUBMIT RESPONSE with an invalid cvNum', () => {
+            const cb = getCallback();
+            routerMock.navigate.calls.reset();
+            cb(buildMessage(MsgID.FARE_CANCEL_RIDE_SUBMIT, MsgSubID.RESPONSE, { cvNum: 4 }));
+            expect(routerMock.navigate).not.toHaveBeenCalled();
+        });
+
         it('should handle FARE_CONCESSION_SUBMIT RESPONSE with cvNum', () => {
             const cb = getCallback();
             cb(buildMessage(MsgID.FARE_CONCESSION_SUBMIT, MsgSubID.RESPONSE, { cvNum: 2 }));
@@ -627,6 +648,13 @@ describe('FareLayoutComponent', () => {
             const cb = getCallback();
             routerMock.navigate.calls.reset();
             cb(buildMessage(MsgID.FARE_CONCESSION_SUBMIT, MsgSubID.RESPONSE, {}));
+            expect(routerMock.navigate).not.toHaveBeenCalled();
+        });
+
+        it('should not navigate on FARE_CONCESSION_SUBMIT RESPONSE with an invalid cvNum', () => {
+            const cb = getCallback();
+            routerMock.navigate.calls.reset();
+            cb(buildMessage(MsgID.FARE_CONCESSION_SUBMIT, MsgSubID.RESPONSE, { cvNum: 4 }));
             expect(routerMock.navigate).not.toHaveBeenCalled();
         });
 

@@ -1,8 +1,0 @@
-{
-    "mcpServers": {
-        "sonarqube": {
-            "command": "sonar",
-            "args": ["run", "mcp", "--project", "willphamsg_madt-cp"]
-        }
-    }
-}

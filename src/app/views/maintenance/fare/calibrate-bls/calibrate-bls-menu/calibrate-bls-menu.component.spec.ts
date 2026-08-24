@@ -8,6 +8,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { provideRouter } from '@angular/router';
 import { MqttService } from '@services/mqtt.service';
+import { of } from 'rxjs';
 
 describe('CalibrateBLSMenuComponent', () => {
     let component: CalibrateBLSMenuComponent;
@@ -40,5 +41,12 @@ describe('CalibrateBLSMenuComponent', () => {
 
     it('should render without errors', () => {
         expect(() => fixture.detectChanges()).not.toThrow();
+    });
+
+    it('should set topics from mqttService when mqtt config is loaded', () => {
+        (mqttService as any).mqttConfigLoaded$ = of(true);
+        mqttService.mqttConfig = { topics: { maintenance: { get: 'maintenance/get' } } } as any;
+        component.ngOnInit();
+        expect((component as any).topics).toEqual({ maintenance: { get: 'maintenance/get' } });
     });
 });

@@ -35,7 +35,14 @@ export const updateDisplayFareBusStopList = createAction(
 
 export const updateCurrentFareBusStop = createAction(
     '[Data] Update Current Fare Bus Stop',
-    props<{ payload: string; manualBls?: boolean; autoBls?: boolean; misMatch?: boolean; idx?: number }>(),
+    props<{
+        payload: string;
+        manualBls?: boolean;
+        autoBls?: boolean;
+        misMatch?: boolean;
+        isUpstage?: boolean;
+        idx?: number;
+    }>(),
 );
 export const selectBusStop = createAction('[Data] Select Bus Stop', props<{ payload: IFmsBusStop | null }>());
 export const selectBusStopForFare = createAction('[Data] Select Bus Stop For Fare', props<{ payload: string }>());

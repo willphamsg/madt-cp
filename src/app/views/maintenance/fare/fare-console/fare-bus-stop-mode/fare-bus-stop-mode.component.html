@@ -5,7 +5,9 @@
     ) {
         <div class="dialog">
             <div class="dialog-header">
-                <p [innerHTML]="(mode === 1 ? 'SET_FARE_MODE_MANUAL' : 'SET_BLS_LOCATION_TO_AUTO') | translate"></p>
+                <p
+                    [innerHTML]="(mode === 1 ? 'SET_FARE_MODE_MANUAL' : 'SET_BLS_LOCATION_TO_AUTO') | translate"
+                ></p>
             </div>
             <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
             <div class="btn-group">
@@ -35,54 +37,25 @@
                 </div>
             </div>
         }
-        <!-- @else if (fareBusStopMode.status === ResponseStatus.ERROR) {
-            <div class="dialog">
-                <img src="/assets/images/svg/big-error.svg" alt="" />
-                <h3 class="dialog-header">{{ 'ERROR' | translate }}</h3>
-                <div class="btn-group">
-                    <button  class="btn btn-ok" (click)="handleButtonSound(); backSelectMode()">
-                        <img src="/assets/images/icons/main/confirm.svg" alt="" />
-                        <span>{{ 'OK' | translate }}</span>
-                    </button>
-                </div>
-            </div>
-        } -->
     } @else {
         <ng-container>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); handleBack()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleBack()"
-            >
-                {{ 'BACK' | translate }}
-            </div>
+            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
             <h1 class="device-operation-title">{{ 'SELECT_BLS_OPERATIONS' | translate }}</h1>
             <div class="device-operation-button-group">
-                <button
-                    [class.active]="finaleMode === 1"
-                    class="device-operation-button"
-                    (click)="handleButtonSound(); handleSelectFareBusStopMode(1)"
-                >
+                <button [class.active]="finaleMode === 1" class="device-operation-button" (click)="handleButtonSound(); handleSelectFareBusStopMode(1)">
                     {{ 'MANUAL' | translate }}
                 </button>
-                <button
-                    [class.active]="finaleMode === 2"
-                    class="device-operation-button"
-                    (click)="handleButtonSound(); handleSelectFareBusStopMode(2)"
-                >
+                <button [class.active]="finaleMode === 2" class="device-operation-button" (click)="handleButtonSound(); handleSelectFareBusStopMode(2)">
                     {{ 'AUTO' | translate }}
                 </button>
             </div>
             @if (posnStatus$ | async; as posnStatus) {
                 <div class="source-info">
                     <p>
-                        <span>{{ 'GNSS_SOURCE' | translate }}</span
-                        >: <strong>{{ mappingPosnStatus(posnStatus.GNSSSource) | translate }}</strong>
+                        <span>{{ 'GNSS_SOURCE'| translate }}</span>: <strong>{{ mappingPosnStatus(posnStatus.GNSSSource) | translate }}</strong>
                     </p>
                     <p>
-                        <span>{{ 'BUS_LOCATION_SOURCE' | translate }}</span
-                        >: <strong>{{ mappingPosnStatus(posnStatus.busLocationSource) | translate }}</strong>
+                        <span>{{ 'BUS_LOCATION_SOURCE'| translate }}</span>: <strong>{{ mappingPosnStatus(posnStatus.busLocationSource) | translate }}</strong>
                     </p>
                 </div>
             }

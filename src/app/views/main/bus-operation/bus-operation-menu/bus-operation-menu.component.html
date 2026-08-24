@@ -8,7 +8,7 @@
             [isConfirm]="true"
             [isCancel]="true"
             (confirm)="handleEndShift(true)"
-            (cancel)="handleEndShift(false)"
+            (cancelled)="handleEndShift(false)"
         ></common-pop-up>
     } @else {
         <ng-container>

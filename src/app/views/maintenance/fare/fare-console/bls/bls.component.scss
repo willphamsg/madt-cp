@@ -1,4 +1,5 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 :host {
     position: relative;
@@ -17,39 +18,7 @@
         left: 0;
     }
 
-    .title {
-        font-size: 32px;
-        font-weight: $font-weight-bold;
-    }
-
-    .content {
-        margin: 0 auto;
-        text-align: center;
-
-        .label,
-        .value {
-            font-size: 32px;
-        }
-
-        .value {
-            font-weight: $font-weight-bold;
-        }
-
-        p {
-            line-height: 2;
-        }
-
-        .confirm {
-            font-size: 28px;
-            line-height: 2;
-        }
-    }
-
-    .btn-group {
-        @include flex-center;
-        gap: 32px;
-        margin-top: 20px;
-    }
+    @include fare-console-bls-shared-content-styles;
 
     .btn {
         @include dark-button;

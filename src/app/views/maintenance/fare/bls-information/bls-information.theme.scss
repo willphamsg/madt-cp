@@ -1,26 +1,8 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 @mixin lta-bls-information-theme($light-theme: false) {
     @if $light-theme {
-        .bls-information-page {
-            .title {
-                color: $black !important;
-            }
-
-            .table {
-                td {
-                    border-left-color: #e5e5e5 !important;
-                    color: $black;
-                }
-
-                tr:nth-child(even) > td {
-                    background-color: $white !important;
-                }
-
-                tr:nth-child(odd) > td {
-                    background-color: #dedede !important;
-                }
-            }
-        }
+        @include lta-info-table-theme-content('.bls-information-page');
     }
 }

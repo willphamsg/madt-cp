@@ -157,40 +157,7 @@
         gap: 32px;
 
         .btn {
-            @include dark-button;
-            font-size: 22px;
-            font-weight: $font-weight-bold;
-            margin-top: 6px;
-            flex-direction: row;
-            background: $madt-bg-light-1;
-            padding: 28px 20px;
-
-            span {
-                font-size: 22px;
-                font-weight: $font-weight-bold;
-                padding-left: 6px;
-                color: #fff;
-            }
-
-            &-cancel {
-                background-color: $madt-color-red;
-            }
-
-            &-confirm {
-                background-color: $madt-bg-light-1;
-            }
-
-            &::before {
-                content: none;
-            }
-
-            .text {
-                padding-left: 8px;
-            }
-
-            &:active {
-                transform: scale(1.01);
-            }
+            @include cash-payment-dark-action-button-styles($padding: 28px 20px, $margin-top: 6px);
         }
     }
 
@@ -538,45 +505,11 @@
                     }
 
                     .btn-receipt {
-                        @include dark-button;
-                        font-size: 22px;
-                        font-weight: $font-weight-bold;
-                        flex-direction: row;
-                        background: $madt-bg-light-1;
-                        padding: 19px;
-                        width: 240px;
-
-                        span {
-                            font-size: 22px;
-                            font-weight: $font-weight-bold;
-                            padding-left: 6px;
-                            color: #fff;
-                        }
-
-                        &-cancel {
-                            background-color: $madt-color-red;
-                        }
-
-                        &-confirm {
-                            background-color: $madt-bg-light-1;
-                        }
-
-                        &:disabled {
-                            opacity: 0.7;
-                            cursor: not-allowed;
-                        }
-
-                        &::before {
-                            content: none;
-                        }
-
-                        .text {
-                            padding-left: 8px;
-                        }
-
-                        &:active {
-                            transform: scale(1.01);
-                        }
+                        @include cash-payment-dark-action-button-styles(
+                            $padding: 19px,
+                            $width: 240px,
+                            $include-disabled: true
+                        );
                     }
                 }
             }

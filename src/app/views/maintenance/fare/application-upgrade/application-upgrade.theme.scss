@@ -1,27 +1,8 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 @mixin lta-view-parameter-theme($light-theme: false) {
     @if $light-theme {
-        .view-parameter-page {
-            .table {
-                th {
-                    border-right-color: 1px solid $madt-bg-dark-2;
-                    background-color: $black;
-                }
-
-                td {
-                    border-left-color: #e5e5e5 !important;
-                    color: $black;
-                }
-
-                tr:nth-child(even) > td {
-                    background-color: #f7f7f7 !important;
-                }
-
-                tr:nth-child(odd) > td {
-                    background-color: #eee !important;
-                }
-            }
-        }
+        @include lta-view-parameter-table-theme-content;
     }
 }

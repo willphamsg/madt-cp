@@ -3303,10 +3303,15 @@
     }
 }
 
-@mixin standard-action-btn-styles($btn-min-width: null, $include-ok: false, $cursor-pointer: false) {
+@mixin standard-action-btn-styles(
+    $btn-min-width: null,
+    $include-ok: false,
+    $cursor-pointer: false,
+    $button-padding: 0 25px
+) {
     @include flex-center;
     min-height: 80px;
-    padding: 0 25px;
+    padding: $button-padding;
     border-radius: 5px;
     transition: 0.2s ease-in-out 0s;
     @if $cursor-pointer {
@@ -3343,15 +3348,28 @@
     }
 }
 
-@mixin standard-btn-group-actions-styles($btn-min-width: null, $include-ok: false) {
+@mixin standard-btn-group-actions-styles(
+    $btn-min-width: null,
+    $include-ok: false,
+    $margin-top: 20px,
+    $button-padding: 0 25px,
+    $cursor-pointer: false
+) {
     .btn-group {
         @include flex-center;
         gap: 32px;
-        margin-top: 20px;
+        @if $margin-top {
+            margin-top: $margin-top;
+        }
     }
 
     .btn {
-        @include standard-action-btn-styles($btn-min-width: $btn-min-width, $include-ok: $include-ok);
+        @include standard-action-btn-styles(
+            $btn-min-width: $btn-min-width,
+            $include-ok: $include-ok,
+            $button-padding: $button-padding,
+            $cursor-pointer: $cursor-pointer
+        );
     }
 }
 
@@ -3412,6 +3430,28 @@
                 transform: scale(1.01);
             }
         }
+    }
+}
+
+@mixin lta-operation-page-layout-styles {
+    height: 100%;
+    padding: 5px 20px 15px 20px;
+    background-color: $madt-bg-black-1;
+
+    .layout {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background-color: $madt-bg-dark-1;
+    }
+
+    .madt-breadcrumb {
+        @include breadcrumb;
+    }
+
+    main {
+        padding: 20px 16px;
+        flex: 1;
     }
 }
 
@@ -3482,6 +3522,321 @@
 
         &:active {
             transform: scale(1.01);
+        }
+    }
+}
+
+@mixin fare-console-bls-shared-content-styles {
+    .title {
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .content {
+        margin: 0 auto;
+        text-align: center;
+
+        .label,
+        .value {
+            font-size: 32px;
+        }
+
+        .value {
+            font-weight: $font-weight-bold;
+        }
+
+        p {
+            line-height: 2;
+        }
+
+        .confirm {
+            font-size: 28px;
+            line-height: 2;
+        }
+    }
+
+    .btn-group {
+        @include flex-center;
+        gap: 32px;
+        margin-top: 20px;
+    }
+}
+
+@mixin cash-payment-dark-action-button-styles($padding, $margin-top: null, $width: null, $include-disabled: false) {
+    @include dark-button;
+    font-size: 22px;
+    font-weight: $font-weight-bold;
+    @if $margin-top {
+        margin-top: $margin-top;
+    }
+    flex-direction: row;
+    background: $madt-bg-light-1;
+    padding: $padding;
+    @if $width {
+        width: $width;
+    }
+
+    span {
+        font-size: 22px;
+        font-weight: $font-weight-bold;
+        padding-left: 6px;
+        color: #fff;
+    }
+
+    &-cancel {
+        background-color: $madt-color-red;
+    }
+
+    &-confirm {
+        background-color: $madt-bg-light-1;
+    }
+
+    @if $include-disabled {
+        &:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+    }
+
+    &::before {
+        content: none;
+    }
+
+    .text {
+        padding-left: 8px;
+    }
+
+    &:active {
+        transform: scale(1.01);
+    }
+}
+
+@mixin lta-full-screen-link-button-btn-group-styles {
+    .link-button {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        > img {
+            margin-right: 1rem;
+        }
+    }
+
+    .btn-group {
+        @include flex-center;
+        gap: 32px;
+
+        .btn {
+            @include flex-center;
+            min-height: 80px;
+            min-width: 210px;
+            border-radius: 5px;
+            transition: 0.2s ease-in-out 0s;
+
+            &:active {
+                transform: scale(1.01);
+            }
+
+            + .btn {
+                background-color: $madt-color-red;
+            }
+
+            span {
+                font-size: 24px;
+                font-weight: $font-weight-bold;
+                padding-left: 6px;
+                color: $white;
+            }
+
+            &-cancel {
+                background-color: $madt-color-red;
+            }
+
+            &-confirm {
+                background-color: $madt-bg-light-1;
+            }
+        }
+    }
+}
+
+@mixin fare-console-test-print-page-styles(
+    $title-margin: null,
+    $title-margin-bottom: null,
+    $button-font-size: 18px,
+    $button-height: null,
+    $button-width: null,
+    $button-min-height: null,
+    $button-padding: null
+) {
+    text-align: center;
+
+    .title {
+        @if $title-margin {
+            margin: $title-margin;
+        }
+        @if $title-margin-bottom {
+            margin-bottom: $title-margin-bottom;
+        }
+        font-size: 32px;
+        font-weight: $font-weight-bold;
+    }
+
+    .content {
+        margin: 0 auto;
+        width: 540px;
+        text-align: center;
+        font-size: 28px;
+
+        h4 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        p {
+            line-height: 2;
+        }
+    }
+
+    img {
+        margin: 30px 0;
+    }
+
+    .button {
+        @include dark-button;
+        font-size: $button-font-size;
+        font-weight: $font-weight-bold;
+        @if $button-height {
+            height: $button-height;
+        }
+        @if $button-width {
+            width: $button-width;
+        }
+        @if $button-min-height {
+            min-height: $button-min-height;
+        }
+        margin: 0 auto;
+        margin-top: 20px;
+        @if $button-padding {
+            padding: $button-padding;
+        }
+        flex-direction: row;
+        background: $madt-bg-light-1;
+
+        &::before {
+            content: none;
+        }
+
+        .text {
+            padding-left: 6px;
+        }
+
+        &:active {
+            transform: scale(1.01);
+        }
+    }
+}
+
+// Dead code (unused, lta-core-theme's body is fully commented out in _theme.scss) —
+// preserved byte-identical, just de-duplicated across the near-identical theme files.
+@mixin lta-view-parameter-table-theme-content {
+    .view-parameter-page {
+        .table {
+            th {
+                border-right-color: 1px solid $madt-bg-dark-2;
+                background-color: $black;
+            }
+
+            td {
+                border-left-color: #e5e5e5 !important;
+                color: $black;
+            }
+
+            tr:nth-child(even) > td {
+                background-color: #f7f7f7 !important;
+            }
+
+            tr:nth-child(odd) > td {
+                background-color: #eee !important;
+            }
+        }
+    }
+}
+
+@mixin lta-cv-mode-based-theme-content($selector) {
+    #{$selector} {
+        color: $black;
+
+        .back-button {
+            background-color: #3e515b !important;
+            color: $white !important;
+
+            &::before {
+                background-color: #3e515b !important;
+            }
+        }
+
+        .content {
+            .row {
+                background-color: $white !important;
+
+                .label {
+                    color: $black !important;
+                }
+            }
+        }
+    }
+}
+
+@mixin lta-manual-input-keyboard-theme-content($selector) {
+    #{$selector} {
+        color: $black;
+
+        .back-button {
+            background-color: #3e515b !important;
+            color: $white !important;
+
+            &::before {
+                background-color: #3e515b !important;
+            }
+        }
+
+        .content {
+            .input-group {
+                input {
+                    background-color: #e7e7e7 !important;
+                    color: $black !important;
+                }
+            }
+        }
+
+        .keyboard {
+            background-color: $white !important;
+        }
+    }
+}
+
+@mixin lta-info-table-theme-content($selector, $include-top-color: false) {
+    #{$selector} {
+        @if $include-top-color {
+            color: $black;
+        }
+
+        .title {
+            color: $black !important;
+        }
+
+        .table {
+            td {
+                border-left-color: #e5e5e5 !important;
+                color: $black;
+            }
+
+            tr:nth-child(even) > td {
+                background-color: $white !important;
+            }
+
+            tr:nth-child(odd) > td {
+                background-color: #dedede !important;
+            }
         }
     }
 }

@@ -1,23 +1,6 @@
 @use 'variables' as *;
+@use 'dedup-mixins' as *;
 
 .cv-operation-page {
-    height: 100%;
-    padding: 5px 20px 15px 20px;
-    background-color: $madt-bg-black-1;
-
-    .layout {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        background-color: $madt-bg-dark-1;
-    }
-
-    .madt-breadcrumb {
-        @include breadcrumb;
-    }
-
-    main {
-        padding: 20px 16px;
-        flex: 1;
-    }
+    @include lta-operation-page-layout-styles;
 }

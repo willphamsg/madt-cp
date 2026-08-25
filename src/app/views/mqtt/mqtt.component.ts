@@ -35,6 +35,7 @@ import {
     maintenanceExtDeviceFlows,
     maintenanceDecommissioningFlows,
 } from '@dummyData/maintenance';
+import { randomFraction, randomIndex } from '@dummyData/dummy-fixtures';
 import * as fareDummy from '@dummyData/fare';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -619,10 +620,8 @@ export class MqttComponent implements OnInit, OnDestroy {
             data: {
                 msgID: MsgID?.MAIN_UP_DOWN_BTN,
                 msgSubID: MsgSubID?.RESPONSE,
-                busStopId:
-                    MainPageDummy.fareBusStopList[Math.floor(Math.random() * MainPageDummy.fareBusStopList.length)]
-                        ?.Busid,
-                index: Math.floor(Math.random() * MainPageDummy.fareBusStopList.length),
+                busStopId: MainPageDummy.fareBusStopList[randomIndex(MainPageDummy.fareBusStopList.length)]?.Busid,
+                index: randomIndex(MainPageDummy.fareBusStopList.length),
             },
         },
 
@@ -632,7 +631,7 @@ export class MqttComponent implements OnInit, OnDestroy {
             isLatest: true,
             data: {
                 msgID: MsgID?.AUDIO_VOLUME_NOTIFY,
-                value: Math.random() * 100,
+                value: randomFraction() * 100,
                 topic: 'TC/UpdateAllTCTabs',
             },
         },

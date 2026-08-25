@@ -7,6 +7,13 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import config from '@assets/config.json';
 import { SoundService } from '@services/sound.service';
 
+/**
+ * `assets/config.json` is a deployed file, so the CJB address it carries is not implicitly
+ * trusted: bypassing Angular's sanitizer for a resource URL would let a `javascript:` or
+ * `data:` address run script in this app's origin.
+ */
+const ALLOWED_IFRAME_PROTOCOLS = new Set(['http:', 'https:']);
+
 @Component({
     selector: 'app-cjb',
     imports: [NgScrollbarModule, RouterModule, TranslateModule],
@@ -14,7 +21,7 @@ import { SoundService } from '@services/sound.service';
     styleUrls: ['./cjb.component.scss'],
 })
 export class CJBComponent {
-    safeUrl: SafeResourceUrl;
+    safeUrl: SafeResourceUrl | null;
     url = config.iFrameURL;
     isBroken = false;
     intervalId;
@@ -25,7 +32,23 @@ export class CJBComponent {
         private readonly sanitizer: DomSanitizer,
         private readonly router: Router,
     ) {
-        this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+        this.safeUrl = this.trustIframeUrl(this.url);
+        this.isBroken = !this.safeUrl;
+    }
+
+    private trustIframeUrl(rawUrl: string): SafeResourceUrl | null {
+        let parsed: URL;
+        try {
+            parsed = new URL(rawUrl);
+        } catch {
+            return null;
+        }
+
+        if (!ALLOWED_IFRAME_PROTOCOLS.has(parsed.protocol)) {
+            return null;
+        }
+
+        return this.sanitizer.bypassSecurityTrustResourceUrl(parsed.href);
     }
 
     onIframeLoad(iframe: HTMLIFrameElement) {

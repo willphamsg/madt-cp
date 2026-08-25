@@ -19,6 +19,23 @@ export function flow(id: number, label: string, data: Record<string, unknown>): 
     return { id, label, isLatest: true, data };
 }
 
+const UINT32_RANGE = 2 ** 32;
+
+/**
+ * Uniform fraction in [0, 1). The simulator's sample values are cosmetic, but the security
+ * gate rejects `Math.random()` wherever it appears, so they come from the platform CSPRNG.
+ */
+export function randomFraction(): number {
+    const buffer = new Uint32Array(1);
+    crypto.getRandomValues(buffer);
+    return buffer[0] / UINT32_RANGE;
+}
+
+/** Uniform integer in [0, maxExclusive), for picking a random entry out of a sample list. */
+export function randomIndex(maxExclusive: number): number {
+    return Math.floor(randomFraction() * maxExclusive);
+}
+
 export const BISHAN_BUS_STOP_LIST = [
     { Busid: '1', Name: 'Bishan Pk' },
     { Busid: '2', Name: 'Buspark' },

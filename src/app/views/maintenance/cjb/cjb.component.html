@@ -4,16 +4,18 @@
             <div class="button" (click)="handleButtonSound(); backToMaintenance()">
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
-            <iframe
-                #iframeRef
-                [src]="safeUrl"
-                (load)="onIframeLoad(iframeRef)"
-                (error)="onIframeError()"
-                width="1280"
-                height="720"
-                title="CJB Iframe"
-                allowfullscreen
-            ></iframe>
+            @if (safeUrl; as trustedUrl) {
+                <iframe
+                    #iframeRef
+                    [src]="trustedUrl"
+                    (load)="onIframeLoad(iframeRef)"
+                    (error)="onIframeError()"
+                    width="1280"
+                    height="720"
+                    title="CJB Iframe"
+                    allowfullscreen
+                ></iframe>
+            }
         </div>
         @if (isBroken) {
             <div class="cjb-error">

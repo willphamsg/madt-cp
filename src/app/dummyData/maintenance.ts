@@ -7,6 +7,7 @@ import {
     REDETECT_CV_LIST,
     FARE_CONSOLE_CONFIG,
     EXTERNAL_DEVICES_ERROR_STATUS,
+    randomFraction,
 } from './dummy-fixtures';
 
 export const parameters = Array.from({ length: 20 }, (_, idx) => ({
@@ -281,7 +282,7 @@ export const maintenanceRedectCVFlows = [
         msgID: MsgID?.MAINTENANCE_REDETECT_CV,
         msgSubID: MsgSubID?.RESPONSE,
         status: ResponseStatus.PROGRESS,
-        percentage: Math.random() * 100,
+        percentage: randomFraction() * 100,
     }),
     flow(17, 'Redetect CV - Success', {
         msgID: MsgID?.MAINTENANCE_REDETECT_CV,
@@ -296,7 +297,7 @@ export const maintenanceLoadParameterFlows = [
         msgID: MsgID?.MAINTENANCE_LOAD_PARAMETERS,
         msgSubID: MsgSubID?.RESPONSE,
         status: ResponseStatus.PROGRESS,
-        percentage: Math.random() * 100,
+        percentage: randomFraction() * 100,
     }),
     flow(17, 'Load Parameters  - Success', {
         msgID: MsgID?.MAINTENANCE_LOAD_PARAMETERS,
@@ -316,7 +317,7 @@ export const maintenanceSaveTransactionFlows = [
         msgID: MsgID?.MAINTENANCE_SAVE_TRANSACTION,
         msgSubID: MsgSubID?.RESPONSE,
         status: ResponseStatus.PROGRESS,
-        percentage: Math.random() * 100,
+        percentage: randomFraction() * 100,
     }),
     flow(17, 'Save Transaction  - Success', {
         msgID: MsgID?.MAINTENANCE_SAVE_TRANSACTION,

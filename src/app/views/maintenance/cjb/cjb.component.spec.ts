@@ -33,6 +33,28 @@ describe('CJBComponent', () => {
         expect(component.isBroken).toBeFalse();
     });
 
+    it('should trust the configured http(s) address and render the iframe', () => {
+        expect(component.safeUrl).toBeTruthy();
+        expect(fixture.nativeElement.querySelector('iframe')).toBeTruthy();
+    });
+
+    it('should refuse a configured address that is not http(s)', () => {
+        expect(component['trustIframeUrl']('javascript:alert(1)')).toBeNull();
+        expect(component['trustIframeUrl']('data:text/html,<script></script>')).toBeNull();
+    });
+
+    it('should refuse a malformed configured address', () => {
+        expect(component['trustIframeUrl']('not-a-url')).toBeNull();
+    });
+
+    it('should show the error state instead of the iframe when the address is refused', () => {
+        component.safeUrl = null;
+        component.isBroken = true;
+        fixture.detectChanges();
+        expect(fixture.nativeElement.querySelector('iframe')).toBeNull();
+        expect(fixture.nativeElement.querySelector('.cjb-error')).toBeTruthy();
+    });
+
     it('should set isBroken to true when onIframeError is called', () => {
         component.onIframeError();
         expect(component.isBroken).toBeTrue();

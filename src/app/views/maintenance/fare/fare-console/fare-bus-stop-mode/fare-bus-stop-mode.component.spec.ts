@@ -56,15 +56,6 @@ describe('FareBusStopMode', () => {
         expect((component as any).topics).toEqual({ maintenance: { get: 'maintenance/get' } });
     });
 
-    describe('mappingPosnStatus', () => {
-        it('should map known values and default to empty string', () => {
-            expect(component.mappingPosnStatus(1)).toBe('FMS');
-            expect(component.mappingPosnStatus(2)).toBe('FARE_SYSTEM');
-            expect(component.mappingPosnStatus(3)).toBe('NONE');
-            expect(component.mappingPosnStatus(99)).toBe('');
-        });
-    });
-
     describe('fareConsole$ subscription', () => {
         it('should set finaleMode from data when not already set', () => {
             (component as any).fareConsole$ = of({ fareBusStopMode: 2 });

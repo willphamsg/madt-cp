@@ -1,6 +1,0 @@
-@use 'variables' as *;
-@use 'dedup-mixins' as *;
-
-.device-operation-content {
-    @include device-operation-content-styles;
-}

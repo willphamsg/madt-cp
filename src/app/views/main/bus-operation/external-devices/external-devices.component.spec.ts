@@ -38,26 +38,10 @@ describe('ExternalDevicesComponent', () => {
         }).not.toThrow();
     });
 
-    it('should return existing cvs correctly', () => {
-        component.externalDevices = { ...component.initialExternalDevices, cv1: { status: 1, message: '' } };
-        expect(component.existingCvs()).toContain('cv1');
-    });
-
-    it('should check field success correctly', () => {
-        component.externalDevices = {
-            ...component.initialExternalDevices,
-            printer: { status: ResponseStatus.SUCCESS, message: '' },
-        };
-        expect(component.fieldSuccess('printer')).toBeTrue();
-    });
-
-    it('should check field error correctly', () => {
-        component.externalDevices = {
-            ...component.initialExternalDevices,
-            printer: { status: ResponseStatus.ERROR, message: 'Paper jam' },
-        };
-        expect(component.fieldError('printer')).toBeTrue();
-        expect(component.errorText('printer')).toEqual('Paper jam');
+    it('should seed the initial payload with an untested printer and not-available devices', () => {
+        expect(component.initialExternalDevices.testPrinter).toEqual({ status: 0, message: '' });
+        expect(component.initialExternalDevices.printer).toEqual({ status: ResponseStatus.NA, message: '' });
+        expect(component.initialExternalDevices.cv6).toEqual({ status: ResponseStatus.NA, message: '' });
     });
 
     it('should handle print test', () => {

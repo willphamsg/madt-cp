@@ -4,19 +4,18 @@ import { Store } from '@ngrx/store';
 import { MqttService } from '@services/mqtt.service';
 import { SoundService } from '@services/sound.service';
 import { AppState } from '@store/app.state';
-import { IFareBusStopMode, MsgID, MsgSubID, ResponseStatus, IPosnStatus } from '@models';
+import { IFareBusStopMode, MsgID, MsgSubID, IPosnStatus } from '@models';
 import { posnStatus } from '@store/global/global.reducer';
 
 /**
  * Shared logic for the fare/bls-operation and maintenance/fare-console
  * "select fare bus-stop mode" screens. Subclasses supply the topic key and
  * the store slice/selectors to use, plus any per-domain hooks (extra
- * subscriptions, additional per-message handling, and the back action).
+ * subscriptions, additional per-message handling, and the back action). The
+ * markup both screens render lives in FareBusStopModeViewComponent.
  */
 @Directive()
 export abstract class FareBusStopModeBase implements OnInit, OnDestroy {
-    readonly MsgID = MsgID;
-    readonly ResponseStatus = ResponseStatus;
     mode = 0; // 1 Manual, 2: Auto
     finaleMode = 0;
 
@@ -74,19 +73,6 @@ export abstract class FareBusStopModeBase implements OnInit, OnDestroy {
     private handleRetainMessages(): void {
         if (!this.mode && this.fareBusStopMode.mode) {
             this.mode = this.fareBusStopMode.mode;
-        }
-    }
-
-    mappingPosnStatus(num: number): string {
-        switch (num) {
-            case 1:
-                return 'FMS';
-            case 2:
-                return 'FARE_SYSTEM';
-            case 3:
-                return 'NONE';
-            default:
-                return '';
         }
     }
 

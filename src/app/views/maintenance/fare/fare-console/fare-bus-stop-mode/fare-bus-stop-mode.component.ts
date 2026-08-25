@@ -1,7 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 import { Observable, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { MqttService } from '@services/mqtt.service';
@@ -15,12 +13,12 @@ import {
     updateFareConsole,
 } from '@store/maintenance/maintenance.reducer';
 import { FareBusStopModeBase } from '@components/fare-bus-stop-mode-base/fare-bus-stop-mode.base';
+import { FareBusStopModeViewComponent } from '@components/fare-bus-stop-mode-view/fare-bus-stop-mode-view.component';
 
 @Component({
     selector: 'fare-bus-stop-mode',
-    imports: [CommonModule, TranslateModule, RouterModule],
+    imports: [FareBusStopModeViewComponent],
     templateUrl: './fare-bus-stop-mode.component.html',
-    styleUrls: ['./fare-bus-stop-mode.component.scss'],
 })
 export class FareBusStopMode extends FareBusStopModeBase {
     protected readonly topicKey = 'maintenance' as const;

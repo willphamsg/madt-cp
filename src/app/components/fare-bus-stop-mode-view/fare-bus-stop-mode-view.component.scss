@@ -1,0 +1,9 @@
+@use 'dedup-mixins' as *;
+
+// The host element stands in for the page wrapper `<div>` the two consuming screens
+// used to declare, so it needs an explicit block display (a custom element is inline
+// by default) to lay out exactly as that `<div>` did.
+:host {
+    display: block;
+    @include device-operation-content-styles;
+}

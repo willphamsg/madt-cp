@@ -10,6 +10,12 @@ import { IExternalDevice, MsgID, MsgSubID, ResponseStatus } from '@models';
 import { AppState } from '@store/app.state';
 import { externalDevices, updateExternalDevices } from '@store/maintenance/maintenance.reducer';
 import { AppScrollBar } from '@components/app-scrollbar/app-scrollbar.component';
+import {
+    createInitialExternalDevices,
+    fieldMessage,
+    hasFieldStatus,
+    listExistingCvs,
+} from '@components/external-devices-base/external-devices.util';
 import { SoundService } from '@services/sound.service';
 
 @Component({
@@ -24,48 +30,7 @@ export class ExternalDevicesComponent implements OnInit, OnDestroy {
     ResponseStatus = ResponseStatus;
 
     private readonly externalDevices$: Observable<IExternalDevice>;
-    initialExternalDevices: IExternalDevice = {
-        testPrinter: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        printer: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        GNSSAntenna: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        busETA: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv1: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv2: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv3: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv4: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv5: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv6: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-    };
+    initialExternalDevices: IExternalDevice = createInitialExternalDevices();
     externalDevices: IExternalDevice = { ...this.initialExternalDevices };
 
     isLoading = true;
@@ -104,36 +69,24 @@ export class ExternalDevicesComponent implements OnInit, OnDestroy {
         });
     }
 
-    existingCvs() {
-        const result: string[] = [];
-        [1, 2, 3, 4, 5, 6].forEach((num) => {
-            if (this.externalDevices[`cv${num}`]) {
-                result.push(`cv${num}`);
-            }
-        });
-        return result;
+    existingCvs(): string[] {
+        return listExistingCvs(this.externalDevices);
     }
 
-    // fieldSuccess(field: string) {
-    //     return (
-    //         this.externalDevices.status === ResponseStatus.SUCCESS ||
-    //         (this.externalDevices[field] && this.externalDevices[field]['status'] === ResponseStatus.SUCCESS)
-    //     );
-    // }
-
-    fieldSuccess(field: string) {
-        return this.externalDevices[field]?.['status'] === ResponseStatus.SUCCESS;
+    fieldSuccess(field: string): boolean {
+        return hasFieldStatus(this.externalDevices, field, ResponseStatus.SUCCESS);
     }
 
-    fieldError(field: string) {
-        return this.externalDevices[field]?.['status'] === ResponseStatus.ERROR;
+    fieldError(field: string): boolean {
+        return hasFieldStatus(this.externalDevices, field, ResponseStatus.ERROR);
     }
 
-    fieldInProgress(field: string) {
-        return this.externalDevices[field]?.['status'] === ResponseStatus.PROGRESS;
+    fieldInProgress(field: string): boolean {
+        return hasFieldStatus(this.externalDevices, field, ResponseStatus.PROGRESS);
     }
+
     errorText(field: string) {
-        return this.externalDevices[field]['message'];
+        return fieldMessage(this.externalDevices, field);
     }
 
     handlePrintTest() {

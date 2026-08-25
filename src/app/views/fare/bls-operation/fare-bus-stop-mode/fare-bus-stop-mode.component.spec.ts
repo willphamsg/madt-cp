@@ -72,15 +72,6 @@ describe('FareBusStopMode', () => {
         });
     });
 
-    describe('mappingPosnStatus', () => {
-        it('should map known values and default to empty string', () => {
-            expect(component.mappingPosnStatus(1)).toBe('FMS');
-            expect(component.mappingPosnStatus(2)).toBe('FARE_SYSTEM');
-            expect(component.mappingPosnStatus(3)).toBe('NONE');
-            expect(component.mappingPosnStatus(99)).toBe('');
-        });
-    });
-
     describe('handleSelectFareBusStopMode', () => {
         it('should execute without errors', () => {
             expect(() => {

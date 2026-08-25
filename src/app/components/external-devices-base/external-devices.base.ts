@@ -5,62 +5,21 @@ import { Store } from '@ngrx/store';
 import { MqttService } from '@services/mqtt.service';
 import { SoundService } from '@services/sound.service';
 import { AppState } from '@store/app.state';
-import { IExternalDevice, MsgID, MsgSubID, ResponseStatus } from '@models';
+import { IExternalDevice, MsgID, MsgSubID } from '@models';
+import { createInitialExternalDevices, TEST_PRINTER_UNTESTED } from './external-devices.util';
 
 /**
  * Shared logic for the main/bus-operation and fare "external devices"
  * diagnostics screens, which are identical apart from the store slice/topic
  * they read and dispatch to. Subclasses supply the topic key, the
- * externalDevices$ selector, and the update action to dispatch.
+ * externalDevices$ selector, and the update action to dispatch. The markup both
+ * screens render lives in ExternalDevicesViewComponent.
  */
 @Directive()
 export abstract class ExternalDevicesBase implements OnInit, OnDestroy {
     protected readonly destroy$ = new Subject<void>();
-    readonly MsgID = MsgID;
-    readonly ResponseStatus = ResponseStatus;
 
-    initialExternalDevices: IExternalDevice = {
-        testPrinter: {
-            status: 0,
-            message: '',
-        },
-        printer: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        GNSSAntenna: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        busETA: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv1: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv2: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv3: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv4: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv5: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-        cv6: {
-            status: ResponseStatus.NA,
-            message: '',
-        },
-    };
+    initialExternalDevices: IExternalDevice = createInitialExternalDevices(TEST_PRINTER_UNTESTED);
     externalDevices: IExternalDevice = { ...this.initialExternalDevices };
 
     isLoading = true;
@@ -87,28 +46,6 @@ export abstract class ExternalDevicesBase implements OnInit, OnDestroy {
             this.externalDevices = data;
             this.isLoading = !data.msgID;
         });
-    }
-
-    existingCvs(): string[] {
-        const result: string[] = [];
-        [1, 2, 3, 4, 5, 6].forEach((num) => {
-            if (this.externalDevices[`cv${num}`]) {
-                result.push(`cv${num}`);
-            }
-        });
-        return result;
-    }
-
-    fieldSuccess(field: string) {
-        return this.externalDevices[field]?.['status'] === ResponseStatus.SUCCESS;
-    }
-
-    fieldError(field: string) {
-        return this.externalDevices[field]?.['status'] === ResponseStatus.ERROR;
-    }
-
-    errorText(field: string) {
-        return this.externalDevices[field]['message'];
     }
 
     handlePrintTest(): void {

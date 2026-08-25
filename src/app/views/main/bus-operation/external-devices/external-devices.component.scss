@@ -1,6 +1,0 @@
-@use 'variables' as *;
-@use 'dedup-mixins' as *;
-
-.external-devices-page {
-    @include external-devices-page-styles;
-}

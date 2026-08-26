@@ -141,313 +141,273 @@ let defaultTargetSelector = 'button, a'; // replace with Angular button selector
 const fallbackClickSelector = 'button, .btn, .button, .back-button';
 
 function mergeSelectors(...selectors) {
-    return [...new Set(selectors.join(',').split(',').map((selector) => selector.trim()).filter(Boolean))].join(', ');
+    return [
+        ...new Set(
+            selectors
+                .join(',')
+                .split(',')
+                .map((selector) => selector.trim())
+                .filter(Boolean),
+        ),
+    ].join(', ');
+}
+
+const routeExtraSelectorRules = [
+    // --- main routes ---
+    {
+        urls: [routerUrls.private.main.busStopInformation],
+        selector: '.bus-stop-page .btn, .bus-stop-page .button, .bus-stop-page .back-button, .bus-stop-page li',
+    },
+    { urls: [routerUrls.private.main.free], selector: '.btn.btn-cancel, .btn.btn-confirm, .btn.btn-ok' },
+    { urls: [routerUrls.private.main.frontDoor], selector: '.toggle-cv-container .button, .toggle-cv-container .btn' },
+    {
+        urls: [routerUrls.private.main.breakdown],
+        selector:
+            '.breakdown-container .button, .breakdown-container .btn, .breakdown-container .back-button, .breakdown-container .right, .breakdown-container li',
+    },
+    {
+        urls: [routerUrls.private.main.cashPayment],
+        selector:
+            '.cash-payment-container .btn, .cash-payment-container .button, .cash-payment-container .back-button, .cash-payment-container .tk-button, .cash-payment-container li, .cash-payment-container .right',
+    },
+    { urls: [routerUrls.private.main.rearDoor], selector: '.toggle-cv-container .btn, .toggle-cv-container .button' },
+    { urls: [routerUrls.private.main.endTrip], selector: '.end-trip-container .btn, .end-trip-container .button' },
+    {
+        urls: [routerUrls.private.main.settings],
+        selector:
+            '.settings-container .btn, .settings-container .button, .settings-container .right, .settings-container li',
+    },
+    {
+        urls: [routerUrls.private.main.languageSetting],
+        selector: '.wrapper .language-opt, .wrapper .btn, .wrapper .button, .wrapper .row',
+    },
+    {
+        urls: [
+            routerUrls.private.main.commissioning.inProgress,
+            routerUrls.private.main.commissioning.clearingAllData,
+            routerUrls.private.main.commissioning.completedClearning,
+        ],
+        selector: '.commissioning-container .btn, .commissioning-container .button',
+    },
+    {
+        urls: [routerUrls.private.main.manualLogin],
+        selector: '.wrapper .btn, .wrapper .button, .wrapper .back-button',
+    },
+    { urls: [routerUrls.private.main.tapCardLogin], selector: 'button, .btn, .button' },
+    { urls: [routerUrls.private.main.login], selector: '.login-container .btn, .login-container .button' },
+    {
+        urls: [routerUrls.private.main.busOperation.startTripValidInfo],
+        selector:
+            '.start-trip-page .btn, .start-trip-page .button, .start-trip-page .back-button, .start-trip-page .right, .start-trip-page li',
+    },
+    {
+        urls: [routerUrls.private.main.busOperation.startTripInvalidInfo],
+        selector: '.wrapper .btn, .wrapper .button',
+    },
+    {
+        urls: [routerUrls.private.main.busOperation.externalDevices],
+        selector: '.external-devices-page .btn, .external-devices-page .button, .external-devices-page .back-button',
+    },
+    { urls: [routerUrls.private.main.busOperation.endShift], selector: '.btn, .button' },
+    {
+        urls: [routerUrls.private.main.dateTimeSetting],
+        selector: '.date-setting .btn, .date-setting .button, .date-setting .back-button',
+    },
+    {
+        urls: [routerUrls.private.main.fareConsoleSetting],
+        selector:
+            '.wrapper .btn, .wrapper .button, .wrapper .back-button, .wrapper .right, .wrapper a, .wrapper #enterKey, .wrapper #backspaceKey, .wrapper #switchKey1, .wrapper #switchKey2',
+    },
+    {
+        urls: [routerUrls.private.main.lockScreen],
+        selector: '.lock-screen-container .btn, .lock-screen-container .button',
+    },
+    {
+        urls: [routerUrls.private.main.dagwOperation],
+        selector: '.dagw-operation-container .btn, .dagw-operation-container .button',
+    },
+    {
+        urls: [routerUrls.private.main.url],
+        selector: '.main-layout-page .btn, .main-layout-page .button, .main-layout-page .nav-item',
+    },
+
+    // --- fare routes ---
+    {
+        urls: [routerUrls.private.fare.topUp],
+        selector: '.top-up-page .btn, .top-up-page .button, .top-up-page .back-button',
+    },
+    {
+        urls: [routerUrls.private.fare.transaction],
+        selector: '.transaction-page .btn, .transaction-page .button, .transaction-page .back-button',
+    },
+    {
+        urls: [routerUrls.private.fare.cancelRideCV1, routerUrls.private.fare.cancelRideCV2],
+        selector: '.cancel-ride .btn, .cancel-ride .button',
+    },
+    {
+        urls: [routerUrls.private.fare.concessionCV1, routerUrls.private.fare.concessionCV2],
+        selector: '.concession .btn, .concession .button',
+    },
+    { urls: [routerUrls.private.fare.cvOperation.showCVStatus], selector: '.show-cv-status .back-button' },
+    {
+        urls: [routerUrls.private.fare.cvOperation.setCV],
+        selector: '.select-boarding-type .back-button, .select-boarding-type .row, .select-boarding-type .btn',
+    },
+    {
+        urls: [routerUrls.private.fare.cvOperation.cvModeControl],
+        selector: '.cv-mode-control .btn, .cv-mode-control .button, .cv-mode-control .back-button',
+    },
+    { urls: [routerUrls.private.fare.cvOperation.powerAllCVOn], selector: '.power-all-cv-on .btn' },
+    { urls: [routerUrls.private.fare.cvOperation.powerAllCVOff], selector: '.power-all-cv-on .btn' },
+    { urls: [routerUrls.private.fare.cvOperation.cvPowerControl], selector: '.cv-power-control .back-button' },
+    { urls: [routerUrls.private.fare.cvOperation.resetAllCV], selector: '.reset-all-cv .btn' },
+    {
+        urls: [routerUrls.private.fare.cvOperation.url],
+        selector: '.device-operation-content .back-button, .device-operation-content .device-operation-button',
+    },
+    {
+        urls: [routerUrls.private.fare.blsOperation.manualLocation, routerUrls.private.fare.blsOperation.autoLocation],
+        selector:
+            '.device-operation-content .btn, .device-operation-content .back-button, .device-operation-content .device-operation-button',
+    },
+    {
+        urls: [routerUrls.private.fare.blsOperation.url],
+        selector:
+            '.device-operation-content .back-button, .device-operation-content .device-operation-button, .device-operation-content .btn',
+    },
+    {
+        urls: [routerUrls.private.fare.printerOperation.inspectorTicket],
+        selector: '.inspector-ticket .back-button, .inspector-ticket .button',
+    },
+    {
+        urls: [routerUrls.private.fare.printerOperation.dailyTripLog],
+        selector: '.daily-trip-log .back-button, .daily-trip-log .button',
+    },
+    {
+        urls: [routerUrls.private.fare.printerOperation.testReceipt],
+        selector: '.test-receipt .back-button, .test-receipt .button',
+    },
+    {
+        urls: [routerUrls.private.fare.printerOperation.retentionTicket],
+        selector: '.printer-off .btn, .printer-off .button, .printer-off .back-button',
+    },
+    { urls: [routerUrls.private.fare.printerOperation.status], selector: '.printer-status .button' },
+    {
+        urls: [routerUrls.private.fare.printerOperation.url],
+        selector: '.device-operation-content .back-button, .device-operation-content .device-operation-button',
+    },
+    {
+        urls: [routerUrls.private.fare.lockScreen],
+        selector: '.lock-screen-container .btn, .lock-screen-container .button',
+    },
+    {
+        urls: [routerUrls.private.fare.url],
+        selector: '.ticketing-container .button, .ticketing-container .btn, .ticketing-container .back-button',
+    },
+
+    // --- maintenance routes ---
+    { urls: [routerUrls.private.maintenance.fare.appUpgrade], selector: '.app-upgrade-page .btn' },
+    {
+        urls: [routerUrls.private.maintenance.fare.viewParameter],
+        selector: '.view-parameter-page img, .view-parameter-page .btn, .view-parameter-page .button',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.blsInformation],
+        selector: '.bls-information-page img, .bls-information-page .btn, .bls-information-page .button',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.calibrateBLS.calibrateBlsManualInput],
+        selector: '.calibrate-bls-manual-input-page .back-button, .calibrate-bls-manual-input-page .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.calibrateBLS.calibrateBlsCalibration],
+        selector: '.calibrate-bls-calibration-page .back-button, .calibrate-bls-calibration-page .btn',
+    },
+    { urls: [routerUrls.private.maintenance.fare.calibrateBLS.url], selector: '.calibrate-bls-page .button' },
+    {
+        urls: [routerUrls.private.maintenance.fare.checkPrinter],
+        selector: '.test-print-page .button, .test-print-page .btn',
+    },
+    { urls: [routerUrls.private.maintenance.fare.loadParameter], selector: '.load-parameter-page .button' },
+    {
+        urls: [routerUrls.private.maintenance.fare.redetectBls],
+        selector: '.test-print-page .button, .test-print-page .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.redetectCrp],
+        selector: '.redetect-crp-page .button, .redetect-crp-page .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.redetectCv],
+        selector: '.redetect-cv-page .confirm-button, .redetect-cv-page .button',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.redetectFms],
+        selector: '.test-print-page .button, .test-print-page .btn',
+    },
+    { urls: [routerUrls.private.maintenance.fare.resetBls], selector: '.test-print-page .button' },
+    { urls: [routerUrls.private.maintenance.fare.saveTransaction], selector: '.save-transaction-page .button' },
+    { urls: [routerUrls.private.maintenance.fare.testPrint], selector: '.test-print-page .button' },
+    { urls: [routerUrls.private.maintenance.fare.versionInfo], selector: '.version-info-page .btn' },
+    {
+        urls: [routerUrls.private.maintenance.fare.externalDevices],
+        selector: '.external-devices-page .button, .external-devices-page .btn, .external-devices-page .back-button',
+    },
+    { urls: [routerUrls.private.maintenance.fare.decommission], selector: '.decommission .btn' },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.deckType],
+        selector: '.deck-type .radio, .deck-type .button',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.blsSetting],
+        selector: '.bls .back-button, .bls .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.timeSetting],
+        selector: '.time-setting .back-button, .time-setting .button, .time-setting .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.dateSetting],
+        selector: '.date-setting .back-button, .date-setting .button, .date-setting .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.busId],
+        selector: '.bus-id .btn, .bus-id .right, .bus-id .back-button, .bus-id .radio',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.complimentaryDay],
+        selector: '.complimentary-day .back-button, .complimentary-day .button',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.deleteParameter],
+        selector: '.delete-parameter .back-button, .delete-parameter .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.ticketingConsole.url],
+        selector: '.fare-console .right, .fare-console .left, .fare-console .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.cjb.url],
+        selector: '.maintenance-fare-layout .button, .maintenance-fare-layout .btn',
+    },
+    {
+        urls: [routerUrls.private.maintenance.fare.url],
+        selector:
+            '.maintenance-fare-layout .button, .maintenance-fare-layout .btn, .maintenance-fare-layout .back-button, .maintenance-fare-layout .confirm-button, .maintenance-fare-layout .menu-direction, .maintenance-fare-layout .nav-item',
+    },
+    {
+        urls: [routerUrls.private.maintenance.url],
+        selector: '.maintenance-container .button, .maintenance-container .btn',
+    },
+];
+
+function matchesRoute(currentURL, urls) {
+    return urls.some((url) => currentURL?.indexOf(url) > -1);
 }
 
 function getRouteExtraSelector(currentURL) {
-    // --- main routes ---
-
-    if (currentURL?.indexOf(routerUrls.private.main.busStopInformation) > -1) {
-        return '.bus-stop-page .btn, .bus-stop-page .button, .bus-stop-page .back-button, .bus-stop-page li';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.free) > -1) {
-        return '.btn.btn-cancel, .btn.btn-confirm, .btn.btn-ok';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.frontDoor) > -1) {
-        return '.toggle-cv-container .button, .toggle-cv-container .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.breakdown) > -1) {
-        return '.breakdown-container .button, .breakdown-container .btn, .breakdown-container .back-button, .breakdown-container .right, .breakdown-container li';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.cashPayment) > -1) {
-        return '.cash-payment-container .btn, .cash-payment-container .button, .cash-payment-container .back-button, .cash-payment-container .tk-button, .cash-payment-container li, .cash-payment-container .right';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.rearDoor) > -1) {
-        return '.toggle-cv-container .btn, .toggle-cv-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.endTrip) > -1) {
-        return '.end-trip-container .btn, .end-trip-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.settings) > -1) {
-        return '.settings-container .btn, .settings-container .button, .settings-container .right, .settings-container li';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.languageSetting) > -1) {
-        return '.wrapper .language-opt, .wrapper .btn, .wrapper .button, .wrapper .row';
-    }
-
-    if (
-        currentURL?.indexOf(routerUrls.private.main.commissioning.inProgress) > -1 ||
-        currentURL?.indexOf(routerUrls.private.main.commissioning.clearingAllData) > -1 ||
-        currentURL?.indexOf(routerUrls.private.main.commissioning.completedClearning) > -1
-    ) {
-        return '.commissioning-container .btn, .commissioning-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.manualLogin) > -1) {
-        return '.wrapper .btn, .wrapper .button, .wrapper .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.tapCardLogin) > -1) {
-        return 'button, .btn, .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.login) > -1) {
-        return '.login-container .btn, .login-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.busOperation.startTripValidInfo) > -1) {
-        return '.start-trip-page .btn, .start-trip-page .button, .start-trip-page .back-button, .start-trip-page .right, .start-trip-page li';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.busOperation.startTripInvalidInfo) > -1) {
-        return '.wrapper .btn, .wrapper .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.busOperation.externalDevices) > -1) {
-        return '.external-devices-page .btn, .external-devices-page .button, .external-devices-page .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.busOperation.endShift) > -1) {
-        return '.btn, .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.dateTimeSetting) > -1) {
-        return '.date-setting .btn, .date-setting .button, .date-setting .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.fareConsoleSetting) > -1) {
-        return '.wrapper .btn, .wrapper .button, .wrapper .back-button, .wrapper .right, .wrapper a, .wrapper #enterKey, .wrapper #backspaceKey, .wrapper #switchKey1, .wrapper #switchKey2';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.lockScreen) > -1) {
-        return '.lock-screen-container .btn, .lock-screen-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.dagwOperation) > -1) {
-        return '.dagw-operation-container .btn, .dagw-operation-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.main.url) > -1) {
-        return '.main-layout-page .btn, .main-layout-page .button, .main-layout-page .nav-item';
-    }
-
-    // --- fare routes ---
-
-    if (currentURL?.indexOf(routerUrls.private.fare.topUp) > -1) {
-        return '.top-up-page .btn, .top-up-page .button, .top-up-page .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.transaction) > -1) {
-        return '.transaction-page .btn, .transaction-page .button, .transaction-page .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cancelRideCV1) > -1 || currentURL?.indexOf(routerUrls.private.fare.cancelRideCV2) > -1) {
-        return '.cancel-ride .btn, .cancel-ride .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.concessionCV1) > -1 || currentURL?.indexOf(routerUrls.private.fare.concessionCV2) > -1) {
-        return '.concession .btn, .concession .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.showCVStatus) > -1) {
-        return '.show-cv-status .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.setCV) > -1) {
-        return '.select-boarding-type .back-button, .select-boarding-type .row, .select-boarding-type .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.cvModeControl) > -1) {
-        return '.cv-mode-control .btn, .cv-mode-control .button, .cv-mode-control .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.powerAllCVOn) > -1) {
-        return '.power-all-cv-on .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.powerAllCVOff) > -1) {
-        return '.power-all-cv-on .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.cvPowerControl) > -1) {
-        return '.cv-power-control .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.resetAllCV) > -1) {
-        return '.reset-all-cv .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.cvOperation.url) > -1) {
-        return '.device-operation-content .back-button, .device-operation-content .device-operation-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.blsOperation.manualLocation) > -1 || currentURL?.indexOf(routerUrls.private.fare.blsOperation.autoLocation) > -1) {
-        return '.device-operation-content .btn, .device-operation-content .back-button, .device-operation-content .device-operation-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.blsOperation.url) > -1) {
-        return '.device-operation-content .back-button, .device-operation-content .device-operation-button, .device-operation-content .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.printerOperation.inspectorTicket) > -1) {
-        return '.inspector-ticket .back-button, .inspector-ticket .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.printerOperation.dailyTripLog) > -1) {
-        return '.daily-trip-log .back-button, .daily-trip-log .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.printerOperation.testReceipt) > -1) {
-        return '.test-receipt .back-button, .test-receipt .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.printerOperation.retentionTicket) > -1) {
-        return '.printer-off .btn, .printer-off .button, .printer-off .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.printerOperation.status) > -1) {
-        return '.printer-status .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.printerOperation.url) > -1) {
-        return '.device-operation-content .back-button, .device-operation-content .device-operation-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.lockScreen) > -1) {
-        return '.lock-screen-container .btn, .lock-screen-container .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.fare.url) > -1) {
-        return '.ticketing-container .button, .ticketing-container .btn, .ticketing-container .back-button';
-    }
-
-    // --- maintenance routes ---
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.appUpgrade) > -1) {
-        return '.app-upgrade-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.viewParameter) > -1) {
-        return '.view-parameter-page img, .view-parameter-page .btn, .view-parameter-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.blsInformation) > -1) {
-        return '.bls-information-page img, .bls-information-page .btn, .bls-information-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.calibrateBLS.calibrateBlsManualInput) > -1) {
-        return '.calibrate-bls-manual-input-page .back-button, .calibrate-bls-manual-input-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.calibrateBLS.calibrateBlsCalibration) > -1) {
-        return '.calibrate-bls-calibration-page .back-button, .calibrate-bls-calibration-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.calibrateBLS.url) > -1) {
-        return '.calibrate-bls-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.checkPrinter) > -1) {
-        return '.test-print-page .button, .test-print-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.loadParameter) > -1) {
-        return '.load-parameter-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.redetectBls) > -1) {
-        return '.test-print-page .button, .test-print-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.redetectCrp) > -1) {
-        return '.redetect-crp-page .button, .redetect-crp-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.redetectCv) > -1) {
-        return '.redetect-cv-page .confirm-button, .redetect-cv-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.redetectFms) > -1) {
-        return '.test-print-page .button, .test-print-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.resetBls) > -1) {
-        return '.test-print-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.saveTransaction) > -1) {
-        return '.save-transaction-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.testPrint) > -1) {
-        return '.test-print-page .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.versionInfo) > -1) {
-        return '.version-info-page .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.externalDevices) > -1) {
-        return '.external-devices-page .button, .external-devices-page .btn, .external-devices-page .back-button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.decommission) > -1) {
-        return '.decommission .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.deckType) > -1) {
-        return '.deck-type .radio, .deck-type .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.blsSetting) > -1) {
-        return '.bls .back-button, .bls .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.timeSetting) > -1) {
-        return '.time-setting .back-button, .time-setting .button, .time-setting .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.dateSetting) > -1) {
-        return '.date-setting .back-button, .date-setting .button, .date-setting .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.busId) > -1) {
-        return '.bus-id .btn, .bus-id .right, .bus-id .back-button, .bus-id .radio';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.complimentaryDay) > -1) {
-        return '.complimentary-day .back-button, .complimentary-day .button';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.deleteParameter) > -1) {
-        return '.delete-parameter .back-button, .delete-parameter .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.ticketingConsole.url) > -1) {
-        return '.fare-console .right, .fare-console .left, .fare-console .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.cjb.url) > -1) {
-        return '.maintenance-fare-layout .button, .maintenance-fare-layout .btn';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.fare.url) > -1) {
-        return '.maintenance-fare-layout .button, .maintenance-fare-layout .btn, .maintenance-fare-layout .back-button, .maintenance-fare-layout .confirm-button, .maintenance-fare-layout .menu-direction, .maintenance-fare-layout .nav-item';
-    }
-
-    if (currentURL?.indexOf(routerUrls.private.maintenance.url) > -1) {
-        return '.maintenance-container .button, .maintenance-container .btn';
-    }
-
-    return fallbackClickSelector;
+    const matchedRule = routeExtraSelectorRules.find((rule) => matchesRoute(currentURL, rule.urls));
+    return matchedRule ? matchedRule.selector : fallbackClickSelector;
 }
 
 function getRandomInt(min, max) {
@@ -525,11 +485,24 @@ function startAutoClicker(interval = 1000) {
             //     targetSelector = 'button, .btn';
             // }
 
-            let targetSelector = mergeSelectors(getRouteExtraSelector(currentURL), defaultTargetSelector, fallbackClickSelector);
+            let targetSelector = mergeSelectors(
+                getRouteExtraSelector(currentURL),
+                defaultTargetSelector,
+                fallbackClickSelector,
+            );
             console.log('Current URL:', currentURL, 'Using selector:', targetSelector);
 
             const allEls = document.querySelectorAll(targetSelector);
-            const els = [...allEls].filter((el) => el.id !== 'settings-btn' && el.id !== 'lock-btn' && el.id !== 'log-out-btn' && !el.classList.contains('disabled') && !el.classList.contains('hidden') && !el.classList.contains('mdc-switch') && !el.disabled);
+            const els = [...allEls].filter(
+                (el) =>
+                    el.id !== 'settings-btn' &&
+                    el.id !== 'lock-btn' &&
+                    el.id !== 'log-out-btn' &&
+                    !el.classList.contains('disabled') &&
+                    !el.classList.contains('hidden') &&
+                    !el.classList.contains('mdc-switch') &&
+                    !el.disabled,
+            );
             const elmIdex = getRandomInt(0, els.length - 1);
             const el = els[elmIdex];
             if (el) {

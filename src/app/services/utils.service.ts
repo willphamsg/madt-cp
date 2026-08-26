@@ -72,14 +72,26 @@ export class UtilsServices {
         return new Date(year, month - 1, day, hour, minute, second);
     }
 
+    private compareByDate(a, b, order: string): number {
+        const date1 = this.createDateFromString(`${a['date']} ${a['time']}`);
+        const date2 = this.createDateFromString(`${b['date']} ${b['time']}`);
+        const sortResult = date1.getTime() - date2.getTime();
+        return order === 'asc' ? sortResult : sortResult * -1;
+    }
+
+    private compareByField(valA, valB, order: string): number {
+        if (typeof valA === 'string') {
+            return order === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        return order === 'asc' ? valA - valB : valB - valA;
+    }
+
     multiSort(fields) {
         return (a, b) => {
             for (const { key, order } of fields) {
                 if (key === 'date') {
-                    const date1 = this.createDateFromString(`${a['date']} ${a['time']}`);
-                    const date2 = this.createDateFromString(`${b['date']} ${b['time']}`);
-                    const sortResult = date1.getTime() - date2.getTime();
-                    if (sortResult !== 0) return order === 'asc' ? sortResult : sortResult * -1;
+                    const sortResult = this.compareByDate(a, b, order);
+                    if (sortResult !== 0) return sortResult;
                     continue; // go to next field if dates are equal
                 }
 
@@ -88,11 +100,7 @@ export class UtilsServices {
 
                 if (valA === valB) continue; // go to next field
 
-                if (typeof valA === 'string') {
-                    return order === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
-                } else {
-                    return order === 'asc' ? valA - valB : valB - valA;
-                }
+                return this.compareByField(valA, valB, order);
             }
             return 0; // all equal
         };

@@ -34,6 +34,80 @@ export class DummyInitService {
         this.mqttService.publishWithMessageFormat({ topic, msgID, msgSubID, payload, opts });
     }
 
+    private handleFareMenuButton(payload: any, replyFare: (msgID: number, msgSubID: number, body?: unknown) => void) {
+        if (payload?.btn === 'CANCEL_RIDE_CV1') {
+            replyFare(MsgID.FARE_CANCEL_RIDE_CV1, MsgSubID.NOTIFY, { timeout: 10000 });
+        } else if (payload?.btn === 'CANCEL_RIDE_CV2') {
+            replyFare(MsgID.FARE_CANCEL_RIDE_CV2, MsgSubID.NOTIFY, { timeout: 10000 });
+        } else if (payload?.btn === 'CONCESSION_CV1') {
+            replyFare(MsgID.FARE_CONCESSION_CV1, MsgSubID.NOTIFY, { timeout: 10000 });
+        } else if (payload?.btn === 'CONCESSION_CV2') {
+            replyFare(MsgID.FARE_CONCESSION_CV2, MsgSubID.NOTIFY, { timeout: 10000 });
+        } else if (payload?.btn === 'TRANSACTION') {
+            replyFare(MsgID.FARE_TRANSACTION, MsgSubID.NOTIFY, { cvList: [1, 2] });
+        } else if (payload?.btn === 'TOP_UP') {
+            replyFare(MsgID.FARE_TOP_UP, MsgSubID.NOTIFY, {
+                amounts: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+            });
+        } else if (payload?.btn === 'FARE_BUS_STOP_MODE') {
+            replyFare(MsgID.FARE_BUS_STOP_MODE, MsgSubID.NOTIFY, {});
+        } else if (payload?.btn === 'CV_OPERATION') {
+            replyFare(MsgID.FARE_CV_OPERATION, MsgSubID.NOTIFY, {});
+        } else if (payload?.btn === 'PRINT_OPERATION') {
+            replyFare(MsgID.FARE_PRINTER_OPERATION, MsgSubID.NOTIFY, {});
+        }
+    }
+
+    private handleFareCvOperationButton(
+        payload: any,
+        replyFare: (msgID: number, msgSubID: number, body?: unknown) => void,
+    ) {
+        if (payload?.btn === 'SHOW_CV_STATUS') {
+            replyFare(MsgID.FARE_CO_CV_STATUS, MsgSubID.NOTIFY, {
+                cvStatus: [
+                    { cvNum: 1, status: 1, subStatus: 2 },
+                    { cvNum: 2, status: 1, subStatus: 5 },
+                    { cvNum: 3, status: 2 },
+                    { cvNum: 4, status: 1, subStatus: 6 },
+                    { cvNum: 5, status: 4 },
+                    { cvNum: 6, status: 5 },
+                ],
+            });
+        } else if (payload?.btn === 'SET_CV_ENTRY_EXIT') {
+            replyFare(MsgID.FARE_CO_CV_ENTRY_EXIT, MsgSubID.NOTIFY, { cvType: 1 });
+        } else if (payload?.btn === 'CV_MODE_CONTROL') {
+            replyFare(MsgID.FARE_CO_CV_MODE_CONTROL, MsgSubID.NOTIFY, {});
+        } else if (payload?.btn === 'POWER_ALL_CV_ON') {
+            replyFare(MsgID.FARE_CO_POWER_ALL_CV_ON, MsgSubID.NOTIFY, { timeout: 10000 });
+        } else if (payload?.btn === 'POWER_ALL_CV_OFF') {
+            replyFare(MsgID.FARE_CO_POWER_ALL_CV_OFF, MsgSubID.NOTIFY, { timeout: 10000 });
+        } else if (payload?.btn === 'CV_POWER_CONTROL') {
+            replyFare(MsgID.FARE_CO_CV_POWER_CTRL, MsgSubID.NOTIFY, {
+                groups: [
+                    { id: 1, cvs: ['CV1', 'CV3', 'CV5'], status: true },
+                    { id: 2, cvs: ['CV2', 'CV4', 'CV6'], status: false },
+                ],
+            });
+        } else if (payload?.btn === 'RESET_ALL_CV') {
+            replyFare(MsgID.FARE_CO_RESET_ALL_CV, MsgSubID.NOTIFY, { timeout: 10000 });
+        }
+    }
+
+    private handleFarePrintOperationButton(
+        payload: any,
+        replyFare: (msgID: number, msgSubID: number, body?: unknown) => void,
+    ) {
+        if (payload?.btn === 'PRINT_RETENTION_TICKET') {
+            replyFare(MsgID.FARE_PO_PRINT_RETENTION_TICKET, MsgSubID.NOTIFY, { cvList: [1, 2] });
+        } else if (payload?.btn === 'PRINT_ON') {
+            replyFare(MsgID.FARE_PO_PRINTER_ON, MsgSubID.NOTIFY, {});
+        } else if (payload?.btn === 'PRINT_OFF') {
+            replyFare(MsgID.FARE_PO_PRINTER_OFF, MsgSubID.NOTIFY, {});
+        } else if (payload?.btn === 'PRINTER_STATUS') {
+            replyFare(MsgID.FARE_PO_PRINTER_STATUS, MsgSubID.NOTIFY, { printerStatus: 1 });
+        }
+    }
+
     // Method to initialize dummy data
     initializeDummyData(topics): void {
         console.log('dummy data init');
@@ -398,27 +472,7 @@ export class DummyInitService {
 
                 switch (header?.msgID) {
                     case MsgID.FARE_MENU_BUTTON:
-                        if (payload?.btn === 'CANCEL_RIDE_CV1') {
-                            replyFare(MsgID.FARE_CANCEL_RIDE_CV1, MsgSubID.NOTIFY, { timeout: 10000 });
-                        } else if (payload?.btn === 'CANCEL_RIDE_CV2') {
-                            replyFare(MsgID.FARE_CANCEL_RIDE_CV2, MsgSubID.NOTIFY, { timeout: 10000 });
-                        } else if (payload?.btn === 'CONCESSION_CV1') {
-                            replyFare(MsgID.FARE_CONCESSION_CV1, MsgSubID.NOTIFY, { timeout: 10000 });
-                        } else if (payload?.btn === 'CONCESSION_CV2') {
-                            replyFare(MsgID.FARE_CONCESSION_CV2, MsgSubID.NOTIFY, { timeout: 10000 });
-                        } else if (payload?.btn === 'TRANSACTION') {
-                            replyFare(MsgID.FARE_TRANSACTION, MsgSubID.NOTIFY, { cvList: [1, 2] });
-                        } else if (payload?.btn === 'TOP_UP') {
-                            replyFare(MsgID.FARE_TOP_UP, MsgSubID.NOTIFY, {
-                                amounts: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-                            });
-                        } else if (payload?.btn === 'FARE_BUS_STOP_MODE') {
-                            replyFare(MsgID.FARE_BUS_STOP_MODE, MsgSubID.NOTIFY, {});
-                        } else if (payload?.btn === 'CV_OPERATION') {
-                            replyFare(MsgID.FARE_CV_OPERATION, MsgSubID.NOTIFY, {});
-                        } else if (payload?.btn === 'PRINT_OPERATION') {
-                            replyFare(MsgID.FARE_PRINTER_OPERATION, MsgSubID.NOTIFY, {});
-                        }
+                        this.handleFareMenuButton(payload, replyFare);
                         break;
 
                     case MsgID.FARE_CANCEL_RIDE_SUBMIT:
@@ -514,35 +568,7 @@ export class DummyInitService {
                         break;
 
                     case MsgID.FARE_CV_OPERATION_BUTTON:
-                        if (payload?.btn === 'SHOW_CV_STATUS') {
-                            replyFare(MsgID.FARE_CO_CV_STATUS, MsgSubID.NOTIFY, {
-                                cvStatus: [
-                                    { cvNum: 1, status: 1, subStatus: 2 },
-                                    { cvNum: 2, status: 1, subStatus: 5 },
-                                    { cvNum: 3, status: 2 },
-                                    { cvNum: 4, status: 1, subStatus: 6 },
-                                    { cvNum: 5, status: 4 },
-                                    { cvNum: 6, status: 5 },
-                                ],
-                            });
-                        } else if (payload?.btn === 'SET_CV_ENTRY_EXIT') {
-                            replyFare(MsgID.FARE_CO_CV_ENTRY_EXIT, MsgSubID.NOTIFY, { cvType: 1 });
-                        } else if (payload?.btn === 'CV_MODE_CONTROL') {
-                            replyFare(MsgID.FARE_CO_CV_MODE_CONTROL, MsgSubID.NOTIFY, {});
-                        } else if (payload?.btn === 'POWER_ALL_CV_ON') {
-                            replyFare(MsgID.FARE_CO_POWER_ALL_CV_ON, MsgSubID.NOTIFY, { timeout: 10000 });
-                        } else if (payload?.btn === 'POWER_ALL_CV_OFF') {
-                            replyFare(MsgID.FARE_CO_POWER_ALL_CV_OFF, MsgSubID.NOTIFY, { timeout: 10000 });
-                        } else if (payload?.btn === 'CV_POWER_CONTROL') {
-                            replyFare(MsgID.FARE_CO_CV_POWER_CTRL, MsgSubID.NOTIFY, {
-                                groups: [
-                                    { id: 1, cvs: ['CV1', 'CV3', 'CV5'], status: true },
-                                    { id: 2, cvs: ['CV2', 'CV4', 'CV6'], status: false },
-                                ],
-                            });
-                        } else if (payload?.btn === 'RESET_ALL_CV') {
-                            replyFare(MsgID.FARE_CO_RESET_ALL_CV, MsgSubID.NOTIFY, { timeout: 10000 });
-                        }
+                        this.handleFareCvOperationButton(payload, replyFare);
                         break;
 
                     case MsgID.FARE_CV_OPERATION_BACK:
@@ -587,15 +613,7 @@ export class DummyInitService {
                         break;
 
                     case MsgID.FARE_PRINT_OPERATION_BUTTON:
-                        if (payload?.btn === 'PRINT_RETENTION_TICKET') {
-                            replyFare(MsgID.FARE_PO_PRINT_RETENTION_TICKET, MsgSubID.NOTIFY, { cvList: [1, 2] });
-                        } else if (payload?.btn === 'PRINT_ON') {
-                            replyFare(MsgID.FARE_PO_PRINTER_ON, MsgSubID.NOTIFY, {});
-                        } else if (payload?.btn === 'PRINT_OFF') {
-                            replyFare(MsgID.FARE_PO_PRINTER_OFF, MsgSubID.NOTIFY, {});
-                        } else if (payload?.btn === 'PRINTER_STATUS') {
-                            replyFare(MsgID.FARE_PO_PRINTER_STATUS, MsgSubID.NOTIFY, { printerStatus: 1 });
-                        }
+                        this.handleFarePrintOperationButton(payload, replyFare);
                         break;
 
                     case MsgID.FARE_PO_PRINT_RTK_SELECT:

@@ -72,75 +72,89 @@ export class BreakdownComponent implements OnInit, OnDestroy {
                     this.topics = this.mqttService.mqttConfig?.topics;
                 }
                 if (data) {
-                    this.breakDownInfoData = data;
-                    console.log('breakDownInfoData', this.breakDownInfoData);
-
-                    if (!this.selectedFirstBusStop) this.selectedFirstBusStop = this.breakDownInfoData.firstBusStop;
-                    if (!this.selectedLastBusStop) this.selectedLastBusStop = this.breakDownInfoData.lastBusStop;
-
-                    // update end bus stop success
-                    if (
-                        this.breakDownInfoData?.msgID === MsgID.BREAKDOWN_CHANGE_BUS_STOP &&
-                        this.breakDownInfoData?.status === ResponseStatus.SUCCESS
-                    ) {
-                        this.step = 0;
-                        const nextEndTripInfo = { ...this.breakDownInfoData };
-                        this.store.dispatch(
-                            updateBreakDownInfo({
-                                payload: {
-                                    ...nextEndTripInfo,
-                                    lastBusStop: this.selectedLastBusStop,
-                                    msgID: MsgID.MAIN_BREAKDOWN,
-                                },
-                            }),
-                        );
-                    }
-
-                    // handle back
-                    if (
-                        this.breakDownInfoData?.msgID === MsgID.BREAKDOWN_BACK_BUTTON &&
-                        this.breakDownInfoData?.status === ResponseStatus.SUCCESS
-                    ) {
-                        const nextEndTripInfo = { ...this.breakDownInfoData };
-                        this.store.dispatch(
-                            updateBreakDownInfo({
-                                payload: {
-                                    ...nextEndTripInfo,
-                                    msgID: this.previousPage,
-                                    status: ResponseStatus.SUCCESS,
-                                },
-                            }),
-                        );
-                    }
-
-                    //handle timeout for first screen
-                    clearTimeout(this.timeOutId);
-                    if (data.timeout && data.timeout > 0) {
-                        this.timeOutId = setTimeout(() => {
-                            this.mqttService.publishWithMessageFormat({
-                                topic: this.topics?.mainTab?.get,
-                                msgID: MsgID.TIMEOUT_MESSAGE,
-                                msgSubID: MsgSubID.NOTIFY,
-                                payload: { msgID: MsgID.MAIN_BREAKDOWN },
-                            });
-                            this.router.navigate([routerUrls?.private?.main?.busStopInformation]);
-                        }, data.timeout);
-                    }
-
-                    //remove disableActions when receive response
-                    if (
-                        data.msgID === MsgID.BREAKDOWN_SUBMIT_COMP_TICKET ||
-                        data.msgID === MsgID.BREAKDOWN_SUBMIT_BREAKDOWN_TICKET
-                    ) {
-                        this.disableActions = false;
-                    }
-
-                    this.handleSaveStateToLocalStorage();
-
-                    //handle set current screen
-                    this.setCurrentScreen();
+                    this.handleBreakdownInfoUpdate(data);
                 }
             });
+    }
+
+    private handleBreakdownInfoUpdate(data: IBreakDown): void {
+        this.breakDownInfoData = data;
+        console.log('breakDownInfoData', this.breakDownInfoData);
+
+        if (!this.selectedFirstBusStop) this.selectedFirstBusStop = this.breakDownInfoData.firstBusStop;
+        if (!this.selectedLastBusStop) this.selectedLastBusStop = this.breakDownInfoData.lastBusStop;
+
+        this.handleBusStopChangeSuccess();
+        this.handleBreakdownBackButton();
+        this.scheduleBreakdownTimeout(data);
+
+        //remove disableActions when receive response
+        if (
+            data.msgID === MsgID.BREAKDOWN_SUBMIT_COMP_TICKET ||
+            data.msgID === MsgID.BREAKDOWN_SUBMIT_BREAKDOWN_TICKET
+        ) {
+            this.disableActions = false;
+        }
+
+        this.handleSaveStateToLocalStorage();
+
+        //handle set current screen
+        this.setCurrentScreen();
+    }
+
+    // update end bus stop success
+    private handleBusStopChangeSuccess(): void {
+        if (
+            this.breakDownInfoData?.msgID === MsgID.BREAKDOWN_CHANGE_BUS_STOP &&
+            this.breakDownInfoData?.status === ResponseStatus.SUCCESS
+        ) {
+            this.step = 0;
+            const nextEndTripInfo = { ...this.breakDownInfoData };
+            this.store.dispatch(
+                updateBreakDownInfo({
+                    payload: {
+                        ...nextEndTripInfo,
+                        lastBusStop: this.selectedLastBusStop,
+                        msgID: MsgID.MAIN_BREAKDOWN,
+                    },
+                }),
+            );
+        }
+    }
+
+    // handle back
+    private handleBreakdownBackButton(): void {
+        if (
+            this.breakDownInfoData?.msgID === MsgID.BREAKDOWN_BACK_BUTTON &&
+            this.breakDownInfoData?.status === ResponseStatus.SUCCESS
+        ) {
+            const nextEndTripInfo = { ...this.breakDownInfoData };
+            this.store.dispatch(
+                updateBreakDownInfo({
+                    payload: {
+                        ...nextEndTripInfo,
+                        msgID: this.previousPage,
+                        status: ResponseStatus.SUCCESS,
+                    },
+                }),
+            );
+        }
+    }
+
+    //handle timeout for first screen
+    private scheduleBreakdownTimeout(data: IBreakDown): void {
+        clearTimeout(this.timeOutId);
+        if (data.timeout && data.timeout > 0) {
+            this.timeOutId = setTimeout(() => {
+                this.mqttService.publishWithMessageFormat({
+                    topic: this.topics?.mainTab?.get,
+                    msgID: MsgID.TIMEOUT_MESSAGE,
+                    msgSubID: MsgSubID.NOTIFY,
+                    payload: { msgID: MsgID.MAIN_BREAKDOWN },
+                });
+                this.router.navigate([routerUrls?.private?.main?.busStopInformation]);
+            }, data.timeout);
+        }
     }
 
     handleSaveStateToLocalStorage() {

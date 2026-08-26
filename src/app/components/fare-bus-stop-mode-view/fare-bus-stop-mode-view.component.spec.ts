@@ -93,9 +93,9 @@ describe('FareBusStopModeViewComponent', () => {
             render();
         });
 
-        it('should emit cancel when the operator backs out', () => {
-            const spy = jasmine.createSpy('cancel');
-            component.cancel.subscribe(spy);
+        it('should emit cancelMode when the operator backs out', () => {
+            const spy = jasmine.createSpy('cancelMode');
+            component.cancelMode.subscribe(spy);
 
             click('.btn-cancel');
 

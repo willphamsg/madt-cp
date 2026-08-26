@@ -65,7 +65,9 @@ export abstract class FareBusStopModeBase implements OnInit, OnDestroy {
     }
 
     /** Hook for a domain-specific extra subscription (e.g. maintenance's fareConsole$). */
-    protected initExtraSubscriptions(): void {}
+    protected initExtraSubscriptions(): void {
+        // Intentional no-op default; overridden by subclasses that need an extra subscription.
+    }
 
     /** Hook for domain-specific handling of a fareBusStopMode$ emission. */
     protected onFareBusStopModeData(_data: IFareBusStopMode): void {}

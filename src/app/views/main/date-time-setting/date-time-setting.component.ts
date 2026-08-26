@@ -97,50 +97,64 @@ export class DateTimeSettingComponent implements OnInit, OnDestroy {
         const target = <HTMLDivElement>event.target;
 
         if (target.id === 'backspaceKey') {
-            if (start > 0) {
-                if (start === end) {
-                    // No selection, just delete the character before the cursor
-                    inputField.value = this.setValueForDateElement(value.slice(0, start - 1) + value.slice(end));
-                    inputField.selectionStart = inputField.selectionEnd = start - 1;
-                } else {
-                    // There is a selection, delete the selected text
-                    inputField.value = this.setValueForDateElement(value.slice(0, start) + value.slice(end));
-                    inputField.selectionStart = inputField.selectionEnd = start;
-                }
-                if (['day', 'month', 'year'].includes(this.dateTimeInputType)) {
-                    // this.hasDateInputError = false;
-                    this.dateTimeErrorMessage = '';
-                } else {
-                    this.hasTimeInputError = false;
-                }
-                this.removeStoreError();
-            }
+            this.handleBackspaceInput(inputField, start, end, value);
         } else if (target.id === 'enterKey') {
             this.handleConfirmDate();
-        } else {
-            if (
-                (this.dateTimeInputType === 'year' && value.length >= 4) ||
-                (this.dateTimeInputType !== 'year' && value.length >= 2)
-            ) {
-                inputField.focus();
-                this.autoFocusOnInput(inputField, inputField.value, target.id === 'backspaceKey', start === 0);
-                return;
-            }
-
-            const keyValue = target.innerText.trim();
-            inputField.value = this.setValueForDateElement(value.slice(0, start) + keyValue + value.slice(end));
-            inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
-            if (['day', 'month', 'year'].includes(this.dateTimeInputType)) {
-                // this.hasDateInputError = false;
-                this.dateTimeErrorMessage = '';
-            } else {
-                this.hasTimeInputError = false;
-            }
-
-            this.removeStoreError();
+        } else if (this.handleCharacterKeyInput(inputField, target, start, end, value)) {
+            return;
         }
         inputField.focus();
         this.autoFocusOnInput(inputField, inputField.value, target.id === 'backspaceKey', start === 0);
+    }
+
+    private handleBackspaceInput(inputField: HTMLInputElement, start: number, end: number, value: string): void {
+        if (start <= 0) return;
+        if (start === end) {
+            // No selection, just delete the character before the cursor
+            inputField.value = this.setValueForDateElement(value.slice(0, start - 1) + value.slice(end));
+            inputField.selectionStart = inputField.selectionEnd = start - 1;
+        } else {
+            // There is a selection, delete the selected text
+            inputField.value = this.setValueForDateElement(value.slice(0, start) + value.slice(end));
+            inputField.selectionStart = inputField.selectionEnd = start;
+        }
+        if (['day', 'month', 'year'].includes(this.dateTimeInputType)) {
+            // this.hasDateInputError = false;
+            this.dateTimeErrorMessage = '';
+        } else {
+            this.hasTimeInputError = false;
+        }
+        this.removeStoreError();
+    }
+
+    private handleCharacterKeyInput(
+        inputField: HTMLInputElement,
+        target: HTMLDivElement,
+        start: number,
+        end: number,
+        value: string,
+    ): boolean {
+        if (
+            (this.dateTimeInputType === 'year' && value.length >= 4) ||
+            (this.dateTimeInputType !== 'year' && value.length >= 2)
+        ) {
+            inputField.focus();
+            this.autoFocusOnInput(inputField, inputField.value, target.id === 'backspaceKey', start === 0);
+            return true;
+        }
+
+        const keyValue = target.innerText.trim();
+        inputField.value = this.setValueForDateElement(value.slice(0, start) + keyValue + value.slice(end));
+        inputField.selectionStart = inputField.selectionEnd = start + keyValue.length;
+        if (['day', 'month', 'year'].includes(this.dateTimeInputType)) {
+            // this.hasDateInputError = false;
+            this.dateTimeErrorMessage = '';
+        } else {
+            this.hasTimeInputError = false;
+        }
+
+        this.removeStoreError();
+        return false;
     }
 
     private removeStoreError() {

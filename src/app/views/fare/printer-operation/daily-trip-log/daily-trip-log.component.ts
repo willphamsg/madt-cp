@@ -24,7 +24,9 @@ export class DailyTripLogComponent {
         this.router.navigate(['/ticketing/device-operation/printer']);
     }
 
-    handlePrint() {}
+    handlePrint() {
+        // Printer integration not yet implemented; button is wired for the upcoming print flow.
+    }
 
     handleButtonSound(): void {
         this.soundService.playButton();

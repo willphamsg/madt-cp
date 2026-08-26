@@ -256,52 +256,76 @@ export class MqttService implements OnDestroy {
             return true;
         }
 
-        const errors: string[] = [];
+        const errors = this.collectMessageFormatErrors(message, topic);
 
-        // Validate topic against configured topics
+        if (errors.length > 0) {
+            this.messageFormatErrorSubject.next(this.buildMessageFormatError(message, topic, direction, errors));
+            console.warn(`Invalid message format [${direction}] on topic "${topic}":`, errors);
+            return false;
+        }
+
+        return true;
+    }
+
+    private collectMessageFormatErrors(message: any, topic: string): string[] {
         const validTopics = this.getAllConfiguredTopics();
+        const errors: string[] = [];
         if (validTopics.length > 0 && !validTopics.includes(topic)) {
             errors.push(`Topic "${topic}" is not defined in mqtt-config.json`);
         }
 
         if (!message || typeof message !== 'object') {
             errors.push('Message must be an object');
-        } else {
-            if (!message.header || typeof message.header !== 'object') {
-                errors.push('Missing or invalid header');
-            } else {
-                if (!message.header.dateTime) errors.push('Missing header.dateTime');
-                if (!message.header.formatVersion) errors.push('Missing header.formatVersion');
-                if ([null, undefined].includes(message.header.msgID)) errors.push('Missing header.msgID');
-                if (![1, 2, 3].includes(message.header.msgSubID)) errors.push('Invalid header.msgSubID');
-            }
-
-            if (!message.payload) {
-                errors.push('Payload cannot be null or undefined');
-            } else if (typeof message.payload !== 'object' && !Array.isArray(message.payload)) {
-                errors.push('Payload must be a non-array object');
-            }
+            return errors;
         }
 
-        if (errors.length > 0) {
-            const formatError: IMessageFormatError = {
-                topic,
-                direction,
-                errors,
-                timestamp: Date.now(),
-            };
-            if (message?.header?.msgID) {
-                formatError.msgID = message.header.msgID;
-            }
-            if (message?.header?.msgSubID) {
-                formatError.msgSubID = message.header.msgSubID;
-            }
-            this.messageFormatErrorSubject.next(formatError);
-            console.warn(`Invalid message format [${direction}] on topic "${topic}":`, errors);
-            return false;
+        errors.push(...this.validateMessageHeader(message.header));
+        errors.push(...this.validateMessagePayload(message.payload));
+        return errors;
+    }
+
+    private validateMessageHeader(header: any): string[] {
+        if (!header || typeof header !== 'object') {
+            return ['Missing or invalid header'];
         }
 
-        return true;
+        const errors: string[] = [];
+        if (!header.dateTime) errors.push('Missing header.dateTime');
+        if (!header.formatVersion) errors.push('Missing header.formatVersion');
+        if ([null, undefined].includes(header.msgID)) errors.push('Missing header.msgID');
+        if (![1, 2, 3].includes(header.msgSubID)) errors.push('Invalid header.msgSubID');
+        return errors;
+    }
+
+    private validateMessagePayload(payload: any): string[] {
+        if (!payload) {
+            return ['Payload cannot be null or undefined'];
+        }
+        if (typeof payload !== 'object' && !Array.isArray(payload)) {
+            return ['Payload must be a non-array object'];
+        }
+        return [];
+    }
+
+    private buildMessageFormatError(
+        message: any,
+        topic: string,
+        direction: 'incoming' | 'outgoing',
+        errors: string[],
+    ): IMessageFormatError {
+        const formatError: IMessageFormatError = {
+            topic,
+            direction,
+            errors,
+            timestamp: Date.now(),
+        };
+        if (message?.header?.msgID) {
+            formatError.msgID = message.header.msgID;
+        }
+        if (message?.header?.msgSubID) {
+            formatError.msgSubID = message.header.msgSubID;
+        }
+        return formatError;
     }
 
     private getAllConfiguredTopics(): string[] {

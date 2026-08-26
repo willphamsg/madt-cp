@@ -86,6 +86,25 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
     currentRoute: string = this.router.url;
     topics;
 
+    // message de-dup trackers for validatedAuth's MQTT callback
+    private currentCvStatusMsg = 0;
+    private currentCVPowerCtrlMsg = 0;
+    private currentCVEXitEntryMsg = 0;
+    private currentPowerCvOnMsg = 0;
+    private currentPowerCvOffMsg = 0;
+    private currentCVModeCtrlMsg = 0;
+    private currentResetAllCvMsg = 0;
+    private currentRetentionTicketMsg = 0;
+    private currentPrinterOnMsg = 0;
+    private currentPrinterOffMsg = 0;
+    private currentPrintStatusMsg = 0;
+    private currentCancelRideMsg = 0;
+    private currentConcessionMsg = 0;
+    private currentFareBusStopModeMsg = 0;
+    private currentTopUpMsg = 0;
+    private currentTransactionMsg = 0;
+    private currentLockScreen = 0;
+
     constructor(
         protected router: Router,
         protected store: Store<AppState>,
@@ -166,26 +185,6 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
     }
 
     validatedAuth(topics) {
-        let currentCvStatusMsg = 0;
-        let currentCVPowerCtrlMsg = 0;
-        let currentCVEXitEntryMsg = 0;
-        let currentPowerCvOnMsg = 0;
-        let currentPowerCvOffMsg = 0;
-        let currentCVModeCtrlMsg = 0;
-        let currentResetAllCvMsg = 0;
-        let currentRetentionTicketMsg = 0;
-        let currentPrinterOnMsg = 0;
-        let currentPrinterOffMsg = 0;
-        // let currentPrinterStatusMsg = 0;
-        let currentPrintStatusMsg = 0;
-        // let currentDisableBlsMsg = 0;
-        let currentCancelRideMsg = 0;
-        let currentConcessionMsg = 0;
-        let currentFareBusStopModeMsg = 0;
-        let currentTopUpMsg = 0;
-        let currentTransactionMsg = 0;
-        let currentLockScreen = 0;
-
         this.mqttService.subscribe({
             topic: topics.fareTab?.response,
             topicKey: TopicsKeys.FARE_TAB,
@@ -204,544 +203,11 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                 const dateTime = new Date(header?.dateTime);
 
                 if (header?.msgSubID === MsgSubID?.NOTIFY) {
-                    switch (header?.msgID) {
-                        case MsgID.FARE_SCREEN:
-                            // this.router.navigate([`${routerUrls.private.fare.url}`]);
-                            if (payload.screenType === FareScreen.LOGIN_FROM_MAIN_TAB) {
-                                // this.screenType = payload.screenType;
-                                this.navigate(routerUrls.private.fare.logOff);
-                            } else if (payload.screenType === FareScreen.ACCESS_DENIED) {
-                                // this.screenType = payload.screenType;
-                                this.navigate(routerUrls.private.fare.accessDenied);
-                            } else if (payload.screenType === FareScreen.WAITING_TRIP_TO_START) {
-                                // this.screenType = FareScreen.WAITING_TRIP_TO_START;
-                                this.navigate(routerUrls.private.fare.waitingTripStart);
-                            } else {
-                                // this.screenType = FareScreen.ON_TRIP_LANDING_PAGE;
-                                this.navigate(routerUrls.private.fare.url);
-                            }
-                            this.handleUnlockSuccess();
-                            break;
-                        // case MsgID.LOGIN_SUCCESS:
-                        //     this.store.dispatch(updateAuth({ payload }));
-                        //     break;
-                        // case MsgID.LOGOUT_SUCCESS:
-                        //     this.store.dispatch(updateIsOnTrip({ payload: false }));
-                        //     this.store.dispatch(
-                        //         updateAuth({ payload: { isLoggedIn: false, loggedInType: undefined } }),
-                        //     );
-                        //     break;
-                        // case MsgID.START_TRIP_SUCCESS:
-                        //     this.store.dispatch(updateIsOnTrip({ payload: true }));
-                        //     this.router.navigate([`${routerUrls.private.fare.url}`]);
-                        //     break;
-                        // case MsgID.END_TRIP_SUCCESS:
-                        //     this.store.dispatch(updateIsOnTrip({ payload: false }));
-
-                        //fare screen button
-                        case MsgID.FARE_CANCEL_RIDE_CV1:
-                            currentCancelRideMsg = this.messValidation(dateTime, currentCancelRideMsg, () => {
-                                this.store.dispatch(
-                                    updateCancelRide({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cancelRideCV1);
-                            });
-                            break;
-                        case MsgID.FARE_CANCEL_RIDE_CV2:
-                            currentCancelRideMsg = this.messValidation(dateTime, currentCancelRideMsg, () => {
-                                this.store.dispatch(
-                                    updateCancelRide({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cancelRideCV2);
-                            });
-                            break;
-                        case MsgID?.FARE_CANCEL_RIDE_SUBMIT_NOTIFY:
-                            currentCancelRideMsg = this.messValidation(dateTime, currentCancelRideMsg, () => {
-                                this.store.dispatch(
-                                    updateCancelRide({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-
-                                if (payload.cvNum) {
-                                    const endPoint = 'cancelRideCV' + payload.cvNum;
-                                    const targetRoute = routerUrls?.private?.fare[endPoint];
-                                    if (targetRoute) {
-                                        this.navigate(targetRoute); // Navigate based on cvNum
-                                    }
-                                }
-                            });
-                            break;
-                        case MsgID.FARE_CONCESSION_CV1:
-                            currentConcessionMsg = this.messValidation(dateTime, currentConcessionMsg, () => {
-                                this.store.dispatch(
-                                    updateConcession({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.concessionCV1);
-                            });
-                            break;
-                        case MsgID.FARE_CONCESSION_CV2:
-                            currentConcessionMsg = this.messValidation(dateTime, currentConcessionMsg, () => {
-                                this.store.dispatch(
-                                    updateConcession({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.concessionCV2);
-                            });
-                            break;
-                        case MsgID.FARE_CONCESSION_SUBMIT_NOTIFY:
-                            currentConcessionMsg = this.messValidation(dateTime, currentConcessionMsg, () => {
-                                this.store.dispatch(
-                                    updateConcession({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                if (payload.cvNum) {
-                                    const endPoint = 'concessionCV' + payload.cvNum;
-                                    const targetRoute = routerUrls?.private?.fare[endPoint];
-                                    if (targetRoute) {
-                                        this.navigate(targetRoute); // Navigate based on cvNum
-                                    }
-                                }
-                            });
-                            break;
-                        case MsgID.FARE_BUS_STOP_MODE:
-                            currentFareBusStopModeMsg = this.messValidation(dateTime, currentFareBusStopModeMsg, () => {
-                                this.store.dispatch(
-                                    updateFareBusStopMode({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.blsOperation.url);
-                            });
-                            break;
-                        case MsgID.FARE_TOP_UP:
-                            currentTopUpMsg = this.messValidation(dateTime, currentTopUpMsg, () => {
-                                this.store.dispatch(
-                                    updateTopUp({
-                                        payload: { ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.topUp);
-                            });
-                            break;
-                        case MsgID.FARE_TRANSACTION:
-                            currentTransactionMsg = this.messValidation(dateTime, currentTransactionMsg, () => {
-                                this.store.dispatch(
-                                    updateTransaction({
-                                        payload: { ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.transaction);
-                            });
-                            break;
-                        case MsgID?.FARE_TRANSACTION_INFORMATION_TYPE_1:
-                        case MsgID?.FARE_TRANSACTION_INFORMATION_TYPE_2:
-                            currentTransactionMsg = this.messValidation(dateTime, currentTransactionMsg, () => {
-                                this.store.dispatch(
-                                    updateTransaction({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.transaction);
-                            });
-                            break;
-
-                        // fare CV operation
-                        case MsgID.FARE_CV_OPERATION:
-                            this.navigate(routerUrls.private.fare.cvOperation.url);
-                            break;
-                        case MsgID.FARE_CO_CV_STATUS:
-                            currentCvStatusMsg = this.messValidation(dateTime, currentCvStatusMsg, () => {
-                                this.store.dispatch(
-                                    updateShowCVStatus({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cvOperation.showCVStatus);
-                            });
-                            break;
-                        case MsgID.FARE_CO_CV_ENTRY_EXIT:
-                            currentCVEXitEntryMsg = this.messValidation(dateTime, currentCVEXitEntryMsg, () => {
-                                this.store.dispatch(
-                                    updateCVEntryExit({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cvOperation.setCV);
-                            });
-                            break;
-                        case MsgID.FARE_CO_CV_MODE_CONTROL:
-                            currentCVModeCtrlMsg = this.messValidation(dateTime, currentCVModeCtrlMsg, () => {
-                                this.store.dispatch(
-                                    updateCVModeControl({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cvOperation.cvModeControl);
-                            });
-                            break;
-                        case MsgID.FARE_CO_POWER_ALL_CV_ON:
-                            currentPowerCvOnMsg = this.messValidation(dateTime, currentPowerCvOnMsg, () => {
-                                this.store.dispatch(updatePowerCvOnOff({ payload: { ...header, ...payload } }));
-                                this.navigate(routerUrls.private.fare.cvOperation.powerAllCVOn);
-                            });
-                            break;
-                        case MsgID.FARE_CO_POWER_ALL_CV_OFF:
-                            currentPowerCvOffMsg = this.messValidation(dateTime, currentPowerCvOffMsg, () => {
-                                this.store.dispatch(updatePowerCvOnOff({ payload: { ...header, ...payload } }));
-                                this.navigate(routerUrls.private.fare.cvOperation.powerAllCVOff);
-                            });
-                            break;
-                        case MsgID.FARE_CO_CV_POWER_CTRL:
-                            currentCVPowerCtrlMsg = this.messValidation(dateTime, currentCVPowerCtrlMsg, () => {
-                                this.store.dispatch(
-                                    updateCVPowerControl({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cvOperation.cvPowerControl);
-                            });
-                            break;
-                        case MsgID.FARE_CO_RESET_ALL_CV:
-                            currentResetAllCvMsg = this.messValidation(dateTime, currentResetAllCvMsg, () => {
-                                this.store.dispatch(
-                                    updateResetAllCV({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cvOperation.resetAllCV);
-                            });
-                            break;
-                        //Printer operations
-                        case MsgID.FARE_PRINTER_OPERATION:
-                            this.navigate(routerUrls.private.fare.printerOperation.url);
-                            break;
-                        case MsgID?.FARE_PO_PRINTER_STATUS:
-                            currentPrintStatusMsg = this.messValidation(dateTime, currentPrintStatusMsg, () => {
-                                this.store.dispatch(
-                                    updatePrintStatus({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.printerOperation.status);
-                            });
-                            break;
-                        case MsgID?.FARE_PO_PRINT_RETENTION_TICKET:
-                            currentRetentionTicketMsg = this.messValidation(dateTime, currentRetentionTicketMsg, () => {
-                                this.store.dispatch(
-                                    updateRetentionTicket({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.printerOperation.retentionTicket);
-                            });
-                            break;
-                        case MsgID?.FARE_PO_PRINTER_ON:
-                            currentPrinterOnMsg = this.messValidation(dateTime, currentPrinterOnMsg, () => {
-                                this.store.dispatch(updatePrinterStatus({ payload: { ...header, ...payload } }));
-                                this.navigate(routerUrls.private.fare.printerOperation.printerOn);
-                            });
-                            break;
-                        case MsgID?.FARE_PO_PRINTER_OFF:
-                            currentPrinterOffMsg = this.messValidation(dateTime, currentPrinterOffMsg, () => {
-                                this.store.dispatch(updatePrinterStatus({ payload: { ...header, ...payload } }));
-                                this.navigate(routerUrls.private.fare.printerOperation.printerOff);
-                            });
-                            break;
-
-                        case MsgID?.EXTERNAL_DEVICES_NOTIFY:
-                            this.store.dispatch(
-                                updateFareExternalDevices({
-                                    payload: { ...header, ...payload },
-                                }),
-                            );
-
-                            // console.log({ status: payload?.status, isRetainMsg });
-                            if (payload?.isNavigationRequired) {
-                                this.navigate(routerUrls.private.fare.externalDevices);
-                            }
-                            break;
-
-                        // fare lock screen
-                        case MsgID.NOTIFY_TO_LOCK:
-                            currentLockScreen = this.messValidation(dateTime, currentLockScreen, () => {
-                                this.handleLockScreen();
-                            });
-                            break;
-                        case MsgID.UNLOCK_SUCCESS:
-                            currentLockScreen = this.messValidation(dateTime, currentLockScreen, () => {
-                                // this.handleUnlockSuccess();
-                            });
-                            break;
-                        // case MsgID.LOCK_BROAD_CAST:
-                        //     this.store.dispatch(
-                        //         updateLockScreen({
-                        //             payload: {
-                        //                 msgID: MsgID.NOTIFY_TO_LOCK,
-                        //             },
-                        //         }),
-                        //     );
-                        //     // this.navigate(routerUrls?.private?.fare?.lockScreen);
-                        //     this.displayLockScreen = true;
-                        //     break;
-                        case MsgID?.MANUAL_LOGIN_PIN:
-                        case MsgID?.MANUAL_LOGIN_PIN2:
-                            currentLockScreen = this.messValidation(dateTime, currentLockScreen, () => {
-                                this.store.dispatch(
-                                    updateLockScreen({
-                                        payload: { ...header, ...payload, timeout: payload.timeout || undefined },
-                                    }),
-                                );
-                            });
-                            break;
-                        // case MsgID.UNLOCK_BROAD_CAST:
-                        //     this.handleUnlockSuccess(true);
-                        //     break;
-
-                        case MsgID.FARE_SPID:
-                            this.spid = payload?.message || '';
-                            this.navigate(routerUrls.private.fare.url);
-                            break;
-
-                        // fare print error:
-                        case MsgID?.COMMON_PRINT_ERROR:
-                            this.showPopUp = {
-                                title: payload.message,
-                                type: 'error',
-                            };
-                            // this.navigate(routerUrls.private.fare.url);
-                            break;
-
-                        case MsgID?.FARE_BYPASS_BLACKLIST_ACTIVE:
-                            this.displayWarning = true;
-                            // this.navigate(routerUrls.private.fare.url);
-                            break;
-                        case MsgID?.FARE_BYPASS_BLACKLIST_INACTIVE:
-                            this.displayWarning = false;
-                            // this.navigate(routerUrls.private.fare.url);
-                            break;
-
-                        // boot up commissioning notify
-                        case MsgID?.BOOT_UP_COMMISSIONING:
-                            this.bootUpCommissioning = {
-                                show: true,
-                                title: payload?.message || '',
-                            };
-                            break;
-                        default:
-                            break;
-                    }
+                    this.handleFareNotify(header, payload, dateTime);
                 }
 
                 if (header?.msgSubID === MsgSubID?.RESPONSE) {
-                    switch (header?.msgID) {
-                        case MsgID?.FARE_CV_OPERATION_BACK:
-                            if (payload.status === ResponseStatus.SUCCESS) {
-                                this.navigate(routerUrls?.private?.fare?.cvOperation.url);
-                            }
-                            break;
-                        case MsgID?.FARE_CO_CV_ENTRY_EXIT_CONFIRM:
-                        case MsgID?.FARE_CO_CV_ENTRY_EXIT_CANCEL:
-                            currentCVEXitEntryMsg = this.messValidation(dateTime, currentCVEXitEntryMsg, () => {
-                                if (payload.status === ResponseStatus.SUCCESS) {
-                                    this.navigate(routerUrls?.private?.fare?.cvOperation?.url);
-                                }
-                            });
-                            break;
-
-                        case MsgID?.FARE_CO_POWER_ALL_CV_CONFIRM:
-                        case MsgID?.FARE_CO_POWER_ALL_CV_CANCEL:
-                            currentPowerCvOnMsg = this.messValidation(dateTime, currentPowerCvOnMsg, () => {
-                                if (payload.status === ResponseStatus.SUCCESS) {
-                                    this.navigate(routerUrls?.private?.fare?.cvOperation?.url);
-                                }
-                            });
-                            break;
-
-                        case MsgID?.FARE_CO_RESET_ALL_CV_CONFIRM:
-                        case MsgID?.FARE_CO_RESET_ALL_CV_CANCEL:
-                            currentResetAllCvMsg = this.messValidation(dateTime, currentResetAllCvMsg, () => {
-                                if (payload.status === ResponseStatus.SUCCESS) {
-                                    this.navigate(routerUrls?.private?.fare?.cvOperation?.url);
-                                }
-                            });
-                            break;
-
-                        case MsgID?.FARE_CO_CV_MODE_CONTROL_SELECT:
-                            currentCVModeCtrlMsg = this.messValidation(dateTime, currentCVModeCtrlMsg, () => {
-                                this.store.dispatch(
-                                    updateCVModeControl({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.cvOperation.cvModeControl);
-                            });
-                            break;
-                        case MsgID?.FARE_CO_CV_MODE_CONTROL_CONFIRM:
-                            currentCVModeCtrlMsg = this.messValidation(dateTime, currentCVModeCtrlMsg, () => {
-                                this.navigate(routerUrls.private.fare.cvOperation.url);
-                            });
-                            break;
-                        case MsgID?.FARE_PO_PRINT_RTK_SELECT:
-                        case MsgID?.FARE_PO_PRINT_RTK_CONFIRM:
-                        case MsgID?.FARE_PO_PRINT_RTK_CANCEL:
-                            currentRetentionTicketMsg = this.messValidation(dateTime, currentRetentionTicketMsg, () => {
-                                this.store.dispatch(
-                                    updateRetentionTicket({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls?.private?.fare?.printerOperation?.retentionTicket);
-                            });
-                            break;
-
-                        case MsgID?.FARE_PO_PRINT_RTK_BACK:
-                        case MsgID?.FARE_PO_PRINT_RTK_PRINT:
-                            currentRetentionTicketMsg = this.messValidation(dateTime, currentRetentionTicketMsg, () => {
-                                this.navigate(routerUrls?.private?.fare?.printerOperation?.url);
-                            });
-                            break;
-
-                        case MsgID?.FARE_CANCEL_RIDE_SUBMIT:
-                            currentCancelRideMsg = this.messValidation(dateTime, currentCancelRideMsg, () => {
-                                this.store.dispatch(
-                                    updateCancelRide({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                if (payload.cvNum) {
-                                    const endPoint = 'cancelRideCV' + payload.cvNum;
-                                    const targetRoute = routerUrls?.private?.fare[endPoint];
-                                    if (targetRoute) {
-                                        this.navigate(targetRoute); // Navigate based on cvNum
-                                    }
-                                }
-                            });
-                            break;
-
-                        case MsgID?.FARE_CONCESSION_SUBMIT:
-                            currentConcessionMsg = this.messValidation(dateTime, currentConcessionMsg, () => {
-                                this.store.dispatch(
-                                    updateConcession({
-                                        payload,
-                                        msgID: header?.msgID,
-                                    }),
-                                );
-                                if (payload.cvNum) {
-                                    const endPoint = 'concessionCV' + payload.cvNum;
-                                    const targetRoute = routerUrls?.private?.fare[endPoint];
-                                    if (targetRoute) {
-                                        this.navigate(targetRoute); // Navigate based on cvNum
-                                    }
-                                }
-                            });
-                            break;
-
-                        // fare bus stop mode
-                        case MsgID?.FARE_BUS_STOP_MODE_SELECT:
-                        case MsgID?.FARE_BUS_STOP_MODE_SUBMIT:
-                            currentFareBusStopModeMsg = this.messValidation(dateTime, currentFareBusStopModeMsg, () => {
-                                this.store.dispatch(
-                                    updateFareBusStopMode({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.blsOperation.url);
-                            });
-                            break;
-
-                        // Top Up
-                        case MsgID?.FARE_TOP_UP_SELECT_AMT:
-                            currentTopUpMsg = this.messValidation(dateTime, currentTopUpMsg, () => {
-                                this.store.dispatch(
-                                    updateTopUp({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.topUp);
-                            });
-                            break;
-
-                        case MsgID?.FARE_TOP_UP_SUBMIT:
-                            currentTopUpMsg = this.messValidation(dateTime, currentTopUpMsg, () => {
-                                this.navigate(routerUrls.private.fare.url);
-                            });
-                            break;
-
-                        case MsgID?.FARE_TRANSACTION_SELECT:
-                        case MsgID?.FARE_TRANSACTION_CONFIRM:
-                        case MsgID?.FARE_TRANSACTION_BACK:
-                            currentTransactionMsg = this.messValidation(dateTime, currentTransactionMsg, () => {
-                                this.store.dispatch(
-                                    updateTransaction({
-                                        payload: { ...header, ...payload },
-                                    }),
-                                );
-                                this.navigate(routerUrls.private.fare.transaction);
-                            });
-                            break;
-
-                        case MsgID?.EXTERNAL_DEVICES:
-                            this.store.dispatch(
-                                updateFareExternalDevices({
-                                    payload: { ...header, ...payload },
-                                }),
-                            );
-                            this.navigate(routerUrls.private.fare.externalDevices);
-                            break;
-
-                        case MsgID?.MAINTENANCE_TEST_PRINT:
-                            this.store.dispatch(
-                                updateTestPrinter({
-                                    payload,
-                                }),
-                            );
-                            this.navigate(routerUrls.private.fare.externalDevices);
-                            break;
-                        case MsgID?.FARE_BACK_BUTTON:
-                            if (payload.status === ResponseStatus.SUCCESS) {
-                                this.navigate(routerUrls.private.fare.url);
-                            }
-                            break;
-
-                        // fare lock screen
-                        case MsgID?.MANUAL_LOGIN_PIN:
-                        case MsgID?.MANUAL_LOGIN_PIN2:
-                            currentLockScreen = this.messValidation(dateTime, currentLockScreen, () => {
-                                if (
-                                    payload.status === ResponseStatus.SUCCESS &&
-                                    header?.msgID === MsgID.MANUAL_LOGIN_PIN2
-                                ) {
-                                    // this.handleUnlockSuccess();
-                                } else {
-                                    this.store.dispatch(
-                                        updateLockScreen({
-                                            payload: { ...header, ...payload, timeout: payload.timeout || undefined },
-                                        }),
-                                    );
-                                }
-                            });
-                            break;
-
-                        default:
-                            break;
-                    }
+                    this.handleFareResponse(header, payload, dateTime);
                 }
             },
         });
@@ -749,6 +215,537 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
             topic: topics.fareTab?.response,
             topicKey: TopicsKeys.FARE_TAB,
         });
+    }
+
+    private navigateFareScreen(payload): void {
+        // this.router.navigate([`${routerUrls.private.fare.url}`]);
+        if (payload.screenType === FareScreen.LOGIN_FROM_MAIN_TAB) {
+            // this.screenType = payload.screenType;
+            this.navigate(routerUrls.private.fare.logOff);
+        } else if (payload.screenType === FareScreen.ACCESS_DENIED) {
+            // this.screenType = payload.screenType;
+            this.navigate(routerUrls.private.fare.accessDenied);
+        } else if (payload.screenType === FareScreen.WAITING_TRIP_TO_START) {
+            // this.screenType = FareScreen.WAITING_TRIP_TO_START;
+            this.navigate(routerUrls.private.fare.waitingTripStart);
+        } else {
+            // this.screenType = FareScreen.ON_TRIP_LANDING_PAGE;
+            this.navigate(routerUrls.private.fare.url);
+        }
+    }
+
+    private navigateByCvNum(prefix: string, cvNum): void {
+        if (cvNum) {
+            const endPoint = prefix + cvNum;
+            const targetRoute = routerUrls?.private?.fare[endPoint];
+            if (targetRoute) {
+                this.navigate(targetRoute); // Navigate based on cvNum
+            }
+        }
+    }
+
+    private handleManualLoginPinResponse(header, payload): void {
+        if (payload.status === ResponseStatus.SUCCESS && header?.msgID === MsgID.MANUAL_LOGIN_PIN2) {
+            // this.handleUnlockSuccess();
+        } else {
+            this.store.dispatch(
+                updateLockScreen({
+                    payload: { ...header, ...payload, timeout: payload.timeout || undefined },
+                }),
+            );
+        }
+    }
+
+    private handleFareNotify(header, payload, dateTime: Date): void {
+        switch (header?.msgID) {
+            case MsgID.FARE_SCREEN:
+                this.navigateFareScreen(payload);
+                this.handleUnlockSuccess();
+                break;
+            // case MsgID.LOGIN_SUCCESS:
+            //     this.store.dispatch(updateAuth({ payload }));
+            //     break;
+            // case MsgID.LOGOUT_SUCCESS:
+            //     this.store.dispatch(updateIsOnTrip({ payload: false }));
+            //     this.store.dispatch(
+            //         updateAuth({ payload: { isLoggedIn: false, loggedInType: undefined } }),
+            //     );
+            //     break;
+            // case MsgID.START_TRIP_SUCCESS:
+            //     this.store.dispatch(updateIsOnTrip({ payload: true }));
+            //     this.router.navigate([`${routerUrls.private.fare.url}`]);
+            //     break;
+            // case MsgID.END_TRIP_SUCCESS:
+            //     this.store.dispatch(updateIsOnTrip({ payload: false }));
+
+            //fare screen button
+            case MsgID.FARE_CANCEL_RIDE_CV1:
+                this.currentCancelRideMsg = this.messValidation(dateTime, this.currentCancelRideMsg, () => {
+                    this.store.dispatch(
+                        updateCancelRide({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cancelRideCV1);
+                });
+                break;
+            case MsgID.FARE_CANCEL_RIDE_CV2:
+                this.currentCancelRideMsg = this.messValidation(dateTime, this.currentCancelRideMsg, () => {
+                    this.store.dispatch(
+                        updateCancelRide({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cancelRideCV2);
+                });
+                break;
+            case MsgID?.FARE_CANCEL_RIDE_SUBMIT_NOTIFY:
+                this.currentCancelRideMsg = this.messValidation(dateTime, this.currentCancelRideMsg, () => {
+                    this.store.dispatch(
+                        updateCancelRide({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigateByCvNum('cancelRideCV', payload.cvNum);
+                });
+                break;
+            case MsgID.FARE_CONCESSION_CV1:
+                this.currentConcessionMsg = this.messValidation(dateTime, this.currentConcessionMsg, () => {
+                    this.store.dispatch(
+                        updateConcession({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.concessionCV1);
+                });
+                break;
+            case MsgID.FARE_CONCESSION_CV2:
+                this.currentConcessionMsg = this.messValidation(dateTime, this.currentConcessionMsg, () => {
+                    this.store.dispatch(
+                        updateConcession({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.concessionCV2);
+                });
+                break;
+            case MsgID.FARE_CONCESSION_SUBMIT_NOTIFY:
+                this.currentConcessionMsg = this.messValidation(dateTime, this.currentConcessionMsg, () => {
+                    this.store.dispatch(
+                        updateConcession({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigateByCvNum('concessionCV', payload.cvNum);
+                });
+                break;
+            case MsgID.FARE_BUS_STOP_MODE:
+                this.currentFareBusStopModeMsg = this.messValidation(dateTime, this.currentFareBusStopModeMsg, () => {
+                    this.store.dispatch(
+                        updateFareBusStopMode({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.blsOperation.url);
+                });
+                break;
+            case MsgID.FARE_TOP_UP:
+                this.currentTopUpMsg = this.messValidation(dateTime, this.currentTopUpMsg, () => {
+                    this.store.dispatch(
+                        updateTopUp({
+                            payload: { ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.topUp);
+                });
+                break;
+            case MsgID.FARE_TRANSACTION:
+                this.currentTransactionMsg = this.messValidation(dateTime, this.currentTransactionMsg, () => {
+                    this.store.dispatch(
+                        updateTransaction({
+                            payload: { ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.transaction);
+                });
+                break;
+            case MsgID?.FARE_TRANSACTION_INFORMATION_TYPE_1:
+            case MsgID?.FARE_TRANSACTION_INFORMATION_TYPE_2:
+                this.currentTransactionMsg = this.messValidation(dateTime, this.currentTransactionMsg, () => {
+                    this.store.dispatch(
+                        updateTransaction({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.transaction);
+                });
+                break;
+
+            // fare CV operation
+            case MsgID.FARE_CV_OPERATION:
+                this.navigate(routerUrls.private.fare.cvOperation.url);
+                break;
+            case MsgID.FARE_CO_CV_STATUS:
+                this.currentCvStatusMsg = this.messValidation(dateTime, this.currentCvStatusMsg, () => {
+                    this.store.dispatch(
+                        updateShowCVStatus({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cvOperation.showCVStatus);
+                });
+                break;
+            case MsgID.FARE_CO_CV_ENTRY_EXIT:
+                this.currentCVEXitEntryMsg = this.messValidation(dateTime, this.currentCVEXitEntryMsg, () => {
+                    this.store.dispatch(
+                        updateCVEntryExit({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cvOperation.setCV);
+                });
+                break;
+            case MsgID.FARE_CO_CV_MODE_CONTROL:
+                this.currentCVModeCtrlMsg = this.messValidation(dateTime, this.currentCVModeCtrlMsg, () => {
+                    this.store.dispatch(
+                        updateCVModeControl({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cvOperation.cvModeControl);
+                });
+                break;
+            case MsgID.FARE_CO_POWER_ALL_CV_ON:
+                this.currentPowerCvOnMsg = this.messValidation(dateTime, this.currentPowerCvOnMsg, () => {
+                    this.store.dispatch(updatePowerCvOnOff({ payload: { ...header, ...payload } }));
+                    this.navigate(routerUrls.private.fare.cvOperation.powerAllCVOn);
+                });
+                break;
+            case MsgID.FARE_CO_POWER_ALL_CV_OFF:
+                this.currentPowerCvOffMsg = this.messValidation(dateTime, this.currentPowerCvOffMsg, () => {
+                    this.store.dispatch(updatePowerCvOnOff({ payload: { ...header, ...payload } }));
+                    this.navigate(routerUrls.private.fare.cvOperation.powerAllCVOff);
+                });
+                break;
+            case MsgID.FARE_CO_CV_POWER_CTRL:
+                this.currentCVPowerCtrlMsg = this.messValidation(dateTime, this.currentCVPowerCtrlMsg, () => {
+                    this.store.dispatch(
+                        updateCVPowerControl({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cvOperation.cvPowerControl);
+                });
+                break;
+            case MsgID.FARE_CO_RESET_ALL_CV:
+                this.currentResetAllCvMsg = this.messValidation(dateTime, this.currentResetAllCvMsg, () => {
+                    this.store.dispatch(
+                        updateResetAllCV({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cvOperation.resetAllCV);
+                });
+                break;
+            //Printer operations
+            case MsgID.FARE_PRINTER_OPERATION:
+                this.navigate(routerUrls.private.fare.printerOperation.url);
+                break;
+            case MsgID?.FARE_PO_PRINTER_STATUS:
+                this.currentPrintStatusMsg = this.messValidation(dateTime, this.currentPrintStatusMsg, () => {
+                    this.store.dispatch(
+                        updatePrintStatus({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.printerOperation.status);
+                });
+                break;
+            case MsgID?.FARE_PO_PRINT_RETENTION_TICKET:
+                this.currentRetentionTicketMsg = this.messValidation(dateTime, this.currentRetentionTicketMsg, () => {
+                    this.store.dispatch(
+                        updateRetentionTicket({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.printerOperation.retentionTicket);
+                });
+                break;
+            case MsgID?.FARE_PO_PRINTER_ON:
+                this.currentPrinterOnMsg = this.messValidation(dateTime, this.currentPrinterOnMsg, () => {
+                    this.store.dispatch(updatePrinterStatus({ payload: { ...header, ...payload } }));
+                    this.navigate(routerUrls.private.fare.printerOperation.printerOn);
+                });
+                break;
+            case MsgID?.FARE_PO_PRINTER_OFF:
+                this.currentPrinterOffMsg = this.messValidation(dateTime, this.currentPrinterOffMsg, () => {
+                    this.store.dispatch(updatePrinterStatus({ payload: { ...header, ...payload } }));
+                    this.navigate(routerUrls.private.fare.printerOperation.printerOff);
+                });
+                break;
+
+            case MsgID?.EXTERNAL_DEVICES_NOTIFY:
+                this.store.dispatch(
+                    updateFareExternalDevices({
+                        payload: { ...header, ...payload },
+                    }),
+                );
+
+                // console.log({ status: payload?.status, isRetainMsg });
+                if (payload?.isNavigationRequired) {
+                    this.navigate(routerUrls.private.fare.externalDevices);
+                }
+                break;
+
+            // fare lock screen
+            case MsgID.NOTIFY_TO_LOCK:
+                this.currentLockScreen = this.messValidation(dateTime, this.currentLockScreen, () => {
+                    this.handleLockScreen();
+                });
+                break;
+            case MsgID.UNLOCK_SUCCESS:
+                this.currentLockScreen = this.messValidation(dateTime, this.currentLockScreen, () => {
+                    // this.handleUnlockSuccess();
+                });
+                break;
+            // case MsgID.LOCK_BROAD_CAST:
+            //     this.store.dispatch(
+            //         updateLockScreen({
+            //             payload: {
+            //                 msgID: MsgID.NOTIFY_TO_LOCK,
+            //             },
+            //         }),
+            //     );
+            //     // this.navigate(routerUrls?.private?.fare?.lockScreen);
+            //     this.displayLockScreen = true;
+            //     break;
+            case MsgID?.MANUAL_LOGIN_PIN:
+            case MsgID?.MANUAL_LOGIN_PIN2:
+                this.currentLockScreen = this.messValidation(dateTime, this.currentLockScreen, () => {
+                    this.store.dispatch(
+                        updateLockScreen({
+                            payload: { ...header, ...payload, timeout: payload.timeout || undefined },
+                        }),
+                    );
+                });
+                break;
+            // case MsgID.UNLOCK_BROAD_CAST:
+            //     this.handleUnlockSuccess(true);
+            //     break;
+
+            case MsgID.FARE_SPID:
+                this.spid = payload?.message || '';
+                this.navigate(routerUrls.private.fare.url);
+                break;
+
+            // fare print error:
+            case MsgID?.COMMON_PRINT_ERROR:
+                this.showPopUp = {
+                    title: payload.message,
+                    type: 'error',
+                };
+                // this.navigate(routerUrls.private.fare.url);
+                break;
+
+            case MsgID?.FARE_BYPASS_BLACKLIST_ACTIVE:
+                this.displayWarning = true;
+                // this.navigate(routerUrls.private.fare.url);
+                break;
+            case MsgID?.FARE_BYPASS_BLACKLIST_INACTIVE:
+                this.displayWarning = false;
+                // this.navigate(routerUrls.private.fare.url);
+                break;
+
+            // boot up commissioning notify
+            case MsgID?.BOOT_UP_COMMISSIONING:
+                this.bootUpCommissioning = {
+                    show: true,
+                    title: payload?.message || '',
+                };
+                break;
+            default:
+                break;
+        }
+    }
+
+    private handleFareResponse(header, payload, dateTime: Date): void {
+        switch (header?.msgID) {
+            case MsgID?.FARE_CV_OPERATION_BACK:
+                if (payload.status === ResponseStatus.SUCCESS) {
+                    this.navigate(routerUrls?.private?.fare?.cvOperation.url);
+                }
+                break;
+            case MsgID?.FARE_CO_CV_ENTRY_EXIT_CONFIRM:
+            case MsgID?.FARE_CO_CV_ENTRY_EXIT_CANCEL:
+                this.currentCVEXitEntryMsg = this.messValidation(dateTime, this.currentCVEXitEntryMsg, () => {
+                    if (payload.status === ResponseStatus.SUCCESS) {
+                        this.navigate(routerUrls?.private?.fare?.cvOperation?.url);
+                    }
+                });
+                break;
+
+            case MsgID?.FARE_CO_POWER_ALL_CV_CONFIRM:
+            case MsgID?.FARE_CO_POWER_ALL_CV_CANCEL:
+                this.currentPowerCvOnMsg = this.messValidation(dateTime, this.currentPowerCvOnMsg, () => {
+                    if (payload.status === ResponseStatus.SUCCESS) {
+                        this.navigate(routerUrls?.private?.fare?.cvOperation?.url);
+                    }
+                });
+                break;
+
+            case MsgID?.FARE_CO_RESET_ALL_CV_CONFIRM:
+            case MsgID?.FARE_CO_RESET_ALL_CV_CANCEL:
+                this.currentResetAllCvMsg = this.messValidation(dateTime, this.currentResetAllCvMsg, () => {
+                    if (payload.status === ResponseStatus.SUCCESS) {
+                        this.navigate(routerUrls?.private?.fare?.cvOperation?.url);
+                    }
+                });
+                break;
+
+            case MsgID?.FARE_CO_CV_MODE_CONTROL_SELECT:
+                this.currentCVModeCtrlMsg = this.messValidation(dateTime, this.currentCVModeCtrlMsg, () => {
+                    this.store.dispatch(
+                        updateCVModeControl({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.cvOperation.cvModeControl);
+                });
+                break;
+            case MsgID?.FARE_CO_CV_MODE_CONTROL_CONFIRM:
+                this.currentCVModeCtrlMsg = this.messValidation(dateTime, this.currentCVModeCtrlMsg, () => {
+                    this.navigate(routerUrls.private.fare.cvOperation.url);
+                });
+                break;
+            case MsgID?.FARE_PO_PRINT_RTK_SELECT:
+            case MsgID?.FARE_PO_PRINT_RTK_CONFIRM:
+            case MsgID?.FARE_PO_PRINT_RTK_CANCEL:
+                this.currentRetentionTicketMsg = this.messValidation(dateTime, this.currentRetentionTicketMsg, () => {
+                    this.store.dispatch(
+                        updateRetentionTicket({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls?.private?.fare?.printerOperation?.retentionTicket);
+                });
+                break;
+
+            case MsgID?.FARE_PO_PRINT_RTK_BACK:
+            case MsgID?.FARE_PO_PRINT_RTK_PRINT:
+                this.currentRetentionTicketMsg = this.messValidation(dateTime, this.currentRetentionTicketMsg, () => {
+                    this.navigate(routerUrls?.private?.fare?.printerOperation?.url);
+                });
+                break;
+
+            case MsgID?.FARE_CANCEL_RIDE_SUBMIT:
+                this.currentCancelRideMsg = this.messValidation(dateTime, this.currentCancelRideMsg, () => {
+                    this.store.dispatch(
+                        updateCancelRide({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigateByCvNum('cancelRideCV', payload.cvNum);
+                });
+                break;
+
+            case MsgID?.FARE_CONCESSION_SUBMIT:
+                this.currentConcessionMsg = this.messValidation(dateTime, this.currentConcessionMsg, () => {
+                    this.store.dispatch(
+                        updateConcession({
+                            payload,
+                            msgID: header?.msgID,
+                        }),
+                    );
+                    this.navigateByCvNum('concessionCV', payload.cvNum);
+                });
+                break;
+
+            // fare bus stop mode
+            case MsgID?.FARE_BUS_STOP_MODE_SELECT:
+            case MsgID?.FARE_BUS_STOP_MODE_SUBMIT:
+                this.currentFareBusStopModeMsg = this.messValidation(dateTime, this.currentFareBusStopModeMsg, () => {
+                    this.store.dispatch(
+                        updateFareBusStopMode({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.blsOperation.url);
+                });
+                break;
+
+            // Top Up
+            case MsgID?.FARE_TOP_UP_SELECT_AMT:
+                this.currentTopUpMsg = this.messValidation(dateTime, this.currentTopUpMsg, () => {
+                    this.store.dispatch(
+                        updateTopUp({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.topUp);
+                });
+                break;
+
+            case MsgID?.FARE_TOP_UP_SUBMIT:
+                this.currentTopUpMsg = this.messValidation(dateTime, this.currentTopUpMsg, () => {
+                    this.navigate(routerUrls.private.fare.url);
+                });
+                break;
+
+            case MsgID?.FARE_TRANSACTION_SELECT:
+            case MsgID?.FARE_TRANSACTION_CONFIRM:
+            case MsgID?.FARE_TRANSACTION_BACK:
+                this.currentTransactionMsg = this.messValidation(dateTime, this.currentTransactionMsg, () => {
+                    this.store.dispatch(
+                        updateTransaction({
+                            payload: { ...header, ...payload },
+                        }),
+                    );
+                    this.navigate(routerUrls.private.fare.transaction);
+                });
+                break;
+
+            case MsgID?.EXTERNAL_DEVICES:
+                this.store.dispatch(
+                    updateFareExternalDevices({
+                        payload: { ...header, ...payload },
+                    }),
+                );
+                this.navigate(routerUrls.private.fare.externalDevices);
+                break;
+
+            case MsgID?.MAINTENANCE_TEST_PRINT:
+                this.store.dispatch(
+                    updateTestPrinter({
+                        payload,
+                    }),
+                );
+                this.navigate(routerUrls.private.fare.externalDevices);
+                break;
+            case MsgID?.FARE_BACK_BUTTON:
+                if (payload.status === ResponseStatus.SUCCESS) {
+                    this.navigate(routerUrls.private.fare.url);
+                }
+                break;
+
+            // fare lock screen
+            case MsgID?.MANUAL_LOGIN_PIN:
+            case MsgID?.MANUAL_LOGIN_PIN2:
+                this.currentLockScreen = this.messValidation(dateTime, this.currentLockScreen, () => {
+                    this.handleManualLoginPinResponse(header, payload);
+                });
+                break;
+
+            default:
+                break;
+        }
     }
 
     handleClickLock() {

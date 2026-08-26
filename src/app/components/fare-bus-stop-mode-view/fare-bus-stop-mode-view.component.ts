@@ -28,7 +28,7 @@ export class FareBusStopModeViewComponent {
     @Input({ required: true }) posnStatus$!: Observable<IPosnStatus | undefined>;
 
     @Output() readonly back = new EventEmitter<void>();
-    @Output() readonly cancel = new EventEmitter<void>();
+    @Output() readonly cancelMode = new EventEmitter<void>();
     @Output() readonly confirmMode = new EventEmitter<void>();
     @Output() readonly backToSelect = new EventEmitter<void>();
     @Output() readonly selectMode = new EventEmitter<number>();

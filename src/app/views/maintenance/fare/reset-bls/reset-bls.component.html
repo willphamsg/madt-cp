@@ -4,7 +4,14 @@
             <h2 class="title">{{ 'RESET_BLS_SOFTWARE' }}</h2>
             <div class="content">
                 <p>{{ 'PRESS_RESET_BTN_TO_RESET' | translate }}</p>
-                <div class="button" (click)="handleButtonSound(); handleSelect()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleSelect()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleSelect()"
+                    (keydown.space)="handleButtonSound(); handleSelect()"
+                >
                     <mat-icon>{{ 'REPLAY' | translate }}</mat-icon>
                     <div class="text">{{ 'RESET' | translate }}</div>
                 </div>

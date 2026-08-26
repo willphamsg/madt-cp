@@ -1,7 +1,14 @@
 <ng-container>
     <div class="maintenance-fare-layout">
         <div class="layout">
-            <div class="button" (click)="handleButtonSound(); backToMaintenance()">
+            <div
+                class="button"
+                (click)="handleButtonSound(); backToMaintenance()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); backToMaintenance()"
+                (keydown.space)="handleButtonSound(); backToMaintenance()"
+            >
                 <span>{{ 'CLOSE' | translate }}</span>
             </div>
             @if (safeUrl; as trustedUrl) {

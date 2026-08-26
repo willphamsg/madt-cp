@@ -115,6 +115,10 @@
                         class="back-to-top"
                         alt=""
                         (click)="handleButtonSound(); triggerScrollTop()"
+                        tabindex="0"
+                        role="button"
+                        (keydown.enter)="handleButtonSound(); triggerScrollTop()"
+                        (keydown.space)="handleButtonSound(); triggerScrollTop()"
                     />
                 }
             </div>
@@ -130,6 +134,10 @@
             <div
                 class="indicator bus-stop"
                 (click)="handleButtonSound(); handleDisplayFareBusStop()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); handleDisplayFareBusStop()"
+                (keydown.space)="handleButtonSound(); handleDisplayFareBusStop()"
                 [ngClass]="{ 'mis-match': fareBusStop?.misMatch, 'full-width': allBusStopList.length <= 3 }"
             >
                 <div class="left">
@@ -167,7 +175,14 @@
     @if (displayFareBusStop) {
         <div class="bus-stop-fare-page">
             <div class="page-header full-row">
-                <div class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleCloseBusStopFare()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleCloseBusStopFare()"
+                    (keydown.space)="handleButtonSound(); handleCloseBusStopFare()"
+                >
                     <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                     <span>{{ 'CLOSE' | translate }}</span>
                 </div>
@@ -184,6 +199,10 @@
                                     selected: item?.Busid === selectFareBusStop
                                 }"
                                 (click)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
+                                tabindex="0"
+                                role="button"
+                                (keydown.enter)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
+                                (keydown.space)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                             >
                                 <div class="left">{{ item.Busid }}</div>
                                 <div class="matd-indicatior">
@@ -213,7 +232,7 @@
                         <img src="/assets/images/icons/main/close.svg" alt="" />
                         <span>{{ 'CANCEL' | translate }}</span>
                     </button>
-                    <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmBusStopFare(true)">
+                    <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmBusStopFare()">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'CONFIRM' | translate }}</span>
                     </button>

@@ -167,17 +167,17 @@ export class TransactionComponent implements OnInit, OnDestroy {
         });
     }
 
-    handleConfirm(isConfirm: boolean): void {
-        if (isConfirm) {
-            this.removeTimeout();
-            this.publishMqttMessage({
-                msgID: MsgID.FARE_TRANSACTION_CONFIRM,
-                msgSubID: MsgSubID.REQUEST,
-                payload: { cvNum: this.selectedCV },
-            });
-        } else {
-            this.backToFirstScreen();
-        }
+    handleConfirm(): void {
+        this.removeTimeout();
+        this.publishMqttMessage({
+            msgID: MsgID.FARE_TRANSACTION_CONFIRM,
+            msgSubID: MsgSubID.REQUEST,
+            payload: { cvNum: this.selectedCV },
+        });
+    }
+
+    handleCancelConfirm(): void {
+        this.backToFirstScreen();
     }
 
     handleStopTransaction(): void {

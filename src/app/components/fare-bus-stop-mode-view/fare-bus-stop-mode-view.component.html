@@ -36,7 +36,16 @@
     }
 } @else {
     <ng-container>
-        <div class="back-button" (click)="back.emit()">{{ 'BACK' | translate }}</div>
+        <div
+            class="back-button"
+            (click)="back.emit()"
+            tabindex="0"
+            role="button"
+            (keydown.enter)="back.emit()"
+            (keydown.space)="back.emit()"
+        >
+            {{ 'BACK' | translate }}
+        </div>
         <h1 class="device-operation-title">{{ 'SELECT_BLS_OPERATIONS' | translate }}</h1>
         <div class="device-operation-button-group">
             <button [class.active]="finaleMode === 1" class="device-operation-button" (click)="selectMode.emit(1)">

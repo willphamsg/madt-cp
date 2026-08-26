@@ -66,8 +66,7 @@ export class LoginManualComponent implements OnInit, OnDestroy {
             this.dutyValue = data['dutyNumber'] || '';
 
             clearTimeout(this.intervalId);
-            // TODO: Need to handle timeout for staff id page.
-            // Currently msg ID 28 is passed when staff id page timeout which TS will use and navigate to OOS page(expected behaviour).
+            // Staff id page timeout passes msg ID 28, which TS uses to navigate to the OOS page (expected behaviour).
             if (data.timeout && data.timeout > 0) {
                 this.intervalId = setTimeout(() => {
                     this.mqttService.publishWithMessageFormat({

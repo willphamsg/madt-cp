@@ -3,7 +3,14 @@
         <div class="maintenance-page">
             <div class="button-control">
                 @for (button of buttons; track button) {
-                    <div class="button" (click)="handleButtonSound(); button.onClick(button.link)">
+                    <div
+                        class="button"
+                        (click)="handleButtonSound(); button.onClick(button.link)"
+                        tabindex="0"
+                        role="button"
+                        (keydown.enter)="handleButtonSound(); button.onClick(button.link)"
+                        (keydown.space)="handleButtonSound(); button.onClick(button.link)"
+                    >
                         <div class="icon-text">
                             <img style="margin-bottom: 5px" src="{{ button.icon }}" alt="" />
                             <div class="text">{{ button.title | translate }}</div>

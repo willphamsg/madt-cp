@@ -244,7 +244,9 @@ export class DummyInitService {
                     case MsgID.BREAKDOWN_CANCEL:
                         replyMain(MsgID.BREAKDOWN_CANCEL, MsgSubID.RESPONSE, { status: ResponseStatus.SUCCESS });
                         break;
+                }
 
+                switch (header?.msgID) {
                     //cash flow buttons
                     case MsgID.MAIN_CASH_SINGLE_SUBMIT:
                         replyMain(

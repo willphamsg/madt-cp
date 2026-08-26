@@ -279,8 +279,7 @@ export class MqttService implements OnDestroy {
             return errors;
         }
 
-        errors.push(...this.validateMessageHeader(message.header));
-        errors.push(...this.validateMessagePayload(message.payload));
+        errors.push(...this.validateMessageHeader(message.header), ...this.validateMessagePayload(message.payload));
         return errors;
     }
 

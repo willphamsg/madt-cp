@@ -490,7 +490,9 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
                     this.navigate(routerUrls.private.fare.printerOperation.printerOff);
                 });
                 break;
+        }
 
+        switch (header?.msgID) {
             case MsgID?.EXTERNAL_DEVICES_NOTIFY:
                 this.store.dispatch(
                     updateFareExternalDevices({
@@ -752,17 +754,16 @@ export class FareLayoutComponent implements OnInit, OnDestroy {
         this.displayLockPopUp = true;
     }
 
-    handleConfirmLock(isConfirm: boolean) {
-        if (isConfirm) {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.fareTab?.get,
-                msgID: MsgID.LOCK_CONFIRM,
-                msgSubID: MsgSubID.REQUEST,
-                payload: {},
-            });
-        } else {
-            this.displayLockPopUp = false;
-        }
+    handleConfirmLock() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.fareTab?.get,
+            msgID: MsgID.LOCK_CONFIRM,
+            msgSubID: MsgSubID.REQUEST,
+            payload: {},
+        });
+    }
+    handleCancelLock() {
+        this.displayLockPopUp = false;
     }
     handleLockScreen() {
         this.displayLockPopUp = false;

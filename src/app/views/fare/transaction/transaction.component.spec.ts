@@ -148,6 +148,14 @@ describe('TransactionComponent', () => {
         });
     });
 
+    describe('handleCancelConfirm', () => {
+        it('should execute without errors', () => {
+            expect(() => {
+                (component as any).handleCancelConfirm();
+            }).not.toThrow();
+        });
+    });
+
     describe('formatValue', () => {
         it('should execute without errors', () => {
             expect(() => {

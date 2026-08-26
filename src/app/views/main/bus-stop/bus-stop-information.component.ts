@@ -260,42 +260,42 @@ export class BusStopInformationComponent implements OnInit, OnDestroy {
         this.displayCfmBusStopFare = true;
     }
 
-    handleConfirmBusStopFare(isConfirm: boolean) {
-        if (isConfirm) {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics.mainTab?.get,
-                msgID: MsgID.MAIN_UPDATE_FARE_BUS_STOP,
-                msgSubID: MsgSubID.NOTIFY,
-                payload: {
-                    busStopId: this.selectFareBusStop,
-                    index: this.selectedIndex,
-                },
-            });
-            this.store.dispatch(
-                updateCurrentFareBusStop({
-                    payload: this.selectFareBusStop,
-                    idx: this.selectedIndex,
-                }),
-            );
-            // this.displayBusStopFare = false;
-            this.displayCfmBusStopFare = false;
-            this.selectFareBusStop = '';
-            this.selectFareBusStopName = '';
-            this.selectedIndex = -1;
-            this.store.dispatch(
-                updateDisplayFareBusStopList({
-                    payload: false,
-                }),
-            );
-        } else {
-            // this.displayBusStopFare = true;
-            this.displayCfmBusStopFare = false;
-            this.store.dispatch(
-                updateDisplayFareBusStopList({
-                    payload: true,
-                }),
-            );
-        }
+    handleConfirmBusStopFare() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics.mainTab?.get,
+            msgID: MsgID.MAIN_UPDATE_FARE_BUS_STOP,
+            msgSubID: MsgSubID.NOTIFY,
+            payload: {
+                busStopId: this.selectFareBusStop,
+                index: this.selectedIndex,
+            },
+        });
+        this.store.dispatch(
+            updateCurrentFareBusStop({
+                payload: this.selectFareBusStop,
+                idx: this.selectedIndex,
+            }),
+        );
+        // this.displayBusStopFare = false;
+        this.displayCfmBusStopFare = false;
+        this.selectFareBusStop = '';
+        this.selectFareBusStopName = '';
+        this.selectedIndex = -1;
+        this.store.dispatch(
+            updateDisplayFareBusStopList({
+                payload: false,
+            }),
+        );
+    }
+
+    handleCancelBusStopFare() {
+        // this.displayBusStopFare = true;
+        this.displayCfmBusStopFare = false;
+        this.store.dispatch(
+            updateDisplayFareBusStopList({
+                payload: true,
+            }),
+        );
     }
 
     handleButtonSound(): void {

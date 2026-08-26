@@ -52,10 +52,18 @@ describe('PrintRetentionTicket', () => {
         });
     });
 
-    describe('handleDetectCart', () => {
+    describe('handleConfirmDetectCart', () => {
         it('should execute without errors', () => {
             expect(() => {
-                (component as any).handleDetectCart();
+                (component as any).handleConfirmDetectCart();
+            }).not.toThrow();
+        });
+    });
+
+    describe('handleCancelDetectCart', () => {
+        it('should execute without errors', () => {
+            expect(() => {
+                (component as any).handleCancelDetectCart();
             }).not.toThrow();
         });
     });

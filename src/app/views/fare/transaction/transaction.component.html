@@ -16,11 +16,11 @@
                             </div>
                             <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
                             <div class="cf-btn-group">
-                                <button class="btn btn-cancel" (click)="handleButtonSound(); handleConfirm(false)">
+                                <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelConfirm()">
                                     <img src="/assets/images/icons/main/close.svg" alt="" />
                                     <span>{{ 'CANCEL' | translate }}</span>
                                 </button>
-                                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm(true)">
+                                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm()">
                                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                                     <span>{{ 'CONFIRM' | translate }}</span>
                                 </button>
@@ -45,7 +45,14 @@
                     ) {
                         @if (transaction.status === ResponseStatus.SUCCESS) {
                             <ng-container>
-                                <div class="back-button" (click)="handleButtonSound(); backToCVScreen()">
+                                <div
+                                    class="back-button"
+                                    (click)="handleButtonSound(); backToCVScreen()"
+                                    tabindex="0"
+                                    role="button"
+                                    (keydown.enter)="handleButtonSound(); backToCVScreen()"
+                                    (keydown.space)="handleButtonSound(); backToCVScreen()"
+                                >
                                     {{ 'BACK' | translate }}
                                 </div>
                                 @if (transaction.cardValue) {
@@ -104,7 +111,14 @@
                         }
                     } @else {
                         <ng-container>
-                            <div class="back-button" (click)="handleButtonSound(); handleBack()">
+                            <div
+                                class="back-button"
+                                (click)="handleButtonSound(); handleBack()"
+                                tabindex="0"
+                                role="button"
+                                (keydown.enter)="handleButtonSound(); handleBack()"
+                                (keydown.space)="handleButtonSound(); handleBack()"
+                            >
                                 {{ 'BACK' | translate }}
                             </div>
                             <div>

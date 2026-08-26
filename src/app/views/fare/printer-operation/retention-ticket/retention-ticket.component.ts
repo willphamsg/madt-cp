@@ -113,29 +113,29 @@ export class PrintRetentionTicket implements OnInit, OnDestroy {
         });
     }
 
-    handleDetectCart(isConfirm: boolean) {
-        if (isConfirm) {
-            this.removeTimeout();
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.fareTab?.get,
-                msgID: MsgID.FARE_PO_PRINT_RTK_CONFIRM,
-                msgSubID: MsgSubID.REQUEST,
+    handleConfirmDetectCart() {
+        this.removeTimeout();
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.fareTab?.get,
+            msgID: MsgID.FARE_PO_PRINT_RTK_CONFIRM,
+            msgSubID: MsgSubID.REQUEST,
+            payload: {
+                cvNum: this.selectedCV,
+            },
+        });
+    }
+
+    handleCancelDetectCart() {
+        this.store.dispatch(
+            updateRetentionTicket({
                 payload: {
-                    cvNum: this.selectedCV,
+                    ...this.retentionTicket,
+                    msgID: MsgID.FARE_PO_PRINT_RETENTION_TICKET,
+                    status: undefined,
+                    timeout: undefined,
                 },
-            });
-        } else {
-            this.store.dispatch(
-                updateRetentionTicket({
-                    payload: {
-                        ...this.retentionTicket,
-                        msgID: MsgID.FARE_PO_PRINT_RETENTION_TICKET,
-                        status: undefined,
-                        timeout: undefined,
-                    },
-                }),
-            );
-        }
+            }),
+        );
     }
 
     handleStopDetectCard() {

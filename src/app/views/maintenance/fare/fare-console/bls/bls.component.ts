@@ -21,25 +21,25 @@ export class BLSStatusComponent extends FareConsoleScreenBase {
         this.step = 2;
     }
 
-    handleConfirmBlsStatus(isConfirm: boolean) {
-        if (isConfirm) {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.maintenance?.get,
-                msgID: MsgID.MAINTENANCE_BLS_STATUS_SUBMIT,
-                msgSubID: MsgSubID.NOTIFY,
-                payload: {
-                    blsStatus: this.selectedBlsStatus,
-                },
-            });
-            this.store.dispatch(
-                updateFareConsole({
-                    payload: { ...this.fareConsoleSetting, blsStatus: this.selectedBlsStatus },
-                    msgID: MsgID.MAINTENANCE_FARE_CONSOLE,
-                }),
-            );
-            this.goBack();
-        } else {
-            this.step = 1;
-        }
+    handleConfirmBlsStatus() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.maintenance?.get,
+            msgID: MsgID.MAINTENANCE_BLS_STATUS_SUBMIT,
+            msgSubID: MsgSubID.NOTIFY,
+            payload: {
+                blsStatus: this.selectedBlsStatus,
+            },
+        });
+        this.store.dispatch(
+            updateFareConsole({
+                payload: { ...this.fareConsoleSetting, blsStatus: this.selectedBlsStatus },
+                msgID: MsgID.MAINTENANCE_FARE_CONSOLE,
+            }),
+        );
+        this.goBack();
+    }
+
+    handleCancelBlsStatus() {
+        this.step = 1;
     }
 }

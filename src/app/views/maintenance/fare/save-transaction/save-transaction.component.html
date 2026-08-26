@@ -31,7 +31,14 @@
             <h2 class="title">{{ 'SAVE_TRANSACTION' | translate }}</h2>
             <div class="content">
                 <p [innerHTML]="'PRESS_SAVE_TRANSACTION_TO_BEGIN_SAVING' | translate"></p>
-                <div class="button" (click)="handleButtonSound(); handleClickButton()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleClickButton()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleClickButton()"
+                    (keydown.space)="handleButtonSound(); handleClickButton()"
+                >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <div class="text">{{ 'SAVE_TRANSACTION' | translate }}</div>
                 </div>

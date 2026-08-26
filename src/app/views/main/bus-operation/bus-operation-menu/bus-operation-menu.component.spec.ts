@@ -42,9 +42,9 @@ describe('BusOperationMenuComponent', () => {
         expect(navigateSpy).toHaveBeenCalledWith(['/test']);
     });
 
-    it('should hide popup if handleEndShift is false', () => {
+    it('should hide popup when handleCancelEndShift is called', () => {
         component.displayEndShiftPopup = true;
-        component.handleEndShift(false);
+        component.handleCancelEndShift();
         expect(component.displayEndShiftPopup).toBeFalse();
     });
 });

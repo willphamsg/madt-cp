@@ -66,9 +66,9 @@ describe('MaintenanceLayoutComponent', () => {
         expect(component.activeLogoutPopup).toBeTrue();
     });
 
-    it('handleLogout(false) should set activeLogoutPopup to false', () => {
+    it('handleCancelLogout should set activeLogoutPopup to false', () => {
         component.activeLogoutPopup = true;
-        component.handleLogout(false);
+        component.handleCancelLogout();
         expect(component.activeLogoutPopup).toBeFalse();
     });
 
@@ -322,8 +322,8 @@ describe('MaintenanceLayoutComponent - handleIgnitionOff / handleLogout with top
         expect(component.ignitionOff.disabled).toBeTrue();
     });
 
-    it('handleLogout(true) publishes LOGOUT request', () => {
-        component.handleLogout(true);
+    it('handleLogout() publishes LOGOUT request', () => {
+        component.handleLogout();
         expect(mqttService.publishWithMessageFormat).toHaveBeenCalledWith(
             jasmine.objectContaining({
                 topic: mqttService.mqttConfig.topics.maintenance.get,

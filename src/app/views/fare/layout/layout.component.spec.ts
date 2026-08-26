@@ -779,22 +779,30 @@ describe('FareLayoutComponent', () => {
     describe('handleConfirmLock', () => {
         it('should publish LOCK_CONFIRM when confirmed', () => {
             component.topics = { fareTab: { get: '/madt/fare/tab' } };
-            component.handleConfirmLock(true);
+            component.handleConfirmLock();
             expect(mockMqttService.publishWithMessageFormat).toHaveBeenCalled();
             const callArgs = mockMqttService.publishWithMessageFormat.calls.mostRecent().args[0];
             expect(callArgs.msgID).toBe(MsgID.LOCK_CONFIRM);
         });
 
+        it('should execute without errors (legacy smoke test)', () => {
+            expect(() => {
+                (component as any).handleConfirmLock();
+            }).not.toThrow();
+        });
+    });
+
+    describe('handleCancelLock', () => {
         it('should hide the lock pop up when not confirmed', () => {
             component.displayLockPopUp = true;
-            component.handleConfirmLock(false);
+            component.handleCancelLock();
             expect(component.displayLockPopUp).toBeFalse();
             expect(mockMqttService.publishWithMessageFormat).not.toHaveBeenCalled();
         });
 
         it('should execute without errors (legacy smoke test)', () => {
             expect(() => {
-                (component as any).handleConfirmLock();
+                (component as any).handleCancelLock();
             }).not.toThrow();
         });
     });

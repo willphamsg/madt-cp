@@ -19,7 +19,14 @@
                     </app-scrollbar>
                 </div>
             </div>
-            <div class="confirm-button" (click)="handleButtonSound(); handleClickOK()">
+            <div
+                class="confirm-button"
+                (click)="handleButtonSound(); handleClickOK()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); handleClickOK()"
+                (keydown.space)="handleButtonSound(); handleClickOK()"
+            >
                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                 <span class="text">{{ 'OK' | translate }}</span>
             </div>
@@ -34,7 +41,14 @@
             <h2 class="title">{{ 'REDETECT_CV' | translate }}</h2>
             <div class="content">
                 <p>{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
-                <div class="button" (click)="handleButtonSound(); handleClickButton()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleClickButton()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleClickButton()"
+                    (keydown.space)="handleButtonSound(); handleClickButton()"
+                >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <div class="text">{{ 'CONFIRM' | translate }}</div>
                 </div>

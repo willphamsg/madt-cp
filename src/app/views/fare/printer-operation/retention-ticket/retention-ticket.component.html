@@ -6,11 +6,11 @@
             </div>
             <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
             <div class="cf-btn-group">
-                <button class="btn btn-cancel" (click)="handleButtonSound(); handleDetectCart(false)">
+                <button class="btn btn-cancel" (click)="handleButtonSound(); handleCancelDetectCart()">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
                 </button>
-                <button class="btn btn-confirm" (click)="handleButtonSound(); handleDetectCart(true)">
+                <button class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmDetectCart()">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'CONFIRM' | translate }}</span>
                 </button>
@@ -60,7 +60,16 @@
         }
     } @else {
         <div>
-            <div class="back-button" (click)="handleButtonSound(); handleBack()">{{ 'BACK' | translate }}</div>
+            <div
+                class="back-button"
+                (click)="handleButtonSound(); handleBack()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); handleBack()"
+                (keydown.space)="handleButtonSound(); handleBack()"
+            >
+                {{ 'BACK' | translate }}
+            </div>
             <h2 class="title">{{ 'PRINT_RETENTION_TICKET' | translate }}</h2>
             <div class="content">
                 <div class="button-control">

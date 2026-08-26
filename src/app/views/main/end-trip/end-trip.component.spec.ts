@@ -84,12 +84,12 @@ describe('EndTripComponent', () => {
         expect(router.navigate).toHaveBeenCalledWith([routerUrls?.private?.main?.busOperation?.url]);
     });
 
-    it('handleConfirm(true) should not throw', () => {
-        expect(() => component.handleConfirm(true)).not.toThrow();
+    it('handleConfirm() should not throw', () => {
+        expect(() => component.handleConfirm()).not.toThrow();
     });
 
-    it('handleConfirm(false) should navigate to bus stop', () => {
-        component.handleConfirm(false);
+    it('handleDeclineConfirm() should navigate to bus stop', () => {
+        component.handleDeclineConfirm();
         expect(router.navigate).toHaveBeenCalledWith([routerUrls?.private?.main?.busStopInformation]);
     });
 

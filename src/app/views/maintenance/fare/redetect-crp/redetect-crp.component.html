@@ -1,5 +1,4 @@
 <div class="redetect-crp-page">
-
     @if (step === 1) {
         <div class="progress-wrapper">
             <h2 class="title">{{ 'SCANNING_FOR_CRP_DEVICE' | translate }}</h2>
@@ -16,7 +15,14 @@
             <div class="content">
                 <div class="confirm">{{ 'CRP_INSTALLED' | translate }}</div>
                 <div class="btn-group">
-                    <div class="btn btn-confirm" (click)="handleButtonSound(); handleFinishTransaction()">
+                    <div
+                        class="btn btn-confirm"
+                        (click)="handleButtonSound(); handleFinishTransaction()"
+                        tabindex="0"
+                        role="button"
+                        (keydown.enter)="handleButtonSound(); handleFinishTransaction()"
+                        (keydown.space)="handleButtonSound(); handleFinishTransaction()"
+                    >
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'OKAY' | translate }}</span>
                     </div>

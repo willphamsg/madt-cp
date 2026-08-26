@@ -78,10 +78,8 @@ export class FareConsoleTableComponent implements OnDestroy, OnInit {
 
     handleChangeSetting(setting: string) {
         this.settingType = setting;
-        switch (setting) {
-            case 'deckType':
-                this.selectChangeDeckType();
-                break;
+        if (setting === 'deckType') {
+            this.selectChangeDeckType();
         }
     }
 

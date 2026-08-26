@@ -1450,7 +1450,9 @@ export class MainComponent implements OnInit, OnDestroy {
                     },
                 );
                 break;
+        }
 
+        switch (header?.msgID) {
             // for buttons on main screen
             case MsgID.MAIN_FREE:
                 messageCounters.currentFreeMsg = this.messValidation(dateTime, messageCounters.currentFreeMsg, () => {
@@ -1956,7 +1958,9 @@ export class MainComponent implements OnInit, OnDestroy {
                     },
                 );
                 break;
+        }
 
+        switch (header?.msgID) {
             // start trip flow:
             case MsgID?.START_TRIP:
                 messageCounters.currentStartTrip = this.messValidation(
@@ -2488,17 +2492,17 @@ export class MainComponent implements OnInit, OnDestroy {
         }
     }
 
-    handleConfirmLock(isConfirm: boolean) {
-        if (isConfirm) {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics.mainTab?.get,
-                msgID: MsgID.LOCK_CONFIRM,
-                msgSubID: MsgSubID.REQUEST,
-                payload: {},
-            });
-        } else {
-            this.displayLockPopUp = false;
-        }
+    handleConfirmLock() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics.mainTab?.get,
+            msgID: MsgID.LOCK_CONFIRM,
+            msgSubID: MsgSubID.REQUEST,
+            payload: {},
+        });
+    }
+
+    handleCancelLock() {
+        this.displayLockPopUp = false;
     }
 
     handleLockScreen() {

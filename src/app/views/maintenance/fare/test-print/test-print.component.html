@@ -5,7 +5,14 @@
             <h2 class="title">{{ 'PRINTER_IS_IN_SERVICE' | translate }}</h2>
             <div class="content">
                 <p>{{ 'PRESS_TEST_PRINT_BTN_TO_PRINT_RECEIPT' | translate }}</p>
-                <div class="button" (click)="handleButtonSound(); handleFinish()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleFinish()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleFinish()"
+                    (keydown.space)="handleButtonSound(); handleFinish()"
+                >
                     <img src="/assets/images/icons/maintenance/print.svg" alt="" />
                     <div class="text">{{ 'TEST_PRINT' | translate }}</div>
                 </div>
@@ -20,7 +27,14 @@
             <div class="content">
                 <h4>{{ 'UNABLE_TO_COM_PRINTER' | translate }}</h4>
                 <p>{{ 'PRESS_TEST_PRINT_BTN_TO_PRINT_RECEIPT' | translate }}</p>
-                <div class="button" (click)="handleButtonSound(); handleFinish()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleFinish()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleFinish()"
+                    (keydown.space)="handleButtonSound(); handleFinish()"
+                >
                     <img src="/assets/images/icons/maintenance/print.svg" alt="" />
                     <div class="text">{{ 'TEST_PRINT' | translate }}</div>
                 </div>
@@ -34,7 +48,14 @@
             <div class="title">{{ 'OUT_OF_SERVICE' | translate }}</div>
             <div class="content">
                 <p>{{ 'PRINTER_NOT_IN_SERVICE' | translate }}</p>
-                <div class="button" (click)="handleButtonSound(); handleFinish()">
+                <div
+                    class="button"
+                    (click)="handleButtonSound(); handleFinish()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); handleFinish()"
+                    (keydown.space)="handleButtonSound(); handleFinish()"
+                >
                     <img src="/assets/images/icons/maintenance/print.svg" alt="" />
                     <div class="text">{{ 'TEST_PRINT' | translate }}</div>
                 </div>

@@ -183,16 +183,16 @@ export class BusOperationMenuComponent implements OnInit, OnDestroy {
         this.soundService.playButton();
     }
 
-    handleEndShift(isConfirmed: boolean) {
-        if (isConfirmed) {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.mainTab?.get,
-                msgID: MsgID.END_SHIFT,
-                msgSubID: MsgSubID.REQUEST,
-                payload: {},
-            });
-        } else {
-            this.displayEndShiftPopup = false;
-        }
+    handleEndShift() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.mainTab?.get,
+            msgID: MsgID.END_SHIFT,
+            msgSubID: MsgSubID.REQUEST,
+            payload: {},
+        });
+    }
+
+    handleCancelEndShift() {
+        this.displayEndShiftPopup = false;
     }
 }

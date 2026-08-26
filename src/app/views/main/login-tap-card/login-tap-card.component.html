@@ -67,7 +67,16 @@
     } @else if (signInTapCardData.message === 'LOGIN_SUCCESS_NEED_PIN') {
         <div class="wrapper">
             <div class="page-header">
-                <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
+                <div
+                    class="back-button"
+                    (click)="handleButtonSound(); backToLogin()"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); backToLogin()"
+                    (keydown.space)="handleButtonSound(); backToLogin()"
+                >
+                    {{ 'BACK' | translate }}
+                </div>
             </div>
             <div>
                 <div class="content">
@@ -108,7 +117,16 @@
         } @else {
             <div class="wrapper">
                 <div class="page-header">
-                    <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
+                    <div
+                        class="back-button"
+                        (click)="handleButtonSound(); backToLogin()"
+                        tabindex="0"
+                        role="button"
+                        (keydown.enter)="handleButtonSound(); backToLogin()"
+                        (keydown.space)="handleButtonSound(); backToLogin()"
+                    >
+                        {{ 'BACK' | translate }}
+                    </div>
                 </div>
                 <div>
                     <div class="content">
@@ -270,7 +288,16 @@
     } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
         <div class="wrapper">
             <div class="page-header">
-                <div class="back-button" (click)="handleButtonSound(); backToLogin(true)">{{ 'BACK' | translate }}</div>
+                <div
+                    class="back-button"
+                    (click)="handleButtonSound(); backToLogin(true)"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); backToLogin(true)"
+                    (keydown.space)="handleButtonSound(); backToLogin(true)"
+                >
+                    {{ 'BACK' | translate }}
+                </div>
             </div>
             <div>
                 <div class="content">
@@ -298,7 +325,16 @@
     <div class="wrapper">
         @if (signInTapCardData.status === ResponseStatus.ERROR) {
             <div class="page-header">
-                <div class="back-button" (click)="handleButtonSound(); backToLogin(true)">{{ 'BACK' | translate }}</div>
+                <div
+                    class="back-button"
+                    (click)="handleButtonSound(); backToLogin(true)"
+                    tabindex="0"
+                    role="button"
+                    (keydown.enter)="handleButtonSound(); backToLogin(true)"
+                    (keydown.space)="handleButtonSound(); backToLogin(true)"
+                >
+                    {{ 'BACK' | translate }}
+                </div>
             </div>
             <div>
                 <div class="content">
@@ -328,7 +364,16 @@
         } @else if (signInTapCardData.status === ResponseStatus.SUCCESS) {
             <div class="wrapper">
                 <div class="page-header">
-                    <div class="back-button" (click)="handleButtonSound(); backToLogin()">{{ 'BACK' | translate }}</div>
+                    <div
+                        class="back-button"
+                        (click)="handleButtonSound(); backToLogin()"
+                        tabindex="0"
+                        role="button"
+                        (keydown.enter)="handleButtonSound(); backToLogin()"
+                        (keydown.space)="handleButtonSound(); backToLogin()"
+                    >
+                        {{ 'BACK' | translate }}
+                    </div>
                 </div>
                 <div>
                     <div class="content">

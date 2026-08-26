@@ -505,15 +505,15 @@ describe('MainComponent', () => {
         });
 
         it('handleConfirmLock publishes on confirm', () => {
-            component.handleConfirmLock(true);
+            component.handleConfirmLock();
             expect(mockMqttService.publishWithMessageFormat).toHaveBeenCalledWith(
                 jasmine.objectContaining({ msgID: MsgID.LOCK_CONFIRM }),
             );
         });
 
-        it('handleConfirmLock hides popup when not confirmed', () => {
+        it('handleCancelLock hides popup when not confirmed', () => {
             component.displayLockPopUp = true;
-            component.handleConfirmLock(false);
+            component.handleCancelLock();
             expect(component.displayLockPopUp).toBeFalse();
         });
 

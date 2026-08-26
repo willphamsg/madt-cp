@@ -26,6 +26,10 @@
                                 class="tk-button"
                                 [class.active]="fareMode === ECashMode.SINGLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
+                                tabindex="0"
+                                role="button"
+                                (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
+                                (keydown.space)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
                             >
                                 {{ 'SINGLE_TICKET' | translate }}
                             </div>
@@ -33,11 +37,22 @@
                                 class="tk-button"
                                 [class.active]="fareMode === ECashMode.MULTIPLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
+                                tabindex="0"
+                                role="button"
+                                (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
+                                (keydown.space)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
                             >
                                 {{ 'MULTIPLE_TICKET' | translate }}
                             </div>
                         </div>
-                        <div class="button" (click)="handleButtonSound(); handleTerminate()">
+                        <div
+                            class="button"
+                            (click)="handleButtonSound(); handleTerminate()"
+                            tabindex="0"
+                            role="button"
+                            (keydown.enter)="handleButtonSound(); handleTerminate()"
+                            (keydown.space)="handleButtonSound(); handleTerminate()"
+                        >
                             <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                             <span>{{ 'CLOSE' | translate }}</span>
                         </div>
@@ -54,6 +69,10 @@
                                     <div
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
+                                        tabindex="0"
+                                        role="button"
+                                        (keydown.enter)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
+                                        (keydown.space)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
@@ -72,6 +91,14 @@
                                     <div
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)"
+                                        tabindex="0"
+                                        role="button"
+                                        (keydown.enter)="
+                                            handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)
+                                        "
+                                        (keydown.space)="
+                                            handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)
+                                        "
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
@@ -90,6 +117,14 @@
                                     <div
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)"
+                                        tabindex="0"
+                                        role="button"
+                                        (keydown.enter)="
+                                            handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)
+                                        "
+                                        (keydown.space)="
+                                            handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)
+                                        "
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
@@ -177,7 +212,14 @@
                     <!-- set exit bus stop -->
                     <ng-container>
                         <div class="page-header">
-                            <div class="back-button" (click)="handleButtonSound(); handleResetBusStopPopup()">
+                            <div
+                                class="back-button"
+                                (click)="handleButtonSound(); handleResetBusStopPopup()"
+                                tabindex="0"
+                                role="button"
+                                (keydown.enter)="handleButtonSound(); handleResetBusStopPopup()"
+                                (keydown.space)="handleButtonSound(); handleResetBusStopPopup()"
+                            >
                                 {{ 'BACK' | translate }}
                             </div>
                         </div>
@@ -217,6 +259,14 @@
                                                         (click)="
                                                             handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
                                                         "
+                                                        tabindex="0"
+                                                        role="button"
+                                                        (keydown.enter)="
+                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
+                                                        "
+                                                        (keydown.space)="
+                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
+                                                        "
                                                     >
                                                         <div class="left">
                                                             {{ busStop.Name }}
@@ -248,7 +298,14 @@
                 } @else if (cashPayment.msgID === MsgID.MAIN_CASH_FARE_CALCULATION_SUBMIT_BUS_STOP_CHANGE) {
                     <ng-container>
                         <div class="page-header">
-                            <div class="back-button" (click)="handleButtonSound(); handleBackFareCalculator()">
+                            <div
+                                class="back-button"
+                                (click)="handleButtonSound(); handleBackFareCalculator()"
+                                tabindex="0"
+                                role="button"
+                                (keydown.enter)="handleButtonSound(); handleBackFareCalculator()"
+                                (keydown.space)="handleButtonSound(); handleBackFareCalculator()"
+                            >
                                 {{ 'BACK' | translate }}
                             </div>
                         </div>
@@ -260,7 +317,14 @@
                                 <div class="scrollbar">
                                     <app-scrollbar>
                                         <ul>
-                                            <li class="row" (click)="handleButtonSound(); handleChangeBusStop('ENTRY')">
+                                            <li
+                                                class="row"
+                                                (click)="handleButtonSound(); handleChangeBusStop('ENTRY')"
+                                                tabindex="0"
+                                                role="button"
+                                                (keydown.enter)="handleButtonSound(); handleChangeBusStop('ENTRY')"
+                                                (keydown.space)="handleButtonSound(); handleChangeBusStop('ENTRY')"
+                                            >
                                                 <div class="left">{{ 'ENTRY_BUS_STOP' | translate }}</div>
                                                 <div class="right">
                                                     <p class="value">
@@ -269,7 +333,14 @@
                                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                                                 </div>
                                             </li>
-                                            <li class="row" (click)="handleButtonSound(); handleChangeBusStop('EXIT')">
+                                            <li
+                                                class="row"
+                                                (click)="handleButtonSound(); handleChangeBusStop('EXIT')"
+                                                tabindex="0"
+                                                role="button"
+                                                (keydown.enter)="handleButtonSound(); handleChangeBusStop('EXIT')"
+                                                (keydown.space)="handleButtonSound(); handleChangeBusStop('EXIT')"
+                                            >
                                                 <div class="left">{{ 'EXIT_BUS_STOP' | translate }}</div>
                                                 <div class="right">
                                                     <p class="value">

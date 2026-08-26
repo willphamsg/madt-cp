@@ -1,5 +1,14 @@
 <div class="time-setting">
-    <div class="back-button" (click)="handleButtonSound(); goBack()">{{ 'BACK' | translate }}</div>
+    <div
+        class="back-button"
+        (click)="handleButtonSound(); goBack()"
+        tabindex="0"
+        role="button"
+        (keydown.enter)="handleButtonSound(); goBack()"
+        (keydown.space)="handleButtonSound(); goBack()"
+    >
+        {{ 'BACK' | translate }}
+    </div>
     <div>
         <h2 class="title">{{ 'SET_TIME' | translate }}</h2>
         <div class="content">

@@ -21,6 +21,10 @@
                                 <div
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/deck-type')"
+                                    tabindex="0"
+                                    role="button"
+                                    (keydown.enter)="handleButtonSound(); handleNavigate('/deck-type')"
+                                    (keydown.space)="handleButtonSound(); handleNavigate('/deck-type')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.deckType.label
                                     }"
@@ -38,6 +42,10 @@
                                 <div
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
+                                    tabindex="0"
+                                    role="button"
+                                    (keydown.enter)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
+                                    (keydown.space)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.fareBusStopMode
                                     }"
@@ -60,6 +68,10 @@
                                 <div
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/date-setting')"
+                                    tabindex="0"
+                                    role="button"
+                                    (keydown.enter)="handleButtonSound(); handleNavigate('/date-setting')"
+                                    (keydown.space)="handleButtonSound(); handleNavigate('/date-setting')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.dateTime
                                     }"
@@ -79,6 +91,10 @@
                                 <div
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/bus-id')"
+                                    tabindex="0"
+                                    role="button"
+                                    (keydown.enter)="handleButtonSound(); handleNavigate('/bus-id')"
+                                    (keydown.space)="handleButtonSound(); handleNavigate('/bus-id')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.busId
                                     }"
@@ -96,6 +112,10 @@
                                 <div
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/complimentary-day')"
+                                    tabindex="0"
+                                    role="button"
+                                    (keydown.enter)="handleButtonSound(); handleNavigate('/complimentary-day')"
+                                    (keydown.space)="handleButtonSound(); handleNavigate('/complimentary-day')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.complimentaryDays
                                     }"

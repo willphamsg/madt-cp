@@ -57,8 +57,6 @@ export class CancelRideComponent implements OnInit, OnDestroy {
         this.mqttService.mqttConfigLoaded$.pipe(takeUntil(this.destroy$)).subscribe((configLoaded) => {
             if (configLoaded) {
                 this.topics = this.mqttService.mqttConfig?.topics;
-                // TODO: Uncomment if initial MQTT message is needed
-                // this.publishInitialCancelRideMessage();
             }
         });
     }
@@ -103,19 +101,7 @@ export class CancelRideComponent implements OnInit, OnDestroy {
         });
     }
 
-    // TODO: Uncomment and implement if needed
-    // private publishInitialCancelRideMessage(): void {
-    //     this.mqttService.publishWithMessageFormat({
-    //         topic: this.topics?.fareTab?.get,
-    //         msgID: MsgID[`FARE_CANCEL_RIDE_${this.cv}`],
-    //         msgSubID: MsgSubID.REQUEST,
-    //         payload: {},
-    //     });
-    // }
-
     handleCancelRide(): void {
-        // TODO: Uncomment if cancellation message is needed
-        // this.publishCancelRideCancel();
         this.backToFare();
     }
 
@@ -154,16 +140,6 @@ export class CancelRideComponent implements OnInit, OnDestroy {
     private getCvNumber(): number {
         return this.cv === 'CV1' ? 1 : 2;
     }
-
-    // TODO: Uncomment and implement if needed
-    // private publishCancelRideCancel(): void {
-    //     this.mqttService.publishWithMessageFormat({
-    //         topic: this.topics?.fareTab?.get,
-    //         msgID: MsgID[`FARE_CANCEL_RIDE_${this.cv}_CANCEL`],
-    //         msgSubID: MsgSubID.NOTIFY,
-    //         payload: {},
-    //     });
-    // }
 
     backToProgressScreen(): void {
         this.updateCancelRideState(ResponseStatus.PROGRESS, 30000, MsgID.FARE_CANCEL_RIDE_SUBMIT);

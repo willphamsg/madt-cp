@@ -7,8 +7,8 @@
             [message]="'PRESS_THE_BTN_TO_PROCEED'"
             [isConfirm]="true"
             [isCancel]="true"
-            (confirm)="handleEndShift(true)"
-            (cancelled)="handleEndShift(false)"
+            (confirm)="handleEndShift()"
+            (cancelled)="handleCancelEndShift()"
         ></common-pop-up>
     } @else {
         <ng-container>

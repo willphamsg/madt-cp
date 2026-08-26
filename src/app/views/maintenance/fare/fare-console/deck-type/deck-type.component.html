@@ -7,6 +7,10 @@
                     @for (deck of fareConsoleSetting.deckTypeList; track deck.id) {
                         <li
                             (click)="handleButtonSound(); handleChangeDeckType(deck.id)"
+                            tabindex="0"
+                            role="button"
+                            (keydown.enter)="handleButtonSound(); handleChangeDeckType(deck.id)"
+                            (keydown.space)="handleButtonSound(); handleChangeDeckType(deck.id)"
                             [ngClass]="{
                                 selected: selectedDeckTypeId === deck.id
                             }"
@@ -19,11 +23,25 @@
         </div>
     </div>
     <div class="btn-group">
-        <div class="button button-cancel" (click)="handleButtonSound(); goBack()">
+        <div
+            class="button button-cancel"
+            (click)="handleButtonSound(); goBack()"
+            tabindex="0"
+            role="button"
+            (keydown.enter)="handleButtonSound(); goBack()"
+            (keydown.space)="handleButtonSound(); goBack()"
+        >
             <img src="/assets/images/icons/main/close.svg" alt="" />
             <span>{{ 'CANCEL' | translate }}</span>
         </div>
-        <div class="button button-confirm" (click)="handleButtonSound(); handleConfirmDeckType()">
+        <div
+            class="button button-confirm"
+            (click)="handleButtonSound(); handleConfirmDeckType()"
+            tabindex="0"
+            role="button"
+            (keydown.enter)="handleButtonSound(); handleConfirmDeckType()"
+            (keydown.space)="handleButtonSound(); handleConfirmDeckType()"
+        >
             <img src="/assets/images/icons/main/confirm.svg" alt="" />
             <span class="text">{{ 'CONFIRM' | translate }}</span>
         </div>

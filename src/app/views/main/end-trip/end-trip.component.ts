@@ -74,7 +74,7 @@ export class EndTripComponent implements OnInit, OnDestroy {
                         payload: { msgID: data.msgID },
                     });
                     if (data.msgID === MsgID.END_TRIP) {
-                        this.handleConfirm(false);
+                        this.handleDeclineConfirm();
                     } else if (data.msgID === MsgID.END_TRIP_TYPE) {
                         this.handleCancelEndTrip();
                     }
@@ -98,24 +98,24 @@ export class EndTripComponent implements OnInit, OnDestroy {
         this.router.navigate([routerUrls?.private?.main?.busOperation?.url]);
     }
 
-    handleConfirm(isConfirm: boolean) {
-        if (isConfirm) {
-            clearTimeout(this.timeOutId);
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.mainTab?.get,
-                msgID: MsgID.END_TRIP_TYPE,
-                msgSubID: MsgSubID.REQUEST,
-                payload: {},
-            });
-        } else {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.mainTab?.get,
-                msgID: MsgID.END_TRIP_CANCEL,
-                msgSubID: MsgSubID.NOTIFY,
-                payload: {},
-            });
-            this.backToMain();
-        }
+    handleConfirm() {
+        clearTimeout(this.timeOutId);
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.mainTab?.get,
+            msgID: MsgID.END_TRIP_TYPE,
+            msgSubID: MsgSubID.REQUEST,
+            payload: {},
+        });
+    }
+
+    handleDeclineConfirm() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.mainTab?.get,
+            msgID: MsgID.END_TRIP_CANCEL,
+            msgSubID: MsgSubID.NOTIFY,
+            payload: {},
+        });
+        this.backToMain();
     }
 
     handleCancelEndTrip() {

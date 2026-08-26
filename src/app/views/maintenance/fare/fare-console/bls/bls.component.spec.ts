@@ -55,9 +55,9 @@ describe('BLSStatusComponent', () => {
         expect(navigateSpy).toHaveBeenCalledWith(['/maintenance/fare/fare-console']);
     });
 
-    it('handleConfirmBlsStatus(false) should reset step to 1', () => {
+    it('handleCancelBlsStatus should reset step to 1', () => {
         component.step = 2;
-        component.handleConfirmBlsStatus(false);
+        component.handleCancelBlsStatus();
         expect(component.step).toBe(1);
     });
 });

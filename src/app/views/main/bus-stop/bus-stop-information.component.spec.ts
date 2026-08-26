@@ -202,7 +202,7 @@ describe('BusStopInformationComponent', () => {
             component.selectedIndex = 2;
             component.topics = { mainTab: { get: 'test/topic' } } as any;
 
-            component.handleConfirmBusStopFare(true);
+            component.handleConfirmBusStopFare();
 
             expect(mqttServiceSpy.publishWithMessageFormat).toHaveBeenCalledWith({
                 topic: 'test/topic',
@@ -218,9 +218,9 @@ describe('BusStopInformationComponent', () => {
             expect(dispatchSpy).toHaveBeenCalledWith(MainActions.updateDisplayFareBusStopList({ payload: false }));
         });
 
-        it('should handle confirm bus stop fare with false', () => {
+        it('should handle cancel bus stop fare', () => {
             const dispatchSpy = spyOn(store, 'dispatch');
-            component.handleConfirmBusStopFare(false);
+            component.handleCancelBusStopFare();
             expect(component.displayCfmBusStopFare).toBeFalse();
             expect(dispatchSpy).toHaveBeenCalledWith(MainActions.updateDisplayFareBusStopList({ payload: true }));
         });

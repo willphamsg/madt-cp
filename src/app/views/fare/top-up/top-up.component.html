@@ -30,7 +30,14 @@
                             </div>
                         </div>
                     } @else {
-                        <div class="back-button" (click)="handleButtonSound(); handleBack()">
+                        <div
+                            class="back-button"
+                            (click)="handleButtonSound(); handleBack()"
+                            tabindex="0"
+                            role="button"
+                            (keydown.enter)="handleButtonSound(); handleBack()"
+                            (keydown.space)="handleButtonSound(); handleBack()"
+                        >
                             {{ 'BACK' | translate }}
                         </div>
                         <div>

@@ -35,8 +35,8 @@
                 [disableSound]="true"
                 [isConfirm]="true"
                 [isCancel]="true"
-                (cancelled)="handleLogout(false)"
-                (confirm)="handleLogout(true)"
+                (cancelled)="handleCancelLogout()"
+                (confirm)="handleLogout()"
             >
             </common-pop-up>
         }

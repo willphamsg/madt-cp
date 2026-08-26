@@ -33,7 +33,14 @@
         </common-pop-up>
     } @else {
         <div>
-            <div class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">
+            <div
+                class="back-button"
+                (click)="handleButtonSound(); handleBackToCalibrateBls()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); handleBackToCalibrateBls()"
+                (keydown.space)="handleButtonSound(); handleBackToCalibrateBls()"
+            >
                 {{ 'BACK' | translate }}
             </div>
             <h2 class="title">{{ 'MANUAL_INPUT' | translate }}</h2>

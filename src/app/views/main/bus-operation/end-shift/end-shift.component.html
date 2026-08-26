@@ -1,16 +1,29 @@
 <div class="end-shift-page">
-
     <div class="dialog">
         <div class="dialog-header">
             <p [innerHTML]="'LOG_OFF' | translate"></p>
         </div>
         <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
         <div class="cf-btn-group">
-            <div class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
+            <div
+                class="btn btn-cancel"
+                (click)="handleButtonSound(); goBack()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); goBack()"
+                (keydown.space)="handleButtonSound(); goBack()"
+            >
                 <img src="/assets/images/icons/main/close.svg" alt="" />
                 <span>{{ 'CANCEL' | translate }}</span>
             </div>
-            <div class="btn btn-confirm" (click)="handleButtonSound(); handleEndShift()">
+            <div
+                class="btn btn-confirm"
+                (click)="handleButtonSound(); handleEndShift()"
+                tabindex="0"
+                role="button"
+                (keydown.enter)="handleButtonSound(); handleEndShift()"
+                (keydown.space)="handleButtonSound(); handleEndShift()"
+            >
                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                 <span>{{ 'CONFIRM' | translate }}</span>
             </div>

@@ -32,6 +32,10 @@
                                         <p class="error-message" [innerHTML]="cvData?.message || '' | translate"></p>
                                         <img
                                             (click)="handleButtonSound(); closeErrorCv(cvData.id)"
+                                            tabindex="0"
+                                            role="button"
+                                            (keydown.enter)="handleButtonSound(); closeErrorCv(cvData.id)"
+                                            (keydown.space)="handleButtonSound(); closeErrorCv(cvData.id)"
                                             class="close-btn"
                                             src="/assets/images/icons/main/close-icon.svg"
                                             alt=""
@@ -241,7 +245,7 @@
                 }
 
                 @if (displayLockPopUp) {
-                    <lock-pop-up (confirm)="handleConfirmLock(true)" (cancelled)="handleConfirmLock(false)"> </lock-pop-up>
+                    <lock-pop-up (confirm)="handleConfirmLock()" (cancelled)="handleCancelLock()"> </lock-pop-up>
                 }
 
                 @if (displayLockScreen) {

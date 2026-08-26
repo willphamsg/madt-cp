@@ -504,18 +504,18 @@ export class MaintenanceLayoutComponent implements OnInit, OnDestroy {
         this.activeLogoutPopup = true;
     }
 
-    handleLogout(isConfirmed: boolean) {
-        if (isConfirmed) {
-            this.mqttService.publishWithMessageFormat({
-                topic: this.topics?.maintenance?.get,
-                msgID: MsgID.LOGOUT,
-                msgSubID: MsgSubID.REQUEST,
-                payload: {},
-            });
-            // this.handleLogoutSuccess();
-        } else {
-            this.activeLogoutPopup = false;
-        }
+    handleLogout() {
+        this.mqttService.publishWithMessageFormat({
+            topic: this.topics?.maintenance?.get,
+            msgID: MsgID.LOGOUT,
+            msgSubID: MsgSubID.REQUEST,
+            payload: {},
+        });
+        // this.handleLogoutSuccess();
+    }
+
+    handleCancelLogout() {
+        this.activeLogoutPopup = false;
     }
 
     private handleLogoutSuccess(): void {

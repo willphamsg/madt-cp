@@ -1,15 +1,9 @@
 <ng-container>
     <div class="maintenance-fare-layout">
         <div class="layout">
-            <div
-                class="button"
-                (click)="handleButtonSound(); backToMaintenance()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); backToMaintenance()"
-                (keydown.space)="handleButtonSound(); backToMaintenance()"
-            >
+            <button type="button" class="button" (click)="handleButtonSound(); backToMaintenance()">
                 <span>{{ 'CLOSE' | translate }}</span>
-            </div>
+            </button>
             @if (safeUrl; as trustedUrl) {
                 <iframe
                     #iframeRef

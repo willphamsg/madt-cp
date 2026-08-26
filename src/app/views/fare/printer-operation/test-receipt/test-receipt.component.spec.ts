@@ -27,6 +27,14 @@ describe('TestReceiptComponent', () => {
         expect(component).toBeTruthy();
     });
 
+    describe('goBack', () => {
+        it('should execute without errors', () => {
+            expect(() => {
+                (component as any).goBack();
+            }).not.toThrow();
+        });
+    });
+
     describe('handlePrint', () => {
         it('should execute without errors', () => {
             expect(() => {

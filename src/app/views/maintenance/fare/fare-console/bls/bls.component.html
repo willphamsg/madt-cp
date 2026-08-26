@@ -1,15 +1,9 @@
 <div class="bls">
     @if (step === 1) {
         <div>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); goBack()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); goBack()"
-                (keydown.space)="handleButtonSound(); goBack()"
-            >
+            <button type="button" class="back-button" (click)="handleButtonSound(); goBack()">
                 {{ 'BACK' | translate }}
-            </div>
+            </button>
             <h2 class="title">{{ 'SECONDARY_BLS_STATUS' | translate }}</h2>
             <div class="content">
                 <p class="label">
@@ -50,26 +44,18 @@
                     {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
                 </div>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-cancel"
-                        (click)="handleButtonSound(); handleCancelBlsStatus()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleCancelBlsStatus()"
-                        (keydown.space)="handleButtonSound(); handleCancelBlsStatus()"
-                    >
+                    <button type="button" class="btn btn-cancel" (click)="handleButtonSound(); handleCancelBlsStatus()">
                         <img src="/assets/images/icons/main/close.svg" alt="" />
                         <span>{{ 'CANCEL' | translate }}</span>
-                    </div>
-                    <div
+                    </button>
+                    <button
+                        type="button"
                         class="btn btn-confirm"
                         (click)="handleButtonSound(); handleConfirmBlsStatus()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleConfirmBlsStatus()"
-                        (keydown.space)="handleButtonSound(); handleConfirmBlsStatus()"
                     >
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'CONFIRM' | translate }}</span>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

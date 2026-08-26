@@ -2,24 +2,12 @@
     <h2 class="title">{{ 'BLS_CALIBRATION_FUNCTION' | translate }}</h2>
     <div class="content">
         <div class="button-group">
-            <div
-                class="button"
-                (click)="handleButtonSound(); handleSelect(1)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleSelect(1)"
-                (keydown.space)="handleButtonSound(); handleSelect(1)"
-            >
+            <button type="button" class="button" (click)="handleButtonSound(); handleSelect(1)">
                 {{ 'MANUAL_INPUT' | translate }}
-            </div>
-            <div
-                class="button"
-                (click)="handleButtonSound(); handleSelect(2)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleSelect(2)"
-                (keydown.space)="handleButtonSound(); handleSelect(2)"
-            >
+            </button>
+            <button type="button" class="button" (click)="handleButtonSound(); handleSelect(2)">
                 {{ 'BLS_CALIBRATION' | translate }}
-            </div>
+            </button>
         </div>
     </div>
 </div>

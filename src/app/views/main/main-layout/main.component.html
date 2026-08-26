@@ -30,15 +30,13 @@
                                             <img [src]="cvData?.activeIcon" alt="" />
                                         </p>
                                         <p class="error-message" [innerHTML]="cvData?.message || '' | translate"></p>
-                                        <img
-                                            (click)="handleButtonSound(); closeErrorCv(cvData.id)"
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); closeErrorCv(cvData.id)"
-                                            (keydown.space)="handleButtonSound(); closeErrorCv(cvData.id)"
+                                        <button
+                                            type="button"
                                             class="close-btn"
-                                            src="/assets/images/icons/main/close-icon.svg"
-                                            alt=""
-                                        />
+                                            (click)="handleButtonSound(); closeErrorCv(cvData.id)"
+                                        >
+                                            <img src="/assets/images/icons/main/close-icon.svg" alt="" />
+                                        </button>
                                     </div>
                                 } @else {
                                     <div

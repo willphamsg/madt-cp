@@ -12,40 +12,34 @@
         <ng-content></ng-content>
         <div class="btn-group">
             @if (btnCancel) {
-                <div
+                <button
+                    type="button"
                     class="button button-cancel"
                     (click)="handleButtonSound(); handleClick('cancel')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClick('cancel')"
-                    (keydown.space)="handleButtonSound(); handleClick('cancel')"
                 >
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
-                </div>
+                </button>
             }
             @if (btnConfirm) {
-                <div
+                <button
+                    type="button"
                     class="button button-confirm"
                     (click)="handleButtonSound(); handleClick('confirm')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClick('confirm')"
-                    (keydown.space)="handleButtonSound(); handleClick('confirm')"
                 >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'CONFIRM' | translate }}</span>
-                </div>
+                </button>
             }
             @if (btnOK) {
-                <div
+                <button
+                    type="button"
                     class="button button-ok"
                     (click)="handleButtonSound(); handleClick('ok')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClick('ok')"
-                    (keydown.space)="handleButtonSound(); handleClick('ok')"
                 >
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'OK' | translate }}</span>
-                </div>
+                </button>
             }
         </div>
     </div>

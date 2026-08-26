@@ -18,12 +18,10 @@
                         <ul>
                             <li class="row">
                                 <div class="left">{{ 'DECK_TYPE' | translate }}</div>
-                                <div
+                                <button
+                                    type="button"
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/deck-type')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/deck-type')"
-                                    (keydown.space)="handleButtonSound(); handleNavigate('/deck-type')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.deckType.label
                                     }"
@@ -34,16 +32,14 @@
                                         <p class="value">{{ 'SELECT' | translate }}</p>
                                     }
                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                </div>
+                                </button>
                             </li>
                             <li class="row">
                                 <div class="left">{{ 'FARE_BUS_STOP_MODE' | translate }}</div>
-                                <div
+                                <button
+                                    type="button"
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
-                                    (keydown.space)="handleButtonSound(); handleNavigate('/fare-bus-stop-mode')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.fareBusStopMode
                                     }"
@@ -59,16 +55,14 @@
                                         <p class="value">{{ 'SELECT' | translate }}</p>
                                     }
                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                </div>
+                                </button>
                             </li>
                             <li class="row">
                                 <div class="left">{{ 'DATE_TIME' | translate }}</div>
-                                <div
+                                <button
+                                    type="button"
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/date-setting')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/date-setting')"
-                                    (keydown.space)="handleButtonSound(); handleNavigate('/date-setting')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.dateTime
                                     }"
@@ -81,16 +75,14 @@
                                         <p class="value">{{ 'ENTER' | translate }}</p>
                                     }
                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                </div>
+                                </button>
                             </li>
                             <li class="row">
                                 <div class="left">{{ 'BUS_ID' | translate }}</div>
-                                <div
+                                <button
+                                    type="button"
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/bus-id')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/bus-id')"
-                                    (keydown.space)="handleButtonSound(); handleNavigate('/bus-id')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.busId
                                     }"
@@ -101,16 +93,14 @@
                                         <p class="value">{{ 'ENTER' | translate }}</p>
                                     }
                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                </div>
+                                </button>
                             </li>
                             <li class="row">
                                 <div class="left">{{ 'COMPLIMENTARY_DAYS' | translate }}</div>
-                                <div
+                                <button
+                                    type="button"
                                     class="right"
                                     (click)="handleButtonSound(); handleNavigate('/complimentary-day')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleNavigate('/complimentary-day')"
-                                    (keydown.space)="handleButtonSound(); handleNavigate('/complimentary-day')"
                                     [ngClass]="{
                                         required: !fareConsoleSetting.complimentaryDays
                                     }"
@@ -121,7 +111,7 @@
                                         <p class="value">{{ 'ENTER' | translate }}</p>
                                     }
                                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                </div>
+                                </button>
                             </li>
                         </ul>
                     </app-scrollbar>

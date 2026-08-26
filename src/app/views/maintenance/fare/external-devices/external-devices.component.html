@@ -14,15 +14,9 @@
                         externalDevices.status === ResponseStatus.ERROR ||
                         externalDevices.status === ResponseStatus.NA
                     ) {
-                        <div
-                            class="refresh-button"
-                            (click)="handleButtonSound(); handleRefresh()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleRefresh()"
-                            (keydown.space)="handleButtonSound(); handleRefresh()"
-                        >
+                        <button type="button" class="refresh-button" (click)="handleButtonSound(); handleRefresh()">
                             <img src="/assets/images/icons/bus-operation/refresh.svg" alt="" />
-                        </div>
+                        </button>
                     }
                 </div>
                 <div class="external-devices-content">
@@ -46,15 +40,13 @@
                                             } @else {
                                                 <p class="value loading">{{ 'TESTING' | translate }}</p>
                                             }
-                                            <div
+                                            <button
+                                                type="button"
                                                 class="button"
                                                 (click)="handleButtonSound(); handlePrintTest()"
-                                                tabindex="0"
-                                                (keydown.enter)="handleButtonSound(); handlePrintTest()"
-                                                (keydown.space)="handleButtonSound(); handlePrintTest()"
                                             >
                                                 <img src="/assets/images/icons/maintenance/print.svg" alt="" />
-                                            </div>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="td">

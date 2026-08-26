@@ -31,16 +31,10 @@
             <h2 class="title">{{ 'LOAD_PARAMETERS' | translate }}</h2>
             <div class="content">
                 <p [innerHTML]="'PRESS_LOAD_PARAMETER_BUTTON' | translate"></p>
-                <div
-                    class="button"
-                    (click)="handleButtonSound(); handleClickButton()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleClickButton()"
-                    (keydown.space)="handleButtonSound(); handleClickButton()"
-                >
+                <button type="button" class="button" (click)="handleButtonSound(); handleClickButton()">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <div class="text">{{ 'LOAD_PARAMETERS' | translate }}</div>
-                </div>
+                </button>
             </div>
         </div>
     }

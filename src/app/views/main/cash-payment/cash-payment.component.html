@@ -22,37 +22,27 @@
                     <div class="page-header">
                         <h2>{{ 'CASH' | translate }}</h2>
                         <div class="button-group">
-                            <div
+                            <button
+                                type="button"
                                 class="tk-button"
                                 [class.active]="fareMode === ECashMode.SINGLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
-                                (keydown.space)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
                             >
                                 {{ 'SINGLE_TICKET' | translate }}
-                            </div>
-                            <div
+                            </button>
+                            <button
+                                type="button"
                                 class="tk-button"
                                 [class.active]="fareMode === ECashMode.MULTIPLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
-                                (keydown.space)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
                             >
                                 {{ 'MULTIPLE_TICKET' | translate }}
-                            </div>
+                            </button>
                         </div>
-                        <div
-                            class="button"
-                            (click)="handleButtonSound(); handleTerminate()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleTerminate()"
-                            (keydown.space)="handleButtonSound(); handleTerminate()"
-                        >
+                        <button type="button" class="button" (click)="handleButtonSound(); handleTerminate()">
                             <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                             <span>{{ 'CLOSE' | translate }}</span>
-                        </div>
+                        </button>
                     </div>
 
                     <div class="cash-container">
@@ -63,17 +53,15 @@
                             </div>
                             <div class="cash-btn-block">
                                 @for (cashValue of cashPayment.adultValues; track $index) {
-                                    <div
+                                    <button
+                                        type="button"
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
-                                        (keydown.space)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
                                         </div>
-                                    </div>
+                                    </button>
                                 }
                             </div>
                         </div>
@@ -84,21 +72,15 @@
                             </div>
                             <div class="cash-btn-block">
                                 @for (cashValue of cashPayment.seniorValues; track $index) {
-                                    <div
+                                    <button
+                                        type="button"
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)"
-                                        tabindex="0"
-                                        (keydown.enter)="
-                                            handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)
-                                        "
-                                        (keydown.space)="
-                                            handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)
-                                        "
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
                                         </div>
-                                    </div>
+                                    </button>
                                 }
                             </div>
                         </div>
@@ -109,21 +91,15 @@
                             </div>
                             <div class="cash-btn-block">
                                 @for (cashValue of cashPayment.studentValues; track $index) {
-                                    <div
+                                    <button
+                                        type="button"
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)"
-                                        tabindex="0"
-                                        (keydown.enter)="
-                                            handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)
-                                        "
-                                        (keydown.space)="
-                                            handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)
-                                        "
                                     >
                                         <div class="cash-btn">
                                             <div class="cash-value">{{ cashValue.value }}</div>
                                         </div>
-                                    </div>
+                                    </button>
                                 }
                             </div>
                         </div>
@@ -206,15 +182,13 @@
                     <!-- set exit bus stop -->
                     <ng-container>
                         <div class="page-header">
-                            <div
+                            <button
+                                type="button"
                                 class="back-button"
                                 (click)="handleButtonSound(); handleResetBusStopPopup()"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleResetBusStopPopup()"
-                                (keydown.space)="handleButtonSound(); handleResetBusStopPopup()"
                             >
                                 {{ 'BACK' | translate }}
-                            </div>
+                            </button>
                         </div>
                         <div class="bus-stop">
                             @if (cashPayment.busStopList?.length) {
@@ -249,21 +223,20 @@
                                                                 ? selectedExitBusStop === busStop.Busid
                                                                 : selectedEntryBusStop === busStop.Busid
                                                         "
-                                                        (click)="
-                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
-                                                        "
-                                                        tabindex="0"
-                                                        (keydown.enter)="
-                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
-                                                        "
-                                                        (keydown.space)="
-                                                            handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
-                                                        "
                                                     >
-                                                        <div class="left">
-                                                            {{ busStop.Name }}
-                                                        </div>
-                                                        <div class="right">KM {{ formatKm(busStop.km) }}</div>
+                                                        <button
+                                                            type="button"
+                                                            style="display: contents"
+                                                            (click)="
+                                                                handleButtonSound();
+                                                                handleSelectBusStop(busStop.Busid, idx)
+                                                            "
+                                                        >
+                                                            <div class="left">
+                                                                {{ busStop.Name }}
+                                                            </div>
+                                                            <div class="right">KM {{ formatKm(busStop.km) }}</div>
+                                                        </button>
                                                     </li>
                                                 }
                                             </ul>
@@ -290,15 +263,13 @@
                 } @else if (cashPayment.msgID === MsgID.MAIN_CASH_FARE_CALCULATION_SUBMIT_BUS_STOP_CHANGE) {
                     <ng-container>
                         <div class="page-header">
-                            <div
+                            <button
+                                type="button"
                                 class="back-button"
                                 (click)="handleButtonSound(); handleBackFareCalculator()"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleBackFareCalculator()"
-                                (keydown.space)="handleButtonSound(); handleBackFareCalculator()"
                             >
                                 {{ 'BACK' | translate }}
-                            </div>
+                            </button>
                         </div>
                         <div class="fare-calculator-result">
                             <h2 class="title">
@@ -308,35 +279,41 @@
                                 <div class="scrollbar">
                                     <app-scrollbar>
                                         <ul>
-                                            <li
-                                                class="row"
-                                                (click)="handleButtonSound(); handleChangeBusStop('ENTRY')"
-                                                tabindex="0"
-                                                (keydown.enter)="handleButtonSound(); handleChangeBusStop('ENTRY')"
-                                                (keydown.space)="handleButtonSound(); handleChangeBusStop('ENTRY')"
-                                            >
-                                                <div class="left">{{ 'ENTRY_BUS_STOP' | translate }}</div>
-                                                <div class="right">
-                                                    <p class="value">
-                                                        {{ cashPayment.fareResult?.entryBusStop?.Name ?? '' }}
-                                                    </p>
-                                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                                </div>
+                                            <li class="row">
+                                                <button
+                                                    type="button"
+                                                    style="display: contents"
+                                                    (click)="handleButtonSound(); handleChangeBusStop('ENTRY')"
+                                                >
+                                                    <div class="left">{{ 'ENTRY_BUS_STOP' | translate }}</div>
+                                                    <div class="right">
+                                                        <p class="value">
+                                                            {{ cashPayment.fareResult?.entryBusStop?.Name ?? '' }}
+                                                        </p>
+                                                        <img
+                                                            src="/assets/images/icons/main/chevron-right.svg"
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                </button>
                                             </li>
-                                            <li
-                                                class="row"
-                                                (click)="handleButtonSound(); handleChangeBusStop('EXIT')"
-                                                tabindex="0"
-                                                (keydown.enter)="handleButtonSound(); handleChangeBusStop('EXIT')"
-                                                (keydown.space)="handleButtonSound(); handleChangeBusStop('EXIT')"
-                                            >
-                                                <div class="left">{{ 'EXIT_BUS_STOP' | translate }}</div>
-                                                <div class="right">
-                                                    <p class="value">
-                                                        {{ cashPayment.fareResult?.exitBusStop?.Name ?? '' }}
-                                                    </p>
-                                                    <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                                                </div>
+                                            <li class="row">
+                                                <button
+                                                    type="button"
+                                                    style="display: contents"
+                                                    (click)="handleButtonSound(); handleChangeBusStop('EXIT')"
+                                                >
+                                                    <div class="left">{{ 'EXIT_BUS_STOP' | translate }}</div>
+                                                    <div class="right">
+                                                        <p class="value">
+                                                            {{ cashPayment.fareResult?.exitBusStop?.Name ?? '' }}
+                                                        </p>
+                                                        <img
+                                                            src="/assets/images/icons/main/chevron-right.svg"
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                </button>
                                             </li>
                                             <li class="row">
                                                 <div class="left">{{ 'ADULT_FARE' | translate }}</div>

@@ -5,26 +5,14 @@
         </div>
         <p class="confirm-msg">{{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}</p>
         <div class="cf-btn-group">
-            <div
-                class="btn btn-cancel"
-                (click)="handleButtonSound(); goBack()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); goBack()"
-                (keydown.space)="handleButtonSound(); goBack()"
-            >
+            <button type="button" class="btn btn-cancel" (click)="handleButtonSound(); goBack()">
                 <img src="/assets/images/icons/main/close.svg" alt="" />
                 <span>{{ 'CANCEL' | translate }}</span>
-            </div>
-            <div
-                class="btn btn-confirm"
-                (click)="handleButtonSound(); handleEndShift()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleEndShift()"
-                (keydown.space)="handleButtonSound(); handleEndShift()"
-            >
+            </button>
+            <button type="button" class="btn btn-confirm" (click)="handleButtonSound(); handleEndShift()">
                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                 <span>{{ 'CONFIRM' | translate }}</span>
-            </div>
+            </button>
         </div>
     </div>
 </div>

@@ -1,46 +1,34 @@
 <div class="select-boarding-type">
-    <div
-        class="back-button"
-        (click)="handleButtonSound(); handleBack()"
-        tabindex="0"
-        (keydown.enter)="handleButtonSound(); handleBack()"
-        (keydown.space)="handleButtonSound(); handleBack()"
-    >
+    <button type="button" class="back-button" (click)="handleButtonSound(); handleBack()">
         {{ 'BACK' | translate }}
-    </div>
+    </button>
     <div>
         <h2 class="title">{{ 'SET_SV_ENTRY_EXIT' | translate }}</h2>
         <div class="content">
-            <div
+            <button
+                type="button"
                 class="row"
                 [ngClass]="{ selected: cvType === 1 }"
                 (click)="handleButtonSound(); handleSelectType(1)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleSelectType(1)"
-                (keydown.space)="handleButtonSound(); handleSelectType(1)"
             >
                 <p class="label">{{ 'SET_ALL_TO_AUTO' | translate }}</p>
-            </div>
-            <div
+            </button>
+            <button
+                type="button"
                 class="row"
                 [ngClass]="{ selected: cvType === 2 }"
                 (click)="handleButtonSound(); handleSelectType(2)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleSelectType(2)"
-                (keydown.space)="handleButtonSound(); handleSelectType(2)"
             >
                 <p class="label">{{ 'SET_ALL_TO_EXIT' | translate }}</p>
-            </div>
-            <div
+            </button>
+            <button
+                type="button"
                 class="row"
                 [ngClass]="{ selected: cvType === 3 }"
                 (click)="handleButtonSound(); handleSelectType(3)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleSelectType(3)"
-                (keydown.space)="handleButtonSound(); handleSelectType(3)"
             >
                 <p class="label">{{ 'SET_ALL_TO_NORMAL' | translate }}</p>
-            </div>
+            </button>
         </div>
     </div>
 

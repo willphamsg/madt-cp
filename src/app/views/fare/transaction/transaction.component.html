@@ -45,15 +45,13 @@
                     ) {
                         @if (transaction.status === ResponseStatus.SUCCESS) {
                             <ng-container>
-                                <div
+                                <button
+                                    type="button"
                                     class="back-button"
                                     (click)="handleButtonSound(); backToCVScreen()"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); backToCVScreen()"
-                                    (keydown.space)="handleButtonSound(); backToCVScreen()"
                                 >
                                     {{ 'BACK' | translate }}
-                                </div>
+                                </button>
                                 @if (transaction.cardValue) {
                                     <h2 class="title">{{ 'CARD_VALUE' | translate }} = ${{ transaction.cardValue }}</h2>
                                 } @else {
@@ -110,15 +108,9 @@
                         }
                     } @else {
                         <ng-container>
-                            <div
-                                class="back-button"
-                                (click)="handleButtonSound(); handleBack()"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleBack()"
-                                (keydown.space)="handleButtonSound(); handleBack()"
-                            >
+                            <button type="button" class="back-button" (click)="handleButtonSound(); handleBack()">
                                 {{ 'BACK' | translate }}
-                            </div>
+                            </button>
                             <div>
                                 <h2 class="title">{{ 'SELECT_CV' | translate }}</h2>
                                 <div class="content">

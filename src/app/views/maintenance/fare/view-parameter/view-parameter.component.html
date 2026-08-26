@@ -26,57 +26,49 @@
                         <th style="width: 40%" scope="col">
                             <div class="table-header">
                                 <p>{{ 'FULL_NAME' | translate }}</p>
-                                <img
-                                    src="/assets/images/icons/maintenance/sort-asc.svg"
-                                    alt=""
-                                    [class]="sort['fullName']"
-                                    (click)="handleButtonSound(); handleSort('fullName')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleSort('fullName')"
-                                    (keydown.space)="handleButtonSound(); handleSort('fullName')"
-                                />
+                                <button type="button" (click)="handleButtonSound(); handleSort('fullName')">
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['fullName']"
+                                    />
+                                </button>
                             </div>
                         </th>
                         <th scope="col">
                             <div class="table-header">
                                 <p>{{ 'VERSION' | translate }}</p>
-                                <img
-                                    src="/assets/images/icons/maintenance/sort-asc.svg"
-                                    alt=""
-                                    [class]="sort['version']"
-                                    (click)="handleButtonSound(); handleSort('version')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleSort('version')"
-                                    (keydown.space)="handleButtonSound(); handleSort('version')"
-                                />
+                                <button type="button" (click)="handleButtonSound(); handleSort('version')">
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['version']"
+                                    />
+                                </button>
                             </div>
                         </th>
                         <th scope="col">
                             <div class="table-header">
                                 <p>{{ 'DATE_TIME' | translate }}</p>
-                                <img
-                                    src="/assets/images/icons/maintenance/sort-asc.svg"
-                                    alt=""
-                                    [class]="sort['date']"
-                                    (click)="handleButtonSound(); handleSort('date')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleSort('date')"
-                                    (keydown.space)="handleButtonSound(); handleSort('date')"
-                                />
+                                <button type="button" (click)="handleButtonSound(); handleSort('date')">
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['date']"
+                                    />
+                                </button>
                             </div>
                         </th>
                         <th scope="col">
                             <div class="table-header">
                                 <p>{{ 'STATUS' | translate }}</p>
-                                <img
-                                    src="/assets/images/icons/maintenance/sort-asc.svg"
-                                    alt=""
-                                    [class]="sort['status']"
-                                    (click)="handleButtonSound(); handleSort('status')"
-                                    tabindex="0"
-                                    (keydown.enter)="handleButtonSound(); handleSort('status')"
-                                    (keydown.space)="handleButtonSound(); handleSort('status')"
-                                />
+                                <button type="button" (click)="handleButtonSound(); handleSort('status')">
+                                    <img
+                                        src="/assets/images/icons/maintenance/sort-asc.svg"
+                                        alt=""
+                                        [class]="sort['status']"
+                                    />
+                                </button>
                             </div>
                         </th>
                     </tr>
@@ -89,57 +81,49 @@
                             <th style="width: 40%" scope="col">
                                 <div class="table-header">
                                     <p>{{ 'FULL_NAME' | translate }}</p>
-                                    <img
-                                        src="/assets/images/icons/maintenance/sort-asc.svg"
-                                        alt=""
-                                        [class]="sort['fullName']"
-                                        (click)="handleButtonSound(); handleSort('fullName')"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleSort('fullName')"
-                                        (keydown.space)="handleButtonSound(); handleSort('fullName')"
-                                    />
+                                    <button type="button" (click)="handleButtonSound(); handleSort('fullName')">
+                                        <img
+                                            src="/assets/images/icons/maintenance/sort-asc.svg"
+                                            alt=""
+                                            [class]="sort['fullName']"
+                                        />
+                                    </button>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="table-header">
                                     <p>{{ 'VERSION' | translate }}</p>
-                                    <img
-                                        src="/assets/images/icons/maintenance/sort-asc.svg"
-                                        alt=""
-                                        [class]="sort['version']"
-                                        (click)="handleButtonSound(); handleSort('version')"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleSort('version')"
-                                        (keydown.space)="handleButtonSound(); handleSort('version')"
-                                    />
+                                    <button type="button" (click)="handleButtonSound(); handleSort('version')">
+                                        <img
+                                            src="/assets/images/icons/maintenance/sort-asc.svg"
+                                            alt=""
+                                            [class]="sort['version']"
+                                        />
+                                    </button>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="table-header">
                                     <p>{{ 'DATE_TIME' | translate }}</p>
-                                    <img
-                                        src="/assets/images/icons/maintenance/sort-asc.svg"
-                                        alt=""
-                                        [class]="sort['date']"
-                                        (click)="handleButtonSound(); handleSort('date')"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleSort('date')"
-                                        (keydown.space)="handleButtonSound(); handleSort('date')"
-                                    />
+                                    <button type="button" (click)="handleButtonSound(); handleSort('date')">
+                                        <img
+                                            src="/assets/images/icons/maintenance/sort-asc.svg"
+                                            alt=""
+                                            [class]="sort['date']"
+                                        />
+                                    </button>
                                 </div>
                             </th>
                             <th scope="col">
                                 <div class="table-header">
                                     <p>{{ 'STATUS' | translate }}</p>
-                                    <img
-                                        src="/assets/images/icons/maintenance/sort-asc.svg"
-                                        alt=""
-                                        [class]="sort['status']"
-                                        (click)="handleButtonSound(); handleSort('status')"
-                                        tabindex="0"
-                                        (keydown.enter)="handleButtonSound(); handleSort('status')"
-                                        (keydown.space)="handleButtonSound(); handleSort('status')"
-                                    />
+                                    <button type="button" (click)="handleButtonSound(); handleSort('status')">
+                                        <img
+                                            src="/assets/images/icons/maintenance/sort-asc.svg"
+                                            alt=""
+                                            [class]="sort['status']"
+                                        />
+                                    </button>
                                 </div>
                             </th>
                         </tr>

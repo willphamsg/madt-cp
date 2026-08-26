@@ -5,15 +5,9 @@
     ) {
         <ng-container>
             <div class="page-header">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); backToLogin()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); backToLogin()"
-                    (keydown.space)="handleButtonSound(); backToLogin()"
-                >
+                <button type="button" class="back-button" (click)="handleButtonSound(); backToLogin()">
                     {{ 'BACK' | translate }}
-                </div>
+                </button>
             </div>
             <div>
                 <div class="content">
@@ -51,15 +45,9 @@
             } @else {
                 <ng-container>
                     <div class="page-header">
-                        <div
-                            class="back-button"
-                            (click)="handleButtonSound(); backToLogin()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); backToLogin()"
-                            (keydown.space)="handleButtonSound(); backToLogin()"
-                        >
+                        <button type="button" class="back-button" (click)="handleButtonSound(); backToLogin()">
                             {{ 'BACK' | translate }}
-                        </div>
+                        </button>
                     </div>
                     <div>
                         <div class="content">
@@ -91,15 +79,9 @@
         } @else if (manualLoginData.status === ResponseStatus.SUCCESS) {
             <ng-container>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToEnterPIN()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToEnterPIN()"
-                        (keydown.space)="handleButtonSound(); backToEnterPIN()"
-                    >
+                    <button type="button" class="back-button" (click)="handleButtonSound(); backToEnterPIN()">
                         {{ 'BACK' | translate }}
-                    </div>
+                    </button>
                 </div>
                 <div>
                     <div class="content">
@@ -128,15 +110,9 @@
             } @else {
                 <ng-container>
                     <div class="page-header">
-                        <div
-                            class="back-button"
-                            (click)="handleButtonSound(); backToEnterPIN()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); backToEnterPIN()"
-                            (keydown.space)="handleButtonSound(); backToEnterPIN()"
-                        >
+                        <button type="button" class="back-button" (click)="handleButtonSound(); backToEnterPIN()">
                             {{ 'BACK' | translate }}
-                        </div>
+                        </button>
                     </div>
                     <div>
                         <div class="content">

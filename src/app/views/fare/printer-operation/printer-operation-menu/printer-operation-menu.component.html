@@ -1,13 +1,7 @@
 <div class="device-operation-content">
-    <div
-        class="back-button"
-        (click)="handleButtonSound(); handleBack()"
-        tabindex="0"
-        (keydown.enter)="handleButtonSound(); handleBack()"
-        (keydown.space)="handleButtonSound(); handleBack()"
-    >
+    <button type="button" class="back-button" (click)="handleButtonSound(); handleBack()">
         {{ 'BACK' | translate }}
-    </div>
+    </button>
     <h1 class="device-operation-title">{{ 'SELECT_PRINTER_OPERATIONS' | translate }}</h1>
     <div class="device-operation-button-group">
         @for (button of buttons; track button) {

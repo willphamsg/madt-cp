@@ -30,15 +30,9 @@
                             </div>
                         </div>
                     } @else {
-                        <div
-                            class="back-button"
-                            (click)="handleButtonSound(); handleBack()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleBack()"
-                            (keydown.space)="handleButtonSound(); handleBack()"
-                        >
+                        <button type="button" class="back-button" (click)="handleButtonSound(); handleBack()">
                             {{ 'BACK' | translate }}
-                        </div>
+                        </button>
                         <div>
                             <h2 class="title">{{ 'SELECT_TOP_UP_AMOUNT' | translate }}</h2>
                             <div class="content">

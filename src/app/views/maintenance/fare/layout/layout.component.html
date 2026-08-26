@@ -2,15 +2,9 @@
     <div class="maintenance-fare-layout">
         <div class="layout">
             <app-breadcrumb [id]="'maintenanceBreadcrumb'" [dateTime]="tcDateTime">
-                <img
-                    (click)="handleButtonSound(); handleBack()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleBack()"
-                    (keydown.space)="handleButtonSound(); handleBack()"
-                    src="/assets/images/icons/maintenance/back.svg"
-                    alt=""
-                    icon
-                />
+                <button type="button" icon (click)="handleButtonSound(); handleBack()">
+                    <img src="/assets/images/icons/maintenance/back.svg" alt="" />
+                </button>
             </app-breadcrumb>
             <div class="madt-main">
                 <div class="madt-side-nav">
@@ -33,26 +27,22 @@
                     </ng-scrollbar>
 
                     @if (isScrollTop) {
-                        <div
+                        <button
+                            type="button"
                             class="menu-direction"
                             (click)="handleButtonSound(); handleScrollBottom()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleScrollBottom()"
-                            (keydown.space)="handleButtonSound(); handleScrollBottom()"
                         >
                             <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
-                        </div>
+                        </button>
                     } @else {
-                        <div
+                        <button
+                            type="button"
                             class="menu-direction"
                             style="transform: rotate(180deg); transition: all 0.2s ease"
                             (click)="handleButtonSound(); handleScrollTop()"
-                            tabindex="0"
-                            (keydown.enter)="handleButtonSound(); handleScrollTop()"
-                            (keydown.space)="handleButtonSound(); handleScrollTop()"
                         >
                             <img src="/assets/images/icons/maintenance/arrow-down.svg" alt="" icon />
-                        </div>
+                        </button>
                     }
                 </div>
                 <div class="madt-content">

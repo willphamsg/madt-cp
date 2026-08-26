@@ -8,16 +8,10 @@
                     {{ busIdData.message ? (busIdData.message | translate) : ('PLEASE_RETRY_AGAIN' | translate) }}
                 </div>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-ok"
-                        (click)="handleButtonSound(); handleRetrySetBusId()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleRetrySetBusId()"
-                        (keydown.space)="handleButtonSound(); handleRetrySetBusId()"
-                    >
+                    <button type="button" class="btn btn-ok" (click)="handleButtonSound(); handleRetrySetBusId()">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span>{{ 'OK' | translate }}</span>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -27,16 +21,10 @@
             <ul class="list">
                 <li class="row">
                     <div class="left">{{ 'BUS_ID' | translate }}</div>
-                    <div
-                        class="right"
-                        (click)="handleButtonSound(); handleChangeStep(2)"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleChangeStep(2)"
-                        (keydown.space)="handleButtonSound(); handleChangeStep(2)"
-                    >
+                    <button type="button" class="right" (click)="handleButtonSound(); handleChangeStep(2)">
                         <p class="value">{{ busIdTemp }}</p>
                         <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                    </div>
+                    </button>
                 </li>
                 <li class="row">
                     <div class="left">{{ 'OPERATOR' | translate }}</div>
@@ -60,26 +48,14 @@
                 </li>
             </ul>
             <div class="btn-group">
-                <div
-                    class="btn btn-cancel"
-                    (click)="handleButtonSound(); handleCancelSubmitBusId()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleCancelSubmitBusId()"
-                    (keydown.space)="handleButtonSound(); handleCancelSubmitBusId()"
-                >
+                <button type="button" class="btn btn-cancel" (click)="handleButtonSound(); handleCancelSubmitBusId()">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
-                </div>
-                <div
-                    class="btn btn-confirm"
-                    (click)="handleButtonSound(); handleSubmitForm()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleSubmitForm()"
-                    (keydown.space)="handleButtonSound(); handleSubmitForm()"
-                >
+                </button>
+                <button type="button" class="btn btn-confirm" (click)="handleButtonSound(); handleSubmitForm()">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span class="text">{{ 'CONFIRM' | translate }}</span>
-                </div>
+                </button>
             </div>
         }
 
@@ -139,15 +115,9 @@
 
         @if (step === 3) {
             <div class="operator">
-                <div
-                    class="back-button"
-                    (click)="handleButtonSound(); handleOperatorBack()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleOperatorBack()"
-                    (keydown.space)="handleButtonSound(); handleOperatorBack()"
-                >
+                <button type="button" class="back-button" (click)="handleButtonSound(); handleOperatorBack()">
                     {{ 'BACK' | translate }}
-                </div>
+                </button>
                 <h3 class="title">{{ 'SELECT_OPERATOR' | translate }}</h3>
                 <div class="operator-content">
                     @if (!busIdData.operators?.length) {
@@ -160,18 +130,15 @@
                             <app-scrollbar>
                                 <ul>
                                     @for (operator of busIdData.operators; track operator.id) {
-                                        <li
-                                            (click)="handleButtonSound(); handleChangeOperator(operator?.id || 0)"
-                                            tabindex="0"
-                                            (keydown.enter)="
-                                                handleButtonSound(); handleChangeOperator(operator?.id || 0)
-                                            "
-                                            (keydown.space)="
-                                                handleButtonSound(); handleChangeOperator(operator?.id || 0)
-                                            "
-                                            [ngClass]="{ selected: operatorIdTemp === operator.id }"
-                                        >
-                                            {{ operator?.label || '' | translate }} - {{ operator.serviceProvider }}
+                                        <li [ngClass]="{ selected: operatorIdTemp === operator.id }">
+                                            <button
+                                                type="button"
+                                                style="display: block; width: 100%; text-align: inherit"
+                                                (click)="handleButtonSound(); handleChangeOperator(operator?.id || 0)"
+                                            >
+                                                {{ operator?.label || '' | translate }} -
+                                                {{ operator.serviceProvider }}
+                                            </button>
                                         </li>
                                     }
                                 </ul>

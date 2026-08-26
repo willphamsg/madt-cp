@@ -20,9 +20,9 @@ export class TestReceiptComponent {
         private readonly router: Router,
     ) {}
 
-    // goBack() {
-    //     this.router.navigate(['/ticketing/device-operation/printer']);
-    // }
+    goBack() {
+        this.router.navigate(['/ticketing/device-operation/printer']);
+    }
 
     handlePrint() {
         // Printer integration not yet implemented; button is wired for the upcoming print flow.

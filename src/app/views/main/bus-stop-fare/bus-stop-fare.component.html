@@ -8,26 +8,18 @@
             {{ 'CONFIRM_TO_SELECT_BUS_STOP' | translate }}
         </p>
         <div class="cf-btn-group">
-            <div
+            <button
+                type="button"
                 class="btn btn-cancel"
                 (click)="handleButtonSound(); handleUpdateBusStop('cancel')"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleUpdateBusStop('cancel')"
-                (keydown.space)="handleButtonSound(); handleUpdateBusStop('cancel')"
             >
                 <img src="/assets/images/icons/main/close.svg" alt="" />
                 <span>{{ 'CANCEL' | translate }}</span>
-            </div>
-            <div
-                class="btn btn-confirm"
-                (click)="handleButtonSound(); handleUpdateBusStop()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleUpdateBusStop()"
-                (keydown.space)="handleButtonSound(); handleUpdateBusStop()"
-            >
+            </button>
+            <button type="button" class="btn btn-confirm" (click)="handleButtonSound(); handleUpdateBusStop()">
                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                 <span>{{ 'CONFIRM' | translate }}</span>
-            </div>
+            </button>
         </div>
     </div>
 </div>

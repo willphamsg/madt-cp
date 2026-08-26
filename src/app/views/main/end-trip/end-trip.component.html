@@ -6,26 +6,14 @@
                 {{ 'PRESS_THE_BTN_TO_PROCEED' | translate }}
             </p>
             <div class="btn-group">
-                <div
-                    class="btn btn-cancel"
-                    (click)="handleButtonSound(); handleDeclineConfirm()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleDeclineConfirm()"
-                    (keydown.space)="handleButtonSound(); handleDeclineConfirm()"
-                >
+                <button type="button" class="btn btn-cancel" (click)="handleButtonSound(); handleDeclineConfirm()">
                     <img src="/assets/images/icons/main/close.svg" alt="" />
                     <span>{{ 'CANCEL' | translate }}</span>
-                </div>
-                <div
-                    class="btn btn-confirm"
-                    (click)="handleButtonSound(); handleConfirm()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleConfirm()"
-                    (keydown.space)="handleButtonSound(); handleConfirm()"
-                >
+                </button>
+                <button type="button" class="btn btn-confirm" (click)="handleButtonSound(); handleConfirm()">
                     <img src="/assets/images/icons/main/confirm.svg" alt="" />
                     <span>{{ 'CONFIRM' | translate }}</span>
-                </div>
+                </button>
             </div>
         </div>
     } @else if (endTripInfoData.msgID && endTripInfoData.service) {
@@ -65,26 +53,14 @@
                     </li>
                 </ul>
                 <div class="btn-group">
-                    <div
-                        class="btn btn-cancel"
-                        (click)="handleButtonSound(); handleCancelEndTrip()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleCancelEndTrip()"
-                        (keydown.space)="handleButtonSound(); handleCancelEndTrip()"
-                    >
+                    <button type="button" class="btn btn-cancel" (click)="handleButtonSound(); handleCancelEndTrip()">
                         <img src="/assets/images/icons/main/close.svg" alt="" />
                         <span>{{ 'CANCEL' | translate }}</span>
-                    </div>
-                    <div
-                        class="btn btn-confirm"
-                        (click)="handleButtonSound(); handleConfirmValue()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); handleConfirmValue()"
-                        (keydown.space)="handleButtonSound(); handleConfirmValue()"
-                    >
+                    </button>
+                    <button type="button" class="btn btn-confirm" (click)="handleButtonSound(); handleConfirmValue()">
                         <img src="/assets/images/icons/main/confirm.svg" alt="" />
                         <span class="text">{{ 'CONFIRM' | translate }}</span>
-                    </div>
+                    </button>
                 </div>
             </div>
         </div>

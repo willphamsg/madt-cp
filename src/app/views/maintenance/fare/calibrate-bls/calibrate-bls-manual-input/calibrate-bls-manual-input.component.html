@@ -33,15 +33,9 @@
         </common-pop-up>
     } @else {
         <div>
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); handleBackToCalibrateBls()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleBackToCalibrateBls()"
-                (keydown.space)="handleButtonSound(); handleBackToCalibrateBls()"
-            >
+            <button type="button" class="back-button" (click)="handleButtonSound(); handleBackToCalibrateBls()">
                 {{ 'BACK' | translate }}
-            </div>
+            </button>
             <h2 class="title">{{ 'MANUAL_INPUT' | translate }}</h2>
             <div class="content mt-50">
                 <div class="flex">

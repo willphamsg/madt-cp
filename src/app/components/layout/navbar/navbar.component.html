@@ -1,11 +1,9 @@
 <div class="navbar-container">
     @for (button of buttonList; track button.label) {
-        <div
+        <button
+            type="button"
             class="nav-item"
             (click)="handleButtonSound(); onChangeTab(button.url)"
-            tabindex="0"
-            (keydown.enter)="handleButtonSound(); onChangeTab(button.url)"
-            (keydown.space)="handleButtonSound(); onChangeTab(button.url)"
             [class.active-link]="isRouteActive(button.key)"
         >
             @if (isRouteActive(button.key)) {
@@ -14,6 +12,6 @@
                 <img [src]="button.img" class="nav-icon" alt="{{ button.label }}" />
             }
             {{ button.label }}
-        </div>
+        </button>
     }
 </div>

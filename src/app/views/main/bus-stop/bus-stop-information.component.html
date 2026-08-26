@@ -110,15 +110,13 @@
                     }
                 </app-scrollbar>
                 @if (allBusStopList.length > 3) {
-                    <img
-                        src="/assets/images/back-to-top.png"
+                    <button
+                        type="button"
                         class="back-to-top"
-                        alt=""
                         (click)="handleButtonSound(); triggerScrollTop()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); triggerScrollTop()"
-                        (keydown.space)="handleButtonSound(); triggerScrollTop()"
-                    />
+                    >
+                        <img src="/assets/images/back-to-top.png" alt="" style="width: 100%; height: 100%" />
+                    </button>
                 }
             </div>
             <div class="indicator destination" [class.full-width]="allBusStopList.length <= 3">
@@ -130,12 +128,10 @@
                     </div>
                 }
             </div>
-            <div
+            <button
+                type="button"
                 class="indicator bus-stop"
                 (click)="handleButtonSound(); handleDisplayFareBusStop()"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleDisplayFareBusStop()"
-                (keydown.space)="handleButtonSound(); handleDisplayFareBusStop()"
                 [ngClass]="{ 'mis-match': fareBusStop?.misMatch, 'full-width': allBusStopList.length <= 3 }"
             >
                 <div class="left">
@@ -166,39 +162,31 @@
                     }
                     <div class="km">KM {{ formatKm(fareBusStop?.km || '') }}</div>
                 </div>
-            </div>
+            </button>
         </div>
     }
 
     @if (displayFareBusStop) {
         <div class="bus-stop-fare-page">
             <div class="page-header full-row">
-                <div
-                    class="button"
-                    (click)="handleButtonSound(); handleCloseBusStopFare()"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleCloseBusStopFare()"
-                    (keydown.space)="handleButtonSound(); handleCloseBusStopFare()"
-                >
+                <button type="button" class="button" (click)="handleButtonSound(); handleCloseBusStopFare()">
                     <img src="/assets/images/icons/main/close-circle.svg" alt="" />
                     <span>{{ 'CLOSE' | translate }}</span>
-                </div>
+                </button>
             </div>
             <div class="bus-stop-fare">
                 <div class="bus-stop-fare-header">{{ 'SELECT_FARE_BUS_STOP' | translate }}</div>
                 <div class="scrollbar">
                     <app-scrollbar>
                         @for (item of fareBusStopList$ | async; track item; let idx = $index) {
-                            <div
+                            <button
+                                type="button"
                                 class="indicator bus-stop-fare-item"
                                 [ngClass]="{
                                     active: fareBusStop?.idx === idx,
                                     selected: item?.Busid === selectFareBusStop
                                 }"
                                 (click)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
-                                tabindex="0"
-                                (keydown.enter)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
-                                (keydown.space)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                             >
                                 <div class="left">{{ item.Busid }}</div>
                                 <div class="matd-indicatior">
@@ -207,7 +195,7 @@
                                     </div>
                                     <div class="time">KM {{ formatKm(item?.km || '') }}</div>
                                 </div>
-                            </div>
+                            </button>
                         }
                     </app-scrollbar>
                 </div>

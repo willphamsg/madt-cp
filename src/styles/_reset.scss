@@ -48,6 +48,7 @@ var,
 b,
 u,
 i,
+button,
 dl,
 dt,
 dd,
@@ -91,6 +92,14 @@ video {
     border: 0;
     font: inherit;
     vertical-align: baseline;
+}
+button {
+    background: none;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    color: inherit;
+    text-align: inherit;
 }
 /* HTML5 display-role reset for older browsers */
 article,

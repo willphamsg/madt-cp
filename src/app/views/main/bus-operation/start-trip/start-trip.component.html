@@ -30,12 +30,10 @@
         <ul>
             <li class="row">
                 <div class="left">{{ 'SERVICE' | translate }}</div>
-                <div
+                <button
+                    type="button"
                     class="right"
                     (click)="handleButtonSound(); serviceEditable && handleChange('service')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); serviceEditable && handleChange('service')"
-                    (keydown.space)="handleButtonSound(); serviceEditable && handleChange('service')"
                     [ngClass]="{
                         required: !startTripData.fare?.serviceNumber
                     }"
@@ -51,16 +49,14 @@
                     @if (serviceEditable) {
                         <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
                     }
-                </div>
+                </button>
             </li>
             <li class="row">
                 <div class="left">{{ 'BUS_STOP' | translate }}</div>
-                <div
+                <button
+                    type="button"
                     class="right"
                     (click)="handleButtonSound(); handleChange('busStop')"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleChange('busStop')"
-                    (keydown.space)="handleButtonSound(); handleChange('busStop')"
                     [ngClass]="{
                         required: !startTripData.fare?.busStop?.['Name'],
                         disabled: !startTripData.fare?.serviceNumber
@@ -74,7 +70,7 @@
                         }
                     </p>
                     <img src="/assets/images/icons/main/chevron-right.svg" alt="" />
-                </div>
+                </button>
             </li>
             <li class="row">
                 <div class="left">{{ 'DIRECTION' | translate }}</div>
@@ -112,15 +108,9 @@
                     <div class="warning-text">{{ 'UNABLE_TO_FIND_FARE' | translate }}</div>
                 </div>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToBusOperation()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToBusOperation()"
-                        (keydown.space)="handleButtonSound(); backToBusOperation()"
-                    >
+                    <button type="button" class="back-button" (click)="handleButtonSound(); backToBusOperation()">
                         {{ 'BACK' | translate }}
-                    </div>
+                    </button>
                 </div>
                 <div class="trip-detail-box mt--50">
                     <div class="trip-detail-header">
@@ -151,15 +141,9 @@
                     <div class="warning-text">{{ 'BUS_STOP_MISMATCH' | translate }}</div>
                 </div>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToBusOperation()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToBusOperation()"
-                        (keydown.space)="handleButtonSound(); backToBusOperation()"
-                    >
+                    <button type="button" class="back-button" (click)="handleButtonSound(); backToBusOperation()">
                         {{ 'BACK' | translate }}
-                    </div>
+                    </button>
                 </div>
                 <div class="trip-detail-box mt--50">
                     <div class="trip-detail-header">
@@ -187,15 +171,9 @@
         @if (startTripData.type === tripTypeDetails.FMS_VALID_INFO) {
             <ng-container>
                 <div class="page-header">
-                    <div
-                        class="back-button"
-                        (click)="handleButtonSound(); backToBusOperation()"
-                        tabindex="0"
-                        (keydown.enter)="handleButtonSound(); backToBusOperation()"
-                        (keydown.space)="handleButtonSound(); backToBusOperation()"
-                    >
+                    <button type="button" class="back-button" (click)="handleButtonSound(); backToBusOperation()">
                         {{ 'BACK' | translate }}
-                    </div>
+                    </button>
                 </div>
                 <div class="trip-detail-box">
                     <div class="trip-detail-header">
@@ -270,15 +248,9 @@
 
     @if (step === 2) {
         <div class="page-header">
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); navigateToStep(1)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); navigateToStep(1)"
-                (keydown.space)="handleButtonSound(); navigateToStep(1)"
-            >
+            <button type="button" class="back-button" (click)="handleButtonSound(); navigateToStep(1)">
                 {{ 'BACK' | translate }}
-            </div>
+            </button>
         </div>
         @if (currentValueChange === 'busStop') {
             <div class="bus-stop">
@@ -302,12 +274,14 @@
                                             [ngClass]="{
                                                 selected: selectedBusStop === busStop.Busid
                                             }"
-                                            (click)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
-                                            (keydown.space)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
                                         >
-                                            {{ busStop.Name }}
+                                            <button
+                                                type="button"
+                                                style="display: block; width: 100%; height: 100%"
+                                                (click)="handleButtonSound(); handleSelectBusStop(busStop.Busid)"
+                                            >
+                                                {{ busStop.Name }}
+                                            </button>
                                         </li>
                                     }
                                 </ul>
@@ -359,12 +333,14 @@
                                             [ngClass]="{
                                                 selected: selectedService === service
                                             }"
-                                            (click)="handleButtonSound(); handleSelectService(service)"
-                                            tabindex="0"
-                                            (keydown.enter)="handleButtonSound(); handleSelectService(service)"
-                                            (keydown.space)="handleButtonSound(); handleSelectService(service)"
                                         >
-                                            {{ service.serviceNumber }} - {{ service.variantName }}
+                                            <button
+                                                type="button"
+                                                style="display: block; width: 100%; height: 100%"
+                                                (click)="handleButtonSound(); handleSelectService(service)"
+                                            >
+                                                {{ service.serviceNumber }} - {{ service.variantName }}
+                                            </button>
                                         </li>
                                     }
                                 </ul>
@@ -393,15 +369,9 @@
 
     @if (step === 3) {
         <div class="page-header">
-            <div
-                class="back-button"
-                (click)="handleButtonSound(); navigateToStep(2)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); navigateToStep(2)"
-                (keydown.space)="handleButtonSound(); navigateToStep(2)"
-            >
+            <button type="button" class="back-button" (click)="handleButtonSound(); navigateToStep(2)">
                 {{ 'BACK' | translate }}
-            </div>
+            </button>
         </div>
         <div class="service-input">
             <div class="content">

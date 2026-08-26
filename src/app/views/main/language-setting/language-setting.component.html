@@ -3,29 +3,26 @@
         <h1 class="text-center text-bold">{{ 'SELECT_LANGUAGE' | translate }}</h1>
         <ul>
             @for (lang of languageOptions; track lang.id) {
-                <p
+                <button
+                    type="button"
                     class="language-opt"
+                    style="display: block"
                     [ngClass]="{ active: language === lang.id }"
                     (click)="handleButtonSound(); handleChangeLanguage(lang.id)"
-                    tabindex="0"
-                    (keydown.enter)="handleButtonSound(); handleChangeLanguage(lang.id)"
-                    (keydown.space)="handleButtonSound(); handleChangeLanguage(lang.id)"
                 >
                     {{ lang.label }}
-                </p>
+                </button>
             }
         </ul>
         <div class="btn-group">
-            <div
+            <button
+                type="button"
                 class="btn btn-confirm"
                 (click)="handleButtonSound(); handleConfirmLanguage(true)"
-                tabindex="0"
-                (keydown.enter)="handleButtonSound(); handleConfirmLanguage(true)"
-                (keydown.space)="handleButtonSound(); handleConfirmLanguage(true)"
             >
                 <img src="/assets/images/icons/main/confirm.svg" alt="" />
                 <span>{{ 'CONFIRM' | translate }}</span>
-            </div>
+            </button>
         </div>
     </div>
 </div>

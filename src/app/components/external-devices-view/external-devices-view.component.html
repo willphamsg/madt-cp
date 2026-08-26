@@ -2,15 +2,9 @@
     <div class="external-devices-header">
         <div class="title">{{ 'EXTERNAL_DEVICES_DIAG' | translate }}</div>
         @if (externalDevices.status === ResponseStatus.SUCCESS || externalDevices.status === ResponseStatus.ERROR) {
-            <div
-                class="refresh-button"
-                (click)="refresh.emit()"
-                tabindex="0"
-                (keydown.enter)="refresh.emit()"
-                (keydown.space)="refresh.emit()"
-            >
+            <button type="button" class="refresh-button" (click)="refresh.emit()">
                 <img src="/assets/images/icons/bus-operation/refresh.svg" alt="" />
-            </div>
+            </button>
         }
     </div>
     <div class="external-devices-content">
@@ -30,15 +24,9 @@
                                 } @else {
                                     <p class="value loading">{{ 'TESTING' | translate }}</p>
                                 }
-                                <div
-                                    class="button"
-                                    (click)="printTest.emit()"
-                                    tabindex="0"
-                                    (keydown.enter)="printTest.emit()"
-                                    (keydown.space)="printTest.emit()"
-                                >
+                                <button type="button" class="button" (click)="printTest.emit()">
                                     <img src="/assets/images/icons/maintenance/print.svg" alt="" />
-                                </div>
+                                </button>
                             </div>
                         </div>
                         <div class="td">

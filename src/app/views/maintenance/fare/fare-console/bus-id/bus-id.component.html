@@ -12,7 +12,6 @@
                         class="btn btn-ok"
                         (click)="handleButtonSound(); handleRetrySetBusId()"
                         tabindex="0"
-                        role="button"
                         (keydown.enter)="handleButtonSound(); handleRetrySetBusId()"
                         (keydown.space)="handleButtonSound(); handleRetrySetBusId()"
                     >
@@ -32,7 +31,6 @@
                         class="right"
                         (click)="handleButtonSound(); handleChangeStep(2)"
                         tabindex="0"
-                        role="button"
                         (keydown.enter)="handleButtonSound(); handleChangeStep(2)"
                         (keydown.space)="handleButtonSound(); handleChangeStep(2)"
                     >
@@ -66,7 +64,6 @@
                     class="btn btn-cancel"
                     (click)="handleButtonSound(); handleCancelSubmitBusId()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); handleCancelSubmitBusId()"
                     (keydown.space)="handleButtonSound(); handleCancelSubmitBusId()"
                 >
@@ -77,7 +74,6 @@
                     class="btn btn-confirm"
                     (click)="handleButtonSound(); handleSubmitForm()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); handleSubmitForm()"
                     (keydown.space)="handleButtonSound(); handleSubmitForm()"
                 >
@@ -147,7 +143,6 @@
                     class="back-button"
                     (click)="handleButtonSound(); handleOperatorBack()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); handleOperatorBack()"
                     (keydown.space)="handleButtonSound(); handleOperatorBack()"
                 >
@@ -168,7 +163,6 @@
                                         <li
                                             (click)="handleButtonSound(); handleChangeOperator(operator?.id || 0)"
                                             tabindex="0"
-                                            role="button"
                                             (keydown.enter)="
                                                 handleButtonSound(); handleChangeOperator(operator?.id || 0)
                                             "

@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NgTemplateOutlet } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,7 +16,7 @@ import { SoundService } from '@services/sound.service';
 
 @Component({
     selector: 'view-parameter',
-    imports: [MatIconModule, RouterModule, AppScrollBar, CommonPopUp, TranslateModule, NgTemplateOutlet],
+    imports: [MatIconModule, RouterModule, AppScrollBar, CommonPopUp, TranslateModule],
     templateUrl: './view-parameter.component.html',
     styleUrls: ['./view-parameter.component.scss'],
 })

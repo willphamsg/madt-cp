@@ -116,7 +116,6 @@
                         alt=""
                         (click)="handleButtonSound(); triggerScrollTop()"
                         tabindex="0"
-                        role="button"
                         (keydown.enter)="handleButtonSound(); triggerScrollTop()"
                         (keydown.space)="handleButtonSound(); triggerScrollTop()"
                     />
@@ -135,7 +134,6 @@
                 class="indicator bus-stop"
                 (click)="handleButtonSound(); handleDisplayFareBusStop()"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); handleDisplayFareBusStop()"
                 (keydown.space)="handleButtonSound(); handleDisplayFareBusStop()"
                 [ngClass]="{ 'mis-match': fareBusStop?.misMatch, 'full-width': allBusStopList.length <= 3 }"
@@ -179,7 +177,6 @@
                     class="button"
                     (click)="handleButtonSound(); handleCloseBusStopFare()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); handleCloseBusStopFare()"
                     (keydown.space)="handleButtonSound(); handleCloseBusStopFare()"
                 >
@@ -200,7 +197,6 @@
                                 }"
                                 (click)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                                 tabindex="0"
-                                role="button"
                                 (keydown.enter)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                                 (keydown.space)="handleButtonSound(); handleChangeBusStopFare(item, idx)"
                             >

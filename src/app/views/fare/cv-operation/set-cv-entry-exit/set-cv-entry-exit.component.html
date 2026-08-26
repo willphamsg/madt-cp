@@ -3,7 +3,6 @@
         class="back-button"
         (click)="handleButtonSound(); handleBack()"
         tabindex="0"
-        role="button"
         (keydown.enter)="handleButtonSound(); handleBack()"
         (keydown.space)="handleButtonSound(); handleBack()"
     >
@@ -17,7 +16,6 @@
                 [ngClass]="{ selected: cvType === 1 }"
                 (click)="handleButtonSound(); handleSelectType(1)"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); handleSelectType(1)"
                 (keydown.space)="handleButtonSound(); handleSelectType(1)"
             >
@@ -28,7 +26,6 @@
                 [ngClass]="{ selected: cvType === 2 }"
                 (click)="handleButtonSound(); handleSelectType(2)"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); handleSelectType(2)"
                 (keydown.space)="handleButtonSound(); handleSelectType(2)"
             >
@@ -39,7 +36,6 @@
                 [ngClass]="{ selected: cvType === 3 }"
                 (click)="handleButtonSound(); handleSelectType(3)"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); handleSelectType(3)"
                 (keydown.space)="handleButtonSound(); handleSelectType(3)"
             >

@@ -4,7 +4,6 @@
             class="nav-item"
             (click)="handleButtonSound(); onChangeTab(button.url)"
             tabindex="0"
-            role="button"
             (keydown.enter)="handleButtonSound(); onChangeTab(button.url)"
             (keydown.space)="handleButtonSound(); onChangeTab(button.url)"
             [class.active-link]="isRouteActive(button.key)"

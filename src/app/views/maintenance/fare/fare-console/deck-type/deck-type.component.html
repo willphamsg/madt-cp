@@ -8,7 +8,6 @@
                         <li
                             (click)="handleButtonSound(); handleChangeDeckType(deck.id)"
                             tabindex="0"
-                            role="button"
                             (keydown.enter)="handleButtonSound(); handleChangeDeckType(deck.id)"
                             (keydown.space)="handleButtonSound(); handleChangeDeckType(deck.id)"
                             [ngClass]="{
@@ -27,7 +26,6 @@
             class="button button-cancel"
             (click)="handleButtonSound(); goBack()"
             tabindex="0"
-            role="button"
             (keydown.enter)="handleButtonSound(); goBack()"
             (keydown.space)="handleButtonSound(); goBack()"
         >
@@ -38,7 +36,6 @@
             class="button button-confirm"
             (click)="handleButtonSound(); handleConfirmDeckType()"
             tabindex="0"
-            role="button"
             (keydown.enter)="handleButtonSound(); handleConfirmDeckType()"
             (keydown.space)="handleButtonSound(); handleConfirmDeckType()"
         >

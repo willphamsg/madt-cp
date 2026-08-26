@@ -8,7 +8,6 @@
                     [ngClass]="{ active: language === lang.id }"
                     (click)="handleButtonSound(); handleChangeLanguage(lang.id)"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); handleChangeLanguage(lang.id)"
                     (keydown.space)="handleButtonSound(); handleChangeLanguage(lang.id)"
                 >
@@ -21,7 +20,6 @@
                 class="btn btn-confirm"
                 (click)="handleButtonSound(); handleConfirmLanguage(true)"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); handleConfirmLanguage(true)"
                 (keydown.space)="handleButtonSound(); handleConfirmLanguage(true)"
             >

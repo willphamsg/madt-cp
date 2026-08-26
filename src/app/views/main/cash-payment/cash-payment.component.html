@@ -27,7 +27,6 @@
                                 [class.active]="fareMode === ECashMode.SINGLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
                                 tabindex="0"
-                                role="button"
                                 (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
                                 (keydown.space)="handleButtonSound(); setFareMode(ECashMode.SINGLE)"
                             >
@@ -38,7 +37,6 @@
                                 [class.active]="fareMode === ECashMode.MULTIPLE"
                                 (click)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
                                 tabindex="0"
-                                role="button"
                                 (keydown.enter)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
                                 (keydown.space)="handleButtonSound(); setFareMode(ECashMode.MULTIPLE)"
                             >
@@ -49,7 +47,6 @@
                             class="button"
                             (click)="handleButtonSound(); handleTerminate()"
                             tabindex="0"
-                            role="button"
                             (keydown.enter)="handleButtonSound(); handleTerminate()"
                             (keydown.space)="handleButtonSound(); handleTerminate()"
                         >
@@ -70,7 +67,6 @@
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
                                         tabindex="0"
-                                        role="button"
                                         (keydown.enter)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
                                         (keydown.space)="handleButtonSound(); setCash(ECashType.ADULT, cashValue.index)"
                                     >
@@ -92,7 +88,6 @@
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)"
                                         tabindex="0"
-                                        role="button"
                                         (keydown.enter)="
                                             handleButtonSound(); setCash(ECashType.SENIOR, cashValue.index)
                                         "
@@ -118,7 +113,6 @@
                                         class="cash-btn-wrap"
                                         (click)="handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)"
                                         tabindex="0"
-                                        role="button"
                                         (keydown.enter)="
                                             handleButtonSound(); setCash(ECashType.STUDENT, cashValue.index)
                                         "
@@ -216,7 +210,6 @@
                                 class="back-button"
                                 (click)="handleButtonSound(); handleResetBusStopPopup()"
                                 tabindex="0"
-                                role="button"
                                 (keydown.enter)="handleButtonSound(); handleResetBusStopPopup()"
                                 (keydown.space)="handleButtonSound(); handleResetBusStopPopup()"
                             >
@@ -260,7 +253,6 @@
                                                             handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
                                                         "
                                                         tabindex="0"
-                                                        role="button"
                                                         (keydown.enter)="
                                                             handleButtonSound(); handleSelectBusStop(busStop.Busid, idx)
                                                         "
@@ -302,7 +294,6 @@
                                 class="back-button"
                                 (click)="handleButtonSound(); handleBackFareCalculator()"
                                 tabindex="0"
-                                role="button"
                                 (keydown.enter)="handleButtonSound(); handleBackFareCalculator()"
                                 (keydown.space)="handleButtonSound(); handleBackFareCalculator()"
                             >
@@ -321,7 +312,6 @@
                                                 class="row"
                                                 (click)="handleButtonSound(); handleChangeBusStop('ENTRY')"
                                                 tabindex="0"
-                                                role="button"
                                                 (keydown.enter)="handleButtonSound(); handleChangeBusStop('ENTRY')"
                                                 (keydown.space)="handleButtonSound(); handleChangeBusStop('ENTRY')"
                                             >
@@ -337,7 +327,6 @@
                                                 class="row"
                                                 (click)="handleButtonSound(); handleChangeBusStop('EXIT')"
                                                 tabindex="0"
-                                                role="button"
                                                 (keydown.enter)="handleButtonSound(); handleChangeBusStop('EXIT')"
                                                 (keydown.space)="handleButtonSound(); handleChangeBusStop('EXIT')"
                                             >

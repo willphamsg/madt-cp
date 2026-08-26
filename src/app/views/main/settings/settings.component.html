@@ -5,7 +5,6 @@
                 class="button"
                 (click)="handleButtonSound(); backToMain()"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); backToMain()"
                 (keydown.space)="handleButtonSound(); backToMain()"
             >
@@ -21,7 +20,6 @@
                     class="right"
                     (click)="handleButtonSound(); setStep('language')"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); setStep('language')"
                     (keydown.space)="handleButtonSound(); setStep('language')"
                 >
@@ -38,7 +36,6 @@
                 class="button"
                 (click)="handleButtonSound(); backToMain()"
                 tabindex="0"
-                role="button"
                 (keydown.enter)="handleButtonSound(); backToMain()"
                 (keydown.space)="handleButtonSound(); backToMain()"
             >
@@ -65,7 +62,6 @@
                     class="btn btn-cancel"
                     (click)="handleButtonSound(); goBack()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); goBack()"
                     (keydown.space)="handleButtonSound(); goBack()"
                 >
@@ -79,7 +75,6 @@
                         toggleDarkMode(themeMode === themeType.LIGHT ? themeType.DARK : themeType.LIGHT)
                     "
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="
                         handleButtonSound();
                         toggleDarkMode(themeMode === themeType.LIGHT ? themeType.DARK : themeType.LIGHT)
@@ -103,7 +98,6 @@
                     class="button"
                     (click)="handleButtonSound(); backToMain()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); backToMain()"
                     (keydown.space)="handleButtonSound(); backToMain()"
                 >
@@ -120,7 +114,6 @@
                             [ngClass]="{ active: currentLanguage === lang.id }"
                             (click)="handleButtonSound(); handleSelectLang(lang.id)"
                             tabindex="0"
-                            role="button"
                             (keydown.enter)="handleButtonSound(); handleSelectLang(lang.id)"
                             (keydown.space)="handleButtonSound(); handleSelectLang(lang.id)"
                         >
@@ -136,7 +129,6 @@
                     class="button"
                     (click)="handleButtonSound(); backToMain()"
                     tabindex="0"
-                    role="button"
                     (keydown.enter)="handleButtonSound(); backToMain()"
                     (keydown.space)="handleButtonSound(); backToMain()"
                 >
@@ -154,7 +146,6 @@
                         class="btn btn-cancel"
                         (click)="handleButtonSound(); onLanguageChange(false)"
                         tabindex="0"
-                        role="button"
                         (keydown.enter)="handleButtonSound(); onLanguageChange(false)"
                         (keydown.space)="handleButtonSound(); onLanguageChange(false)"
                     >
@@ -165,7 +156,6 @@
                         class="btn btn-confirm"
                         (click)="handleButtonSound(); onLanguageChange(true)"
                         tabindex="0"
-                        role="button"
                         (keydown.enter)="handleButtonSound(); onLanguageChange(true)"
                         (keydown.space)="handleButtonSound(); onLanguageChange(true)"
                     >
